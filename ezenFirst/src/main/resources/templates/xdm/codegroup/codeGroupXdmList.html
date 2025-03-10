@@ -2,36 +2,48 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>코드그룹관리</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+<title>코드그룹관리</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
 
-  <!-- Favicons -->
-  <link href="/xdm/template/AdminUI/assets/img/favicon.png" rel="icon">
-  <link href="/xdm/template/AdminUI/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<!-- Favicons -->
+<link href="/xdm/template/AdminUI/assets/img/favicon.png" rel="icon">
+<link href="/xdm/template/AdminUI/assets/img/apple-touch-icon.png"
+	rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.gstatic.com" rel="preconnect">
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+	rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="/xdm/template/AdminUI/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/xdm/template/AdminUI/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="/xdm/template/AdminUI/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="/xdm/template/AdminUI/assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="/xdm/template/AdminUI/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="/xdm/template/AdminUI/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="/xdm/template/AdminUI/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+<!-- Vendor CSS Files -->
+<link
+	href="/xdm/template/AdminUI/assets/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="/xdm/template/AdminUI/assets/vendor/bootstrap-icons/bootstrap-icons.css"
+	rel="stylesheet">
+<link
+	href="/xdm/template/AdminUI/assets/vendor/boxicons/css/boxicons.min.css"
+	rel="stylesheet">
+<link href="/xdm/template/AdminUI/assets/vendor/quill/quill.snow.css"
+	rel="stylesheet">
+<link href="/xdm/template/AdminUI/assets/vendor/quill/quill.bubble.css"
+	rel="stylesheet">
+<link href="/xdm/template/AdminUI/assets/vendor/remixicon/remixicon.css"
+	rel="stylesheet">
+<link
+	href="/xdm/template/AdminUI/assets/vendor/simple-datatables/style.css"
+	rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <link href="/xdm/template/AdminUI/assets/css/style.css" rel="stylesheet">
+<!-- Template Main CSS File -->
+<link href="/xdm/template/AdminUI/assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
+<!-- =======================================================
   * Template Name: NiceAdmin
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
   * Updated: Apr 20 2024 with Bootstrap v5.3.3
@@ -42,692 +54,599 @@
 
 <body>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Admin</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
-
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
-
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
-
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
-          </a><!-- End Notification Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
-            </li>
-
-          </ul><!-- End Notification Dropdown Items -->
-
-        </li><!-- End Notification Nav -->
-
-        <li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">3</span>
-          </a><!-- End Messages Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
-              You have 3 new messages
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="/xdm/template/AdminUI/assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Maria Hudson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>4 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="/xdm/template/AdminUI/assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>Anna Nelson</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>6 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="/xdm/template/AdminUI/assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                <div>
-                  <h4>David Muldon</h4>
-                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                  <p>8 hrs. ago</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Show all messages</a>
-            </li>
-
-          </ul><!-- End Messages Dropdown Items -->
-
-        </li><!-- End Messages Nav -->
-
-        <li class="nav-item dropdown pe-3">
-
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="/xdm/template/AdminUI/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
-          </a><!-- End Profile Iamge Icon -->
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-person"></i>
-                <span>My Profile</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
-              </a>
-            </li>
-
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
-
-  </header><!-- End Header -->
-
-  <!-- ******************************************************************************* -->
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-
-    <ul class="sidebar-nav" id="sidebar-nav">
-
-      <!-- Home -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-          <i class="bi bi-grid"></i>
-          <span>Home</span>
-        </a>
-      </li>
-      <!-- End Home -->
-
-      <!-- 공지사항 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="notice.html">
-          <i class="bi bi-bell"></i>
-          <span>공지사항</span>
-        </a>
-      </li>
-      <!-- End 공지사항 -->
-
-      <!-- 회원관리 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-people"></i><span>회원관리</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- End 회원관리 -->
-
-      <!-- 서비스관리 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-display"></i><span>서비스관리</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- End 서비스관리 -->
-
-      <!-- 커뮤니케이션 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-chat-left"></i><span>커뮤니케이션</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- End 커뮤니케이션 -->
-
-      <!-- 시스템관리 -->
-      <li class="nav-item">
-        <a class="nav-link" data-bs-target="#system-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gear"></i><span>시스템관리</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="system-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="system-code.html">
-              <i class="bi bi-circle"></i><span>코드관리</span>
-            </a>
-          </li>
-          <li>
-            <a href="system-codeGroup.html" class="active">
-              <i class="bi bi-circle"></i><span>코드그룹관리</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- End 시스템관리 -->
-
-      <!-- 개인정보 관리 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>개인정보 관리</span>
-        </a>
-      </li>
-      <!-- End 개인정보 관리 -->
-
-      <!-- test -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layers"></i><span>test</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- End test -->
-
-    </ul>
-
-  </aside><!-- End Sidebar-->
-
-  <!-- ******************************************************************************* -->
-
-
-
-
-
-  <!-- Main -->
-  <main id="main" class="main">
-
-    <div class="pagetitle">
-
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">시스템관리</li>
-          <li class="breadcrumb-item active">코드그룹관리</li>
-        </ol>
-      </nav>
-
-      <h1 style="font-weight: bold;">Code Group</h1>
-
-      <div class="row mb-3 mt-3">
-        <div class="col-2">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>N</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div class="col-2">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Y</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div class="col-2">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>날짜</option>
-            <option value="1">등록일</option>
-            <option value="2">수정일</option>
-          </select>
-        </div>
-        <div class="col-2">
-          <input type="text" class="form-control" placeholder="2025-01-05">
-        </div>
-        <div class="col-2">
-          <input type="text" class="form-control" placeholder="2025-02-04">
-        </div>
-      </div>
-
-      <div class="row mb-3 mt-3">
-        <div class="col-2">
-          <select class="form-select" aria-label="Default select example">
-            <option selected>검색구분</option>
-            <option value="1">코드그룹 코드</option>
-            <option value="2">코드그룹 이름</option>
-            <option value="3">코드그룹 이름(영문)</option>
-          </select>
-        </div>
-        <div class="col-2">
-          <input type="text" class="form-control" placeholder="검색어">
-        </div>
-        <div class="col-2">
-          <a href="#" class="btn btn-outline-secondary" title="Upload new profile image"><i
-              class="ri-search-line"></i></a>
-          <a href="#" class="btn btn-outline-secondary" title="Remove my profile image"><i
-              class="ri-reset-right-line"></i></a>
-        </div>
-      </div>
-
-    </div><!-- End Page Title -->
-
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
-
-          <div class="card">
-            <div class="card-body m-2">
-
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title">Total: 42</h5>
-                </div>
-                <div class="col-2 pt-2" style="float: right;">
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>5</option>
-                    <option value="1">10</option>
-                    <option value="2">15</option>
-                    <option value="3">20</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Table with stripped rows -->
-              <div class="row">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                          <label class="form-check-label" for="flexCheckDefault">
-                          </label>
-                        </div>
-                      </th>
-                      <th>#</th>
-                      <th>사용</th>
-                      <th>코드그룹 코드</th>
-                      <th>코드그룹 이름</th>
-                      <th>코드그룹 이름(영문)</th>
-                      <th>갯수</th>
-                      <th>순서</th>
-                      <th>등록일</th>
-                      <th>수정일</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                          <label class="form-check-label" for="flexCheckDefault">
-                          </label>
-                        </div>
-                      </td>
-                      <td>42</td>
-                      <td>Y</td>
-                      <td>42</td>
-                      <td style="color:blue">작품.기타사이트유형</td>
-                      <td></td>
-                      <td>8</td>
-                      <td>1</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                          <label class="form-check-label" for="flexCheckDefault">
-                          </label>
-                        </div>
-                      </td>
-                      <td>41</td>
-                      <td>Y</td>
-                      <td>41</td>
-                      <td style="color:blue">작품.연재사이트</td>
-                      <td></td>
-                      <td>9</td>
-                      <td>1</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                          <label class="form-check-label" for="flexCheckDefault">
-                          </label>
-                        </div>
-                      </td>
-                      <td>40</td>
-                      <td>Y</td>
-                      <td>40</td>
-                      <td style="color:blue">결제.구매자거래상태</td>
-                      <td></td>
-                      <td>9</td>
-                      <td>1</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                          <label class="form-check-label" for="flexCheckDefault">
-                          </label>
-                        </div>
-                      </td>
-                      <td>39</td>
-                      <td>Y</td>
-                      <td>39</td>
-                      <td style="color:blue">결제.판매자거래상태</td>
-                      <td></td>
-                      <td>10</td>
-                      <td>1</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                          <label class="form-check-label" for="flexCheckDefault">
-                          </label>
-                        </div>
-                      </td>
-                      <td>38</td>
-                      <td>Y</td>
-                      <td>38</td>
-                      <td style="color:blue">결제.승인상태</td>
-                      <td></td>
-                      <td>7</td>
-                      <td>1</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                          <label class="form-check-label" for="flexCheckDefault">
-                          </label>
-                        </div>
-                      </td>
-                      <td>37</td>
-                      <td>N</td>
-                      <td>37</td>
-                      <td style="color:blue">결제.승인상태1</td>
-                      <td></td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-
-                  </tbody>
-                </table>
-              </div>
-              <!-- End Table with stripped rows -->
-
-              <!-- Pagination with icons -->
-              <div class="row">
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div><!-- End Pagination with icons -->
-
-              <div class="row">
-                <div class="col">
-                  <a href="#" class="btn btn-danger" title="Upload new profile image">
-                    <i class="ri-close-large-line"></i>
-                  </a>
-                  <a href="#" class="btn btn-danger" title="Remove my profile image">
-                    <i class="ri-delete-bin-line"></i>
-                  </a>
-                </div>
-                <div class="col">
-                  <div style="float: right;">
-                    <a href="#" class="btn btn-success" title="Remove my profile image">
-                      <i class="ri-file-excel-line"></i>
-                    </a>
-                    <a href="system-codeGroup-register.html" class="btn btn-primary" title="Remove my profile image">
-                      <i class="ri-add-line"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-  </main><!-- End #main -->
-
-  <!-- ******************************************************************************* -->
-
-
-
-
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer><!-- End Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="/xdm/template/AdminUI/assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="/xdm/template/AdminUI/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/xdm/template/AdminUI/assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="/xdm/template/AdminUI/assets/vendor/echarts/echarts.min.js"></script>
-  <script src="/xdm/template/AdminUI/assets/vendor/quill/quill.js"></script>
-  <script src="/xdm/template/AdminUI/assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="/xdm/template/AdminUI/assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="/xdm/template/AdminUI/assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="/xdm/template/AdminUI/assets/js/main.js"></script>
+	<!-- ======= Header ======= -->
+	<header id="header" class="header fixed-top d-flex align-items-center">
+
+		<div class="d-flex align-items-center justify-content-between">
+			<a href="index.html" class="logo d-flex align-items-center"> <img
+				src="assets/img/logo.png" alt=""> <span
+				class="d-none d-lg-block">Admin</span>
+			</a> <i class="bi bi-list toggle-sidebar-btn"></i>
+		</div>
+		<!-- End Logo -->
+
+		<div class="search-bar">
+			<form class="search-form d-flex align-items-center" method="POST"
+				action="#">
+				<input type="text" name="query" placeholder="Search"
+					title="Enter search keyword">
+				<button type="submit" title="Search">
+					<i class="bi bi-search"></i>
+				</button>
+			</form>
+		</div>
+		<!-- End Search Bar -->
+
+		<nav class="header-nav ms-auto">
+			<ul class="d-flex align-items-center">
+
+				<li class="nav-item d-block d-lg-none"><a
+					class="nav-link nav-icon search-bar-toggle " href="#"> <i
+						class="bi bi-search"></i>
+				</a></li>
+				<!-- End Search Icon-->
+
+				<li class="nav-item dropdown"><a class="nav-link nav-icon"
+					href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i>
+						<span class="badge bg-primary badge-number">4</span>
+				</a>
+				<!-- End Notification Icon -->
+
+					<ul
+						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+						<li class="dropdown-header">You have 4 new notifications <a
+							href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View
+									all</span></a>
+						</li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="notification-item"><i
+							class="bi bi-exclamation-circle text-warning"></i>
+							<div>
+								<h4>Lorem Ipsum</h4>
+								<p>Quae dolorem earum veritatis oditseno</p>
+								<p>30 min. ago</p>
+							</div></li>
+
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="notification-item"><i
+							class="bi bi-x-circle text-danger"></i>
+							<div>
+								<h4>Atque rerum nesciunt</h4>
+								<p>Quae dolorem earum veritatis oditseno</p>
+								<p>1 hr. ago</p>
+							</div></li>
+
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="notification-item"><i
+							class="bi bi-check-circle text-success"></i>
+							<div>
+								<h4>Sit rerum fuga</h4>
+								<p>Quae dolorem earum veritatis oditseno</p>
+								<p>2 hrs. ago</p>
+							</div></li>
+
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="notification-item"><i
+							class="bi bi-info-circle text-primary"></i>
+							<div>
+								<h4>Dicta reprehenderit</h4>
+								<p>Quae dolorem earum veritatis oditseno</p>
+								<p>4 hrs. ago</p>
+							</div></li>
+
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+						<li class="dropdown-footer"><a href="#">Show all
+								notifications</a></li>
+
+					</ul>
+					<!-- End Notification Dropdown Items --></li>
+				<!-- End Notification Nav -->
+
+				<li class="nav-item dropdown"><a class="nav-link nav-icon"
+					href="#" data-bs-toggle="dropdown"> <i
+						class="bi bi-chat-left-text"></i> <span
+						class="badge bg-success badge-number">3</span>
+				</a>
+				<!-- End Messages Icon -->
+
+					<ul
+						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+						<li class="dropdown-header">You have 3 new messages <a
+							href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View
+									all</span></a>
+						</li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="message-item"><a href="#"> <img
+								src="/xdm/template/AdminUI/assets/img/messages-1.jpg" alt=""
+								class="rounded-circle">
+								<div>
+									<h4>Maria Hudson</h4>
+									<p>Velit asperiores et ducimus soluta repudiandae labore
+										officia est ut...</p>
+									<p>4 hrs. ago</p>
+								</div>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="message-item"><a href="#"> <img
+								src="/xdm/template/AdminUI/assets/img/messages-2.jpg" alt=""
+								class="rounded-circle">
+								<div>
+									<h4>Anna Nelson</h4>
+									<p>Velit asperiores et ducimus soluta repudiandae labore
+										officia est ut...</p>
+									<p>6 hrs. ago</p>
+								</div>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="message-item"><a href="#"> <img
+								src="/xdm/template/AdminUI/assets/img/messages-3.jpg" alt=""
+								class="rounded-circle">
+								<div>
+									<h4>David Muldon</h4>
+									<p>Velit asperiores et ducimus soluta repudiandae labore
+										officia est ut...</p>
+									<p>8 hrs. ago</p>
+								</div>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li class="dropdown-footer"><a href="#">Show all messages</a>
+						</li>
+
+					</ul>
+					<!-- End Messages Dropdown Items --></li>
+				<!-- End Messages Nav -->
+
+				<li class="nav-item dropdown pe-3"><a
+					class="nav-link nav-profile d-flex align-items-center pe-0"
+					href="#" data-bs-toggle="dropdown"> <img
+						src="/xdm/template/AdminUI/assets/img/profile-img.jpg"
+						alt="Profile" class="rounded-circle"> <span
+						class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+				</a>
+				<!-- End Profile Iamge Icon -->
+
+					<ul
+						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+						<li class="dropdown-header">
+							<h6>Kevin Anderson</h6> <span>Web Designer</span>
+						</li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li><a class="dropdown-item d-flex align-items-center"
+							href="users-profile.html"> <i class="bi bi-person"></i> <span>My
+									Profile</span>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li><a class="dropdown-item d-flex align-items-center"
+							href="users-profile.html"> <i class="bi bi-gear"></i> <span>Account
+									Settings</span>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li><a class="dropdown-item d-flex align-items-center"
+							href="pages-faq.html"> <i class="bi bi-question-circle"></i>
+								<span>Need Help?</span>
+						</a></li>
+						<li>
+							<hr class="dropdown-divider">
+						</li>
+
+						<li><a class="dropdown-item d-flex align-items-center"
+							href="#"> <i class="bi bi-box-arrow-right"></i> <span>Sign
+									Out</span>
+						</a></li>
+
+					</ul>
+					<!-- End Profile Dropdown Items --></li>
+				<!-- End Profile Nav -->
+
+			</ul>
+		</nav>
+		<!-- End Icons Navigation -->
+
+	</header>
+	<!-- End Header -->
+
+	<!-- ******************************************************************************* -->
+	<!-- ======= Sidebar ======= -->
+	<aside id="sidebar" class="sidebar">
+
+		<ul class="sidebar-nav" id="sidebar-nav">
+
+			<!-- Home -->
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="index.html"> <i class="bi bi-grid"></i> <span>Home</span>
+			</a></li>
+			<!-- End Home -->
+
+			<!-- 공지사항 -->
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="notice.html"> <i class="bi bi-bell"></i> <span>공지사항</span>
+			</a></li>
+			<!-- End 공지사항 -->
+
+			<!-- 회원관리 -->
+			<li class="nav-item"><a class="nav-link collapsed"
+				data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-people"></i><span>회원관리</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a>
+				<ul id="components-nav" class="nav-content collapse "
+					data-bs-parent="#sidebar-nav">
+					<li><a href="components-alerts.html"> <i
+							class="bi bi-circle"></i><span>Alerts</span>
+					</a></li>
+					<li><a href="components-accordion.html"> <i
+							class="bi bi-circle"></i><span>Accordion</span>
+					</a></li>
+				</ul></li>
+			<!-- End 회원관리 -->
+
+			<!-- 서비스관리 -->
+			<li class="nav-item"><a class="nav-link collapsed"
+				data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-display"></i><span>서비스관리</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a>
+				<ul id="components-nav" class="nav-content collapse "
+					data-bs-parent="#sidebar-nav">
+					<li><a href="components-alerts.html"> <i
+							class="bi bi-circle"></i><span>Alerts</span>
+					</a></li>
+					<li><a href="components-accordion.html"> <i
+							class="bi bi-circle"></i><span>Accordion</span>
+					</a></li>
+				</ul></li>
+			<!-- End 서비스관리 -->
+
+			<!-- 커뮤니케이션 -->
+			<li class="nav-item"><a class="nav-link collapsed"
+				data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-chat-left"></i><span>커뮤니케이션</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a>
+				<ul id="components-nav" class="nav-content collapse "
+					data-bs-parent="#sidebar-nav">
+					<li><a href="components-alerts.html"> <i
+							class="bi bi-circle"></i><span>Alerts</span>
+					</a></li>
+					<li><a href="components-accordion.html"> <i
+							class="bi bi-circle"></i><span>Accordion</span>
+					</a></li>
+				</ul></li>
+			<!-- End 커뮤니케이션 -->
+
+			<!-- 시스템관리 -->
+			<li class="nav-item"><a class="nav-link"
+				data-bs-target="#system-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-gear"></i><span>시스템관리</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a>
+				<ul id="system-nav" class="nav-content collapse show"
+					data-bs-parent="#sidebar-nav">
+					<li><a href="system-code.html"> <i class="bi bi-circle"></i><span>코드관리</span>
+					</a></li>
+					<li><a href="system-codeGroup.html" class="active"> <i
+							class="bi bi-circle"></i><span>코드그룹관리</span>
+					</a></li>
+				</ul></li>
+			<!-- End 시스템관리 -->
+
+			<!-- 개인정보 관리 -->
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="users-profile.html"> <i class="bi bi-person"></i> <span>개인정보
+						관리</span>
+			</a></li>
+			<!-- End 개인정보 관리 -->
+
+			<!-- test -->
+			<li class="nav-item"><a class="nav-link collapsed"
+				data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+					<i class="bi bi-layers"></i><span>test</span><i
+					class="bi bi-chevron-down ms-auto"></i>
+			</a>
+				<ul id="components-nav" class="nav-content collapse "
+					data-bs-parent="#sidebar-nav">
+					<li><a href="components-alerts.html"> <i
+							class="bi bi-circle"></i><span>Alerts</span>
+					</a></li>
+					<li><a href="components-accordion.html"> <i
+							class="bi bi-circle"></i><span>Accordion</span>
+					</a></li>
+				</ul></li>
+			<!-- End test -->
+
+		</ul>
+
+	</aside>
+	<!-- End Sidebar-->
+
+	<!-- ******************************************************************************* -->
+
+
+
+
+
+	<!-- Main -->
+	<main id="main" class="main">
+
+		
+			<div class="pagetitle">
+
+				<nav>
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+						<li class="breadcrumb-item">시스템관리</li>
+						<li class="breadcrumb-item active">코드그룹관리</li>
+					</ol>
+				</nav>
+
+				<h1 style="font-weight: bold;">Code Group</h1>
+
+				<div class="row mb-3 mt-3">
+					<div class="col-2">
+						<select class="form-select" aria-label="Default select example">
+							<option selected>N</option>
+							<option value="1">One</option>
+							<option value="2">Two</option>
+							<option value="3">Three</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select class="form-select" aria-label="Default select example">
+							<option selected>Y</option>
+							<option value="1">One</option>
+							<option value="2">Two</option>
+							<option value="3">Three</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select class="form-select" aria-label="Default select example">
+							<option selected>날짜</option>
+							<option value="1">등록일</option>
+							<option value="2">수정일</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<input type="text" class="form-control" placeholder="2025-01-05">
+					</div>
+					<div class="col-2">
+						<input type="text" class="form-control" placeholder="2025-02-04">
+					</div>
+				</div>
+
+				<div class="row mb-3 mt-3">
+					<div class="col-2">
+						<select class="form-select" aria-label="Default select example">
+							<option selected>검색구분</option>
+							<option value="1">코드그룹 코드</option>
+							<option value="2">코드그룹 이름</option>
+							<option value="3">코드그룹 이름(영문)</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<input type="text" class="form-control" placeholder="검색어">
+					</div>
+					<div class="col-2">
+						<a href="/codeGroupList" class="btn btn-outline-secondary"
+							title="Upload new profile image" id="search">
+							<i class="ri-search-line"></i>
+						</a> 
+						<a href="#"
+							class="btn btn-outline-secondary" title="Remove my profile image">
+							<i class="ri-reset-right-line"></i>
+						</a>
+					</div>
+				</div>
+
+			</div>
+	
+		<!-- End Page Title -->
+
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+
+					<div class="card">
+						<div class="card-body m-2">
+
+							<div class="row">
+								<div class="col">
+									<h5 class="card-title">Total: 42</h5>
+								</div>
+								<div class="col-2 pt-2" style="float: right;">
+									<select class="form-select" aria-label="Default select example">
+										<option selected>5</option>
+										<option value="1">10</option>
+										<option value="2">15</option>
+										<option value="3">20</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- Table with stripped rows -->
+							<div class="row">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox" value=""
+														id="flexCheckDefault"> <label
+														class="form-check-label" for="flexCheckDefault"> </label>
+												</div>
+											</th>
+											<th>#</th>
+											<th>사용</th>
+											<th>코드그룹 코드</th>
+											<th>코드그룹 이름</th>
+											<th>코드그룹 이름(영문)</th>
+											<th>갯수</th>
+											<th>순서</th>
+											<th>등록일</th>
+											<th>수정일</th>
+										</tr>
+									</thead>
+									<tbody>
+
+										<tr th:each="list : ${list}">
+											<td>
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox" value=""
+														id="flexCheckDefault"> <label
+														class="form-check-label" for="flexCheckDefault"> </label>
+												</div>
+											</td>
+											<td th:text="${list.seq}"></td>
+											<td th:text="${list.codeGroupUse}"></td>
+											<td th:text="${list.codeGroupCd}"></td>
+											<td th:text="${list.codeGroupNm}" style="color: blue"></td>
+											<td></td>
+											<td th:text="${list.codeCnt}"></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</div>
+							<!-- End Table with stripped rows -->
+
+							<!-- Pagination with icons -->
+							<div class="row">
+								<nav aria-label="Page navigation example">
+									<ul class="pagination justify-content-center">
+										<li class="page-item"><a class="page-link" href="#"
+											aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+										</a></li>
+										<li class="page-item active" aria-current="page"><a
+											class="page-link" href="#">1</a></li>
+										<li class="page-item"><a class="page-link" href="#">2</a></li>
+										<li class="page-item"><a class="page-link" href="#">3</a></li>
+										<li class="page-item"><a class="page-link" href="#"
+											aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+										</a></li>
+									</ul>
+								</nav>
+							</div>
+							<!-- End Pagination with icons -->
+
+							<div class="row">
+								<div class="col">
+									<a href="#" class="btn btn-danger"
+										title="Upload new profile image"> <i
+										class="ri-close-large-line"></i>
+									</a> <a href="#" class="btn btn-danger"
+										title="Remove my profile image"> <i
+										class="ri-delete-bin-line"></i>
+									</a>
+								</div>
+								<div class="col">
+									<div style="float: right;">
+										<a href="#" class="btn btn-success"
+											title="Remove my profile image"> <i
+											class="ri-file-excel-line"></i>
+										</a> <a href="/codeGroupRegister"
+											class="btn btn-primary">
+											<i class="ri-add-line"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+	</main>
+	<!-- End #main -->
+
+	<!-- ******************************************************************************* -->
+
+
+
+
+
+	<!-- ======= Footer ======= -->
+	<footer id="footer" class="footer">
+		<div class="copyright">
+			&copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights
+			Reserved
+		</div>
+		<div class="credits">
+			<!-- All the links in the footer should remain intact. -->
+			<!-- You can delete the links only if you purchased the pro version. -->
+			<!-- Licensing information: https://bootstrapmade.com/license/ -->
+			<!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+			Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+		</div>
+	</footer>
+	<!-- End Footer -->
+
+	<a href="#"
+		class="back-to-top d-flex align-items-center justify-content-center"><i
+		class="bi bi-arrow-up-short"></i></a>
+
+	<!-- Vendor JS Files -->
+	<script
+		src="/xdm/template/AdminUI/assets/vendor/apexcharts/apexcharts.min.js"></script>
+	<script
+		src="/xdm/template/AdminUI/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="/xdm/template/AdminUI/assets/vendor/chart.js/chart.umd.js"></script>
+	<script
+		src="/xdm/template/AdminUI/assets/vendor/echarts/echarts.min.js"></script>
+	<script src="/xdm/template/AdminUI/assets/vendor/quill/quill.js"></script>
+	<script
+		src="/xdm/template/AdminUI/assets/vendor/simple-datatables/simple-datatables.js"></script>
+	<script
+		src="/xdm/template/AdminUI/assets/vendor/tinymce/tinymce.min.js"></script>
+	<script
+		src="/xdm/template/AdminUI/assets/vendor/php-email-form/validate.js"></script>
+
+	<!-- Template Main JS File -->
+	<script src="/xdm/template/AdminUI/assets/js/main.js"></script>
+	
+	<!-- temp -->
+	<script type="text/javascript">
+	
+	
+	</script>
 
 </body>
 

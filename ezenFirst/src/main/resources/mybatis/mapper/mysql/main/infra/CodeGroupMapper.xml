@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.junefw.infra.codegroup.CodeGroupDao">
+<mapper namespace="com.a2a2lab.module.codeGroup.CodeGroupDao">
 
-	  
+	<resultMap id="resultMapObj"
+		type="com.a2a2lab.module.codeGroup.CodeGroupDto"></resultMap>
+
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT
+		seq,
+		codeGroupUse,
+		codeGroupCd,
+		codeGroupNm,
+		codeCnt
+		FROM
+		codegroup
+		WHERE
+		codeGroupDelNy = 0
+	</select>
+
 </mapper>
