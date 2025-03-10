@@ -11,23 +11,32 @@ public class CodeGroupController {
 	@Autowired
 	CodeGroupService codeGroupService;
 	
-	@RequestMapping(value = "/codeGroup")
-	public String codeGroup(Model model) {
+	@RequestMapping(value = "/codeGroupXdmList")
+	public String codeGroupXdmList(Model model) {
 		model.addAttribute("list", codeGroupService.selectList());
 		return "/xdm/codeGroup/codeGroupXdmList";
 	}
 	
-//	@RequestMapping(value = "/codeGroupList")
-//	public String codeGroupList(Model model) {
-//		model.addAttribute("list", codeGroupService.selectList());
-//		return "redirect:/codeGroup";
-//	}
-	
-	@RequestMapping(value = "/codeGroupRegister")
-	public String codeGroupRegister() {
+	@RequestMapping(value = "/codeGroupXdmRegister")
+	public String codeGroupXdmRegister() {
 
 		return "/xdm/codeGroup/codeGroupXdmRegister";
 	}
 	
+	@RequestMapping(value = "/codeGroupXdmInst")
+	public String codeGroupXdmInst(CodeGroupDto codeGroupDto) {
+		
+		codeGroupService.insert(codeGroupDto);
+		
+		return "redirect:/codeGroupXdmList";
+	}
+	
+	@RequestMapping(value = "/codeGroupXdmDele")
+	public String codeGroupXdmDele(CodeGroupDto codeGroupDto) {
+		
+		codeGroupService.delete(codeGroupDto);
+		
+		return "redirect:/codeGroupXdmList";
+	}
 	
 }

@@ -465,8 +465,8 @@
 							title="Upload new profile image" id="search">
 							<i class="ri-search-line"></i>
 						</a> 
-						<a href="#"
-							class="btn btn-outline-secondary" title="Remove my profile image">
+						<a href="/codeGroupXdmList"
+							class="btn btn-outline-secondary">
 							<i class="ri-reset-right-line"></i>
 						</a>
 					</div>
@@ -531,7 +531,7 @@
 												</div>
 											</td>
 											<td th:text="${list.seq}"></td>
-											<td th:text="${list.codeGroupUse}"></td>
+											<td th:text="${list.codeGroupUse} == 1 ? 'Y' : 'N' "></td>
 											<td th:text="${list.codeGroupCd}"></td>
 											<td th:text="${list.codeGroupNm}" style="color: blue"></td>
 											<td></td>
@@ -568,11 +568,12 @@
 							<div class="row">
 								<div class="col">
 									<a href="#" class="btn btn-danger"
-										title="Upload new profile image"> <i
-										class="ri-close-large-line"></i>
-									</a> <a href="#" class="btn btn-danger"
-										title="Remove my profile image"> <i
-										class="ri-delete-bin-line"></i>
+										title="Upload new profile image">
+										<i class="ri-close-large-line"></i>
+									</a> 
+									<a href="#" class="btn btn-danger"
+										title="Remove my profile image"> 
+										<i class="ri-delete-bin-line"></i>
 									</a>
 								</div>
 								<div class="col">
@@ -580,7 +581,7 @@
 										<a href="#" class="btn btn-success"
 											title="Remove my profile image"> <i
 											class="ri-file-excel-line"></i>
-										</a> <a href="/codeGroupRegister"
+										</a> <a href="/codeGroupXdmRegister"
 											class="btn btn-primary">
 											<i class="ri-add-line"></i>
 										</a>
@@ -644,7 +645,9 @@
 	
 	<!-- temp -->
 	<script type="text/javascript">
-	
+		
+
+				
 	
 	</script>
 

@@ -8,15 +8,43 @@
 
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT
-		seq,
-		codeGroupUse,
-		codeGroupCd,
-		codeGroupNm,
-		codeCnt
+			seq,
+			codeGroupUse,
+			codeGroupCd,
+			codeGroupNm,
+			codeCnt
 		FROM
-		codegroup
+			codegroup
 		WHERE
-		codeGroupDelNy = 0
+			codeGroupDelNy = 0
 	</select>
 
+	<insert id="insert">
+		INSERT INTO codegroup(
+			codeGroupUse,
+			codeGroupCd,
+			codeGroupNm,
+			codeCnt,
+			codeGroupDelNy
+		) VALUES(
+			#{codeGroupUse},
+			#{codeGroupCd},
+			#{codeGroupNm},
+			1,
+			0
+		)
+		<selectKey resultType="String" keyProperty="seq"
+			order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="delete">
+		UPDATE codegroup SET
+			codeGroupDelNy = 1
+		WHERE
+			seq = #{seq}
+	</update>
+	
+	
 </mapper>
