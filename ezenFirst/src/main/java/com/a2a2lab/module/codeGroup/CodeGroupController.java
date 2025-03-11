@@ -17,6 +17,7 @@ public class CodeGroupController {
 		return "/xdm/codeGroup/codeGroupXdmList";
 	}
 	
+	
 	@RequestMapping(value = "/codeGroupXdmRegister")
 	public String codeGroupXdmRegister() {
 
