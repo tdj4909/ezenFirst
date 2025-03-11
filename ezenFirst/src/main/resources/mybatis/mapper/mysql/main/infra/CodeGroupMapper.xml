@@ -17,6 +17,8 @@
 			codegroup
 		WHERE
 			codeGroupDelNy = 0
+		ORDER BY
+			seq DESC
 	</select>
 
 	<insert id="insert">
@@ -39,7 +41,15 @@
 		</selectKey>
 	</insert>
 	
-	<update id="delete">
+	<delete id="delete">
+		DELETE
+		FROM
+			codegroup
+		WHERE
+			seq = #{seq}
+	</delete>
+	
+	<update id="uelete">
 		UPDATE codegroup SET
 			codeGroupDelNy = 1
 		WHERE

@@ -40,4 +40,10 @@ public class CodeGroupController {
 		return "redirect:/codeGroupXdmList";
 	}
 	
+	@RequestMapping(value = "/codeGroupXdmUele")
+	public String codeGroupXdmUele(CodeGroupDto codeGroupDto) {
+		codeGroupService.uelete(codeGroupDto);
+		return "redirect:/codeGroupXdmList";
+	}
+	
 }

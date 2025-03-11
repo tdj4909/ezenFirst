@@ -23,4 +23,8 @@ public class CodeGroupService {
 		return codeGroupDao.delete(codeGroupDto);
 	}
 
+	public int uelete(CodeGroupDto codeGroupDto) {
+		return codeGroupDao.uelete(codeGroupDto);
+	}
+
 }
