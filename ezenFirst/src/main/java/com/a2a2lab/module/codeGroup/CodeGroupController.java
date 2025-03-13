@@ -26,17 +26,13 @@ public class CodeGroupController {
 	
 	@RequestMapping(value = "/codeGroupXdmInst")
 	public String codeGroupXdmInst(CodeGroupDto codeGroupDto) {
-		
 		codeGroupService.insert(codeGroupDto);
-		
 		return "redirect:/codeGroupXdmList";
 	}
 	
 	@RequestMapping(value = "/codeGroupXdmDele")
 	public String codeGroupXdmDele(CodeGroupDto codeGroupDto) {
-		
 		codeGroupService.delete(codeGroupDto);
-		
 		return "redirect:/codeGroupXdmList";
 	}
 	
@@ -44,6 +40,11 @@ public class CodeGroupController {
 	public String codeGroupXdmUele(CodeGroupDto codeGroupDto) {
 		codeGroupService.uelete(codeGroupDto);
 		return "redirect:/codeGroupXdmList";
+	}
+	
+	@RequestMapping(value = "/usrIndex")
+	public String usrIndex() {
+		return "/usr/index/index";
 	}
 	
 }
