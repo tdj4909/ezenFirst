@@ -3,8 +3,9 @@ package com.a2a2lab.module.code;
 public class CodeDto {
 
 	private String seq;
-	private String codeNm;
 	private Integer codeCd;
+	private String codeNm;
+	private Integer codeUse;
 	private Integer codeDelNy;
 	private Integer codeGroup_seq;
 	private Integer codeGroupUse;
@@ -59,6 +60,12 @@ public class CodeDto {
 	}
 	public void setCodeGroupNm(String codeGroupNm) {
 		this.codeGroupNm = codeGroupNm;
+	}
+	public Integer getCodeUse() {
+		return codeUse;
+	}
+	public void setCodeUse(Integer codeUse) {
+		this.codeUse = codeUse;
 	}
 	
 }

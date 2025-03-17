@@ -36,7 +36,7 @@
 		SELECT aa.* FROM (
 			SELECT
 				b.seq,
-				a.codeGroupUse,
+				b.codeUse,
 				a.codeGroupCd,
 				a.codeGroupNm,
 				b.codeCd,
@@ -50,19 +50,31 @@
 		) aa
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
+	
+	<select id="selectCodeGroup" resultMap="resultMapObj">
+		SELECT
+			seq,
+			codeGroupCd,
+		    codeGroupNm
+		FROM
+			codegroup
+		WHERE
+			codeGroupDelNy = 0
+	</select>
 
 	<insert id="insert">
 		INSERT INTO code(
-			codeNm,
 		    codeCd,
+			codeNm,
+			codeUse,
 		    codeDelNy,
 		    codeGroup_seq
 		) VALUES(
-		#{codeNm},
 		#{codeCd},
-		#{codeDelNy},
-		#{codeGroup_seq},
-		0
+		#{codeNm},
+		#{codeUse},
+		0,
+		#{codeGroup_seq}
 		)
 		<selectKey resultType="String" keyProperty="seq"
 			order="AFTER">

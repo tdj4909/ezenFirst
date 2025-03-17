@@ -29,5 +29,9 @@ public class CodeService {
 	public int uelete(CodeDto codeDto) {
 		return codeDao.uelete(codeDto);
 	}
+	
+	public List<CodeDto> selectCodeGroup() {
+		return codeDao.selectCodeGroup();
+	}
 
 }
