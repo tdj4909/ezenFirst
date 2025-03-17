@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.a2a2lab.module.code.CodeDao">
+
+	<resultMap id="resultMapObj"
+		type="com.a2a2lab.module.code.CodeDto"></resultMap>
+
+	<sql id="selectCommon">
+		FROM code a
+		WHERE 1=1
+		AND codeDelNy = 0
+
+		<!-- <if test="shUseNy != null and !shUseNy.equals('')">AND a.ifcgUseNy 
+			= #{shUseNy}</if> -->
+		<!-- <if test="shDelNy != null and !shDelNy.equals('')">AND a.ifcgDelNy 
+			= #{shDelNy}</if> -->
+
+		<!-- <choose> <when test="shOptionDate == 1">AND a.regDateTime BETWEEN 
+			#{shDateStart} AND #{shDateEnd}</when> <when test="shOptionDate == 2">AND 
+			a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when> </choose> -->
+
+		<!-- <choose> <when test="shOption == 1">AND a.ifcgSeq = #{shValue}</when> 
+			<when test="shOption == 2">AND a.ifcgName LIKE CONCAT('%',#{shValue},'%')</when> 
+			<when test="shOption == 3">AND a.ifcgNameEng LIKE CONCAT('%',#{shValue},'%')</when> 
+			</choose> -->
+
+	</sql>
+
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommon"></include>
+	</select>
+
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT aa.* FROM (
+			SELECT
+				b.seq,
+				a.codeGroupUse,
+				a.codeGroupCd,
+				a.codeGroupNm,
+				b.codeCd,
+				b.codeNm
+			FROM codegroup a
+				JOIN code b ON a.seq = b.codeGroup_seq
+			WHERE 1=1
+				AND b.codeDelNy = 0
+			ORDER BY
+				seq DESC
+		) aa
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+	</select>
+
+	<insert id="insert">
+		INSERT INTO code(
+			codeNm,
+		    codeCd,
+		    codeDelNy,
+		    codeGroup_seq
+		) VALUES(
+		#{codeNm},
+		#{codeCd},
+		#{codeDelNy},
+		#{codeGroup_seq},
+		0
+		)
+		<selectKey resultType="String" keyProperty="seq"
+			order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+
+	<delete id="delete">
+		DELETE
+		FROM
+			code
+		WHERE
+			seq = #{seq}
+	</delete>
+
+	<update id="uelete">
+		UPDATE code SET
+			codeDelNy = 1
+		WHERE
+			seq = #{seq}
+	</update>
+
+
+</mapper>
