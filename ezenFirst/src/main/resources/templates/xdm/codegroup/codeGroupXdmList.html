@@ -129,9 +129,9 @@
 										<tr th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
 											<td><input class="form-check-input rowCheckbox"
 												type="checkbox"></td>
-											<td th:text="${list.seq}"></td>
+											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 											<td th:text="${list.codeGroupUse} == 1 ? 'Y' : 'N' "></td>
-											<td th:text="${list.codeGroupCd}"></td>
+											<td th:text="${list.codeGroupCd} == null ? ${list.seq} : ${list.codeGroupCd}"></td>
 											<td th:text="${list.codeGroupNm}" style="color: blue"></td>
 											<td></td>
 											<td th:text="${list.codeCnt}"></td>

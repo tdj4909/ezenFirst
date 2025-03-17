@@ -4,7 +4,7 @@ public class CodeGroupDto {
 
 	private String seq;
 	private Integer codeGroupUse;
-	private Integer codeGroupCd;
+	private String codeGroupCd;
 	private String codeGroupNm;
 	private Integer codeCnt;
 	private Integer codeGroupDelNy;
@@ -21,10 +21,10 @@ public class CodeGroupDto {
 	public void setCodeGroupUse(Integer codeGroupUse) {
 		this.codeGroupUse = codeGroupUse;
 	}
-	public Integer getCodeGroupCd() {
+	public String getCodeGroupCd() {
 		return codeGroupCd;
 	}
-	public void setCodeGroupCd(Integer codeGroupCd) {
+	public void setCodeGroupCd(String codeGroupCd) {
 		this.codeGroupCd = codeGroupCd;
 	}
 	public String getCodeGroupNm() {

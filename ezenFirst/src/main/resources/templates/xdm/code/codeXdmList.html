@@ -131,17 +131,17 @@
 
 
 										<tr th:if="${#lists.isEmpty(list)}">
-											<td colspan=10 style="text-align: center"><p>There
+											<td colspan=12 style="text-align: center"><p>There
 													are no data!</p></td>
 										</tr>
 										<tr th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
 											<td><input class="form-check-input rowCheckbox"
 												type="checkbox"></td>
-											<td th:text="${list.seq}"></td>
+											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 											<td th:text="${list.codeUse} == 1 ? 'Y' : 'N' "></td>
-											<td th:text="${list.codeGroupCd}"></td>
+											<td th:text="${list.codeGroupCd} == null ? ${list.codeGroup_seq} : ${list.codeGroupCd}"></td>
 											<td th:text="${list.codeGroupNm}"></td>
-											<td th:text="${list.codeCd}"></td>
+											<td th:text="${list.codeCd} == null ? ${list.seq} : ${list.codeCd}"></td>
 											<td></td>
 											<td th:text="${list.codeNm}" style="color: blue"></td>
 											<td></td>

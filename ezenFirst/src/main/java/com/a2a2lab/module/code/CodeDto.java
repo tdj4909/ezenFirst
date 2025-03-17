@@ -3,13 +3,15 @@ package com.a2a2lab.module.code;
 public class CodeDto {
 
 	private String seq;
-	private Integer codeCd;
+	private String codeCd;
 	private String codeNm;
 	private Integer codeUse;
 	private Integer codeDelNy;
 	private Integer codeGroup_seq;
+	
+//	---- 상속 ----
 	private Integer codeGroupUse;
-	private Integer codeGroupCd;
+	private String codeGroupCd;
 	private String codeGroupNm;
 	
 	
@@ -25,10 +27,10 @@ public class CodeDto {
 	public void setCodeNm(String codeNm) {
 		this.codeNm = codeNm;
 	}
-	public Integer getCodeCd() {
+	public String getCodeCd() {
 		return codeCd;
 	}
-	public void setCodeCd(Integer codeCd) {
+	public void setCodeCd(String codeCd) {
 		this.codeCd = codeCd;
 	}
 	public Integer getCodeDelNy() {
@@ -49,10 +51,10 @@ public class CodeDto {
 	public void setCodeGroupUse(Integer codeGroupUse) {
 		this.codeGroupUse = codeGroupUse;
 	}
-	public Integer getCodeGroupCd() {
+	public String getCodeGroupCd() {
 		return codeGroupCd;
 	}
-	public void setCodeGroupCd(Integer codeGroupCd) {
+	public void setCodeGroupCd(String codeGroupCd) {
 		this.codeGroupCd = codeGroupCd;
 	}
 	public String getCodeGroupNm() {

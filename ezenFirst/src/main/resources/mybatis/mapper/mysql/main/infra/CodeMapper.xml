@@ -37,6 +37,7 @@
 			SELECT
 				b.seq,
 				b.codeUse,
+				b.codeGroup_seq,
 				a.codeGroupCd,
 				a.codeGroupNm,
 				b.codeCd,
@@ -70,7 +71,7 @@
 		    codeDelNy,
 		    codeGroup_seq
 		) VALUES(
-		#{codeCd},
+		NULLIF(#{codeCd}, ''),
 		#{codeNm},
 		#{codeUse},
 		0,

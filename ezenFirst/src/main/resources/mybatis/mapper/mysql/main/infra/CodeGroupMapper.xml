@@ -59,7 +59,7 @@
 			codeGroupDelNy
 		) VALUES(
 			#{codeGroupUse},
-			#{codeGroupCd},
+			NULLIF(#{codeGroupCd},''),
 			#{codeGroupNm},
 			1,
 			0
