@@ -7,23 +7,9 @@
 		type="com.a2a2lab.module.member.MemberDto"></resultMap>
 
 	<sql id="selectCommon">
-		FROM codegroup a
+		FROM user a
 		WHERE 1=1
-			AND codeGroupDelNy = 0
-			
-		<!-- <if test="shUseNy != null and !shUseNy.equals('')">AND a.ifcgUseNy = #{shUseNy}</if> -->
-		<!-- <if test="shDelNy != null and !shDelNy.equals('')">AND a.ifcgDelNy = #{shDelNy}</if> -->
-		
-		<!-- <choose>
-			<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-			<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-		</choose> -->
-		
-		<!-- <choose>
-			<when test="shOption == 1">AND a.ifcgSeq = #{shValue}</when>
-			<when test="shOption == 2">AND a.ifcgName LIKE CONCAT('%',#{shValue},'%')</when>
-			<when test="shOption == 3">AND a.ifcgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
-		</choose> -->
+			AND userDelNy = 0
 			
 	</sql>
 
@@ -35,19 +21,20 @@
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT aa.* FROM (
 			SELECT
-				a.seq,
-				a.codeGroupUse,
-				a.codeGroupCd,
-				a.codeGroupNm,
-				(SELECT COUNT(*)
-                FROM code b
-                WHERE
-					a.seq = b.codeGroup_seq
-				) AS codeCnt
+				email
+			    ,nickname
+			    ,lastNm
+			    ,firstNm
+			    ,gender
+			    ,birthYear
+			    ,birthMonth
+			    ,birthDay
+			    ,phone
+			    ,admin
 			FROM
-				codegroup a
+				user
 			WHERE
-				codeGroupDelNy = 0
+				userDelNy = 0
 			ORDER BY
 				seq DESC
 			) aa
@@ -55,18 +42,32 @@
 	</select>
 
 	<insert id="insert">
-		INSERT INTO codegroup(
-			codeGroupUse,
-			codeGroupCd,
-			codeGroupNm,
-			codeCnt,
-			codeGroupDelNy
+		INSERT INTO user(
+			email
+			,password
+			,nickname
+			,lastNm
+			,firstNm
+			,gender
+			,birthYear
+			,birthMonth
+			,birthDay
+			,phone
+			,admin
+			,userDelNy
 		) VALUES(
-			#{codeGroupUse},
-			NULLIF(#{codeGroupCd},''),
-			#{codeGroupNm},
-			1,
-			0
+			#{email}
+			,#{password}
+			,#{nickname}
+			,#{lastNm}
+			,#{firstNm}
+			,#{gender}
+			,#{birthYear}
+			,#{birthMonth}
+			,#{birthDay}
+			,#{phone}
+			,0
+			,0
 		)
 		<selectKey resultType="String" keyProperty="seq"
 			order="AFTER">

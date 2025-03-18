@@ -3,16 +3,18 @@ package com.a2a2lab.module.member;
 public class MemberDto {
 
 	private String seq;
-	private String codeCd;
-	private String codeNm;
-	private Integer codeUse;
-	private Integer codeDelNy;
-	private Integer codeGroup_seq;
-	
-//	---- 상속 ----
-	private Integer codeGroupUse;
-	private String codeGroupCd;
-	private String codeGroupNm;
+	private String email;
+	private String password;
+	private String nickname;
+	private String lastNm;
+	private String firstNm;
+	private Integer gender;
+	private Integer birthYear;
+	private Integer birthMonth;
+	private Integer birthDay;
+	private String phone;
+	private Integer admin;
+	private Integer userDelNy;
 	
 	
 	public String getSeq() {
@@ -21,53 +23,77 @@ public class MemberDto {
 	public void setSeq(String seq) {
 		this.seq = seq;
 	}
-	public String getCodeNm() {
-		return codeNm;
+	public String getEmail() {
+		return email;
 	}
-	public void setCodeNm(String codeNm) {
-		this.codeNm = codeNm;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public String getCodeCd() {
-		return codeCd;
+	public String getPassword() {
+		return password;
 	}
-	public void setCodeCd(String codeCd) {
-		this.codeCd = codeCd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public Integer getCodeDelNy() {
-		return codeDelNy;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setCodeDelNy(Integer codeDelNy) {
-		this.codeDelNy = codeDelNy;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
-	public Integer getCodeGroup_seq() {
-		return codeGroup_seq;
+	public String getLastNm() {
+		return lastNm;
 	}
-	public void setCodeGroup_seq(Integer codeGroup_seq) {
-		this.codeGroup_seq = codeGroup_seq;
+	public void setLastNm(String lastNm) {
+		this.lastNm = lastNm;
 	}
-	public Integer getCodeGroupUse() {
-		return codeGroupUse;
+	public String getFirstNm() {
+		return firstNm;
 	}
-	public void setCodeGroupUse(Integer codeGroupUse) {
-		this.codeGroupUse = codeGroupUse;
+	public void setFirstNm(String firstNm) {
+		this.firstNm = firstNm;
 	}
-	public String getCodeGroupCd() {
-		return codeGroupCd;
+	public Integer getGender() {
+		return gender;
 	}
-	public void setCodeGroupCd(String codeGroupCd) {
-		this.codeGroupCd = codeGroupCd;
+	public void setGender(Integer gender) {
+		this.gender = gender;
 	}
-	public String getCodeGroupNm() {
-		return codeGroupNm;
+	public Integer getBirthYear() {
+		return birthYear;
 	}
-	public void setCodeGroupNm(String codeGroupNm) {
-		this.codeGroupNm = codeGroupNm;
+	public void setBirthYear(Integer birthYear) {
+		this.birthYear = birthYear;
 	}
-	public Integer getCodeUse() {
-		return codeUse;
+	public Integer getBirthMonth() {
+		return birthMonth;
 	}
-	public void setCodeUse(Integer codeUse) {
-		this.codeUse = codeUse;
+	public void setBirthMonth(Integer birthMonth) {
+		this.birthMonth = birthMonth;
+	}
+	public Integer getBirthDay() {
+		return birthDay;
+	}
+	public void setBirthDay(Integer birthDay) {
+		this.birthDay = birthDay;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public Integer getAdmin() {
+		return admin;
+	}
+	public void setAdmin(Integer admin) {
+		this.admin = admin;
+	}
+	public Integer getUserDelNy() {
+		return userDelNy;
+	}
+	public void setUserDelNy(Integer userDelNy) {
+		this.userDelNy = userDelNy;
 	}
 	
 }

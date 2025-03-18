@@ -5,35 +5,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.codeGroup.CodeGroupDto;
 
 @Controller
 public class MemberController {
 
 	@Autowired
-	MemberService codeService;
+	MemberService service;
 	
-	@RequestMapping(value = "/codeXdmList")
-	public String codeXdmList(MemberVo vo, Model model) {
-		
-		vo.setParamsPaging(codeService.selectOneCount());
-		model.addAttribute("list", codeService.selectList(vo));
+	@RequestMapping(value = "/accountUsrRegister")
+	public String accountUsrRegister() {
+
+		return "/usr/account/accountUsrRegister";
+	}
+	
+	@RequestMapping(value = "/accountUsrRegisterInst")
+	public String accountUsrRegisterInst(MemberDto memberDto) {
+		service.insert(memberDto);
+		return "redirect:/accountUsrRegister";
+	}
+	
+	@RequestMapping(value = "/memberXdmList")
+	public String memberXdmList(Model model, MemberVo vo) {
+
+		vo.setParamsPaging(service.selectOneCount());
+		model.addAttribute("list", service.selectList(vo));
 		model.addAttribute("vo", vo);
 		
-		
-		return "/xdm/code/codeXdmList";
-	}
-	
-	@RequestMapping(value = "/codeXdmRegister")
-	public String codeXdmRegister(Model model) {
-		model.addAttribute("codeGroup", codeService.selectCodeGroup());
-		return "/xdm/code/codeXdmRegister";
-	}
-	
-	@RequestMapping(value = "/codeXdmInst")
-	public String codeXdmInst(MemberDto codeDto) {
-		codeService.insert(codeDto);
-		return "redirect:/codeXdmList";
+		return "/xdm/member/memberXdmList";
 	}
 	
 }
