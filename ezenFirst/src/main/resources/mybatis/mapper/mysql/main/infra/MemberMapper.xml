@@ -29,10 +29,16 @@
 			    ,birthYear
 			    ,birthMonth
 			    ,birthDay
+			    ,
+			    (
+					SELECT codeNm
+			        FROM code c
+			        WHERE u.mobileCarrier = c.seq
+			    ) AS codeNm
 			    ,phone
 			    ,admin
 			FROM
-				user
+				user u
 			WHERE
 				userDelNy = 0
 			ORDER BY
@@ -41,6 +47,16 @@
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 
+	<select id="selectMobileCarrierGroup" resultMap="resultMapObj">
+		SELECT
+			seq AS codeSeq
+		    ,codeNm
+		FROM
+			code
+		WHERE
+			codeGroup_seq = 1
+	</select>
+	
 	<insert id="insert">
 		INSERT INTO user(
 			email
@@ -52,6 +68,7 @@
 			,birthYear
 			,birthMonth
 			,birthDay
+			,mobileCarrier
 			,phone
 			,admin
 			,userDelNy
@@ -65,6 +82,7 @@
 			,#{birthYear}
 			,#{birthMonth}
 			,#{birthDay}
+			,#{mobileCarrier}
 			,#{phone}
 			,0
 			,0

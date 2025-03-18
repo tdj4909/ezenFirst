@@ -33,6 +33,7 @@ public class CodeController {
 	@RequestMapping(value = "/codeXdmInst")
 	public String codeXdmInst(CodeDto codeDto) {
 		codeService.insert(codeDto);
+		System.out.println(codeDto.getCodeGroup_seq());
 		return "redirect:/codeXdmList";
 	}
 	

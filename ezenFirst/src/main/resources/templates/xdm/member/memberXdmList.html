@@ -115,6 +115,7 @@
 											<th>이름</th>
 											<th>성</th>
 											<th>생일</th>
+											<th>통신사</th>
 											<th>전화번호</th>
 											<th>관리자</th>
 										</tr>
@@ -122,7 +123,7 @@
 									<tbody>
 									
 										<tr th:if="${#lists.isEmpty(list)}">
-											<td colspan=9 style="text-align: center"><p>There
+											<td colspan=10 style="text-align: center"><p>There
 													are no data!</p></td>
 										</tr>
 										<tr th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
@@ -132,11 +133,13 @@
 											<td th:text="${list.email}"></td>
 											<td th:text="${list.nickname}"></td>
 											<td th:text="|${list.lastNm} ${list.firstNm}|" style="color: blue"></td>
-											<!-- <td th:text="${list.gender}"></td> -->
+
 											<td th:if="${list.gender == 1}">남</td>
 											<td th:if="${list.gender == 2}">여</td>
 											<td th:if="${list.gender == 3}">공개안함</td>
-											<td th:text="|${list.birthYear}년 ${list.birthMonth}월 ${list.birthDay}일|"></td>
+											
+											<td th:text="|${list.birthYear}년 ${list.birthMonth}월 ${list.birthDay}일|"></td>											
+											<td th:text="${list.codeNm}"></td>
 											<td th:text="${list.phone}"></td>
 											<td th:text="${list.admin} == 1 ? 'Y' : 'N' "></td>
 										</tr>

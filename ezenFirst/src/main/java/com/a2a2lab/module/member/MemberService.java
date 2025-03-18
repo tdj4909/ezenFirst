@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.codeGroup.CodeGroupDto;
 import com.a2a2lab.module.codeGroup.CodeGroupVo;
 
@@ -24,6 +25,10 @@ public class MemberService {
 
 	public List<MemberDto> selectList(MemberVo vo) {
 		return memberDao.selectList(vo);
+	}
+	
+	public List<MemberDto> selectMobileCarrierGroup() {
+		return memberDao.selectMobileCarrierGroup();
 	}
 
 }

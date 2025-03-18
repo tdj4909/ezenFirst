@@ -6,8 +6,9 @@ public class CodeGroupDto {
 	private Integer codeGroupUse;
 	private String codeGroupCd;
 	private String codeGroupNm;
-	private Integer codeCnt;
 	private Integer codeGroupDelNy;
+	
+	private Integer codeCnt;
 	
 	public String getSeq() {
 		return seq;
@@ -33,17 +34,17 @@ public class CodeGroupDto {
 	public void setCodeGroupNm(String codeGroupNm) {
 		this.codeGroupNm = codeGroupNm;
 	}
-	public Integer getCodeCnt() {
-		return codeCnt;
-	}
-	public void setCodeCnt(Integer codeCnt) {
-		this.codeCnt = codeCnt;
-	}
 	public Integer getCodeGroupDelNy() {
 		return codeGroupDelNy;
 	}
 	public void setCodeGroupDelNy(Integer codeGroupDelNy) {
 		this.codeGroupDelNy = codeGroupDelNy;
+	}
+	public Integer getCodeCnt() {
+		return codeCnt;
+	}
+	public void setCodeCnt(Integer codeCnt) {
+		this.codeCnt = codeCnt;
 	}
 	
 }

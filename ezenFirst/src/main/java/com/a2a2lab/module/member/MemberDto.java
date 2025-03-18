@@ -12,9 +12,13 @@ public class MemberDto {
 	private Integer birthYear;
 	private Integer birthMonth;
 	private Integer birthDay;
+	private Integer mobileCarrier;
 	private String phone;
 	private Integer admin;
 	private Integer userDelNy;
+	
+	private String codeSeq;
+	private String codeNm;
 	
 	
 	public String getSeq() {
@@ -94,6 +98,24 @@ public class MemberDto {
 	}
 	public void setUserDelNy(Integer userDelNy) {
 		this.userDelNy = userDelNy;
+	}
+	public String getCodeSeq() {
+		return codeSeq;
+	}
+	public void setCodeSeq(String codeSeq) {
+		this.codeSeq = codeSeq;
+	}
+	public String getCodeNm() {
+		return codeNm;
+	}
+	public void setCodeNm(String codeNm) {
+		this.codeNm = codeNm;
+	}
+	public Integer getMobileCarrier() {
+		return mobileCarrier;
+	}
+	public void setMobileCarrier(Integer mobileCarrier) {
+		this.mobileCarrier = mobileCarrier;
 	}
 	
 }

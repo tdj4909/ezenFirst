@@ -15,13 +15,14 @@ public class MemberController {
 	MemberService service;
 	
 	@RequestMapping(value = "/accountUsrRegister")
-	public String accountUsrRegister() {
-
+	public String accountUsrRegister(Model model) {
+		model.addAttribute("mobileCarrierGroup", service.selectMobileCarrierGroup());
 		return "/usr/account/accountUsrRegister";
 	}
 	
 	@RequestMapping(value = "/accountUsrRegisterInst")
 	public String accountUsrRegisterInst(MemberDto memberDto) {
+		System.out.println(memberDto.getMobileCarrier());
 		service.insert(memberDto);
 		return "redirect:/accountUsrRegister";
 	}

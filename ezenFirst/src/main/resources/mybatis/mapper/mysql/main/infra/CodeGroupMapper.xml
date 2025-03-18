@@ -59,13 +59,11 @@
 			codeGroupUse,
 			codeGroupCd,
 			codeGroupNm,
-			codeCnt,
 			codeGroupDelNy
 		) VALUES(
 			#{codeGroupUse},
 			NULLIF(#{codeGroupCd},''),
 			#{codeGroupNm},
-			1,
 			0
 		)
 		<selectKey resultType="String" keyProperty="seq"
