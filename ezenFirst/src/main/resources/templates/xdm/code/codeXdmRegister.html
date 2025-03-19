@@ -110,8 +110,7 @@
 								</div>
 								<div class="col">
 									<div style="float: right;">
-										<button type="button" class="btn btn-primary" id="btnSave"
-											data-bs-toggle="modal" data-bs-target="#exampleModal">
+										<button type="button" class="btn btn-primary" id="btnSave">
 											<i class="bi bi-database-fill"></i>
 										</button>
 									</div>
@@ -126,15 +125,13 @@
 			<!-- Modal -->
 			<div class="modal fade" id="exampleModal" tabindex="-1">
 				<div class="modal-dialog">
-					<div class="modal-content">
+					<div class="modal-content" id="modalContent">
 						<div class="modal-header">
 							<h1 class="modal-title fs-5" id="exampleModalLabel">모달 제목</h1>
-							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 						</div>
 						<div class="modal-body">모달 내용</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-bs-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-secondary" id="close">Close</button>
 							<button type="button" class="btn btn-primary">Save
 								changes</button>
 						</div>
@@ -152,19 +149,42 @@
 
 <!-- temp -->
 <script type="text/javascript">
-	/* let codeNm = document.getElementById("codeNm"); */
+
+	let codeNm = document.getElementById("codeNm");
+	let exampleModal = document.getElementById('exampleModal');
+	let close = document.getElementById('close');
+	let modalContent = document.getElementById('modalContent');
 
 	document.getElementById("btnSave").onclick = function() {
 
 		if (codeNm.value.trim() == null || codeNm.value.trim() == "") {
-			/* alert("#####");
-			alert("@@@@@@@@@@@@@"); */
+			
+			let myModal = new bootstrap.Modal(exampleModal);
+			myModal.show();
+			
+			close.addEventListener("mouseover", () => {
+				close.classList.replace("btn-secondary", "btn-danger");
+				modalContent.style.cssText = "border-width: 5px; border-color: red;";				
+			});
+			
+			close.addEventListener("mouseout", () => {
+				close.classList.replace("btn-danger", "btn-secondary");
+				modalContent.style.cssText = "border-width: 2px; border-color: rgba(0, 0, 0, 0.176);";	
+			});
+			
+			close.addEventListener("click", () => {
+				myModal.hide();
+			});
 
-			codeNm.focus();
-
+			exampleModal.addEventListener("hidden.bs.modal", () => {
+				codeNm.focus();
+			});
+			
 			return false;
 		}
 
+		
+		
 		document.getElementById("form").submit();
 	}
 </script>
