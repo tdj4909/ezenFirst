@@ -24,56 +24,34 @@
 
 			<div class="row mb-3 mt-3">
 				<div class="col-2">
-					<select class="form-select">
-						<option selected>N</option>
-						<option value="1">One</option>
-						<option value="2">Two</option>
-						<option value="3">Three</option>
+					<select id="shDelNy" name="shDelNy" class="form-select">
+						<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
+						<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
+						<option value="0" th:selected="${vo.shDelNy == 0}">N</option>
 					</select>
 				</div>
 				<div class="col-2">
-					<select class="form-select">
-						<option selected>사용여부</option>
-						<option value="1">Y</option>
-						<option value="2">N</option>
+					<select id="shOption" name="shOption" class="form-select">
+						<option value="" th:selected="${vo.shOption == null}">검색구분</option>
+						<option value="1" th:selected="${vo.shOption == 1}">이메일</option>
+						<option value="2" th:selected="${vo.shOption == 2}">닉네임</option>
+						<option value="3" th:selected="${vo.shOption == 3}">이름</option>
 					</select>
 				</div>
 				<div class="col-2">
-					<select class="form-select">
-						<option selected>날짜</option>
-						<option value="1">등록일</option>
-						<option value="2">수정일</option>
-					</select>
+					<input id="shValue" name="shValue" type="text" th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control">
+					<div class="invalid-feedback" id="shValueFeedback"></div>
 				</div>
 				<div class="col-2">
-					<input type="text" class="form-control" placeholder="2025-01-05">
-				</div>
-				<div class="col-2">
-					<input type="text" class="form-control" placeholder="2025-02-04">
-				</div>
-			</div>
-
-			<div class="row mb-3 mt-3">
-				<div class="col-2">
-					<select class="form-select">
-						<option selected>검색구분</option>
-						<option value="1">코드그룹 코드</option>
-						<option value="2">코드그룹 이름</option>
-						<option value="3">코드그룹 이름(영문)</option>
-					</select>
-				</div>
-				<div class="col-2">
-					<input type="text" class="form-control" placeholder="검색어">
-				</div>
-				<div class="col-2">
-					<a href="/codeGroupXdmList" class="btn btn-outline-secondary"
-						title="Upload new profile image" id="search"> <i
-						class="ri-search-line"></i>
-					</a> <a href="/codeGroupXdmList" class="btn btn-outline-secondary">
+					<button type="button" class="btn btn-outline-secondary" id="btnSearch"> 
+						<i class="ri-search-line"></i>
+					</button> 
+					<a href="/memberXdmList" class="btn btn-outline-secondary">
 						<i class="ri-reset-right-line"></i>
 					</a>
 				</div>
 			</div>
+
 
 		</div>
 
@@ -92,11 +70,13 @@
 									<h5 class="card-title" th:text="|Total: ${vo.totalRows}|"></h5>
 								</div>
 								<div class="col-2 pt-2" style="float: right;">
-									<select class="form-select">
-										<option selected>5</option>
-										<option value="1">10</option>
-										<option value="2">15</option>
-										<option value="3">20</option>
+									<select id="changeRowNum" name="changeRowNum" class="form-select">
+										<option value="5" th:selected="${vo.rowNumToShow eq 5}">5</option>
+										<option value="10" th:selected="${vo.rowNumToShow eq 10}">10</option>
+										<option value="30" th:selected="${vo.rowNumToShow eq 30}">30</option>
+										<option value="50" th:selected="${vo.rowNumToShow eq 50}">50</option>
+										<option value="80" th:selected="${vo.rowNumToShow eq 80}">80</option>
+										<option value="100" th:selected="${vo.rowNumToShow eq 100}">100</option> 
 									</select>
 								</div>
 							</div>
@@ -132,11 +112,13 @@
 											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 											<td th:text="${list.email}"></td>
 											<td th:text="${list.nickname}"></td>
-											<td th:text="|${list.lastNm} ${list.firstNm}|" style="color: blue"></td>
+											<td th:text="${list.userFullNm}" style="color: blue"></td>
 
-											<td th:if="${list.gender == 1}">남</td>
+											<td th:text="${@memberService.selectOneCachedCode(list.gender)}"></td>
+											
+<!-- 											<td th:if="${list.gender == 1}">남</td>
 											<td th:if="${list.gender == 2}">여</td>
-											<td th:if="${list.gender == 3}">공개안함</td>
+											<td th:if="${list.gender == 3}">공개안함</td> -->
 											
 											<td th:text="|${list.birthYear}년 ${list.birthMonth}월 ${list.birthDay}일|"></td>											
 											<td th:text="${list.codeNm}"></td>
@@ -182,20 +164,17 @@
 
 							<div class="row">
 								<div class="col">
-									<a href="#" class="btn btn-danger"
-										title="Upload new profile image"> <i
+									<a href="#" class="btn btn-danger"> <i
 										class="ri-close-large-line"></i>
-									</a> <a href="#" class="btn btn-danger"
-										title="Remove my profile image"> <i
+									</a> <a href="#" class="btn btn-danger"> <i
 										class="ri-delete-bin-line"></i>
 									</a>
 								</div>
 								<div class="col">
 									<div style="float: right;">
-										<a href="#" class="btn btn-success"
-											title="Remove my profile image"> <i
+										<a href="#" class="btn btn-success"> <i
 											class="ri-file-excel-line"></i>
-										</a> <a href="/codeGroupXdmRegister" class="btn btn-primary">
+										</a> <a href="/memberXdmRegister" class="btn btn-primary">
 											<i class="ri-add-line"></i>
 										</a>
 									</div>
@@ -234,6 +213,16 @@
 		    form.submit();
 		}
 				
+		document.getElementById("btnSearch").onclick = function () {
+		    form.action = "/memberXdmList";
+		    form.submit();
+		};
+		
+		document.getElementById("changeRowNum").onchange = function () {
+		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+		    form.action = "/memberXdmList";
+		    form.submit();
+		}
 	
 	</script>
 

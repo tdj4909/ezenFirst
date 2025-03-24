@@ -9,21 +9,19 @@
 	<sql id="selectCommon">
 		FROM codegroup a
 		WHERE 1=1
-			AND codeGroupDelNy = 0
 			
-		<!-- <if test="shUseNy != null and !shUseNy.equals('')">AND a.ifcgUseNy = #{shUseNy}</if> -->
-		<!-- <if test="shDelNy != null and !shDelNy.equals('')">AND a.ifcgDelNy = #{shDelNy}</if> -->
+		<if test="shUseNy != null and !shUseNy.equals('')">AND a.codegroupUse = #{shUseNy}</if>
+		<if test="shDelNy != null and !shDelNy.equals('')">AND a.codegroupDelNy = #{shDelNy}</if>
 		
-		<!-- <choose>
+<!-- 		<choose>
 			<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
 			<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
 		</choose> -->
 		
-		<!-- <choose>
-			<when test="shOption == 1">AND a.ifcgSeq = #{shValue}</when>
-			<when test="shOption == 2">AND a.ifcgName LIKE CONCAT('%',#{shValue},'%')</when>
-			<when test="shOption == 3">AND a.ifcgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
-		</choose> -->
+		<choose>
+			<when test="shOption == 1">AND a.seq = #{shValue}</when>
+			<when test="shOption == 2">AND a.codegroupNm LIKE CONCAT('%',#{shValue},'%')</when>
+		</choose>
 			
 	</sql>
 
@@ -44,10 +42,7 @@
                 WHERE
 					a.seq = b.codeGroup_seq
 				) AS codeCnt
-			FROM
-				codegroup a
-			WHERE
-				codeGroupDelNy = 0
+			<include refid="selectCommon"></include>
 			ORDER BY
 				seq DESC
 			) aa

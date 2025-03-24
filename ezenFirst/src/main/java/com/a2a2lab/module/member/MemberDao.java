@@ -14,8 +14,9 @@ public interface MemberDao {
 	
 	
 	public int insert(MemberDto memberDto);
-	public int selectOneCount();
+	public int selectOneCount(MemberVo vo);
 	public List<MemberDto> selectList(MemberVo vo);
 	public List<MemberDto> selectMobileCarrierGroup();
 
+	public List<MemberDto> selectListCachedCodeArrayList();
 }

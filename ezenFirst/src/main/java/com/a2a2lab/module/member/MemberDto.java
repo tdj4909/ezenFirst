@@ -1,5 +1,8 @@
 package com.a2a2lab.module.member;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MemberDto {
 
 	private String seq;
@@ -17,9 +20,11 @@ public class MemberDto {
 	private Integer admin;
 	private Integer userDelNy;
 	
+	private String userFullNm;
 	private String codeSeq;
 	private String codeNm;
 	
+	public static List<MemberDto> cachedCodeArrayList = new ArrayList<MemberDto>();
 	
 	public String getSeq() {
 		return seq;
@@ -116,6 +121,10 @@ public class MemberDto {
 	}
 	public void setMobileCarrier(Integer mobileCarrier) {
 		this.mobileCarrier = mobileCarrier;
+	}
+	
+	public String getUserFullNm() {
+		return lastNm + firstNm;
 	}
 	
 }

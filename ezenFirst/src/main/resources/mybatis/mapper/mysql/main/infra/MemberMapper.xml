@@ -9,7 +9,19 @@
 	<sql id="selectCommon">
 		FROM user a
 		WHERE 1=1
-			AND userDelNy = 0
+			
+		<if test="shDelNy != null and !shDelNy.equals('')">AND a.userDelNy = #{shDelNy}</if>
+		
+<!-- 		<choose>
+			<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+			<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		</choose> -->
+		
+		<choose>
+			<when test="shOption == 1">AND a.email = #{shValue}</when>
+			<when test="shOption == 2">AND a.nickname LIKE CONCAT('%',#{shValue},'%')</when>
+			<when test="shOption == 3">AND CONCAT(a.lastNm, a.firstNm) LIKE CONCAT('%',#{shValue},'%')</when>
+		</choose>
 			
 	</sql>
 
@@ -21,26 +33,23 @@
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT aa.* FROM (
 			SELECT
-				email
-			    ,nickname
-			    ,lastNm
-			    ,firstNm
-			    ,gender
-			    ,birthYear
-			    ,birthMonth
-			    ,birthDay
+				a.email
+			    ,a.nickname
+			    ,a.lastNm
+			    ,a.firstNm
+			    ,a.gender
+			    ,a.birthYear
+			    ,a.birthMonth
+			    ,a.birthDay
 			    ,
 			    (
 					SELECT codeNm
 			        FROM code c
-			        WHERE u.mobileCarrier = c.seq
+			        WHERE a.mobileCarrier = c.seq
 			    ) AS codeNm
-			    ,phone
-			    ,admin
-			FROM
-				user u
-			WHERE
-				userDelNy = 0
+			    ,a.phone
+			    ,a.admin
+			<include refid="selectCommon"></include>
 			ORDER BY
 				seq DESC
 			) aa
@@ -84,7 +93,7 @@
 			,#{birthDay}
 			,#{mobileCarrier}
 			,#{phone}
-			,0
+			,#{admin}
 			,0
 		)
 		<selectKey resultType="String" keyProperty="seq"
@@ -108,5 +117,15 @@
 			seq = #{seq}
 	</update>
 	
+		<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
+		SELECT 
+			seq
+			, gender
+		FROM
+			user
+		WHERE 1=1
+			AND userDelNy = 0
+
+   </select>
 	
 </mapper>
