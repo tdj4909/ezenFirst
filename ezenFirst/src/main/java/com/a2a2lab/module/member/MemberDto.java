@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberDto {
+	
+	private String ifcgSeq;
 
 	private String seq;
 	private String email;
@@ -125,6 +127,13 @@ public class MemberDto {
 	
 	public String getUserFullNm() {
 		return lastNm + firstNm;
+	}
+	
+	public String getIfcgSeq() {
+		return ifcgSeq;
+	}
+	public void setIfcgSeq(String ifcgSeq) {
+		this.ifcgSeq = ifcgSeq;
 	}
 	
 }

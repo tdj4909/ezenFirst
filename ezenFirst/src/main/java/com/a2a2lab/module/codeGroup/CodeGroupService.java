@@ -14,12 +14,21 @@ public class CodeGroupService {
 	public int selectOneCount(CodeGroupVo vo) {
 		return codeGroupDao.selectOneCount(vo);
 	}
+	
+	public CodeGroupDto selectOne(CodeGroupVo vo) {
+		return codeGroupDao.selectOne(vo);
+	}
+	
 	public List<CodeGroupDto> selectList(CodeGroupVo vo) {
 		return codeGroupDao.selectList(vo);
 	}
 	
 	public int insert(CodeGroupDto codeGroupDto) {
 		return codeGroupDao.insert(codeGroupDto);
+	}
+	
+	public int update(CodeGroupDto codeGroupDto) {
+		return codeGroupDao.update(codeGroupDto);
 	}
 
 	public int delete(CodeGroupDto codeGroupDto) {

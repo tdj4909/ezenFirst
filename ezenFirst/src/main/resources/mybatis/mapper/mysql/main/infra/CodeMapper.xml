@@ -29,8 +29,36 @@
 		<include refid="selectCommon"></include>
 	</select>
 
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT 
+			aa.*
+			,aa.seq AS ifcgSeq
+		FROM (
+			SELECT
+				b.seq,
+				b.codeUse,
+				b.codeGroup_seq,
+				c.codeGroupCd,
+				c.codeGroupNm,
+				b.codeCd,
+				b.codeNm
+			FROM codegroup c
+				JOIN (SELECT * 
+				<include refid="selectCommon"></include>
+				) b
+				ON c.seq = b.codeGroup_seq
+			ORDER BY
+				seq DESC
+		) aa
+		WHERE
+			aa.seq = #{ifcgSeq}
+	</select>
+	
 	<select id="selectList" resultMap="resultMapObj">
-		SELECT aa.* FROM (
+		SELECT 
+			aa.*
+			,aa.seq AS ifcgSeq
+		FROM (
 			SELECT
 				b.seq,
 				b.codeUse,
@@ -94,6 +122,16 @@
 			codeDelNy = 1
 		WHERE
 			seq = #{seq}
+	</update>
+	
+	<update id="update">
+		UPDATE code SET
+			codeCd = #{codeCd},
+			codeNm = #{codeNm},
+			codeUse = #{codeUse},
+		    codeGroup_seq = #{codeGroup_seq}
+		WHERE
+			seq = #{ifcgSeq}
 	</update>
 
 

@@ -2,6 +2,7 @@ package com.a2a2lab.module.member;
 
 public class MemberVo {
 
+	private String ifcgSeq;
 	private String ifbnSeq;
 
 //	search
@@ -12,8 +13,12 @@ public class MemberVo {
 	private String shDateEnd;
 	private Integer shOption;									/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
 	private String shValue;
+	private Integer shGender;
 	
-//	paging
+	
+
+
+	//	paging
 	private int thisPage = 1;									// 현재 페이지
 	private int rowNumToShow = 5;								// 화면에 보여줄 데이터 줄 갯수
 	private int pageNumToShow = 5;								// 화면에 보여줄 페이징 번호 갯수
@@ -28,6 +33,14 @@ public class MemberVo {
 //	------------------------------------------
 	
 	// search Getter, Setter
+	
+		public String getIfcgSeq() {
+			return ifcgSeq;
+		}
+	
+		public void setIfcgSeq(String ifcgSeq) {
+			this.ifcgSeq = ifcgSeq;
+		}
 	
 		public String getIfbnSeq() {
 			return ifbnSeq;
@@ -91,6 +104,14 @@ public class MemberVo {
 
 		public void setShValue(String shValue) {
 			this.shValue = shValue;
+		}
+		
+		public Integer getShGender() {
+			return shGender;
+		}
+
+		public void setShGender(Integer shGender) {
+			this.shGender = shGender;
 		}
 
 		

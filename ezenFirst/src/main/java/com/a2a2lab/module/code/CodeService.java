@@ -14,6 +14,11 @@ public class CodeService {
 	public int selectOneCount(CodeVo vo) {
 		return codeDao.selectOneCount(vo);
 	}
+	
+	public CodeDto selectOne(CodeVo vo) {
+		return codeDao.selectOne(vo);
+	}
+	
 	public List<CodeDto> selectList(CodeVo vo) {
 		return codeDao.selectList(vo);
 	}
@@ -28,6 +33,10 @@ public class CodeService {
 
 	public int uelete(CodeDto codeDto) {
 		return codeDao.uelete(codeDto);
+	}
+	
+	public int update(CodeDto codeDto) {
+		return codeDao.update(codeDto);
 	}
 	
 	public List<CodeDto> selectCodeGroup() {

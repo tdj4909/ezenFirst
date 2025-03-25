@@ -2,6 +2,7 @@ package com.a2a2lab.module.code;
 
 public class CodeVo {
 
+	private String ifcgSeq;
 	private String ifbnSeq;
 
 //	search
@@ -29,6 +30,15 @@ public class CodeVo {
 	
 	// search Getter, Setter
 	
+		
+		public String getIfcgSeq() {
+			return ifcgSeq;
+		}
+	
+		public void setIfcgSeq(String ifcgSeq) {
+			this.ifcgSeq = ifcgSeq;
+		}
+		
 		public String getIfbnSeq() {
 			return ifbnSeq;
 		}

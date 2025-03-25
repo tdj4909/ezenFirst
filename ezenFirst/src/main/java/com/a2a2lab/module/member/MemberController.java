@@ -35,7 +35,7 @@ public class MemberController {
 		vo.setParamsPaging(service.selectOneCount(vo));
 		
 		if (vo.getTotalRows() > 0) {
-			model.addAttribute("list", service.selectList(vo));
+			model.addAttribute("lists", service.selectList(vo));
 		}
 		
 		return "/xdm/member/memberXdmList";

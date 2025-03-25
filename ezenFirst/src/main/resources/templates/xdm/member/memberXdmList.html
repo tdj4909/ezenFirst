@@ -10,6 +10,7 @@
 		<input type="hidden" name="thisPage" th:value="${vo.thisPage}"
 			default="1" /> <input type="hidden" id="rowNumToShow"
 			name="rowNumToShow" th:value="${vo.rowNumToShow}" />
+		<input type="hidden" name="ifcgSeq">
 		<div class="pagetitle">
 
 			<nav>
@@ -31,6 +32,14 @@
 					</select>
 				</div>
 				<div class="col-2">
+					<select id="shOption" name="shGender" class="form-select">
+						<option value="" th:selected="${vo.shGender == null}">성별</option>
+						<option value="1" th:selected="${vo.shGender == 1}">남성</option>
+						<option value="2" th:selected="${vo.shGender == 2}">여성</option>
+						<option value="3" th:selected="${vo.shGender == 3}">공개안함</option>
+					</select>
+				</div>
+				<div class="col-2">
 					<select id="shOption" name="shOption" class="form-select">
 						<option value="" th:selected="${vo.shOption == null}">검색구분</option>
 						<option value="1" th:selected="${vo.shOption == 1}">이메일</option>
@@ -46,7 +55,7 @@
 					<button type="button" class="btn btn-outline-secondary" id="btnSearch"> 
 						<i class="ri-search-line"></i>
 					</button> 
-					<a href="/memberXdmList" class="btn btn-outline-secondary">
+					<a href="" class="btn btn-outline-secondary">
 						<i class="ri-reset-right-line"></i>
 					</a>
 				</div>
@@ -102,17 +111,20 @@
 									</thead>
 									<tbody>
 									
-										<tr th:if="${#lists.isEmpty(list)}">
+										<tr th:if="${#lists.isEmpty(lists)}">
 											<td colspan=10 style="text-align: center"><p>There
 													are no data!</p></td>
 										</tr>
-										<tr th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
+										<tr th:if="${!#lists.isEmpty(lists)}" th:each="list : ${lists}">
 											<td><input class="form-check-input rowCheckbox"
 												type="checkbox"></td>
 											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 											<td th:text="${list.email}"></td>
 											<td th:text="${list.nickname}"></td>
-											<td th:text="${list.userFullNm}" style="color: blue"></td>
+											
+											<td class="align-middle fw-semi-bold">
+												<a href="javascript:void(0);" th:text="${list.userFullNm}" th:attr="onclick=|goForm('${list.ifcgSeq}')|"></a>
+											</td>
 
 											<td th:text="${@memberService.selectOneCachedCode(list.gender)}"></td>
 											
@@ -174,9 +186,10 @@
 									<div style="float: right;">
 										<a href="#" class="btn btn-success"> <i
 											class="ri-file-excel-line"></i>
-										</a> <a href="/memberXdmRegister" class="btn btn-primary">
+										</a> 
+										<button type="button" id="btnForm" class="btn btn-primary">
 											<i class="ri-add-line"></i>
-										</a>
+										</button>
 									</div>
 								</div>
 							</div>
@@ -221,6 +234,37 @@
 		document.getElementById("changeRowNum").onchange = function () {
 		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
 		    form.action = "/memberXdmList";
+		    form.submit();
+		}
+		
+		
+		// 사이드바 현재화면 위치 active
+		document.addEventListener("DOMContentLoaded", function () {
+		    const currentPath = window.location.pathname;
+		    const links = document.querySelectorAll(".nav-content a");
+
+		    links.forEach(link => {
+		        if (link.getAttribute("href") === currentPath) {
+		        	const navContent = link.closest(".nav-content");
+		            const navLink = navContent.previousElementSibling; // 부모 메뉴의 <a> 태그 찾기
+		            
+		            link.classList.add("active");
+		            navContent.classList.add("show"); // 메뉴 열기
+		            navLink.classList.remove("collapsed"); // collapsed 제거
+		        }
+		    });
+		});
+		
+		let seq = document.querySelector("input[name=ifcgSeq]");
+		
+		document.getElementById("btnForm").onclick = function () {
+		    goForm(0);
+		}
+
+
+		goForm = function (keyValue) {
+		    seq.value = keyValue;
+		    form.action = "/memberXdmRegister";
 		    form.submit();
 		}
 	

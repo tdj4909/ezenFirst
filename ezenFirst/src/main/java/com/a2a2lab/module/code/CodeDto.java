@@ -2,12 +2,15 @@ package com.a2a2lab.module.code;
 
 public class CodeDto {
 
+	private String ifcgSeq;
+	
+	
 	private String seq;
 	private String codeCd;
 	private String codeNm;
 	private Integer codeUse;
 	private Integer codeDelNy;
-	private Integer codeGroup_seq;
+	private String codeGroup_seq;
 	
 //	---- 상속 ----
 	private Integer codeGroupUse;
@@ -39,10 +42,10 @@ public class CodeDto {
 	public void setCodeDelNy(Integer codeDelNy) {
 		this.codeDelNy = codeDelNy;
 	}
-	public Integer getCodeGroup_seq() {
+	public String getCodeGroup_seq() {
 		return codeGroup_seq;
 	}
-	public void setCodeGroup_seq(Integer codeGroup_seq) {
+	public void setCodeGroup_seq(String codeGroup_seq) {
 		this.codeGroup_seq = codeGroup_seq;
 	}
 	public Integer getCodeGroupUse() {
@@ -68,6 +71,13 @@ public class CodeDto {
 	}
 	public void setCodeUse(Integer codeUse) {
 		this.codeUse = codeUse;
+	}
+	
+	public String getIfcgSeq() {
+		return ifcgSeq;
+	}
+	public void setIfcgSeq(String ifcgSeq) {
+		this.ifcgSeq = ifcgSeq;
 	}
 	
 }

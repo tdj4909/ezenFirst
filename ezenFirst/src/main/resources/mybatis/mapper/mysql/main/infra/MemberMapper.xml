@@ -11,6 +11,7 @@
 		WHERE 1=1
 			
 		<if test="shDelNy != null and !shDelNy.equals('')">AND a.userDelNy = #{shDelNy}</if>
+		<if test="shGender != null and !shGender.equals('')">AND a.gender = #{shGender}</if>
 		
 <!-- 		<choose>
 			<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
@@ -31,9 +32,13 @@
 	</select>
 
 	<select id="selectList" resultMap="resultMapObj">
-		SELECT aa.* FROM (
+		SELECT 
+			aa.*
+			,aa.seq AS ifcgSeq 
+		FROM (
 			SELECT
-				a.email
+				a.seq
+				,a.email
 			    ,a.nickname
 			    ,a.lastNm
 			    ,a.firstNm

@@ -5,6 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.a2a2lab.module.code.CodeService;
+import com.a2a2lab.module.code.CodeVo;
 
 @Controller
 public class CodeGroupController {
@@ -17,31 +21,24 @@ public class CodeGroupController {
 		
 //		setSearch(vo);
 		vo.setParamsPaging(codeGroupService.selectOneCount(vo));
+		
 		if (vo.getTotalRows() > 0) {
-			model.addAttribute("list", codeGroupService.selectList(vo));
+			model.addAttribute("lists", codeGroupService.selectList(vo));
 		}
-		
-		
-		System.out.println("@@@@@@@@@@@@@@@@@@");
-		System.out.println(vo.getShDelNy());
-		System.out.println(vo.getShUseNy());
-		System.out.println(vo.getShDateStart());
-		System.out.println(vo.getShDateEnd());
 		
 		
 		return "/xdm/codeGroup/codeGroupXdmList";
 	}
 	
-	
-	@RequestMapping(value = "/codeGroupXdmRegister")
-	public String codeGroupXdmRegister() {
-
-		return "/xdm/codeGroup/codeGroupXdmRegister";
-	}
-	
 	@RequestMapping(value = "/codeGroupXdmInst")
 	public String codeGroupXdmInst(CodeGroupDto codeGroupDto) {
 		codeGroupService.insert(codeGroupDto);
+		return "redirect:/codeGroupXdmList";
+	}
+	
+	@RequestMapping(value = "/codeGroupXdmUpdt")
+	public String codeGroupXdmUpdt(CodeGroupDto codeGroupDto) {
+		codeGroupService.update(codeGroupDto);
 		return "redirect:/codeGroupXdmList";
 	}
 	
@@ -60,6 +57,18 @@ public class CodeGroupController {
 	@RequestMapping(value = "/usrIndex")
 	public String usrIndex() {
 		return "/usr/index/index";
+	}
+	
+	@RequestMapping(value = "/codeGroupXdmRegister")
+	public String codeGroupXdmRegister(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception{
+		
+		if (vo.getIfcgSeq().equals("0") || vo.getIfcgSeq().equals("")) {
+//			insert mode
+		} else {
+//			update mode
+			model.addAttribute("item", codeGroupService.selectOne(vo));
+		}
+		return "/xdm/codeGroup/codeGroupXdmRegister";
 	}
 	
 }

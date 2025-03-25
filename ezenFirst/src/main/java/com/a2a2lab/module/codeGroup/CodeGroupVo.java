@@ -2,6 +2,7 @@ package com.a2a2lab.module.codeGroup;
 
 public class CodeGroupVo {
 
+	private String ifcgSeq;
 	private String ifbnSeq;
 
 //	search
@@ -28,6 +29,24 @@ public class CodeGroupVo {
 //	------------------------------------------
 	
 // search Getter, Setter
+	
+	@Override
+	public String toString() {
+		return "CodeGroupVo [ifcgSeq=" + ifcgSeq + ", ifbnSeq=" + ifbnSeq + ", shUseNy=" + shUseNy + ", shDelNy="
+				+ shDelNy + ", shOptionDate=" + shOptionDate + ", shDateStart=" + shDateStart + ", shDateEnd="
+				+ shDateEnd + ", shOption=" + shOption + ", shValue=" + shValue + ", thisPage=" + thisPage
+				+ ", rowNumToShow=" + rowNumToShow + ", pageNumToShow=" + pageNumToShow + ", totalRows=" + totalRows
+				+ ", totalPages=" + totalPages + ", startPage=" + startPage + ", endPage=" + endPage
+				+ ", startRnumForMysql=" + startRnumForMysql + "]";
+	}
+
+	public String getIfcgSeq() {
+		return ifcgSeq;
+	}
+
+	public void setIfcgSeq(String ifcgSeq) {
+		this.ifcgSeq = ifcgSeq;
+	}
 	
 	public String getIfbnSeq() {
 		return ifbnSeq;

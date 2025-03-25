@@ -29,9 +29,35 @@
 		SELECT COUNT(*)
 		<include refid="selectCommon"></include>
 	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+			aa.seq
+			,aa.codeGroupUse
+			,aa.codeGroupCd
+			,aa.codeGroupNm
+			,aa.seq AS ifcgSeq
+		FROM (
+			SELECT 
+				a.seq
+				,a.codeGroupUse
+				,a.codeGroupCd
+				,a.codeGroupNm
+			<include refid="selectCommon"></include>
+			) aa
+		WHERE
+			aa.seq = #{ifcgSeq}
+	</select>
 
 	<select id="selectList" resultMap="resultMapObj">
-		SELECT aa.* FROM (
+		SELECT 
+			aa.seq
+			,aa.codeGroupUse
+			,aa.codeGroupCd
+			,aa.codeGroupNm
+			,aa.codeCnt
+			,aa.seq AS ifcgSeq
+		FROM (
 			SELECT
 				a.seq,
 				a.codeGroupUse,
@@ -80,6 +106,15 @@
 			codeGroupDelNy = 1
 		WHERE
 			seq = #{seq}
+	</update>
+	
+	<update id="update">
+		UPDATE codegroup SET
+			codeGroupUse = #{codeGroupUse},
+			codeGroupCd = #{codeGroupCd},
+			codeGroupNm = #{codeGroupNm}
+		WHERE
+			seq = #{ifcgSeq}
 	</update>
 	
 	

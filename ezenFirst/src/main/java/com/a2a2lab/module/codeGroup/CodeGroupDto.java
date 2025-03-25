@@ -10,6 +10,8 @@ public class CodeGroupDto {
 	
 	private Integer codeCnt;
 	
+	private String ifcgSeq;
+	
 	public String getSeq() {
 		return seq;
 	}
@@ -45,6 +47,12 @@ public class CodeGroupDto {
 	}
 	public void setCodeCnt(Integer codeCnt) {
 		this.codeCnt = codeCnt;
+	}
+	public String getIfcgSeq() {
+		return ifcgSeq;
+	}
+	public void setIfcgSeq(String ifcgSeq) {
+		this.ifcgSeq = ifcgSeq;
 	}
 	
 }
