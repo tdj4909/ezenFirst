@@ -121,7 +121,7 @@
 		UPDATE code SET
 			codeDelNy = 1
 		WHERE
-			seq = #{seq}
+			seq = #{ifcgSeq}
 	</update>
 	
 	<update id="update">

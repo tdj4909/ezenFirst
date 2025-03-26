@@ -1,10 +1,13 @@
 package com.a2a2lab.module.code;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.a2a2lab.module.codeGroup.CodeGroupDto;
 import com.a2a2lab.module.codeGroup.CodeGroupVo;
@@ -49,6 +52,19 @@ public class CodeController {
 	@RequestMapping(value = "/codeXdmUpdt")
 	public String codeXdmUpdt(CodeDto codeDto) {
 		codeService.update(codeDto);
+		return "redirect:/codeXdmList";
+	}
+	
+	@RequestMapping(value = "/codeXdmUele")
+	public String codeGroupXdmUele(@RequestParam("delSeq") List<String> delSeq) {
+
+		for(String delseq : delSeq) {
+			if(!delseq.equals("")) {
+				CodeDto codeDto = new CodeDto();
+				codeDto.setIfcgSeq(delseq);
+				codeService.uelete(codeDto);
+			}
+		}
 		return "redirect:/codeXdmList";
 	}
 	

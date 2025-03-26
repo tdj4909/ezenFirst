@@ -25,6 +25,10 @@ public class MemberService {
 	public int selectOneCount(MemberVo vo) {
 		return memberDao.selectOneCount(vo);
 	}
+	
+	public int loginChk(MemberDto dto) {
+		return memberDao.loginChk(dto);
+	}
 
 	public List<MemberDto> selectList(MemberVo vo) {
 		return memberDao.selectList(vo);

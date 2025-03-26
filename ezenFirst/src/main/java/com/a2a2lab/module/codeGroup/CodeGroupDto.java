@@ -12,6 +12,14 @@ public class CodeGroupDto {
 	
 	private String ifcgSeq;
 	
+	
+	@Override
+	public String toString() {
+		return "CodeGroupDto [seq=" + seq + ", codeGroupUse=" + codeGroupUse + ", codeGroupCd=" + codeGroupCd
+				+ ", codeGroupNm=" + codeGroupNm + ", codeGroupDelNy=" + codeGroupDelNy + ", codeCnt=" + codeCnt
+				+ ", ifcgSeq=" + ifcgSeq + "]";
+	}
+	
 	public String getSeq() {
 		return seq;
 	}

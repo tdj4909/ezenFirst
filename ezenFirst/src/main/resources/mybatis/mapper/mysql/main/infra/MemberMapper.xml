@@ -60,6 +60,17 @@
 			) aa
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
+	
+	<select id="loginChk" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM
+			user
+		WHERE
+			1=1
+			AND email = #{email}
+			AND password = #{password}
+	</select>
 
 	<select id="selectMobileCarrierGroup" resultMap="resultMapObj">
 		SELECT

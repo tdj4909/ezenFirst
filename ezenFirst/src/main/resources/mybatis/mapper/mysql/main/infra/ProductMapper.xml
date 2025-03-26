@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.a2a2lab.module.product.ProductDao">
+
+	<resultMap id="resultMapObj"
+		type="com.a2a2lab.module.product.ProductDto"></resultMap>
+
+	<sql id="selectCommon">
+		FROM menu a
+		WHERE 1=1
+			
+		<if test="shDelNy != null and !shDelNy.equals('')">AND a.menuDelNy = #{shDelNy}</if>
+
+<!-- 		
+		<choose>
+			<when test="shOption == 1">AND a.email = #{shValue}</when>
+			<when test="shOption == 2">AND a.nickname LIKE CONCAT('%',#{shValue},'%')</when>
+			<when test="shOption == 3">AND CONCAT(a.lastNm, a.firstNm) LIKE CONCAT('%',#{shValue},'%')</when>
+		</choose>
+			 -->
+	</sql>
+
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommon"></include>
+	</select>
+
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT 
+			aa.*
+			,aa.seq AS ifcgSeq 
+		FROM (
+			SELECT
+				a.seq
+				,a.menuNm
+				,a.menuPrice
+				,a.menuDescription
+				,a.calories
+				,a.sugars
+				,a.protein
+				,a.fat
+				,a.sodium
+				,a.menuType
+				,a.recommand
+				,a.menuNew
+				,a.orderCnt
+				,a.menuStock
+			<include refid="selectCommon"></include>
+			ORDER BY
+				seq DESC
+			) aa
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+	</select>
+
+
+	
+</mapper>

@@ -1,5 +1,7 @@
 package com.a2a2lab.module.codeGroup;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +15,14 @@ import com.a2a2lab.module.code.CodeVo;
 @Controller
 public class CodeGroupController {
 
+    private final CodeService codeService;
+
 	@Autowired
 	CodeGroupService codeGroupService;
+
+    CodeGroupController(CodeService codeService) {
+        this.codeService = codeService;
+    }
 	
 	@RequestMapping(value = "/codeGroupXdmList")
 	public String codeGroupXdmList(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
@@ -49,8 +57,15 @@ public class CodeGroupController {
 	}
 	
 	@RequestMapping(value = "/codeGroupXdmUele")
-	public String codeGroupXdmUele(CodeGroupDto codeGroupDto) {
-		codeGroupService.uelete(codeGroupDto);
+	public String codeGroupXdmUele(@RequestParam("delSeq") List<String> delSeq) {
+
+		for(String delseq : delSeq) {
+			if(!delseq.equals("")) {
+				CodeGroupDto codeGroupDto = new CodeGroupDto();
+				codeGroupDto.setIfcgSeq(delseq);
+				codeGroupService.uelete(codeGroupDto);
+			}
+		}
 		return "redirect:/codeGroupXdmList";
 	}
 	

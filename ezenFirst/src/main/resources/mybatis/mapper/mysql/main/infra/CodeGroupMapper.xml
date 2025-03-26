@@ -105,7 +105,7 @@
 		UPDATE codegroup SET
 			codeGroupDelNy = 1
 		WHERE
-			seq = #{seq}
+			seq = #{ifcgSeq}
 	</update>
 	
 	<update id="update">
