@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.a2a2lab.module.codeGroup.CodeGroupDto;
 import com.a2a2lab.module.codeGroup.CodeGroupVo;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class CodeController {
 
@@ -19,7 +21,13 @@ public class CodeController {
 	CodeService codeService;
 	
 	@RequestMapping(value = "/codeXdmList")
-	public String codeXdmList(@ModelAttribute("vo") CodeVo vo, Model model) {
+	public String codeXdmList(@ModelAttribute("vo") CodeVo vo, Model model, HttpSession httpSession) {
+		
+		// login 검사
+		if(httpSession.getAttribute("user") == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("user", httpSession.getAttribute("user"));
 		
 //		setSearch(vo);
 		vo.setParamsPaging(codeService.selectOneCount(vo));
@@ -32,7 +40,14 @@ public class CodeController {
 	}
 	
 	@RequestMapping(value = "/codeXdmRegister")
-	public String codeXdmRegister(@ModelAttribute("vo") CodeVo vo, Model model) {
+	public String codeXdmRegister(@ModelAttribute("vo") CodeVo vo, Model model, HttpSession httpSession) {
+		
+		// login 검사
+		if(httpSession.getAttribute("user") == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("user", httpSession.getAttribute("user"));
+		
 		model.addAttribute("codeGroup", codeService.selectCodeGroup());
 		if (vo.getIfcgSeq().equals("0") || vo.getIfcgSeq().equals("")) {
 //			insert mode

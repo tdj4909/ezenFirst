@@ -25,9 +25,26 @@ public class ProductService {
 	public int selectOneCount(ProductVo vo) {
 		return dao.selectOneCount(vo);
 	}
+	
+	public ProductDto selectOne(ProductVo vo) {
+		return dao.selectOne(vo);
+	}
 
 	public List<ProductDto> selectList(ProductVo vo) {
-		return dao.selectList(vo);
+		List<ProductDto> dtos = dao.selectList(vo);
+		for(ProductDto dto : dtos) {
+			if (dto.getMenuType() == 1) {
+				dto.setMenuTypeNm("세트");
+			} else if (dto.getMenuType() == 2) {
+				dto.setMenuTypeNm("단품");
+			} else if (dto.getMenuType() == 3) {
+				dto.setMenuTypeNm("사이드");
+			} else if (dto.getMenuType() == 4) {
+				dto.setMenuTypeNm("음료");
+			}
+		}
+		
+		return dtos;
 	}
 
 }

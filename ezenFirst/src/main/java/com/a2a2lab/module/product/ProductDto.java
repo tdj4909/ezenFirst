@@ -19,7 +19,18 @@ public class ProductDto {
 	private Integer menuStock;
 	private Integer menuDelNy;
 	
+	private String menuTypeNm;
 	
+	private String ifcgSeq;
+	
+	
+	
+	public String getIfcgSeq() {
+		return ifcgSeq;
+	}
+	public void setIfcgSeq(String ifcgSeq) {
+		this.ifcgSeq = ifcgSeq;
+	}
 	public String getSeq() {
 		return seq;
 	}
@@ -110,7 +121,12 @@ public class ProductDto {
 	public void setMenuDelNy(Integer menuDelNy) {
 		this.menuDelNy = menuDelNy;
 	}
-	
+	public String getMenuTypeNm() {
+		return menuTypeNm;
+	}
+	public void setMenuTypeNm(String menuTypeNm) {
+		this.menuTypeNm = menuTypeNm;
+	}
 	
 	
 }

@@ -1,6 +1,7 @@
 package com.a2a2lab.module.member;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a2a2lab.module.code.CodeDto;
@@ -37,8 +39,14 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/memberXdmList")
-	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo) {
+	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo, HttpSession httpSession) {
 
+		// login 검사
+		if(httpSession.getAttribute("user") == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("user", httpSession.getAttribute("user"));
+		
 		vo.setParamsPaging(service.selectOneCount(vo));
 		
 		if (vo.getTotalRows() > 0) {
@@ -49,7 +57,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/memberXdmRegister")
-	public String memberXdmRegister(Model model, @ModelAttribute("vo") MemberVo vo) {
+	public String memberXdmRegister(Model model, @ModelAttribute("vo") MemberVo vo, HttpSession httpSession) {
+		
+		// login 검사
+		if(httpSession.getAttribute("user") == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("user", httpSession.getAttribute("user"));
 		
 		model.addAttribute("mobileCarrierGroup", service.selectMobileCarrierGroup());
 		if (vo.getIfcgSeq().equals("0") || vo.getIfcgSeq().equals("")) {
@@ -65,12 +79,28 @@ public class MemberController {
 	
 	@RequestMapping(value = "/memberXdmRegisterInst")
 	public String memberXdmRegisterInst(MemberDto memberDto) {
-
 		service.insert(memberDto);
 		return "redirect:/memberXdmList";
 	}
 	
+	@RequestMapping(value = "/memberXdmRegisterUpdt")
+	public String memberXdmRegisterUpdt(MemberDto memberDto) {
+		service.update(memberDto);
+		return "redirect:/memberXdmList";
+	}
 	
+	@RequestMapping(value = "/memberXdmUele")
+	public String memberXdmUele(@RequestParam("seq") List<String> seqs) {
+
+		for(String seq : seqs) {
+			if(!seq.isBlank()) {
+				MemberDto dto = new MemberDto();
+				dto.setSeq(seq);
+				service.uelete(dto);
+			}
+		}
+		return "redirect:/memberXdmList";
+	}
 	
 //	---------로그인---------------------------------------
 	
@@ -91,7 +121,8 @@ public class MemberController {
 		
 		// 검사결과 map에 put해서 리턴
 		if(result != 0) {
-			httpSession.setAttribute("user", dto.getEmail());
+			dto = service.getByEmail(dto.getEmail());
+			httpSession.setAttribute("user", dto);
 			returnMap.put("rt", "success");
 		} else {
 			returnMap.put("rt", "fail");

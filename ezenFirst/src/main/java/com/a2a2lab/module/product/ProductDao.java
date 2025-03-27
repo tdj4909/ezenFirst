@@ -15,6 +15,7 @@ public interface ProductDao {
 	
 	public int insert(ProductDto dto);
 	public int selectOneCount(ProductVo vo);
+	public ProductDto selectOne(ProductVo vo);
 	public List<ProductDto> selectList(ProductVo vo);
 
 }

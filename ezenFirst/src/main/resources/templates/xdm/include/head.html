@@ -94,6 +94,9 @@
 				</a></li>
 				<!-- End Search Icon-->
 
+				
+				<span th:text="${'Seq = ' + user.seq}"></span>
+
 				<li class="nav-item dropdown"><a class="nav-link nav-icon"
 					href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i>
 						<span class="badge bg-primary badge-number">4</span>
@@ -235,14 +238,15 @@
 					href="#" data-bs-toggle="dropdown"> <img
 						src="/xdm/template/AdminUI/assets/img/profile-img.jpg"
 						alt="Profile" class="rounded-circle"> <span
-						class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+						class="d-none d-md-block dropdown-toggle ps-2" th:text="${user.email}"></span>
+						
 				</a>
 				<!-- End Profile Iamge Icon -->
 
 					<ul
 						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 						<li class="dropdown-header">
-							<h6>Kevin Anderson</h6> <span>Web Designer</span>
+							<h6 th:text="${user.email}"></h6> <span>Web Designer</span>
 						</li>
 						<li>
 							<hr class="dropdown-divider">

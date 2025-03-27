@@ -14,7 +14,11 @@ public interface MemberDao {
 	
 	
 	public int insert(MemberDto dto);
+	public int update(MemberDto dto);
+	public int uelete(MemberDto dto);
 	public int selectOneCount(MemberVo vo);
+	public MemberDto selectOne(MemberVo vo);
+	public MemberDto getByEmail(String email);
 	public int loginChk(MemberDto dto);
 	public List<MemberDto> selectList(MemberVo vo);
 	public List<MemberDto> selectMobileCarrierGroup();

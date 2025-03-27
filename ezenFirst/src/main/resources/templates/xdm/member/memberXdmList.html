@@ -32,11 +32,18 @@
 					</select>
 				</div>
 				<div class="col-2">
-					<select id="shOption" name="shGender" class="form-select">
+					<select id="shGender" name="shGender" class="form-select">
 						<option value="" th:selected="${vo.shGender == null}">성별</option>
 						<option value="1" th:selected="${vo.shGender == 1}">남성</option>
 						<option value="2" th:selected="${vo.shGender == 2}">여성</option>
 						<option value="3" th:selected="${vo.shGender == 3}">공개안함</option>
+					</select>
+				</div>
+				<div class="col-2">
+					<select id="shAdmin" name="shAdmin" class="form-select">
+						<option value="" th:selected="${vo.shAdmin == null}">관리자</option>
+						<option value="0" th:selected="${vo.shAdmin == 0}">N</option>
+						<option value="1" th:selected="${vo.shAdmin == 1}">Y</option>
 					</select>
 				</div>
 				<div class="col-2">
@@ -116,8 +123,9 @@
 													are no data!</p></td>
 										</tr>
 										<tr th:if="${!#lists.isEmpty(lists)}" th:each="list : ${lists}">
-											<td><input class="form-check-input rowCheckbox"
-												type="checkbox"></td>
+											<td>
+												<input class="form-check-input rowCheckbox" type="checkbox" name="seq" th:value="${list.seq}">
+											</td>
 											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 											<td th:text="${list.email}"></td>
 											<td th:text="${list.nickname}"></td>
@@ -178,9 +186,10 @@
 								<div class="col">
 									<a href="#" class="btn btn-danger"> <i
 										class="ri-close-large-line"></i>
-									</a> <a href="#" class="btn btn-danger"> <i
-										class="ri-delete-bin-line"></i>
-									</a>
+									</a> 
+									<button type="button" id="btnUelete" class="btn btn-danger"> 
+										<i class="ri-delete-bin-line"></i>
+									</button>
 								</div>
 								<div class="col">
 									<div style="float: right;">
@@ -198,6 +207,29 @@
 
 				</div>
 			</div>
+			
+			
+<!-- 			Modal -->
+			<div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body" id="modalConfirmBody">
+							body
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-secondary btn-sm btn_custom" data-bs-dismiss="modal"><i class="fa-solid fa-angle-left fa-lg"></i></button>
+							<button type="button" class="btn btn-danger btn-sm btn_custom" name="" id="btnModalDelete"><i class="fa-solid fa-x fa-lg"></i></button>
+							<button type="button" class="btn btn-danger btn-sm btn_custom" name="" id="btnModalUelete"><i class="far fa-trash-alt fa-lg"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>			
+			
+			
 		</section>
 
 	</form>
@@ -208,29 +240,33 @@
 <!-- temp -->
 <script type="text/javascript">
 	
+	let rowCheckboxes = document.querySelectorAll('.rowCheckbox');
+	let currentPath = window.location.pathname;
+	let links = document.querySelectorAll(".nav-content a");
+	
 		// 전체 선택/해제 함수
-		function toggleSelectAll(source) {
-		    // 모든 체크박스를 선택하는 선택자
-		    const checkboxes = document.querySelectorAll('.rowCheckbox');
-		    
+		function toggleSelectAll(source) {		    
 		    // 모든 체크박스에 대해 상태를 '전체 선택' 체크박스 상태에 맞게 설정
-		    checkboxes.forEach((checkbox) => {
+		    rowCheckboxes.forEach((checkbox) => {
 		        checkbox.checked = source.checked;
 		    });
 		}
 
+		// 페이징
 		let form = document.querySelector("form[name=formList]");
 		goList = function (thisPage) {
 		    document.querySelector("input[name=thisPage]").value = thisPage;
 		    form.action = "/memberXdmList";
 		    form.submit();
 		}
-				
+		
+		// 검색
 		document.getElementById("btnSearch").onclick = function () {
 		    form.action = "/memberXdmList";
 		    form.submit();
 		};
 		
+		// 테이블 행 출력 개수
 		document.getElementById("changeRowNum").onchange = function () {
 		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
 		    form.action = "/memberXdmList";
@@ -238,11 +274,10 @@
 		}
 		
 		
-		// 사이드바 현재화면 위치 active
+		
 		document.addEventListener("DOMContentLoaded", function () {
-		    const currentPath = window.location.pathname;
-		    const links = document.querySelectorAll(".nav-content a");
 
+			// 사이드바 현재화면 위치 active
 		    links.forEach(link => {
 		        if (link.getAttribute("href") === currentPath) {
 		        	const navContent = link.closest(".nav-content");
@@ -253,19 +288,53 @@
 		            navLink.classList.remove("collapsed"); // collapsed 제거
 		        }
 		    });
+			
+		 	// 체크박스
+		    rowCheckboxes.forEach(checkbox => {
+	            checkbox.addEventListener("change", function () {
+	                let allChecked = document.querySelectorAll(".rowCheckbox:checked").length === rowCheckboxes.length;
+	                selectAllCheckbox.checked = allChecked;
+	            });
+	        });
+		 	
 		});
 		
+		// Insert or Update
 		let seq = document.querySelector("input[name=ifcgSeq]");
-		
+		// Insert
 		document.getElementById("btnForm").onclick = function () {
 		    goForm(0);
 		}
-
-
+		// Update
 		goForm = function (keyValue) {
 		    seq.value = keyValue;
 		    form.action = "/memberXdmRegister";
 		    form.submit();
+		}
+		
+		// Uelete
+		// Modal 먼저 실행
+		if(document.getElementById("btnUelete")){
+			document.getElementById("btnUelete").onclick = function () {
+				document.querySelector("#modalConfirmTitle").textContent = "확 인";
+				document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+				document.querySelector("#btnModalUelete").style.display = '';
+				document.querySelector("#btnModalDelete").style.display = 'none';
+				
+				let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
+	            modal.show();     	
+			}
+		}
+		// Modal에서 확인 버튼 누르면
+		document.getElementById("btnModalUelete").onclick = function () {
+
+			let selected = document.querySelectorAll(".rowCheckbox:not(:checked)");
+			selected.forEach((s) => {
+				s.value = '';
+			});
+
+			form.action = "/memberXdmUele";
+			form.submit();
 		}
 	
 	</script>

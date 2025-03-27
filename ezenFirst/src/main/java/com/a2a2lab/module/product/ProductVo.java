@@ -13,10 +13,14 @@ public class ProductVo {
 	private String shDateEnd;
 	private Integer shOption;									/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
 	private String shValue;
-	private Integer shGender;
+	private Integer shType;
+	private Integer shRecommand;
+	private Integer shNew;
 	
 	
 
+
+	
 
 	//	paging
 	private int thisPage = 1;									// 현재 페이지
@@ -106,12 +110,28 @@ public class ProductVo {
 			this.shValue = shValue;
 		}
 		
-		public Integer getShGender() {
-			return shGender;
+		public Integer getShType() {
+			return shType;
 		}
 
-		public void setShGender(Integer shGender) {
-			this.shGender = shGender;
+		public void setShType(Integer shType) {
+			this.shType = shType;
+		}
+
+		public Integer getShRecommand() {
+			return shRecommand;
+		}
+
+		public void setShRecommand(Integer shRecommand) {
+			this.shRecommand = shRecommand;
+		}
+
+		public Integer getShNew() {
+			return shNew;
+		}
+
+		public void setShNew(Integer shNew) {
+			this.shNew = shNew;
 		}
 
 		

@@ -48,7 +48,7 @@
 										<label for="select1" class="form-label">코드그룹<b
 											style="color: red;">*</b></label> 
 										<select name="codeGroup_seq" id="codeGroup_seq" class="form-select">
-											<option value="">선택하세요</option>
+											<option disabled hidden selected>선택하세요</option>
 											<option th:each="group : ${codeGroup}"
 													th:value="${group.seq}" 
 													th:text="${group.codeGroupNm}" 
@@ -90,8 +90,8 @@
 										<label for="select2" class="form-label">사용여부<b
 											style="color: red;">*</b></label> 
 										<select name="codeUse" id="codeUse" class="form-select">
-											<option value="1" th:selected="${codeUse == 1}">사용</option>
-											<option value="0" th:selected="${codeUse == 0}">사용안함</option>
+											<option value="1" th:selected="${item?.codeUse == 1}">사용</option>
+											<option value="0" th:selected="${item?.codeUse == 0}">사용안함</option>
 										</select>
 									</div>
 									<div class="col-3">

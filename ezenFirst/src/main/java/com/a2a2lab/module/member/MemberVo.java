@@ -14,6 +14,7 @@ public class MemberVo {
 	private Integer shOption;									/* null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 */
 	private String shValue;
 	private Integer shGender;
+	private Integer shAdmin;
 	
 	
 
@@ -114,6 +115,13 @@ public class MemberVo {
 			this.shGender = shGender;
 		}
 
+		public Integer getShAdmin() {
+			return shAdmin;
+		}
+		
+		public void setShAdmin(Integer shAdmin) {
+			this.shAdmin = shAdmin;
+		}
 		
 	// paging Getter, Setter
 	public void setParamsPaging(int totalRows) {

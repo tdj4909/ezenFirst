@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.a2a2lab.module.code.CodeService;
 import com.a2a2lab.module.code.CodeVo;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class CodeGroupController {
 
@@ -25,7 +27,13 @@ public class CodeGroupController {
     }
 	
 	@RequestMapping(value = "/codeGroupXdmList")
-	public String codeGroupXdmList(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception {
+	public String codeGroupXdmList(@ModelAttribute("vo") CodeGroupVo vo, Model model, HttpSession httpSession) throws Exception {
+		
+		// login 검사
+		if(httpSession.getAttribute("user") == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("user", httpSession.getAttribute("user"));
 		
 //		setSearch(vo);
 		vo.setParamsPaging(codeGroupService.selectOneCount(vo));
@@ -75,7 +83,13 @@ public class CodeGroupController {
 	}
 	
 	@RequestMapping(value = "/codeGroupXdmRegister")
-	public String codeGroupXdmRegister(@ModelAttribute("vo") CodeGroupVo vo, Model model) throws Exception{
+	public String codeGroupXdmRegister(@ModelAttribute("vo") CodeGroupVo vo, Model model, HttpSession httpSession) throws Exception{
+		
+		// login 검사
+		if(httpSession.getAttribute("user") == null) {
+			return "redirect:/login";
+		}
+		model.addAttribute("user", httpSession.getAttribute("user"));
 		
 		if (vo.getIfcgSeq().equals("0") || vo.getIfcgSeq().equals("")) {
 //			insert mode

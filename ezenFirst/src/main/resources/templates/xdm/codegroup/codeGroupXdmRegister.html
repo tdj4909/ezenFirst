@@ -73,11 +73,11 @@
 
 									<div class="row mb-3">
 										<div class="col-3">
-											<label for="select2" class="form-label">사용여부<b
-												style="color: red;">*</b></label> <select name="codeGroupUse"
-												class="form-select">
-												<option value="1" th:selected="${codeGroupUse == 1}">사용</option>
-												<option value="0" th:selected="${codeGroupUse == 0}">사용안함</option>
+											<label for="codeGroupUse" class="form-label">사용여부<b
+												style="color: red;">*</b></label> 
+											<select name="codeGroupUse" id="codeGroupUse" class="form-select">
+												<option value="1" th:selected="${item?.codeGroupUse == 1}">사용</option>
+												<option value="0" th:selected="${item?.codeGroupUse == 0}">사용안함</option>
 											</select>
 										</div>
 										<div class="col-3">

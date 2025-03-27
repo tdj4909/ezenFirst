@@ -11,19 +11,49 @@
 		WHERE 1=1
 			
 		<if test="shDelNy != null and !shDelNy.equals('')">AND a.menuDelNy = #{shDelNy}</if>
+		<if test="shType != null and !shType.equals('')">AND a.menuType = #{shType}</if>
+		<if test="shRecommand != null and !shRecommand.equals('')">AND a.recommand = #{shRecommand}</if>
+		<if test="shNew != null and !shNew.equals('')">AND a.menuNew = #{shNew}</if>
 
-<!-- 		
+		
 		<choose>
-			<when test="shOption == 1">AND a.email = #{shValue}</when>
-			<when test="shOption == 2">AND a.nickname LIKE CONCAT('%',#{shValue},'%')</when>
-			<when test="shOption == 3">AND CONCAT(a.lastNm, a.firstNm) LIKE CONCAT('%',#{shValue},'%')</when>
+			<when test="shOption == 1">AND a.menuNm LIKE CONCAT('%',#{shValue},'%')</when>
+			<when test="shOption == 2">AND a.menuDescription LIKE CONCAT('%',#{shValue},'%')</when>
 		</choose>
-			 -->
+			
 	</sql>
 
 	<select id="selectOneCount" resultType="Integer">
 		SELECT COUNT(*)
 		<include refid="selectCommon"></include>
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT 
+			aa.*
+			,aa.seq AS ifcgSeq 
+		FROM (
+			SELECT
+				a.seq
+				,a.menuNm
+				,a.menuPrice
+				,a.menuDescription
+				,a.calories
+				,a.sugars
+				,a.protein
+				,a.fat
+				,a.sodium
+				,a.menuType
+				,a.recommand
+				,a.menuNew
+				,a.orderCnt
+				,a.menuStock
+			<include refid="selectCommon"></include>
+			ORDER BY
+				seq DESC
+			) aa
+		WHERE
+			aa.seq = #{ifcgSeq}
 	</select>
 
 	<select id="selectList" resultMap="resultMapObj">
@@ -53,6 +83,39 @@
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 
+	<insert id="insert">
+		INSERT INTO menu(
+		    menuNm
+			,menuPrice
+			,menuDescription
+			,calories
+			,sugars
+			,protein
+			,fat
+			,sodium
+			,menuType
+			,recommand
+			,menuNew
+			,orderCnt
+			,menuStock
+			,menuDelNy
+		) VALUES(
+			#{menuNm}
+			,#{menuPrice}
+			,#{menuDescription}
+			,#{calories}
+			,#{sugars}
+			,#{protein}
+			,#{fat}
+			,#{sodium}
+			,#{menuType}
+			,#{recommand}
+			,#{menuNew}
+			,0
+			,#{menuNm}
+			,0
+		)
+	</insert>
 
 	
 </mapper>

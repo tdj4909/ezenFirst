@@ -12,6 +12,7 @@
 			
 		<if test="shDelNy != null and !shDelNy.equals('')">AND a.userDelNy = #{shDelNy}</if>
 		<if test="shGender != null and !shGender.equals('')">AND a.gender = #{shGender}</if>
+		<if test="shAdmin != null and !shAdmin.equals('')">AND a.admin = #{shAdmin}</if>
 		
 <!-- 		<choose>
 			<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
@@ -31,6 +32,38 @@
 		<include refid="selectCommon"></include>
 	</select>
 
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT 
+			aa.*
+			,aa.seq AS ifcgSeq 
+		FROM (
+			SELECT
+				a.seq
+				,a.email
+			    ,a.nickname
+			    ,a.lastNm
+			    ,a.firstNm
+			    ,a.gender
+			    ,a.birthYear
+			    ,a.birthMonth
+			    ,a.birthDay
+			    ,
+			    (
+					SELECT codeNm
+			        FROM code c
+			        WHERE a.mobileCarrier = c.seq
+			    ) AS codeNm
+			    ,a.phone
+			    ,a.admin
+			    ,a.password
+			<include refid="selectCommon"></include>
+			ORDER BY
+				seq DESC
+			) aa
+		WHERE
+			aa.seq = #{ifcgSeq}
+	</select>
+	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT 
 			aa.*
@@ -70,6 +103,28 @@
 			1=1
 			AND email = #{email}
 			AND password = #{password}
+	</select>
+	
+	<select id="getByEmail" resultMap="resultMapObj">
+		SELECT 
+			seq
+			,email
+			,nickname
+			,lastNm
+			,firstNm
+			,gender
+			,birthYear
+			,birthMonth
+			,birthDay
+			,mobileCarrier
+			,phone
+			,admin
+			,userDelNy
+		FROM
+			user
+		WHERE
+			1=1
+			AND email = #{email}
 	</select>
 
 	<select id="selectMobileCarrierGroup" resultMap="resultMapObj">
@@ -126,9 +181,26 @@
 			seq = #{seq}
 	</delete>
 	
+	<update id="update">
+		UPDATE user SET
+			email = #{email}
+			,nickname = #{nickname}
+			,lastNm = #{lastNm}
+			,firstNm = #{firstNm}
+			,gender = #{gender}
+			,birthYear = #{birthYear}
+			,birthMonth = #{birthMonth}
+			,birthDay = #{birthDay}
+			,mobileCarrier = #{mobileCarrier}
+			,phone = #{phone}
+			,admin = #{admin}
+		WHERE
+			seq = #{ifcgSeq}
+	</update>
+	
 	<update id="uelete">
-		UPDATE codegroup SET
-			codeGroupDelNy = 1
+		UPDATE user SET
+			userDelNy = 1
 		WHERE
 			seq = #{seq}
 	</update>

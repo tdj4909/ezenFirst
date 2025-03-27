@@ -16,31 +16,47 @@ import jakarta.annotation.PostConstruct;
 public class MemberService {
 
 	@Autowired
-	MemberDao memberDao;
+	MemberDao dao;
 	
-	public int insert(MemberDto memberDto) {
-		return memberDao.insert(memberDto);
+	public int insert(MemberDto dto) {
+		return dao.insert(dto);
+	}
+	
+	public int update(MemberDto dto) {
+		return dao.update(dto);
+	}
+	
+	public int uelete(MemberDto dto) {
+		return dao.uelete(dto);
 	}
 
 	public int selectOneCount(MemberVo vo) {
-		return memberDao.selectOneCount(vo);
+		return dao.selectOneCount(vo);
+	}
+	
+	public MemberDto selectOne(MemberVo vo) {
+		return dao.selectOne(vo);
+	}
+	
+	public MemberDto getByEmail(String email) {
+		return dao.getByEmail(email);
 	}
 	
 	public int loginChk(MemberDto dto) {
-		return memberDao.loginChk(dto);
+		return dao.loginChk(dto);
 	}
 
 	public List<MemberDto> selectList(MemberVo vo) {
-		return memberDao.selectList(vo);
+		return dao.selectList(vo);
 	}
 	
 	public List<MemberDto> selectMobileCarrierGroup() {
-		return memberDao.selectMobileCarrierGroup();
+		return dao.selectMobileCarrierGroup();
 	}
 
 	@PostConstruct
 	public void selectListCachedCodeArrayList() throws Exception {
-		List<MemberDto> codeListFromDb = (ArrayList<MemberDto>) memberDao.selectListCachedCodeArrayList();
+		List<MemberDto> codeListFromDb = (ArrayList<MemberDto>) dao.selectListCachedCodeArrayList();
 		MemberDto.cachedCodeArrayList.clear(); 
 		MemberDto.cachedCodeArrayList.addAll(codeListFromDb);
 		System.out.println("cachedCodeArrayList: " + MemberDto.cachedCodeArrayList.size() + " chached !");

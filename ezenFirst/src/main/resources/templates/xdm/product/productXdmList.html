@@ -12,6 +12,7 @@
 		<input type="hidden" id="rowNumToShow"
 			name="rowNumToShow" th:value="${vo.rowNumToShow}" />
 		<input type="hidden" name="ifcgSeq">
+		
 		<div class="pagetitle">
 
 			<nav>
@@ -33,19 +34,38 @@
 					</select>
 				</div>
 				<div class="col-2">
-					<select id="shOption" name="shGender" class="form-select">
-						<option value="" th:selected="${vo.shGender == null}">성별</option>
-						<option value="1" th:selected="${vo.shGender == 1}">남성</option>
-						<option value="2" th:selected="${vo.shGender == 2}">여성</option>
-						<option value="3" th:selected="${vo.shGender == 3}">공개안함</option>
+					<select id="shType" name="shType" class="form-select">
+						<option value="" th:selected="${vo.shType == null}">종류</option>
+						<option value="1" th:selected="${vo.shType == 1}">세트</option>
+						<option value="2" th:selected="${vo.shType == 2}">단품</option>
+						<option value="3" th:selected="${vo.shType == 3}">사이드</option>
+						<option value="4" th:selected="${vo.shType == 4}">음료</option>
 					</select>
 				</div>
 				<div class="col-2">
+					<select id="shRecommand" name="shRecommand" class="form-select">
+						<option value="" th:selected="${vo.shRecommand == null}">추천</option>
+						<option value="1" th:selected="${vo.shRecommand == 1}">Y</option>
+						<option value="0" th:selected="${vo.shRecommand == 0}">N</option>
+					</select>
+				</div>
+				<div class="col-2">
+					<select id="shNew" name="shNew" class="form-select">
+						<option value="" th:selected="${vo.shNew == null}">신메뉴</option>
+						<option value="1" th:selected="${vo.shNew == 1}">Y</option>
+						<option value="0" th:selected="${vo.shNew == 0}">N</option>
+					</select>
+				</div>
+				
+			</div>
+			
+			<div class="row mb-3 mt-3">
+			
+				<div class="col-2">
 					<select id="shOption" name="shOption" class="form-select">
 						<option value="" th:selected="${vo.shOption == null}">검색구분</option>
-						<option value="1" th:selected="${vo.shOption == 1}">이메일</option>
-						<option value="2" th:selected="${vo.shOption == 2}">닉네임</option>
-						<option value="3" th:selected="${vo.shOption == 3}">이름</option>
+						<option value="1" th:selected="${vo.shOption == 1}">메뉴명</option>
+						<option value="2" th:selected="${vo.shOption == 2}">설명</option>
 					</select>
 				</div>
 				<div class="col-2">
@@ -60,6 +80,7 @@
 						<i class="ri-reset-right-line"></i>
 					</a>
 				</div>
+				
 			</div>
 
 
@@ -122,11 +143,15 @@
 													are no data!</p></td>
 										</tr>
 										<tr th:if="${!#lists.isEmpty(lists)}" th:each="list : ${lists}">
-											<td><input class="form-check-input rowCheckbox"
-												type="checkbox"></td>
+											<td>
+												<input class="form-check-input rowCheckbox" type="checkbox">
+											</td>
 											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 											
-											<td th:text="${list.menuNm}"></td>
+											<td class="align-middle fw-semi-bold">
+												<a href="javascript:void(0);" th:text="${list.menuNm}" th:attr="onclick=|goForm('${list.ifcgSeq}')|"></a>
+											</td>
+											
 											<td th:text="${list.menuPrice}"></td>
 											<td th:text="${list.menuDescription}"></td>
 											<td th:text="${list.calories}"></td>
@@ -134,20 +159,12 @@
 											<td th:text="${list.protein}"></td>
 											<td th:text="${list.fat}"></td>
 											<td th:text="${list.sodium}"></td>
-											<td th:text="${list.menuType}"></td>
-											<td th:text="${list.recommand}"></td>
-											<td th:text="${list.menuNew}"></td>
+											<td th:text="${list.menuTypeNm}"></td>
+											<td th:text="${list.recommand == 1 ? 'Y' : 'N'}"></td>
+											<td th:text="${list.menuNew == 1 ? 'Y' : 'N'}"></td>
 											<td th:text="${list.orderCnt}"></td>
 											<td th:text="${list.menuStock}"></td>
 											
-											
-											
-											<!-- 
-											<td class="align-middle fw-semi-bold">
-												<a href="javascript:void(0);" th:text="${list.userFullNm}" th:attr="onclick=|goForm('${list.ifcgSeq}')|"></a>
-											</td>
-											<td th:text="${list.admin} == 1 ? 'Y' : 'N' "></td>
-											 -->
 										</tr>
 
 									</tbody>
@@ -234,18 +251,18 @@
 		let form = document.querySelector("form[name=formList]");
 		goList = function (thisPage) {
 		    document.querySelector("input[name=thisPage]").value = thisPage;
-		    form.action = "/memberXdmList";
+		    form.action = "/productXdmList";
 		    form.submit();
 		}
 				
 		document.getElementById("btnSearch").onclick = function () {
-		    form.action = "/memberXdmList";
+		    form.action = "/productXdmList";
 		    form.submit();
 		};
 		
 		document.getElementById("changeRowNum").onchange = function () {
 		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-		    form.action = "/memberXdmList";
+		    form.action = "/productXdmList";
 		    form.submit();
 		}
 		
@@ -267,16 +284,16 @@
 		    });
 		});
 		
+		//Insert or Update
 		let seq = document.querySelector("input[name=ifcgSeq]");
-		
+		//Insert
 		document.getElementById("btnForm").onclick = function () {
 		    goForm(0);
 		}
-
-
+		//Update
 		goForm = function (keyValue) {
 		    seq.value = keyValue;
-		    form.action = "/memberXdmRegister";
+		    form.action = "/productXdmRegister";
 		    form.submit();
 		}
 	
