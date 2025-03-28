@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -72,14 +72,14 @@
                         <div class="mb-3 text-start">
                             <label for="email" class="form-label">ID</label>
                             <input type="email" class="form-control" id="email" name="email"
-                                placeholder="name@example.com">
+                                placeholder="name@example.com" th:value="${tmpEmail}">
                         </div>
 
                         <!-- password -->
                         <div class="mb-3 text-start">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" id="password" name="password" class="form-control "
-                                placeholder="Password">
+                                placeholder="Password" th:value="${tmpPwd}">
                         </div>
 
                         <div class="row mb-5">

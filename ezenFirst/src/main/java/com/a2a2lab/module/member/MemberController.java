@@ -24,21 +24,6 @@ public class MemberController {
 	@Autowired
 	MemberService service;
 	
-//	사용자 계정------------------------------------------------------------
-	@RequestMapping(value = "/accountUsrRegister")
-	public String accountUsrRegister(Model model) {
-		model.addAttribute("mobileCarrierGroup", service.selectMobileCarrierGroup());
-		return "/usr/account/accountUsrRegister";
-	}
-	
-	@RequestMapping(value = "/accountUsrRegisterInst")
-	public String accountUsrRegisterInst(MemberDto memberDto) {
-		System.out.println(memberDto.getMobileCarrier());
-		memberDto.setAdmin(0);
-		service.insert(memberDto);
-		return "redirect:/accountUsrRegister";
-	}
-	
 //  관리자---------------------------------------------------------------------------	
 	@RequestMapping(value = "/memberXdmList")
 	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo, HttpSession httpSession) {
@@ -108,7 +93,12 @@ public class MemberController {
 //	로그인--------------------------------------------------------------
 	
 	@RequestMapping(value = "/loginXdm")
-	public String loginXdm() {
+	public String loginXdm(Model model) {
+		
+		String tmpEmail = "sample@example.com";
+		String tmpPwd = "12345678";
+		model.addAttribute("tmpEmail", tmpEmail);
+		model.addAttribute("tmpPwd", tmpPwd);
 
 		return "/xdm/sign/loginXdm";
 	}
