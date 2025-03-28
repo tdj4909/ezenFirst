@@ -31,7 +31,7 @@ public class CodeGroupController {
 		
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/login";
+			return "redirect:/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
@@ -87,7 +87,7 @@ public class CodeGroupController {
 		
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/login";
+			return "redirect:/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		

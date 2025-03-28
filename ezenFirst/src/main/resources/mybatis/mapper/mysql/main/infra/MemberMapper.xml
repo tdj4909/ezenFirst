@@ -94,37 +94,17 @@
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	
-	<select id="loginChk" resultType="Integer">
+	<select id="loginChk" resultMap="resultMapObj">
 		SELECT 
-			COUNT(*)
+			seq
+			,email
+			,admin
 		FROM
 			user
 		WHERE
 			1=1
 			AND email = #{email}
 			AND password = #{password}
-	</select>
-	
-	<select id="getByEmail" resultMap="resultMapObj">
-		SELECT 
-			seq
-			,email
-			,nickname
-			,lastNm
-			,firstNm
-			,gender
-			,birthYear
-			,birthMonth
-			,birthDay
-			,mobileCarrier
-			,phone
-			,admin
-			,userDelNy
-		FROM
-			user
-		WHERE
-			1=1
-			AND email = #{email}
 	</select>
 
 	<select id="selectMobileCarrierGroup" resultMap="resultMapObj">

@@ -26,7 +26,8 @@
 
 		<section class="section">
 <!-- ********************************************************************************************* -->
-			<form action="/productXdmInst" method="post" id="form">
+			<form action="" method="post" id="form">
+				<input type="hidden"name="ifcgSeq" th:value="${item?.ifcgSeq}">
 				<div class="row">
 					<div class="col-lg-12">
 
@@ -51,29 +52,29 @@
 										</div>
 										<div class="col-4">
 											<label for="calories" class="form-label">열량(kcal)<b style="color: red;">*</b></label> 
-											<input type="text" id="calories" name="calories" class="form-control" placeholder="숫자">
+											<input type="text" id="calories" name="calories" class="form-control" placeholder="숫자" th:value="${item?.calories}">
 											<div class="invalid-feedback">열량을 입력하세요.</div>
 										</div>
 										<div class="col-4">
 											<div class="row">
 												<div class="col-3">
 													<label for="sugars" class="form-label">당류(g)<b style="color: red;">*</b></label> 
-													<input type="text" id="sugars" name="sugars" class="form-control" placeholder="숫자">
+													<input type="text" id="sugars" name="sugars" class="form-control" placeholder="숫자" th:value="${item?.sugars}">
 													<div class="invalid-feedback">당류를 입력하세요.</div>
 												</div>
 												<div class="col-3">
 													<label for="protein" class="form-label">단백질(g)<b style="color: red;">*</b></label> 
-													<input type="text" id="protein" name="protein" class="form-control" placeholder="숫자">
+													<input type="text" id="protein" name="protein" class="form-control" placeholder="숫자" th:value="${item?.protein}">
 													<div class="invalid-feedback">단백질을 입력하세요.</div>
 												</div>
 												<div class="col-3">
 													<label for="fat" class="form-label">포화지방(g)<b style="color: red;">*</b></label> 
-													<input type="text" id="fat" name="fat" class="form-control" placeholder="숫자">
+													<input type="text" id="fat" name="fat" class="form-control" placeholder="숫자" th:value="${item?.fat}">
 													<div class="invalid-feedback">포화지방을 입력하세요.</div>
 												</div>
 												<div class="col-3">
 													<label for="sodium" class="form-label">나트륨(mg)<b style="color: red;">*</b></label> 
-													<input type="text" id="sodium" name="sodium" class="form-control" placeholder="숫자">
+													<input type="text" id="sodium" name="sodium" class="form-control" placeholder="숫자" th:value="${item?.sodium}">
 													<div class="invalid-feedback">나트륨을 입력하세요.</div>
 												</div>
 												
@@ -87,7 +88,7 @@
 										<div class="col-4">
 											<label for="text" class="form-label">가격<b
 												style="color: red;">*</b></label> 
-											<input type="text" id="menuPrice" name="menuPrice" class="form-control" placeholder="숫자" required>
+											<input type="text" id="menuPrice" name="menuPrice" class="form-control" placeholder="숫자" th:value="${item?.menuPrice}" required>
 											<div class="invalid-feedback">가격을 입력하세요.</div>
 										</div>
 										<div class="col-4">
@@ -103,7 +104,7 @@
 										<div class="col-4">
 											<label for="menuStock" class="form-label">재고<b
 												style="color: red;">*</b></label> 
-											<input type="text" id="menuStock" name="menuStock" class="form-control" placeholder="숫자" required>
+											<input type="text" id="menuStock" name="menuStock" class="form-control" placeholder="숫자" th:value="${item?.menuStock}" required>
 											<div class="invalid-feedback">재고를 입력하세요.</div>
 										</div>
 
@@ -113,7 +114,7 @@
 									<div class="row mb-3">
 										<div class="col-8">
 											<label for="menuDescription" class="form-label">설명</label>
-											<textarea class="form-control" id="menuDescription" name="menuDescription" rows="1" placeholder="설명"></textarea>
+											<textarea class="form-control" id="menuDescription" name="menuDescription" rows="2" placeholder="설명" th:text="${item?.menuDescription}" maxlength="200"></textarea>
 										</div>
 										<div class="col-4">
 											<div class="row">
@@ -145,13 +146,13 @@
 
 								<div class="row">
 									<div class="col">
-										<a href="/memberXdmList" class="btn btn-outline-secondary"> <i
+										<a href="/productXdmList" class="btn btn-outline-secondary"> <i
 											class="ri-list-check"></i>
 										</a>
 									</div>
 									<div class="col">
 										<div style="float: right;">
-											<button type="button" class="btn btn-primary" id="btnSave">
+											<button type="button" class="btn btn-primary" id="btnSubmit">
 												<i class="bi bi-database-fill"></i>
 											</button>
 										</div>
@@ -172,9 +173,18 @@
 	<!-- temp -->
 	<script type="text/javascript">
 	
-	document.getElementById("btnSave").onclick = function(){
-		document.getElementById("form").submit();
+	let seq = document.querySelector("input[name=ifcgSeq]");
+	
+	document.getElementById("btnSubmit").onclick = function(){
+		if(seq.value == "0" || seq.value == "") {
+			form.action = "/productXdmInst";
+			form.submit();
+		} else {
+			form.action = "/productXdmUpdt";
+			form.submit();
+		}
 	}
+	
 	</script>
 	
 	<!-- ******************************************************************************* -->

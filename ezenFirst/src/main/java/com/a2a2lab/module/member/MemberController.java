@@ -24,6 +24,7 @@ public class MemberController {
 	@Autowired
 	MemberService service;
 	
+//	사용자 계정------------------------------------------------------------
 	@RequestMapping(value = "/accountUsrRegister")
 	public String accountUsrRegister(Model model) {
 		model.addAttribute("mobileCarrierGroup", service.selectMobileCarrierGroup());
@@ -38,12 +39,13 @@ public class MemberController {
 		return "redirect:/accountUsrRegister";
 	}
 	
+//  관리자---------------------------------------------------------------------------	
 	@RequestMapping(value = "/memberXdmList")
 	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo, HttpSession httpSession) {
 
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/login";
+			return "redirect:/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
@@ -61,7 +63,7 @@ public class MemberController {
 		
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/login";
+			return "redirect:/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
@@ -101,13 +103,14 @@ public class MemberController {
 		}
 		return "redirect:/memberXdmList";
 	}
-	
-//	---------로그인---------------------------------------
-	
-	@RequestMapping(value = "/login")
-	public String login() {
 
-		return "/xdm/sign/login";
+	
+//	로그인--------------------------------------------------------------
+	
+	@RequestMapping(value = "/loginXdm")
+	public String loginXdm() {
+
+		return "/xdm/sign/loginXdm";
 	}
 	
 	@ResponseBody
@@ -117,12 +120,11 @@ public class MemberController {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 			
 		// dto의 (email, password)와 DB의 (email, password)가 일치하는지 검사
-		int result = service.loginChk(dto);
+		MemberDto result = service.loginChk(dto);
 		
 		// 검사결과 map에 put해서 리턴
-		if(result != 0) {
-			dto = service.getByEmail(dto.getEmail());
-			httpSession.setAttribute("user", dto);
+		if(result != null) {
+			httpSession.setAttribute("user", result);
 			returnMap.put("rt", "success");
 		} else {
 			returnMap.put("rt", "fail");

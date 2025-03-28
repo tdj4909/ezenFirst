@@ -38,11 +38,7 @@ public class MemberService {
 		return dao.selectOne(vo);
 	}
 	
-	public MemberDto getByEmail(String email) {
-		return dao.getByEmail(email);
-	}
-	
-	public int loginChk(MemberDto dto) {
+	public MemberDto loginChk(MemberDto dto) {
 		return dao.loginChk(dto);
 	}
 

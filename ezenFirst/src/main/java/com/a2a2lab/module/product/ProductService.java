@@ -21,6 +21,14 @@ public class ProductService {
 	public int insert(ProductDto dto) {
 		return dao.insert(dto);
 	}
+	
+	public int uelete(ProductDto dto) {
+		return dao.uelete(dto);
+	}
+	
+	public int update(ProductDto dto) {
+		return dao.update(dto);
+	}
 
 	public int selectOneCount(ProductVo vo) {
 		return dao.selectOneCount(vo);

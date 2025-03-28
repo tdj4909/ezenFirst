@@ -46,7 +46,6 @@
 				,a.menuType
 				,a.recommand
 				,a.menuNew
-				,a.orderCnt
 				,a.menuStock
 			<include refid="selectCommon"></include>
 			ORDER BY
@@ -74,7 +73,6 @@
 				,a.menuType
 				,a.recommand
 				,a.menuNew
-				,a.orderCnt
 				,a.menuStock
 			<include refid="selectCommon"></include>
 			ORDER BY
@@ -96,7 +94,6 @@
 			,menuType
 			,recommand
 			,menuNew
-			,orderCnt
 			,menuStock
 			,menuDelNy
 		) VALUES(
@@ -111,11 +108,35 @@
 			,#{menuType}
 			,#{recommand}
 			,#{menuNew}
-			,0
-			,#{menuNm}
+			,#{menuStock}
 			,0
 		)
 	</insert>
+	
+	<update id="update">
+		UPDATE menu SET
+			menuNm = #{menuNm}
+			,menuPrice = #{menuPrice}
+			,menuDescription = #{menuDescription}
+			,calories = #{calories}
+			,sugars = #{sugars}
+			,protein = #{protein}
+			,fat = #{fat}
+			,sodium = #{sodium}
+			,menuType = #{menuType}
+			,recommand = #{recommand}
+			,menuNew = #{menuNew}
+			,menuStock = #{menuStock}
+		WHERE
+			seq = #{ifcgSeq}
+	</update>
+	
+	<update id="uelete">
+		UPDATE menu SET
+			menuDelNy = 1
+		WHERE
+			seq = #{seq}
+	</update>
 
 	
 </mapper>
