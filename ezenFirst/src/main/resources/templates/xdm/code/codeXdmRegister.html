@@ -25,7 +25,7 @@
 	<!-- End Page Title -->
 
 	<section class="section">
-		<form action="/codeXdmInst" method="post" id="form" class="needs-validation" novalidate>
+		<form action="" method="post" id="form" class="needs-validation" novalidate>
 		
 			<div class="row">
 				<div class="col-lg-12">
@@ -45,10 +45,10 @@
 									<div class="col-3">
 										<div th:replace="~{xdm/codegroup/codeGroupXdmVo :: vo}"></div>
 										
-										<label for="select1" class="form-label">코드그룹<b
+										<label for="codeGroup_seq" class="form-label">코드그룹<b
 											style="color: red;">*</b></label> 
-										<select name="codeGroup_seq" id="codeGroup_seq" class="form-select">
-											<option disabled hidden selected>선택하세요</option>
+										<select name="codeGroup_seq" id="codeGroup_seq" class="form-select" required>
+											<option disabled hidden selected value="">선택하세요</option>
 											<option th:each="group : ${codeGroup}"
 													th:value="${group.seq}" 
 													th:text="${group.codeGroupNm}" 
@@ -66,37 +66,25 @@
 										<input type="text" id="ifcgSeq" name="ifcgSeq" th:value="${item?.ifcgSeq}" maxlength="20" placeholder="자동생성" disabled class="form-control"/>
 									</div>
 									<div class="col-3">
-										<label for="text2" class="form-label">코드 (ANOTHER)</label> <input
+										<label for="codeCd" class="form-label">코드 (ANOTHER)</label> <input
 											name="codeCd" type="text" class="form-control" th:value="${item?.codeCd}"
 											placeholder="영대소문자,숫자">
 									</div>
 									<div class="col-3">
-										<label for="text3" class="form-label">코드 이름<b
-											style="color: red;">*</b></label> <input name="codeNm" id="codeNm" th:value="${item?.codeNm}"
-											type="text" class="form-control" placeholder="한글,영대소문자,숫자" required>
+										<label for="codeNm" class="form-label">코드 이름<b style="color: red;">*</b></label> 
+										<input name="codeNm" id="codeNm" th:value="${item?.codeNm}" 
+												type="text" class="form-control" placeholder="한글,영대소문자,숫자" required>
 										<div class="invalid-feedback">
 									      코드 이름을 입력하세요.
 									    </div>
 									</div>
 									<div class="col-3">
-										<label for="text4" class="form-label">코드 이름(영문)</label> <input
-											id="text4" type="text" class="form-control"
-											placeholder="영대소문자,숫자">
-									</div>
-								</div>
-
-								<div class="row mb-3">
-									<div class="col-3">
-										<label for="select2" class="form-label">사용여부<b
+										<label for="codeUse" class="form-label">사용여부<b
 											style="color: red;">*</b></label> 
 										<select name="codeUse" id="codeUse" class="form-select">
 											<option value="1" th:selected="${item?.codeUse == 1}">사용</option>
 											<option value="0" th:selected="${item?.codeUse == 0}">사용안함</option>
 										</select>
-									</div>
-									<div class="col-3">
-										<label for="text5" class="form-label">순서</label> <input
-											id="text5" type="text" class="form-control">
 									</div>
 								</div>
 
@@ -104,6 +92,10 @@
 									<div class="col-6">
 										<label for="textarea1" class="form-label">설명</label>
 										<textarea class="form-control" id="textarea1" rows="3"></textarea>
+									</div>
+									<div class="col-3">
+										<label for="text5" class="form-label">순서</label> <input
+											id="text5" type="text" class="form-control">
 									</div>
 								</div>
 
@@ -162,7 +154,7 @@
 	let exampleModal = document.getElementById('exampleModal');
 	let close = document.getElementById('close');
 	let modalContent = document.getElementById('modalContent');
-	const forms = document.querySelectorAll('.needs-validation');
+	
 	  
 /* 	document.getElementById("btnSubmit").onclick = function() {
 
@@ -230,28 +222,60 @@
 	
 	let seq = document.querySelector("input[name=ifcgSeq]");							/* ### */
 	
-	function validationInst() {
-	    if(validationUpdt() == false) return false;
-	}
+// 	function validationInst() {
+// 	    if(validationUpdt() == false) return false;
+// 	}
 	
-	function validationUpdt() {
- 		if(!checkOnlyEnglishNumber('ifcgSeqAnother', 2, 1, "코드그룹 코드 (Another)는 영대소문자, 숫자만 입력 가능합니다.")) return false;
+// 	function validationUpdt() {
+//  		if(!checkOnlyEnglishNumber('ifcgSeqAnother', 2, 1, "코드그룹 코드 (Another)는 영대소문자, 숫자만 입력 가능합니다.")) return false;
 
+// 	}
+
+
+	// 유효성 검사
+	function validation() {
+	    const form = document.querySelector('.needs-validation'); // 단일 폼 선택
+	    const inputCodeNm = form.querySelector("input[name='codeNm']"); // 코드 이름 입력 필드
+	    const selectCodeGroupSeq = form.querySelector("select[name='codeGroup_seq']"); // 코드 그룹 선택 필드
+	
+	    // 코드 그룹이 선택되지 않은 경우
+	    if (!selectCodeGroupSeq.value) { 
+	        form.classList.add("was-validated");
+	        selectCodeGroupSeq.focus();
+	        return false;
+	    }
+	    // 코드 이름이 비어 있는 경우
+	    if (!inputCodeNm.value.trim()) {
+	        form.classList.add("was-validated");
+	        inputCodeNm.focus();
+	        return false;
+	    }
+	
+	    return true;
 	}
 	
 	document.getElementById("btnSubmit").onclick = function () {
 		if(seq.value == "0" || seq.value == "") {
-// 			if(validationInst() == false) return false;
+			if(validation() == false) return false;
 // 			$("#modalLoading").modal("show");
 			form.action = "/codeXdmInst";
 			form.submit();
 		} else {
-// 			if(validationUpdt() == false) return false;
+			if(validation() == false) return false;
 // 			$("#modalLoading").modal("show");
 			form.action = "/codeXdmUpdt";
 			form.submit();
 		}
 	}
+	
+	document.addEventListener("DOMContentLoaded", function () {
+	    const inputCodeNm = document.querySelector("input[name='codeNm']");
+
+	    inputCodeNm.addEventListener("input", function () {
+	        // 첫 글자가 공백이면 자동 제거
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	});
 	
 </script>
 

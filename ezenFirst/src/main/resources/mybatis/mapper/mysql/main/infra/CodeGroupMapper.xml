@@ -14,8 +14,8 @@
 		<if test="shDelNy != null and !shDelNy.equals('')">AND a.codegroupDelNy = #{shDelNy}</if>
 		
 		<choose>
-			<when test="shOptionDate == 1">AND a.codeGroupRegDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-			<when test="shOptionDate == 2">AND a.codeGroupModDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+			<when test="shOptionDate == 1">AND a.codeGroupRegDateTime BETWEEN CONCAT(#{shDateStart}, 'T00:00:00') AND CONCAT(#{shDateEnd}, 'T23:59:59')</when>
+			<when test="shOptionDate == 2">AND a.codeGroupModDateTime BETWEEN CONCAT(#{shDateStart}, 'T00:00:00') AND CONCAT(#{shDateEnd}, 'T23:59:59')</when>
 		</choose>
 		
 		<choose>

@@ -26,7 +26,7 @@
 
 		<section class="section">
 <!-- ********************************************************************************************* -->
-			<form action="" method="post" id="form">
+			<form action="" method="post" id="form" class="needs-validation" novalidate>
 				<input type="hidden"name="ifcgSeq" th:value="${item?.ifcgSeq}">
 				<div class="row">
 					<div class="col-lg-12">
@@ -47,34 +47,34 @@
 									<div class="row mb-3">
 										<div class="col-4">
 											<label for="text" class="form-label">메뉴명<b style="color: red;">*</b></label> 
-											<input type="text" id="menuNm" name="menuNm" class="form-control" placeholder="메뉴명" th:value="${item?.menuNm}">
+											<input type="text" id="menuNm" name="menuNm" class="form-control" placeholder="메뉴명" th:value="${item?.menuNm}" required>
 											<div class="invalid-feedback">메뉴명을 입력하세요.</div>
 										</div>
 										<div class="col-4">
 											<label for="calories" class="form-label">열량(kcal)<b style="color: red;">*</b></label> 
-											<input type="text" id="calories" name="calories" class="form-control" placeholder="숫자" th:value="${item?.calories}">
+											<input type="text" id="calories" name="calories" class="form-control" placeholder="숫자" th:value="${item?.calories}" required>
 											<div class="invalid-feedback">열량을 입력하세요.</div>
 										</div>
 										<div class="col-4">
 											<div class="row">
 												<div class="col-3">
 													<label for="sugars" class="form-label">당류(g)<b style="color: red;">*</b></label> 
-													<input type="text" id="sugars" name="sugars" class="form-control" placeholder="숫자" th:value="${item?.sugars}">
+													<input type="text" id="sugars" name="sugars" class="form-control" placeholder="숫자" th:value="${item?.sugars}" required>
 													<div class="invalid-feedback">당류를 입력하세요.</div>
 												</div>
 												<div class="col-3">
 													<label for="protein" class="form-label">단백질(g)<b style="color: red;">*</b></label> 
-													<input type="text" id="protein" name="protein" class="form-control" placeholder="숫자" th:value="${item?.protein}">
+													<input type="text" id="protein" name="protein" class="form-control" placeholder="숫자" th:value="${item?.protein}" required>
 													<div class="invalid-feedback">단백질을 입력하세요.</div>
 												</div>
 												<div class="col-3">
 													<label for="fat" class="form-label">포화지방(g)<b style="color: red;">*</b></label> 
-													<input type="text" id="fat" name="fat" class="form-control" placeholder="숫자" th:value="${item?.fat}">
+													<input type="text" id="fat" name="fat" class="form-control" placeholder="숫자" th:value="${item?.fat}" required>
 													<div class="invalid-feedback">포화지방을 입력하세요.</div>
 												</div>
 												<div class="col-3">
 													<label for="sodium" class="form-label">나트륨(mg)<b style="color: red;">*</b></label> 
-													<input type="text" id="sodium" name="sodium" class="form-control" placeholder="숫자" th:value="${item?.sodium}">
+													<input type="text" id="sodium" name="sodium" class="form-control" placeholder="숫자" th:value="${item?.sodium}" required>
 													<div class="invalid-feedback">나트륨을 입력하세요.</div>
 												</div>
 												
@@ -93,8 +93,8 @@
 										</div>
 										<div class="col-4">
 											<label for="menuType" class="form-label">종류<b style="color: red;">*</b></label> 
-											<select class="form-select" name="menuType">
-												<option hidden disabled selected>종류</option>
+											<select class="form-select" name="menuType" required>
+												<option hidden disabled value="" selected>종류</option>
 												<option value="1" th:selected="${item?.menuType == 1}">세트</option>
 												<option value="2" th:selected="${item?.menuType == 2}">단품</option>
 												<option value="3" th:selected="${item?.menuType == 3}">사이드</option>
@@ -121,7 +121,7 @@
 												<div class="col-6">
 													<label for="recommand" class="form-label">추천<b
 														style="color: red;">*</b></label> 
-													<select name="recommand" id="recommand" class="form-select">
+													<select name="recommand" id="recommand" class="form-select" required>
 														<option value="1" th:selected="${item?.recommand == 1}">Y</option>
 														<option value="0" th:selected="${item?.recommand == 0}">N</option>
 													</select>
@@ -129,7 +129,7 @@
 												<div class="col-6">
 													<label for="menuNew" class="form-label">신메뉴<b
 														style="color: red;">*</b></label> 
-													<select name="menuNew" id="menuNew" class="form-select">
+													<select name="menuNew" id="menuNew" class="form-select" required>
 														<option value="1" th:selected="${item?.menuNew == 1}">Y</option>
 														<option value="0" th:selected="${item?.menuNew == 0}">N</option>
 													</select>
@@ -173,13 +173,107 @@
 	<!-- temp -->
 	<script type="text/javascript">
 	
+	const form = document.querySelector('.needs-validation'); // 단일 폼 선택
+    
+    const inputMenuNm = form.querySelector("input[name='menuNm']");
+    const inputCalories = form.querySelector("input[name='calories']");
+    const inputSugars = form.querySelector("input[name='sugars']");
+    const inputProtein = form.querySelector("input[name='protein']");
+    const inputFat = form.querySelector("input[name='fat']");
+    const inputSodium = form.querySelector("input[name='sodium']");
+    
+    const inputMenuPrice = form.querySelector("input[name='menuPrice']");
+    const selectMenuType = form.querySelector("select[name='menuType']");
+    const inputMenuStock = form.querySelector("input[name='menuStock']");
+    
+    const selectRecommand = form.querySelector("select[name='recommand']");
+    const selectMenuNew = form.querySelector("select[name='menuNew']");
+
+    
+	// 유효성 검사
+	function validation() {
+	    
+	    let isValid = true;
+	    
+	    if (!inputMenuNm.value.trim()) {		// inputMenuNm
+	    	inputMenuNm.focus();
+	        isValid = false;
+	    } else if (!inputCalories.value.trim()) {	// inputCalories
+	    	inputCalories.focus();
+	        isValid = false;
+	    } else if (!inputSugars.value.trim()) {		// inputSugars
+	    	inputSugars.focus();
+	        isValid = false;
+	    } else if (!inputProtein.value.trim()) {		// inputProtein
+	    	inputProtein.focus();
+	        isValid = false;
+	    } else if (!inputFat.value.trim()) {		// inputFat
+	    	inputFat.focus();
+	        isValid = false;
+	    } else if (!inputSodium.value.trim()) {	// inputSodium
+	    	inputSodium.focus();
+	        isValid = false;
+	    } else if (!inputMenuPrice.value.trim()) {		// inputMenuPrice
+	    	inputMenuPrice.focus();
+	        isValid = false;
+	    } else if (!selectMenuType.value) {		// selectMenuType
+	    	selectMenuType.focus();
+	        isValid = false;
+	    } else if (!inputMenuStock.value) {		// inputMenuStock
+	    	inputMenuStock.focus();
+	        isValid = false;
+	    } else if (!selectRecommand.value) {		// selectRecommand
+	    	selectRecommand.focus();
+	        isValid = false;
+	    } else if (!selectMenuNew.value) {	// selectMenuNew
+	    	selectMenuNew.focus();
+	        isValid = false;
+	    }
+	    
+	    
+	    if(!isValid){
+	    	form.classList.add("was-validated");
+	    }
+	
+	    return isValid;
+	}
+    
+	document.addEventListener("DOMContentLoaded", function () {
+
+		// 첫 글자가 공백이면 자동 제거
+	    inputMenuNm.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputCalories.addEventListener("input", function () {
+	        this.value = this.value.replace(/[^0-9]/g, '');
+	    });
+	    inputSugars.addEventListener("input", function () {
+	        this.value = this.value.replace(/[^0-9]/g, '');
+	    });
+	    inputProtein.addEventListener("input", function () {
+	        this.value = this.value.replace(/[^0-9]/g, '');
+	    });
+	    inputFat.addEventListener("input", function () {
+	        this.value = this.value.replace(/[^0-9]/g, '');
+	    });
+	    inputSodium.addEventListener("input", function () {
+	        this.value = this.value.replace(/[^0-9]/g, '');
+	    });
+	    inputMenuPrice.addEventListener("input", function () {
+	        this.value = this.value.replace(/[^0-9]/g, '');
+	    });
+	});
+	
+	
 	let seq = document.querySelector("input[name=ifcgSeq]");
 	
 	document.getElementById("btnSubmit").onclick = function(){
 		if(seq.value == "0" || seq.value == "") {
+			if(validation() == false) return false;
 			form.action = "/productXdmInst";
 			form.submit();
 		} else {
+			if(validation() == false) return false;
 			form.action = "/productXdmUpdt";
 			form.submit();
 		}

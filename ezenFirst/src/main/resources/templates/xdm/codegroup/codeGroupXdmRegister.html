@@ -26,11 +26,7 @@
 
 		<section class="section">
 
-			<form action="/codeGroupXdmInst" method="post" id="form">
-			
-				
-				
-				
+			<form class="needs-validation" action="" method="post" id="form" novalidate>
 				
 				<div class="row">
 					<div class="col-lg-12">
@@ -60,18 +56,13 @@
 												placeholder="영대소문자,숫자">
 										</div>
 										<div class="col-3">
-											<label for="text3" class="form-label">코드그룹 이름<b
-												style="color: red;">*</b></label> <input name="codeGroupNm" type="text" th:value="${item?.codeGroupNm}"
-												class="form-control" placeholder="한글,영대소문자,숫자">
+											<label for="text3" class="form-label">코드그룹 이름<b style="color: red;">*</b></label>
+											<input name="codeGroupNm" type="text" th:value="${item?.codeGroupNm}"
+												class="form-control" placeholder="한글,영대소문자,숫자" required>
+											<div class="invalid-feedback">
+												코드그룹 이름을 입력하세요.
+											</div>
 										</div>
-										<div class="col-3">
-											<label for="text4" class="form-label">코드그룹 이름(영문)</label> <input
-												id="text4" type="text" class="form-control"
-												placeholder="영대소문자,숫자">
-										</div>
-									</div>
-
-									<div class="row mb-3">
 										<div class="col-3">
 											<label for="codeGroupUse" class="form-label">사용여부<b
 												style="color: red;">*</b></label> 
@@ -80,16 +71,16 @@
 												<option value="0" th:selected="${item?.codeGroupUse == 0}">사용안함</option>
 											</select>
 										</div>
-										<div class="col-3">
-											<label for="text5" class="form-label">순서</label> 
-											<input id="text5" type="text" class="form-control">
-										</div>
 									</div>
 
 									<div class="row mb-3">
 										<div class="col-6">
 											<label for="textarea1" class="form-label">설명</label>
 											<textarea class="form-control" id="textarea1" rows="3"></textarea>
+										</div>
+										<div class="col-3">
+											<label for="text5" class="form-label">순서</label> 
+											<input id="text5" type="text" class="form-control">
 										</div>
 									</div>
 
@@ -125,35 +116,43 @@
 	<!-- temp -->
 	<script type="text/javascript">
 	
-// 	document.getElementById("btnSave").onclick = function(){
-// 		document.getElementById("form").submit();
-// 	}
-	
-	
 	let seq = document.querySelector("input[name=ifcgSeq]");
-	
-	function validationInst() {
-	    if(validationUpdt() == false) return false;
-	}
-	
-	function validationUpdt() {
- 		if(!checkOnlyEnglishNumber('codeGroupCd', 2, 1, "코드그룹 코드 (Another)는 영대소문자, 숫자만 입력 가능합니다.")) return false;
 
+	// 유효성 검사
+	function validation() {
+
+		const form = document.querySelector(".needs-validation"); // 폼 선택
+	    const inputField = form.querySelector("input[name='codeGroupNm']"); // 입력 필드 찾기
+
+	    if (!inputField.value.trim()) { 
+	        form.classList.add("was-validated"); // 부트스트랩 유효성 스타일 적용
+	        inputField.focus();
+	        return false; // 제출 차단
+	    }
+
+	    return true; // 입력이 올바르면 제출 허용
 	}
 	
 	document.getElementById("btnSubmit").onclick = function () {
-		if(seq.value == "0" || seq.value == "") {
-// 			if(validationInst() == false) return false;
-// 			$("#modalLoading").modal("show");
+		if(seq.value == "0" || seq.value == "") {				// Insert
+			if(validation() == false) return false;
 			form.action = "/codeGroupXdmInst";
 			form.submit();
-		} else {
-// 			if(validationUpdt() == false) return false;
-// 			$("#modalLoading").modal("show");
+		} else {												// Update
+			if(validation() == false) return false;
 			form.action = "/codeGroupXdmUpdt";
 			form.submit();
 		}
 	}
+	
+	document.addEventListener("DOMContentLoaded", function () {
+	    const inputCodeGroupNm = document.querySelector("input[name='codeGroupNm']");
+
+	    inputCodeGroupNm.addEventListener("input", function () {
+	        // 첫 글자가 공백이면 자동 제거
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	});
 	
 	</script>
 	

@@ -26,7 +26,7 @@
 
 		<section class="section">
 <!-- ********************************************************************************************* -->
-			<form action="/memberXdmRegisterInst" method="post" id="form">
+			<form action="" method="post" id="form" class="needs-validation" novalidate>
 				<input type="hidden"name="ifcgSeq" th:value="${item?.ifcgSeq}">
 				<div class="row">
 					<div class="col-lg-12">
@@ -45,15 +45,14 @@
 
 									<div class="row mb-3">
 										<div class="col-4">
-											<label for="email" class="form-label">이메일<b
-												style="color: red;">*</b></label> 
-											<input type="email" id="email" name="email" class="form-control" placeholder="이메일" th:value="${item?.email}">
+											<label for="email" class="form-label">이메일<b style="color: red;">*</b></label> 
+											<input type="email" id="email" name="email" class="form-control" placeholder="이메일" th:value="${item?.email}" required>
 											<div class="invalid-feedback">이메일을 입력하세요.</div>
 										</div>
 										<div class="col-4">
 											<label for="nickname" class="form-label">닉네임<b
 												style="color: red;">*</b></label> 
-											<input type="text" id="nickname" name="nickname" class="form-control" placeholder="한글,영대소문자,숫자" th:value="${item?.nickname}">
+											<input type="text" id="nickname" name="nickname" class="form-control" placeholder="한글,영대소문자,숫자" th:value="${item?.nickname}" required>
 											<div class="invalid-feedback">닉네임을 입력하세요.</div>
 										</div>
 										<div class="col-4">
@@ -61,23 +60,23 @@
 											
 												<div class="col-4">
 													<label for="birthYear" class="form-label">연<b style="color: red;">*</b></label> 
-													<select name="birthYear" id="birthYearSelect" class="form-select">
-														<option disabled hidden selected>연</option>
+													<select name="birthYear" id="birthYearSelect" class="form-select" th:value="${item?.birthYear}" required>
+														<option disabled hidden selected value="">연</option>
 													</select>
 												</div>
 												
 												<div class="col-4">
 													<label for="birthMonth" class="form-label">월<b style="color: red;">*</b></label> 
-													<select name="birthMonth" id="birthMonthSelect" class="form-select">
-														<option disabled hidden selected>월</option>
+													<select name="birthMonth" id="birthMonthSelect" class="form-select" required>
+														<option disabled hidden selected value="">월</option>
 
 													</select>
 												</div>
 												
 												<div class="col-4">
 													<label for="birthDay" class="form-label">일<b style="color: red;">*</b></label> 
-													<select name="birthDay" id="birthDaySelect" class="form-select">
-														<option disabled hidden selected>일</option>
+													<select name="birthDay" id="birthDaySelect" class="form-select" required>
+														<option disabled hidden selected value="">일</option>
 
 													</select>
 												</div>
@@ -98,13 +97,13 @@
 												<div class="col">
 													<label for="lastNm" class="form-label">성<b
 												style="color: red;">*</b></label> 
-											<input type="text" id="lastNm" name="lastNm" class="form-control" placeholder="한글,영대소문자" th:value="${item?.lastNm}">
+											<input type="text" id="lastNm" name="lastNm" class="form-control" placeholder="한글,영대소문자" th:value="${item?.lastNm}" required>
 											<div class="invalid-feedback">성을 입력하세요.</div>
 												</div>
 												<div class="col">
 													<label for="firstNm" class="form-label">이름<b
 												style="color: red;">*</b></label> 
-											<input type="text" id="firstNm" name="firstNm" class="form-control" placeholder="한글,영대소문자" th:value="${item?.firstNm}">
+											<input type="text" id="firstNm" name="firstNm" class="form-control" placeholder="한글,영대소문자" th:value="${item?.firstNm}" required>
 											<div class="invalid-feedback">이름을 입력하세요.</div>
 												</div>
 											</div>
@@ -114,8 +113,8 @@
 												<div class="col-4">
 													<label for="mobileCarrier" class="form-label">통신사<b
 															style="color: red;">*</b></label> 
-													<select class="form-select" name="mobileCarrier">
-														<option disabled hidden selected>통신사</option>
+													<select class="form-select" name="mobileCarrier" required>
+														<option disabled hidden selected value="">통신사</option>
 														<option th:each="group : ${mobileCarrierGroup}" 
 																th:value="${group.codeSeq}"
 																th:text="${group.codeNm}"
@@ -128,7 +127,7 @@
 												<div class="col-8">
 													<label for="phone" class="form-label">휴대폰 번호<b
 														style="color: red;">*</b></label> 
-													<input type="text" id="phone" name="phone" class="form-control" th:value="${item?.phone}">
+													<input type="text" id="phone" name="phone" class="form-control" th:value="${item?.phone}" required>
 													<div class="invalid-feedback">휴대폰 번호를 입력하세요.</div>
 												</div>
 											</div>
@@ -145,8 +144,8 @@
 										</div>
 										<div class="col-4">
 											<label for="gender" class="form-label">성별<b style="color: red;">*</b></label> 
-											<select name="gender" class="form-select">
-												<option disabled hidden selected>성별</option>
+											<select name="gender" class="form-select" required>
+												<option disabled hidden selected value="">성별</option>
 												<option value="1" th:selected="${item?.gender == 1}">남자</option>
 												<option value="2" th:selected="${item?.gender == 2}">여자</option>
 												<option value="3" th:selected="${item?.gender == 3}">공개안함</option>
@@ -202,16 +201,138 @@
 	<!-- End #main -->
 
 	<!-- temp -->
+	
+	<script th:inline="javascript">
+	    // 타임리프 변수를 자바스크립트로 전달
+	    var selectedYear = /*[[${item?.birthYear}]]*/ 0;
+	    var selectedMonth = /*[[${item?.birthMonth}]]*/ 0;
+	    var selectedDay = /*[[${item?.birthDay}]]*/ 0;
+	    
+	</script>
+
 
 	<script>
+	
+	const form = document.querySelector('.needs-validation'); // 단일 폼 선택
+    
+    const inputEmail = form.querySelector("input[name='email']");
+    const inputPwd = form.querySelector("input[name='password']");
+    const inputPwdChk = form.querySelector("input[name='passwordChk']");
+    
+    const inputNickNm = form.querySelector("input[name='nickname']");
+    const inputLastNm = form.querySelector("input[name='lastNm']");
+    const inputFirstNm = form.querySelector("input[name='firstNm']");
+    const selectGender = form.querySelector("select[name='gender']");
+    
+    const selectYr = form.querySelector("select[name='birthYear']");
+    const selectMn = form.querySelector("select[name='birthMonth']");
+    const selectDy = form.querySelector("select[name='birthDay']");
+    const selectMobileCarrier = form.querySelector("select[name='mobileCarrier']");
+    const inputPhone = form.querySelector("input[name='phone']");
+    
+	// 유효성 검사
+	function validation() {
+	    
+	    let isValid = true;
+	    
+	    if (!inputEmail.value.trim()) {		// Email
+	    	inputEmail.focus();
+	        isValid = false;
+	    } else if (!inputPwd.value.trim()) {	// Password
+	    	inputPwd.focus();
+	        isValid = false;
+	    } else if (!inputPwdChk.value.trim()) {		// PaswordChk
+	    	inputPwdChk.focus();
+	        isValid = false;
+	    } else if (!inputNickNm.value.trim()) {		// Nickname
+	    	inputNickNm.focus();
+	        isValid = false;
+	    } else if (!inputLastNm.value.trim()) {		// LastNm
+	    	inputLastNm.focus();
+	        isValid = false;
+	    } else if (!inputFirstNm.value.trim()) {	// FirstNm
+	    	inputFirstNm.focus();
+	        isValid = false;
+	    } else if (!selectGender.value) {		// Gender
+	    	selectGender.focus();
+	        isValid = false;
+	    } else if (!selectYr.value) {		// BirthYear
+	    	selectYr.focus();
+	        isValid = false;
+	    } else if (!selectMn.value) {		// BirthMonth
+	    	selectMn.focus();
+	        isValid = false;
+	    } else if (!selectDy.value) {		// BirthDay
+	    	selectDy.focus();
+	        isValid = false;
+	    } else if (!selectMobileCarrier.value) {	// MobileCarrier
+	    	selectMobileCarrier.focus();
+	        isValid = false;
+	    } else if (!inputPhone.value.trim()) { // Phone
+	    	inputPhone.focus();
+	        isValid = false;
+	    }
+	    
+	    
+	    if(!isValid){
+	    	form.classList.add("was-validated");
+	    }
+	
+	    return isValid;
+	}
+    
+	document.addEventListener("DOMContentLoaded", function () {
+
+		// 첫 글자가 공백이면 자동 제거
+	    inputEmail.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputPwd.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputPwdChk.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputNickNm.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputLastNm.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputFirstNm.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputPhone.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	});
+	
+/* 	function pwdChk(){
+		console.log("@@@@@@@@@@@@@@");
+		if (inputPwd.value.trim() && inputPwdChk.value.trim() && inputPwd.value !== inputPwdChk.value) {
+			inputPwdChk.classList.remove("is-valid", "is-invalid");
+			inputPwdChk.classList.add("is-invalid");
+	        inputPwdChk.nextElementSibling.textContent = "비밀번호가 일치하지 않습니다.";
+	        console.log('!!!!!!!!!!!!!!!!');
+	        return false;
+	    }
+		
+		return true;
+	} */
+	
+	
 	
 	let seq = document.querySelector("input[name=ifcgSeq]");
 	
 	document.getElementById("btnSubmit").onclick = function(){
-		if(seq.value == "0" || seq.value == "") {
+		if(seq.value == "0" || seq.value == "") {				// Insert
+			if(validation() == false) return false;
+// 			if(pwdChk() == false) return false;
 			form.action = "/memberXdmRegisterInst";
 			form.submit();
-		} else {
+		} else {												// Update
+			if(validation() == false) return false;
+// 			if(pwdChk() == false) return false;
 			form.action = "/memberXdmRegisterUpdt";
 			form.submit();
 		}
@@ -220,11 +341,17 @@
 	// 연도 Select
     const birthYearSelect = document.getElementById("birthYearSelect");
     const currentYear = new Date().getFullYear();
-
+    
     for (let year = currentYear; year >= currentYear-100; year--) {
         let option = document.createElement("option");
         option.value = year;
         option.textContent = year;
+        
+    	 // 기본 선택값 설정
+        if (year == selectedYear) {
+            option.selected = true;
+        }
+     
         birthYearSelect.appendChild(option);
     }
     
@@ -235,6 +362,12 @@
         let option = document.createElement("option");
         option.value = month;
         option.textContent = month;
+        
+  	 	 // 기본 선택값 설정
+        if (month == selectedMonth) {
+            option.selected = true;
+        }
+   	 
         birthMonthSelect.appendChild(option);
     }
     
@@ -246,8 +379,16 @@
         let option = document.createElement("option");
         option.value = day;
         option.textContent = day;
+        
+   		 // 기본 선택값 설정
+        if (day == selectedDay) {
+            option.selected = true;
+        }
+   	 
         birthDaySelect.appendChild(option);
     }
+    
+    
     
 	</script>
 	

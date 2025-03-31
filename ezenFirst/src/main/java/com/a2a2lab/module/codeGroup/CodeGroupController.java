@@ -21,7 +21,7 @@ public class CodeGroupController {
 
 	@Autowired
 	CodeGroupService codeGroupService;
-
+	
     CodeGroupController(CodeService codeService) {
         this.codeService = codeService;
     }
@@ -36,6 +36,7 @@ public class CodeGroupController {
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
 //		setSearch(vo);
+		System.out.println(vo);
 		vo.setParamsPaging(codeGroupService.selectOneCount(vo));
 		
 		if (vo.getTotalRows() > 0) {

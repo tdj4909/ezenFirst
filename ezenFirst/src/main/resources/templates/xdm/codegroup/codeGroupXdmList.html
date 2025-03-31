@@ -48,7 +48,7 @@
 					</select>
 				</div>
 				<div class="col-2">
-					<input id="datetimepickerStart" name="shDateStart" type="text" class="form-control" placeholder="시작일">
+					<input id="datetimepickerStart" name="shDateStart" type="text" class="form-control" placeholder="시작일" th:value="${vo.shDateStart}">
 					
 <!-- 					<input type="text" id="shDateStart" name="shDateStart"  -->
 <!-- 					placeholder="시작일" class="form-control" autocomplete="off"> -->
@@ -56,7 +56,7 @@
 <!-- 					th:value="${#strings.substring(vo.shDateStart, 0, 10)}"  -->
 				</div>
 				<div class="col-2">
-					<input id="datetimepickerEnd" name="shDateEnd" type="text" class="form-control" placeholder="종료일">
+					<input id="datetimepickerEnd" name="shDateEnd" type="text" class="form-control" placeholder="종료일" th:value="${vo.shDateEnd}">
 <!-- 					<input type="text" id="shDateEnd" name="shDateEnd"  -->
 <!-- 					placeholder="종료일" class="form-control" autocomplete="off"> -->
 <!-- 					th:value="${#strings.substring(vo.shDateEnd, 0, 10)}"  -->
@@ -128,7 +128,6 @@
 											<th>사용</th>
 											<th>코드그룹 코드</th>
 											<th>코드그룹 이름</th>
-											<th>코드그룹 이름(영문)</th>
 											<th>갯수</th>
 											<th>순서</th>
 											<th>등록일</th>
@@ -138,7 +137,7 @@
 									<tbody>
 									
 										<tr th:if="${#lists.isEmpty(lists)}">
-											<td colspan=10 style="text-align: center"><p>There
+											<td colspan=9 style="text-align: center"><p>There
 													are no data!</p></td>
 										</tr>
 										<tr th:each="list : ${lists}">
@@ -156,7 +155,6 @@
 												<a href="javascript:void(0);" th:text="${list.codeGroupNm}" th:attr="onclick=|goForm(${list.ifcgSeq})|"></a>
 											</td>
 											
-											<td></td>
 											<td th:text="${list.codeCnt}"></td>
 											<td></td>
 											<td th:text="${list.codeGroupRegDateTime}"></td>
@@ -362,9 +360,15 @@
 			form.submit();
 		}
 		
-		
-		jQuery('#datetimepickerStart').datetimepicker();
-		jQuery('#datetimepickerEnd').datetimepicker();
+		// 날짜 검색 조건
+		jQuery('#datetimepickerStart').datetimepicker({
+			timepicker:false,
+			format:'Y-m-d'
+		});
+		jQuery('#datetimepickerEnd').datetimepicker({
+			timepicker:false,
+			format:'Y-m-d'
+		});
 		
 	</script>
 
