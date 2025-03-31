@@ -99,6 +99,13 @@
 			seq
 			,email
 			,admin
+			,lastNm
+		    ,firstNm
+		    ,gender
+		    ,birthYear
+		    ,birthMonth
+		    ,birthDay
+		    ,phone
 		FROM
 			user
 		WHERE

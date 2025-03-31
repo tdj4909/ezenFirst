@@ -13,10 +13,10 @@
 		<if test="shUseNy != null and !shUseNy.equals('')">AND a.codegroupUse = #{shUseNy}</if>
 		<if test="shDelNy != null and !shDelNy.equals('')">AND a.codegroupDelNy = #{shDelNy}</if>
 		
-<!-- 		<choose>
-			<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-			<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-		</choose> -->
+		<choose>
+			<when test="shOptionDate == 1">AND a.codeGroupRegDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+			<when test="shOptionDate == 2">AND a.codeGroupModDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		</choose>
 		
 		<choose>
 			<when test="shOption == 1">AND a.seq = #{shValue}</when>
@@ -55,6 +55,8 @@
 			,aa.codeGroupUse
 			,aa.codeGroupCd
 			,aa.codeGroupNm
+			,aa.codeGroupRegDateTime
+			,aa.codeGroupModDateTime
 			,aa.codeCnt
 			,aa.seq AS ifcgSeq
 		FROM (
@@ -63,6 +65,8 @@
 				a.codeGroupUse,
 				a.codeGroupCd,
 				a.codeGroupNm,
+				a.codeGroupRegDateTime,
+				a.codeGroupModDateTime,
 				(SELECT COUNT(*)
                 FROM code b
                 WHERE
@@ -80,11 +84,13 @@
 			codeGroupUse,
 			codeGroupCd,
 			codeGroupNm,
+			codeGroupRegDateTime,
 			codeGroupDelNy
 		) VALUES(
 			#{codeGroupUse},
 			NULLIF(#{codeGroupCd},''),
 			#{codeGroupNm},
+			now(),
 			0
 		)
 		<selectKey resultType="String" keyProperty="seq"
@@ -110,9 +116,10 @@
 	
 	<update id="update">
 		UPDATE codegroup SET
-			codeGroupUse = #{codeGroupUse},
-			codeGroupCd = #{codeGroupCd},
-			codeGroupNm = #{codeGroupNm}
+			codeGroupUse = #{codeGroupUse}
+			,codeGroupCd = #{codeGroupCd}
+			,codeGroupNm = #{codeGroupNm}
+			,codeGroupModDateTime = now()
 		WHERE
 			seq = #{ifcgSeq}
 	</update>

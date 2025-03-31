@@ -48,15 +48,17 @@
 					</select>
 				</div>
 				<div class="col-2">
-					<input type="text" id="shDateStart" name="shDateStart" 
-		
-					placeholder="시작일" class="form-control" autocomplete="off">
+					<input id="datetimepickerStart" name="shDateStart" type="text" class="form-control" placeholder="시작일">
+					
+<!-- 					<input type="text" id="shDateStart" name="shDateStart"  -->
+<!-- 					placeholder="시작일" class="form-control" autocomplete="off"> -->
+					
 <!-- 					th:value="${#strings.substring(vo.shDateStart, 0, 10)}"  -->
 				</div>
 				<div class="col-2">
-					<input type="text" id="shDateEnd" name="shDateEnd" 
-					
-					placeholder="종료일" class="form-control" autocomplete="off">
+					<input id="datetimepickerEnd" name="shDateEnd" type="text" class="form-control" placeholder="종료일">
+<!-- 					<input type="text" id="shDateEnd" name="shDateEnd"  -->
+<!-- 					placeholder="종료일" class="form-control" autocomplete="off"> -->
 <!-- 					th:value="${#strings.substring(vo.shDateEnd, 0, 10)}"  -->
 				</div>
 			</div>
@@ -139,7 +141,7 @@
 											<td colspan=10 style="text-align: center"><p>There
 													are no data!</p></td>
 										</tr>
-										<tr th:if="${!#lists.isEmpty(lists)}" th:each="list : ${lists}">
+										<tr th:each="list : ${lists}">
 											<td>
 												<input class="form-check-input rowCheckbox" type="checkbox" name="seq" th:value="${list.seq}">
 												<input type="hidden" name="delSeq" th:id="'delSeq_' + ${list.seq}">
@@ -157,8 +159,8 @@
 											<td></td>
 											<td th:text="${list.codeCnt}"></td>
 											<td></td>
-											<td></td>
-											<td></td>
+											<td th:text="${list.codeGroupRegDateTime}"></td>
+											<td th:text="${list.codeGroupModDateTime}"></td>
 										</tr>
 
 									</tbody>
@@ -359,6 +361,10 @@
 			form.action = "/codeGroupXdmUele";
 			form.submit();
 		}
+		
+		
+		jQuery('#datetimepickerStart').datetimepicker();
+		jQuery('#datetimepickerEnd').datetimepicker();
 		
 	</script>
 

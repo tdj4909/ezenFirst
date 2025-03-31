@@ -30,6 +30,8 @@
 
     <!-- Template Stylesheet -->
     <link href="/usr/template/onlineMenuBoard/assets/css/style.css" rel="stylesheet">
+    
+    <script src="/xdm/jquery/jquery-3.7.1.min.js"></script>
 </head>
 
 <body>
@@ -68,8 +70,9 @@
                             <a href="account-edit.html" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fas fa-user fa-2x"></i></a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 <a href="login.html" class="dropdown-item">로그인</a>
-                                <a href="register.html" class="dropdown-item active">회원가입</a>
-                                <a href="account-details.html" class="dropdown-item">개인정보 수정</a>
+                                <button type="button" id="signOut" class="dropdown-item">로그아웃</button>
+                                <a href="/TableOrder/accountRegister" class="dropdown-item active">회원가입</a>
+                                <a href="/TableOrder/accountUpdt" class="dropdown-item">개인정보 수정</a>
                                 <a href="account-changePassword.html" class="dropdown-item">비밀번호 변경</a>
                                 <a href="account-orderHistory.html" class="dropdown-item">주문내역</a>
                                 <a href="addMenu.html" class="dropdown-item">메뉴추가</a>
@@ -82,5 +85,27 @@
         </div>
     </div>
     <!-- Navbar End -->
+    
+    <script>
+    $("#signOut").on("click", function(){
+			$.ajax({
+				async: true 
+				,cache: false
+				,type: "post"
+				,url: "/signoutUsrProc"
+				,data: {}
+				,success: function(response) {
+					if(response.rt == "success") {
+						location.href = "/TableOrder/accountLogin";
+					} else {
+						// by pass
+					}
+				}
+				,error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		});
+    </script>
     
 </th:block>

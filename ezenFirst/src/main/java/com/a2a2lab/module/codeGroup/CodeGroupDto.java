@@ -1,24 +1,21 @@
 package com.a2a2lab.module.codeGroup;
 
+import java.time.LocalDateTime;
+
 public class CodeGroupDto {
 
 	private String seq;
 	private Integer codeGroupUse;
 	private String codeGroupCd;
 	private String codeGroupNm;
+	private LocalDateTime codeGroupRegDateTime;
+	private LocalDateTime codeGroupModDateTime;
 	private Integer codeGroupDelNy;
 	
 	private Integer codeCnt;
 	
 	private String ifcgSeq;
 	
-	
-	@Override
-	public String toString() {
-		return "CodeGroupDto [seq=" + seq + ", codeGroupUse=" + codeGroupUse + ", codeGroupCd=" + codeGroupCd
-				+ ", codeGroupNm=" + codeGroupNm + ", codeGroupDelNy=" + codeGroupDelNy + ", codeCnt=" + codeCnt
-				+ ", ifcgSeq=" + ifcgSeq + "]";
-	}
 	
 	public String getSeq() {
 		return seq;
@@ -62,5 +59,16 @@ public class CodeGroupDto {
 	public void setIfcgSeq(String ifcgSeq) {
 		this.ifcgSeq = ifcgSeq;
 	}
-	
+	public LocalDateTime getCodeGroupRegDateTime() {
+		return codeGroupRegDateTime;
+	}
+	public void setCodeGroupRegDateTime(LocalDateTime codeGroupRegDateTime) {
+		this.codeGroupRegDateTime = codeGroupRegDateTime;
+	}
+	public LocalDateTime getCodeGroupModDateTime() {
+		return codeGroupModDateTime;
+	}
+	public void setCodeGroupModDateTime(LocalDateTime codeGroupModDateTime) {
+		this.codeGroupModDateTime = codeGroupModDateTime;
+	}
 }

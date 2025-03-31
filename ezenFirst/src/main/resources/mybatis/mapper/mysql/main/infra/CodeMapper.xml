@@ -13,9 +13,10 @@
 		<if test="shUseNy != null and !shUseNy.equals('')">AND a.codeUse = #{shUseNy}</if>
 		<if test="shDelNy != null and !shDelNy.equals('')">AND a.codeDelNy = #{shDelNy}</if>
 
-		<!-- <choose> <when test="shOptionDate == 1">AND a.regDateTime BETWEEN 
-			#{shDateStart} AND #{shDateEnd}</when> <when test="shOptionDate == 2">AND 
-			a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when> </choose> -->
+		<choose> 
+			<when test="shOptionDate == 1">AND a.codeRegDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when> 
+			<when test="shOptionDate == 2">AND a.codeModDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when> 
+		</choose>
 
 		<choose> 
 			<when test="shOption == 1">AND a.seq = #{shValue}</when> 
@@ -41,7 +42,9 @@
 				c.codeGroupCd,
 				c.codeGroupNm,
 				b.codeCd,
-				b.codeNm
+				b.codeNm,
+				b.codeRegDateTime,
+				b.codeModDateTime
 			FROM codegroup c
 				JOIN (SELECT * 
 				<include refid="selectCommon"></include>
@@ -66,7 +69,9 @@
 				c.codeGroupCd,
 				c.codeGroupNm,
 				b.codeCd,
-				b.codeNm
+				b.codeNm,
+				b.codeRegDateTime,
+				b.codeModDateTime
 			FROM codegroup c
 				JOIN (SELECT * 
 				<include refid="selectCommon"></include>
@@ -94,12 +99,14 @@
 		    codeCd,
 			codeNm,
 			codeUse,
+			codeRegDateTime,
 		    codeDelNy,
 		    codeGroup_seq
 		) VALUES(
 		NULLIF(#{codeCd}, ''),
 		#{codeNm},
 		#{codeUse},
+		now(),
 		0,
 		#{codeGroup_seq}
 		)
@@ -129,7 +136,8 @@
 			codeCd = #{codeCd},
 			codeNm = #{codeNm},
 			codeUse = #{codeUse},
-		    codeGroup_seq = #{codeGroup_seq}
+		    codeGroup_seq = #{codeGroup_seq},
+		    codeModDateTime = now()
 		WHERE
 			seq = #{ifcgSeq}
 	</update>

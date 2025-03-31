@@ -95,6 +95,7 @@ public class MemberController {
 	@RequestMapping(value = "/loginXdm")
 	public String loginXdm(Model model) {
 		
+		// 임시 로그인 계정
 		String tmpEmail = "sample@example.com";
 		String tmpPwd = "12345678";
 		model.addAttribute("tmpEmail", tmpEmail);

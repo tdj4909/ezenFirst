@@ -1,5 +1,7 @@
 package com.a2a2lab.module.code;
 
+import java.time.LocalDateTime;
+
 public class CodeDto {
 
 	private String ifcgSeq;
@@ -9,6 +11,8 @@ public class CodeDto {
 	private String codeCd;
 	private String codeNm;
 	private Integer codeUse;
+	private LocalDateTime codeRegDateTime;
+	private LocalDateTime codeModDateTime;
 	private Integer codeDelNy;
 	private String codeGroup_seq;
 	
@@ -16,6 +20,7 @@ public class CodeDto {
 	private Integer codeGroupUse;
 	private String codeGroupCd;
 	private String codeGroupNm;
+	
 	
 	
 	public String getSeq() {
@@ -78,6 +83,19 @@ public class CodeDto {
 	}
 	public void setIfcgSeq(String ifcgSeq) {
 		this.ifcgSeq = ifcgSeq;
+	}
+	
+	public LocalDateTime getCodeRegDateTime() {
+		return codeRegDateTime;
+	}
+	public void setCodeRegDateTime(LocalDateTime codeRegDateTime) {
+		this.codeRegDateTime = codeRegDateTime;
+	}
+	public LocalDateTime getCodeModDateTime() {
+		return codeModDateTime;
+	}
+	public void setCodeModDateTime(LocalDateTime codeModDateTime) {
+		this.codeModDateTime = codeModDateTime;
 	}
 	
 }
