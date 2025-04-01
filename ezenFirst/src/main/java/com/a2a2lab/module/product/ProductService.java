@@ -26,6 +26,10 @@ public class ProductService {
 		return dao.uelete(dto);
 	}
 	
+	public int delete(ProductDto dto) {
+		return dao.delete(dto);
+	}
+	
 	public int update(ProductDto dto) {
 		return dao.update(dto);
 	}

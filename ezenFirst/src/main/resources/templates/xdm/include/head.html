@@ -300,11 +300,11 @@
 				async: true 
 				,cache: false
 				,type: "post"
-				,url: "/signoutXdmProc"
+				,url: "/Xdm/signoutXdmProc"
 				,data: {}
 				,success: function(response) {
 					if(response.rt == "success") {
-						location.href = "/loginXdm";
+						location.href = "/Xdm/login";
 					} else {
 						// by pass
 					}
@@ -347,7 +347,7 @@
 			</a>
 				<ul id="members-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a href="/memberXdmList"> <i
+					<li><a href="/Xdm/memberXdmList"> <i
 							class="bi bi-circle"></i><span>회원관리</span>
 					</a></li>
 					<li><a href="components-accordion.html"> <i
@@ -364,7 +364,7 @@
 			</a>
 				<ul id="products-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a href="/productXdmList"> <i
+					<li><a href="/Xdm/productXdmList"> <i
 							class="bi bi-circle"></i><span>제품관리</span>
 					</a></li>
 					<li><a href="components-accordion.html"> <i
@@ -399,12 +399,12 @@
 				<ul id="system-nav" class="nav-content collapse"
 					data-bs-parent="#sidebar-nav">
 					<li>
-						<a href="/codeXdmList" class=""> 
+						<a href="/Xdm/codeXdmList" class=""> 
 							<i class="bi bi-circle"></i><span>코드관리</span>
 						</a>
 					</li>
 					<li>
-						<a href="/codeGroupXdmList" class=""> 
+						<a href="/Xdm/codeGroupXdmList" class=""> 
 							<i class="bi bi-circle"></i><span>코드그룹관리</span>
 						</a>
 					</li>

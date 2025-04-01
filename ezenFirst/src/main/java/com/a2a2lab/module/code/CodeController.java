@@ -20,12 +20,12 @@ public class CodeController {
 	@Autowired
 	CodeService codeService;
 	
-	@RequestMapping(value = "/codeXdmList")
+	@RequestMapping(value = "/Xdm/codeXdmList")
 	public String codeXdmList(@ModelAttribute("vo") CodeVo vo, Model model, HttpSession httpSession) {
 		
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/loginXdm";
+			return "redirect:/Xdm/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
@@ -39,12 +39,12 @@ public class CodeController {
 		return "/xdm/code/codeXdmList";
 	}
 	
-	@RequestMapping(value = "/codeXdmRegister")
+	@RequestMapping(value = "/Xdm/codeXdmRegister")
 	public String codeXdmRegister(@ModelAttribute("vo") CodeVo vo, Model model, HttpSession httpSession) {
 		
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/loginXdm";
+			return "redirect:/Xdm/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
@@ -58,19 +58,19 @@ public class CodeController {
 		return "/xdm/code/codeXdmRegister";
 	}
 	
-	@RequestMapping(value = "/codeXdmInst")
+	@RequestMapping(value = "/Xdm/codeXdmInst")
 	public String codeXdmInst(CodeDto codeDto) {
 		codeService.insert(codeDto);
-		return "redirect:/codeXdmList";
+		return "redirect:/Xdm/codeXdmList";
 	}
 	
-	@RequestMapping(value = "/codeXdmUpdt")
+	@RequestMapping(value = "/Xdm/codeXdmUpdt")
 	public String codeXdmUpdt(CodeDto codeDto) {
 		codeService.update(codeDto);
-		return "redirect:/codeXdmList";
+		return "redirect:/Xdm/codeXdmList";
 	}
 	
-	@RequestMapping(value = "/codeXdmUele")
+	@RequestMapping(value = "/Xdm/codeXdmUele")
 	public String codeGroupXdmUele(@RequestParam("delSeq") List<String> delSeq) {
 
 		for(String delseq : delSeq) {
@@ -80,7 +80,20 @@ public class CodeController {
 				codeService.uelete(codeDto);
 			}
 		}
-		return "redirect:/codeXdmList";
+		return "redirect:/Xdm/codeXdmList";
+	}
+	
+	@RequestMapping(value = "/Xdm/codeXdmDele")
+	public String codeGroupXdmDele(@RequestParam("delSeq") List<String> delSeq) {
+		
+		for(String delseq : delSeq) {
+			if(!delseq.equals("")) {
+				CodeDto codeDto = new CodeDto();
+				codeDto.setIfcgSeq(delseq);
+				codeService.delete(codeDto);
+			}
+		}
+		return "redirect:/Xdm/codeXdmList";
 	}
 	
 }

@@ -25,11 +25,14 @@ public class AccountController {
 	@Autowired
 	MemberService memberService;
 
-//  사용자 회원가입-------------------------------------------------------------------
-	// 회원가입 화면
+//  사용자 회원가입 or 개인정보 수정-------------------------------------------------------------------
+	// 회원가입 or 개인정보 수정 화면
 	@RequestMapping(value = "/TableOrder/accountRegister")
-	public String accountRegister(Model model) {
+	public String accountRegister(Model model, HttpSession httpSession) {
+
+		model.addAttribute("user", httpSession.getAttribute("user"));
 		model.addAttribute("mobileCarrierGroup", memberService.selectMobileCarrierGroup());
+
 		return "/usr/account/accountRegister";
 	}
 	// 회원가입 Insert
@@ -37,7 +40,15 @@ public class AccountController {
 	public String accountUsrRegisterInst(MemberDto dto) {
 		dto.setAdmin(0);
 		memberService.insert(dto);
-		return "redirect:/TableOrder/accountRegister";
+		return "redirect:/TableOrder/shopList";
+	}
+	// 개인정보 수정
+	@RequestMapping(value = "/TableOrder/accountRegisterUpdt")
+	public String accountRegisterUpdt(MemberDto dto, HttpSession httpSession) {
+		memberService.update(dto);
+		MemberDto result = memberService.loginChk(dto);
+		httpSession.setAttribute("user", result);
+		return "redirect:/TableOrder/shopList";
 	}
 
 //  사용자 로그인, 로그아웃-----------------------------------------------------------------
@@ -53,12 +64,13 @@ public class AccountController {
 	}
 	// 로그인
 	@ResponseBody
-	@RequestMapping(value = "/signinUsrProc")
+	@RequestMapping(value = "/TableOrder/signinUsrProc")
 	public Map<String, Object> signinUsrProc(MemberDto dto, HttpSession httpSession) throws Exception {	
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		// dto의 (email, password)와 DB의 (email, password)가 일치하는지 검사
 		MemberDto result = memberService.loginChk(dto);
+		System.out.println(result);
 		
 		// 검사결과 map에 put해서 리턴
 		if(result != null) {
@@ -71,7 +83,7 @@ public class AccountController {
 	}
 	// 로그아웃
 	@ResponseBody
-	@RequestMapping(value = "/signoutUsrProc")
+	@RequestMapping(value = "/TableOrder/signoutUsrProc")
 	public Map<String, Object> signoutUsrProc(HttpSession httpSession) throws Exception {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
@@ -84,12 +96,18 @@ public class AccountController {
 	
 // 사용자 개인정보 수정--------------------------------------------------------------
 	// 개인정보 수정 화면
-		@RequestMapping(value = "/TableOrder/accountUpdt")
-		public String accountUpdt(Model model, HttpSession httpSession) {
-			
-			model.addAttribute("user", httpSession.getAttribute("user"));
-			
-			return "/usr/account/accountUpdate";
-		}
+	@RequestMapping(value = "/TableOrder/accountUpdate")
+	public String accountUpdate(Model model, HttpSession httpSession) {
+		
+		model.addAttribute("user", httpSession.getAttribute("user"));
+		
+		return "/usr/account/accountUpdate";
+	}
+	// 개인정보 수정
+	@RequestMapping(value = "/TableOrder/accountUpdateUpdt")
+	public String accountUpdateUpdt(MemberDto memberDto) {
+		
+		return "redirect:/TableOrder/shopList";
+	}
 	
 }

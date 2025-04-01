@@ -23,12 +23,12 @@ public class ProductController {
 	ProductService service;
 	
 	
-	@RequestMapping(value = "/productXdmList")
+	@RequestMapping(value = "/Xdm/productXdmList")
 	public String productXdmList(Model model, @ModelAttribute("vo") ProductVo vo, HttpSession httpSession) {
 
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/loginXdm";
+			return "redirect:/Xdm/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
@@ -41,12 +41,12 @@ public class ProductController {
 		return "/xdm/product/productXdmList";
 	}
 	
-	@RequestMapping(value = "/productXdmRegister")
+	@RequestMapping(value = "/Xdm/productXdmRegister")
 	public String productXdmRegister(@ModelAttribute("vo") ProductVo vo, Model model, HttpSession httpSession) {
 
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/loginXdm";
+			return "redirect:/Xdm/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
@@ -60,19 +60,19 @@ public class ProductController {
 		return "/xdm/product/productXdmRegister";
 	}
 	
-	@RequestMapping(value = "/productXdmInst")
+	@RequestMapping(value = "/Xdm/productXdmInst")
 	public String productXdmInst(ProductDto dto) {
 		service.insert(dto);
-		return "redirect:/productXdmList";
+		return "redirect:/Xdm/productXdmList";
 	}
 	
-	@RequestMapping(value = "/productXdmUpdt")
+	@RequestMapping(value = "/Xdm/productXdmUpdt")
 	public String productXdmUpdt(ProductDto dto) {
 		service.update(dto);
-		return "redirect:/productXdmList";
+		return "redirect:/Xdm/productXdmList";
 	}
 	
-	@RequestMapping(value = "/productXdmUele")
+	@RequestMapping(value = "/Xdm/productXdmUele")
 	public String productXdmUele(@RequestParam("seq") List<String> seqs) {
 		
 		for(String seq : seqs) {
@@ -82,7 +82,20 @@ public class ProductController {
 				service.uelete(dto);
 			}
 		}
-		return "redirect:/productXdmList";
+		return "redirect:/Xdm/productXdmList";
+	}
+	
+	@RequestMapping(value = "/Xdm/productXdmDele")
+	public String productXdmDele(@RequestParam("seq") List<String> seqs) {
+		
+		for(String seq : seqs) {
+			if(!seq.isBlank()) {
+				ProductDto dto = new ProductDto();
+				dto.setSeq(seq);
+				service.delete(dto);
+			}
+		}
+		return "redirect:/Xdm/productXdmList";
 	}
 	
 	

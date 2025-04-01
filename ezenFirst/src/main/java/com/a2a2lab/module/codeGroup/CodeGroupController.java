@@ -26,12 +26,12 @@ public class CodeGroupController {
         this.codeService = codeService;
     }
 	
-	@RequestMapping(value = "/codeGroupXdmList")
+	@RequestMapping(value = "/Xdm/codeGroupXdmList")
 	public String codeGroupXdmList(@ModelAttribute("vo") CodeGroupVo vo, Model model, HttpSession httpSession) throws Exception {
 		
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/loginXdm";
+			return "redirect:/Xdm/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
@@ -47,25 +47,32 @@ public class CodeGroupController {
 		return "/xdm/codeGroup/codeGroupXdmList";
 	}
 	
-	@RequestMapping(value = "/codeGroupXdmInst")
+	@RequestMapping(value = "/Xdm/codeGroupXdmInst")
 	public String codeGroupXdmInst(CodeGroupDto codeGroupDto) {
 		codeGroupService.insert(codeGroupDto);
-		return "redirect:/codeGroupXdmList";
+		return "redirect:/Xdm/codeGroupXdmList";
 	}
 	
-	@RequestMapping(value = "/codeGroupXdmUpdt")
+	@RequestMapping(value = "/Xdm/codeGroupXdmUpdt")
 	public String codeGroupXdmUpdt(CodeGroupDto codeGroupDto) {
 		codeGroupService.update(codeGroupDto);
-		return "redirect:/codeGroupXdmList";
+		return "redirect:/Xdm/codeGroupXdmList";
 	}
 	
-	@RequestMapping(value = "/codeGroupXdmDele")
-	public String codeGroupXdmDele(CodeGroupDto codeGroupDto) {
-		codeGroupService.delete(codeGroupDto);
-		return "redirect:/codeGroupXdmList";
+	@RequestMapping(value = "/Xdm/codeGroupXdmDele")
+	public String codeGroupXdmDele(@RequestParam("delSeq") List<String> delSeq) {
+		
+		for(String delseq : delSeq) {
+			if(!delseq.equals("")) {
+				CodeGroupDto codeGroupDto = new CodeGroupDto();
+				codeGroupDto.setIfcgSeq(delseq);
+				codeGroupService.delete(codeGroupDto);
+			}
+		}
+		return "redirect:/Xdm/codeGroupXdmList";
 	}
 	
-	@RequestMapping(value = "/codeGroupXdmUele")
+	@RequestMapping(value = "/Xdm/codeGroupXdmUele")
 	public String codeGroupXdmUele(@RequestParam("delSeq") List<String> delSeq) {
 
 		for(String delseq : delSeq) {
@@ -75,20 +82,20 @@ public class CodeGroupController {
 				codeGroupService.uelete(codeGroupDto);
 			}
 		}
-		return "redirect:/codeGroupXdmList";
+		return "redirect:/Xdm/codeGroupXdmList";
 	}
 	
-	@RequestMapping(value = "/usrIndex")
+	@RequestMapping(value = "/Xdm/usrIndex")
 	public String usrIndex() {
 		return "/usr/index/index";
 	}
 	
-	@RequestMapping(value = "/codeGroupXdmRegister")
+	@RequestMapping(value = "/Xdm/codeGroupXdmRegister")
 	public String codeGroupXdmRegister(@ModelAttribute("vo") CodeGroupVo vo, Model model, HttpSession httpSession) throws Exception{
 		
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/loginXdm";
+			return "redirect:/Xdm/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		

@@ -145,7 +145,7 @@ signin.on("click", function(){
 		,cache: false
 		,type: "post"
 		/* ,dataType:"json" */
-		,url: "/signinXdmProc"
+		,url: "/Xdm/signinXdmProc"
 		/* ,data : $("#formLogin").serialize() */
 		,data : { 
 			"email" : $("#email").val()
@@ -154,7 +154,7 @@ signin.on("click", function(){
 			}
 		,success: function(response) {
 			if(response.rt == "success") {
-				location.href = "/memberXdmList";
+				location.href = "/Xdm/memberXdmList";
 /* 				if(response.changePwd == "true") {
 					location.href = "/v1/infra/member/expiredPwdUsrForm";
 				} else {

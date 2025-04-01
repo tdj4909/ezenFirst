@@ -13,12 +13,7 @@
 		<if test="shDelNy != null and !shDelNy.equals('')">AND a.userDelNy = #{shDelNy}</if>
 		<if test="shGender != null and !shGender.equals('')">AND a.gender = #{shGender}</if>
 		<if test="shAdmin != null and !shAdmin.equals('')">AND a.admin = #{shAdmin}</if>
-		
-<!-- 		<choose>
-			<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-			<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-		</choose> -->
-		
+
 		<choose>
 			<when test="shOption == 1">AND a.email = #{shValue}</when>
 			<when test="shOption == 2">AND a.nickname LIKE CONCAT('%',#{shValue},'%')</when>
@@ -44,15 +39,14 @@
 			    ,a.lastNm
 			    ,a.firstNm
 			    ,a.gender
-			    ,a.birthYear
-			    ,a.birthMonth
-			    ,a.birthDay
+			    ,a.userDob
 			    ,
 			    (
 					SELECT codeNm
 			        FROM code c
 			        WHERE a.mobileCarrier = c.seq
 			    ) AS codeNm
+			    ,a.mobileCarrier
 			    ,a.phone
 			    ,a.admin
 			    ,a.password
@@ -76,9 +70,7 @@
 			    ,a.lastNm
 			    ,a.firstNm
 			    ,a.gender
-			    ,a.birthYear
-			    ,a.birthMonth
-			    ,a.birthDay
+			    ,a.userDob
 			    ,
 			    (
 					SELECT codeNm
@@ -98,14 +90,15 @@
 		SELECT 
 			seq
 			,email
-			,admin
+			,password
+			,nickname
 			,lastNm
 		    ,firstNm
 		    ,gender
-		    ,birthYear
-		    ,birthMonth
-		    ,birthDay
+		    ,userDob
+		    ,mobileCarrier
 		    ,phone
+		    ,admin
 		FROM
 			user
 		WHERE
@@ -132,9 +125,7 @@
 			,lastNm
 			,firstNm
 			,gender
-			,birthYear
-			,birthMonth
-			,birthDay
+			,userDob
 			,mobileCarrier
 			,phone
 			,admin
@@ -146,9 +137,7 @@
 			,#{lastNm}
 			,#{firstNm}
 			,#{gender}
-			,#{birthYear}
-			,#{birthMonth}
-			,#{birthDay}
+			,#{userDob}
 			,#{mobileCarrier}
 			,#{phone}
 			,#{admin}
@@ -160,24 +149,14 @@
 		</selectKey>
 	</insert>
 	
-	<delete id="delete">
-		DELETE
-		FROM
-			codegroup
-		WHERE
-			seq = #{seq}
-	</delete>
 	
 	<update id="update">
 		UPDATE user SET
-			email = #{email}
-			,nickname = #{nickname}
+			nickname = #{nickname}
 			,lastNm = #{lastNm}
 			,firstNm = #{firstNm}
 			,gender = #{gender}
-			,birthYear = #{birthYear}
-			,birthMonth = #{birthMonth}
-			,birthDay = #{birthDay}
+			,userDob = #{userDob}
 			,mobileCarrier = #{mobileCarrier}
 			,phone = #{phone}
 			,admin = #{admin}
@@ -191,6 +170,14 @@
 		WHERE
 			seq = #{seq}
 	</update>
+	
+	<delete id="delete">
+		Delete
+		FROM
+			user
+		WHERE
+			seq = #{seq}
+	</delete>
 	
 		<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
 		SELECT 

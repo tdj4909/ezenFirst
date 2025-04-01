@@ -29,6 +29,10 @@ public class MemberService {
 	public int uelete(MemberDto dto) {
 		return dao.uelete(dto);
 	}
+	
+	public int delete(MemberDto dto) {
+		return dao.delete(dto);
+	}
 
 	public int selectOneCount(MemberVo vo) {
 		return dao.selectOneCount(vo);

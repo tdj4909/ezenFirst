@@ -1,5 +1,6 @@
 package com.a2a2lab.module.member;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +15,7 @@ public class MemberDto {
 	private String lastNm;
 	private String firstNm;
 	private Integer gender;
-	private Integer birthYear;
-	private Integer birthMonth;
-	private Integer birthDay;
+	private String userDob;
 	private Integer mobileCarrier;
 	private String phone;
 	private Integer admin;
@@ -28,6 +27,16 @@ public class MemberDto {
 	
 	public static List<MemberDto> cachedCodeArrayList = new ArrayList<MemberDto>();
 	
+	
+	
+	@Override
+	public String toString() {
+		return "MemberDto [ifcgSeq=" + ifcgSeq + ", seq=" + seq + ", email=" + email + ", password=" + password
+				+ ", nickname=" + nickname + ", lastNm=" + lastNm + ", firstNm=" + firstNm + ", gender=" + gender
+				+ ", userDob=" + userDob + ", mobileCarrier=" + mobileCarrier + ", phone=" + phone + ", admin=" + admin
+				+ ", userDelNy=" + userDelNy + ", userFullNm=" + userFullNm + ", codeSeq=" + codeSeq + ", codeNm="
+				+ codeNm + "]";
+	}
 	public String getSeq() {
 		return seq;
 	}
@@ -70,23 +79,12 @@ public class MemberDto {
 	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
-	public Integer getBirthYear() {
-		return birthYear;
+	
+	public String getUserDob() {
+		return userDob;
 	}
-	public void setBirthYear(Integer birthYear) {
-		this.birthYear = birthYear;
-	}
-	public Integer getBirthMonth() {
-		return birthMonth;
-	}
-	public void setBirthMonth(Integer birthMonth) {
-		this.birthMonth = birthMonth;
-	}
-	public Integer getBirthDay() {
-		return birthDay;
-	}
-	public void setBirthDay(Integer birthDay) {
-		this.birthDay = birthDay;
+	public void setUserDob(String userDob) {
+		this.userDob = userDob;
 	}
 	public String getPhone() {
 		return phone;

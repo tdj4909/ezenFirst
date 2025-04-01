@@ -46,7 +46,7 @@
 									<div class="row mb-3">
 										<div class="col-4">
 											<label for="email" class="form-label">이메일<b style="color: red;">*</b></label> 
-											<input type="email" id="email" name="email" class="form-control" placeholder="이메일" th:value="${item?.email}" required>
+											<input type="email" id="email" name="email" class="form-control" placeholder="이메일" th:value="${item?.email}" th:disabled="${item?.email != null}" required>
 											<div class="invalid-feedback">이메일을 입력하세요.</div>
 										</div>
 										<div class="col-4">
@@ -56,31 +56,9 @@
 											<div class="invalid-feedback">닉네임을 입력하세요.</div>
 										</div>
 										<div class="col-4">
-											<div class="row">
-											
-												<div class="col-4">
-													<label for="birthYear" class="form-label">연<b style="color: red;">*</b></label> 
-													<select name="birthYear" id="birthYearSelect" class="form-select" th:value="${item?.birthYear}" required>
-														<option disabled hidden selected value="">연</option>
-													</select>
-												</div>
-												
-												<div class="col-4">
-													<label for="birthMonth" class="form-label">월<b style="color: red;">*</b></label> 
-													<select name="birthMonth" id="birthMonthSelect" class="form-select" required>
-														<option disabled hidden selected value="">월</option>
-
-													</select>
-												</div>
-												
-												<div class="col-4">
-													<label for="birthDay" class="form-label">일<b style="color: red;">*</b></label> 
-													<select name="birthDay" id="birthDaySelect" class="form-select" required>
-														<option disabled hidden selected value="">일</option>
-
-													</select>
-												</div>
-											</div>
+											<label for="userDob" class="form-label">생년월일<b style="color: red;">*</b></label> 
+											<input id="datetimepicker" name="userDob" type="text" class="form-control" placeholder="생년월일" th:value="${item?.userDob}" required>
+											<div class="invalid-feedback">생년월일을 입력하세요.</div>
 										</div>
 
 									</div>
@@ -121,7 +99,6 @@
 																th:selected="${group.codeNm == item?.codeNm}"
 																>
 														</option>
-					
 													</select>
 												</div>
 												<div class="col-8">
@@ -176,7 +153,7 @@
 
 								<div class="row">
 									<div class="col">
-										<a href="/memberXdmList" class="btn btn-outline-secondary"> <i
+										<a href="/Xdm/memberXdmList" class="btn btn-outline-secondary"> <i
 											class="ri-list-check"></i>
 										</a>
 									</div>
@@ -201,15 +178,6 @@
 	<!-- End #main -->
 
 	<!-- temp -->
-	
-	<script th:inline="javascript">
-	    // 타임리프 변수를 자바스크립트로 전달
-	    var selectedYear = /*[[${item?.birthYear}]]*/ 0;
-	    var selectedMonth = /*[[${item?.birthMonth}]]*/ 0;
-	    var selectedDay = /*[[${item?.birthDay}]]*/ 0;
-	    
-	</script>
-
 
 	<script>
 	
@@ -223,10 +191,8 @@
     const inputLastNm = form.querySelector("input[name='lastNm']");
     const inputFirstNm = form.querySelector("input[name='firstNm']");
     const selectGender = form.querySelector("select[name='gender']");
-    
-    const selectYr = form.querySelector("select[name='birthYear']");
-    const selectMn = form.querySelector("select[name='birthMonth']");
-    const selectDy = form.querySelector("select[name='birthDay']");
+    const inputUserDob = form.querySelector("input[name='userDob']");
+
     const selectMobileCarrier = form.querySelector("select[name='mobileCarrier']");
     const inputPhone = form.querySelector("input[name='phone']");
     
@@ -235,13 +201,13 @@
 	    
 	    let isValid = true;
 	    
-	    if (!inputEmail.value.trim()) {		// Email
+	    if (!inputEmail.value.trim() && (seq.value == "0" || seq.value == "")) {		// Email
 	    	inputEmail.focus();
 	        isValid = false;
-	    } else if (!inputPwd.value.trim()) {	// Password
+	    } else if (!inputPwd.value.trim() && (seq.value == "0" || seq.value == "")) {	// Password
 	    	inputPwd.focus();
 	        isValid = false;
-	    } else if (!inputPwdChk.value.trim()) {		// PaswordChk
+	    } else if (!inputPwdChk.value.trim() && (seq.value == "0" || seq.value == "")) {		// PaswordChk
 	    	inputPwdChk.focus();
 	        isValid = false;
 	    } else if (!inputNickNm.value.trim()) {		// Nickname
@@ -256,14 +222,8 @@
 	    } else if (!selectGender.value) {		// Gender
 	    	selectGender.focus();
 	        isValid = false;
-	    } else if (!selectYr.value) {		// BirthYear
-	    	selectYr.focus();
-	        isValid = false;
-	    } else if (!selectMn.value) {		// BirthMonth
-	    	selectMn.focus();
-	        isValid = false;
-	    } else if (!selectDy.value) {		// BirthDay
-	    	selectDy.focus();
+	    } else if (!inputUserDob.value.trim()) {		// UserDob
+	    	inputUserDob.focus();
 	        isValid = false;
 	    } else if (!selectMobileCarrier.value) {	// MobileCarrier
 	    	selectMobileCarrier.focus();
@@ -305,6 +265,9 @@
 	    inputPhone.addEventListener("input", function () {
 	        this.value = this.value.replace(/^\s+/, "");
 	    });
+	    inputUserDob.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
 	});
 	
 /* 	function pwdChk(){
@@ -328,67 +291,21 @@
 		if(seq.value == "0" || seq.value == "") {				// Insert
 			if(validation() == false) return false;
 // 			if(pwdChk() == false) return false;
-			form.action = "/memberXdmRegisterInst";
+			form.action = "/Xdm/memberXdmRegisterInst";
 			form.submit();
 		} else {												// Update
 			if(validation() == false) return false;
 // 			if(pwdChk() == false) return false;
-			form.action = "/memberXdmRegisterUpdt";
+			form.action = "/Xdm/memberXdmRegisterUpdt";
 			form.submit();
 		}
 	}
-	
-	// 연도 Select
-    const birthYearSelect = document.getElementById("birthYearSelect");
-    const currentYear = new Date().getFullYear();
-    
-    for (let year = currentYear; year >= currentYear-100; year--) {
-        let option = document.createElement("option");
-        option.value = year;
-        option.textContent = year;
-        
-    	 // 기본 선택값 설정
-        if (year == selectedYear) {
-            option.selected = true;
-        }
-     
-        birthYearSelect.appendChild(option);
-    }
-    
-    // 월 Select
-    const birthMonthSelect = document.getElementById("birthMonthSelect");
 
-    for (let month = 1; month <= 12; month++) {
-        let option = document.createElement("option");
-        option.value = month;
-        option.textContent = month;
-        
-  	 	 // 기본 선택값 설정
-        if (month == selectedMonth) {
-            option.selected = true;
-        }
-   	 
-        birthMonthSelect.appendChild(option);
-    }
     
- 	// 일 Select
-    const birthDaySelect = document.getElementById("birthDaySelect");
-
-    for (let day = 1; day <= 31; day++) {
-		
-        let option = document.createElement("option");
-        option.value = day;
-        option.textContent = day;
-        
-   		 // 기본 선택값 설정
-        if (day == selectedDay) {
-            option.selected = true;
-        }
-   	 
-        birthDaySelect.appendChild(option);
-    }
-    
-    
+    jQuery('#datetimepicker').datetimepicker({
+		timepicker:false,
+		format:'Y-m-d'
+	});
     
 	</script>
 	

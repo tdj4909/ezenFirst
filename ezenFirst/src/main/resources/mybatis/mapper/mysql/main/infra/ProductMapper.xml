@@ -137,6 +137,14 @@
 		WHERE
 			seq = #{seq}
 	</update>
+	
+	<delete id="delete">
+		Delete
+		FROM
+			menu
+		WHERE
+			seq = #{seq}
+	</delete>
 
 	
 </mapper>

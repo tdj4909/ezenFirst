@@ -199,13 +199,14 @@
 
 							<div class="row">
 								<div class="col">
-									<a href="#" class="btn btn-danger"> <i
-										class="ri-close-large-line"></i>
-									</a> 
-									<button type="button" id="btnUelete" class="btn btn-danger"> <i
-										class="ri-delete-bin-line"></i>
+									<button type="button" id="btnDelete" class="btn btn-danger"> 
+										<i class="ri-close-large-line"></i>
+									</button>
+									<button type="button" id="btnUelete" class="btn btn-danger">
+										<i class="ri-delete-bin-line"></i>
 									</button>
 								</div>
+								
 								<div class="col">
 									<div style="float: right;">
 										<a href="#" class="btn btn-success"> <i
@@ -216,6 +217,7 @@
 										</button>
 									</div>
 								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -272,19 +274,19 @@
 		let form = document.querySelector("form[name=formList]");
 		goList = function (thisPage) {
 		    document.querySelector("input[name=thisPage]").value = thisPage;
-		    form.action = "/codeGroupXdmList";
+		    form.action = "/Xdm/codeGroupXdmList";
 		    form.submit();
 		}
 				
 		// 검색
 		document.getElementById("btnSearch").onclick = function () {
-		    form.action = "/codeGroupXdmList";
+		    form.action = "/Xdm/codeGroupXdmList";
 		    form.submit();
 		};
 		
 		document.getElementById("changeRowNum").onchange = function () {
 		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-		    form.action = "/codeGroupXdmList";
+		    form.action = "/Xdm/codeGroupXdmList";
 		    form.submit();
 		}
 		
@@ -323,24 +325,23 @@
 		//Update
 		goForm = function (keyValue) {
 			seq.value = keyValue;
-		    form.action = "/codeGroupXdmRegister";
+		    form.action = "/Xdm/codeGroupXdmRegister";
 		    form.submit();
 		};
 		
 		
 		// Uelete
 		// Modal 먼저 실행
-		if(document.getElementById("btnUelete")){
-			document.getElementById("btnUelete").onclick = function () {
-				document.querySelector("#modalConfirmTitle").textContent = "확 인";
-				document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
-				document.querySelector("#btnModalUelete").style.display = '';
-				document.querySelector("#btnModalDelete").style.display = 'none';
-				
-				let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
-	            modal.show();     	
-			}
+		document.getElementById("btnUelete").onclick = function () {
+			document.querySelector("#modalConfirmTitle").textContent = "확 인";
+			document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+			document.querySelector("#btnModalUelete").style.display = '';
+			document.querySelector("#btnModalDelete").style.display = 'none';
+			
+			let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
+            modal.show();     	
 		}
+		
 		// Modal에서 확인 버튼 누르면
 		document.getElementById("btnModalUelete").onclick = function () {
 
@@ -356,7 +357,30 @@
 			});
 
 			 
-			form.action = "/codeGroupXdmUele";
+			form.action = "/Xdm/codeGroupXdmUele";
+			form.submit();
+		}
+		
+		// Delete
+		// Modal 먼저 실행
+		document.getElementById("btnDelete").onclick = function () {
+			document.querySelector("#modalConfirmTitle").textContent = "확 인";
+			document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+			document.querySelector("#btnModalUelete").style.display = 'none';
+			document.querySelector("#btnModalDelete").style.display = '';
+			
+			let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
+            modal.show();     	
+		}
+		// Modal에서 확인 버튼 누르면
+		document.getElementById("btnModalDelete").onclick = function () {
+
+			let selected = document.querySelectorAll(".rowCheckbox:checked");
+			selected.forEach((s) => {
+				document.querySelector(`input[id="delSeq_${s.value}"]`).value = s.value;
+			});
+
+			form.action = "/Xdm/codeGroupXdmDele";
 			form.submit();
 		}
 		

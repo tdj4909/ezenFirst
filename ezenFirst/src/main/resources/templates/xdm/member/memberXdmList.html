@@ -46,6 +46,8 @@
 						<option value="1" th:selected="${vo.shAdmin == 1}">Y</option>
 					</select>
 				</div>
+			</div>
+			<div class="row mb-3 mt-3">
 				<div class="col-2">
 					<select id="shOption" name="shOption" class="form-select">
 						<option value="" th:selected="${vo.shOption == null}">검색구분</option>
@@ -110,7 +112,7 @@
 											<th>닉네임</th>
 											<th>이름</th>
 											<th>성</th>
-											<th>생일</th>
+											<th>생년월일</th>
 											<th>통신사</th>
 											<th>전화번호</th>
 											<th>관리자</th>
@@ -140,7 +142,7 @@
 											<td th:if="${list.gender == 2}">여</td>
 											<td th:if="${list.gender == 3}">공개안함</td> -->
 											
-											<td th:text="|${list.birthYear}년 ${list.birthMonth}월 ${list.birthDay}일|"></td>											
+											<td th:text="${list.userDob}"></td>											
 											<td th:text="${list.codeNm}"></td>
 											<td th:text="${list.phone}"></td>
 											<td th:text="${list.admin} == 1 ? 'Y' : 'N' "></td>
@@ -184,9 +186,9 @@
 
 							<div class="row">
 								<div class="col">
-									<a href="#" class="btn btn-danger"> <i
-										class="ri-close-large-line"></i>
-									</a> 
+									<button type="button" id="btnDelete" class="btn btn-danger"> 
+										<i class="ri-close-large-line"></i>
+									</button>
 									<button type="button" id="btnUelete" class="btn btn-danger"> 
 										<i class="ri-delete-bin-line"></i>
 									</button>
@@ -256,20 +258,20 @@
 		let form = document.querySelector("form[name=formList]");
 		goList = function (thisPage) {
 		    document.querySelector("input[name=thisPage]").value = thisPage;
-		    form.action = "/memberXdmList";
+		    form.action = "/Xdm/memberXdmList";
 		    form.submit();
 		}
 		
 		// 검색
 		document.getElementById("btnSearch").onclick = function () {
-		    form.action = "/memberXdmList";
+		    form.action = "/Xdm/memberXdmList";
 		    form.submit();
 		};
 		
 		// 테이블 행 출력 개수
 		document.getElementById("changeRowNum").onchange = function () {
 		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-		    form.action = "/memberXdmList";
+		    form.action = "/Xdm/memberXdmList";
 		    form.submit();
 		}
 		
@@ -308,7 +310,7 @@
 		// Update
 		goForm = function (keyValue) {
 		    seq.value = keyValue;
-		    form.action = "/memberXdmRegister";
+		    form.action = "/Xdm/memberXdmRegister";
 		    form.submit();
 		}
 		
@@ -333,7 +335,30 @@
 				s.value = '';
 			});
 
-			form.action = "/memberXdmUele";
+			form.action = "/Xdm/memberXdmUele";
+			form.submit();
+		}
+		
+		// Delete
+		// Modal 먼저 실행
+		document.getElementById("btnDelete").onclick = function () {
+			document.querySelector("#modalConfirmTitle").textContent = "확 인";
+			document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+			document.querySelector("#btnModalUelete").style.display = 'none';
+			document.querySelector("#btnModalDelete").style.display = '';
+			
+			let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
+            modal.show();     	
+		}
+		// Modal에서 확인 버튼 누르면
+		document.getElementById("btnModalDelete").onclick = function () {
+
+			let selected = document.querySelectorAll(".rowCheckbox:not(:checked)");
+			selected.forEach((s) => {
+				s.value = '';
+			});
+
+			form.action = "/Xdm/memberXdmDele";
 			form.submit();
 		}
 	

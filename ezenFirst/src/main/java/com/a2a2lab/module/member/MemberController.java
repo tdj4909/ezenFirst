@@ -25,12 +25,12 @@ public class MemberController {
 	MemberService service;
 	
 //  관리자---------------------------------------------------------------------------	
-	@RequestMapping(value = "/memberXdmList")
+	@RequestMapping(value = "/Xdm/memberXdmList")
 	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo, HttpSession httpSession) {
 
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/loginXdm";
+			return "redirect:/Xdm/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
@@ -43,12 +43,12 @@ public class MemberController {
 		return "/xdm/member/memberXdmList";
 	}
 	
-	@RequestMapping(value = "/memberXdmRegister")
+	@RequestMapping(value = "/Xdm/memberXdmRegister")
 	public String memberXdmRegister(Model model, @ModelAttribute("vo") MemberVo vo, HttpSession httpSession) {
 		
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/loginXdm";
+			return "redirect:/Xdm/loginXdm";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
@@ -64,19 +64,19 @@ public class MemberController {
 		return "/xdm/member/memberXdmRegister";
 	}
 	
-	@RequestMapping(value = "/memberXdmRegisterInst")
+	@RequestMapping(value = "/Xdm/memberXdmRegisterInst")
 	public String memberXdmRegisterInst(MemberDto memberDto) {
 		service.insert(memberDto);
-		return "redirect:/memberXdmList";
+		return "redirect:/Xdm/memberXdmList";
 	}
 	
-	@RequestMapping(value = "/memberXdmRegisterUpdt")
+	@RequestMapping(value = "/Xdm/memberXdmRegisterUpdt")
 	public String memberXdmRegisterUpdt(MemberDto memberDto) {
 		service.update(memberDto);
-		return "redirect:/memberXdmList";
+		return "redirect:/Xdm/memberXdmList";
 	}
 	
-	@RequestMapping(value = "/memberXdmUele")
+	@RequestMapping(value = "/Xdm/memberXdmUele")
 	public String memberXdmUele(@RequestParam("seq") List<String> seqs) {
 
 		for(String seq : seqs) {
@@ -86,13 +86,26 @@ public class MemberController {
 				service.uelete(dto);
 			}
 		}
-		return "redirect:/memberXdmList";
+		return "redirect:/Xdm/memberXdmList";
+	}
+	
+	@RequestMapping(value = "/Xdm/memberXdmDele")
+	public String memberXdmDele(@RequestParam("seq") List<String> seqs) {
+
+		for(String seq : seqs) {
+			if(!seq.isBlank()) {
+				MemberDto dto = new MemberDto();
+				dto.setSeq(seq);
+				service.delete(dto);
+			}
+		}
+		return "redirect:/Xdm/memberXdmList";
 	}
 
 	
 //	로그인--------------------------------------------------------------
 	
-	@RequestMapping(value = "/loginXdm")
+	@RequestMapping(value = "/Xdm/loginXdm")
 	public String loginXdm(Model model) {
 		
 		// 임시 로그인 계정
@@ -105,7 +118,7 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/signinXdmProc")
+	@RequestMapping(value = "/Xdm/signinXdmProc")
 	public Map<String, Object> signinXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
@@ -125,7 +138,7 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/signoutXdmProc")
+	@RequestMapping(value = "/Xdm/signoutXdmProc")
 	public Map<String, Object> signoutXdmProc(HttpSession httpSession) throws Exception {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();

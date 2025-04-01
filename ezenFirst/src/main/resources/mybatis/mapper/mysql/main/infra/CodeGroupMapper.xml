@@ -104,7 +104,7 @@
 		FROM
 			codegroup
 		WHERE
-			seq = #{seq}
+			seq = #{ifcgSeq}
 	</delete>
 	
 	<update id="uelete">

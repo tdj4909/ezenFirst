@@ -104,7 +104,7 @@
 
 							<div class="row">
 								<div class="col">
-									<a href="/codeXdmList" class="btn btn-outline-secondary"
+									<a href="/Xdm/codeXdmList" class="btn btn-outline-secondary"
 										title="Upload new profile image"> <i class="ri-list-check"></i>
 									</a>
 								</div>
@@ -258,12 +258,12 @@
 		if(seq.value == "0" || seq.value == "") {
 			if(validation() == false) return false;
 // 			$("#modalLoading").modal("show");
-			form.action = "/codeXdmInst";
+			form.action = "/Xdm/codeXdmInst";
 			form.submit();
 		} else {
 			if(validation() == false) return false;
 // 			$("#modalLoading").modal("show");
-			form.action = "/codeXdmUpdt";
+			form.action = "/Xdm/codeXdmUpdt";
 			form.submit();
 		}
 	}

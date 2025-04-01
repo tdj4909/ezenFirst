@@ -146,7 +146,7 @@
 
 								<div class="row">
 									<div class="col">
-										<a href="/productXdmList" class="btn btn-outline-secondary"> <i
+										<a href="/Xdm/productXdmList" class="btn btn-outline-secondary"> <i
 											class="ri-list-check"></i>
 										</a>
 									</div>
@@ -270,11 +270,11 @@
 	document.getElementById("btnSubmit").onclick = function(){
 		if(seq.value == "0" || seq.value == "") {
 			if(validation() == false) return false;
-			form.action = "/productXdmInst";
+			form.action = "/Xdm/productXdmInst";
 			form.submit();
 		} else {
 			if(validation() == false) return false;
-			form.action = "/productXdmUpdt";
+			form.action = "/Xdm/productXdmUpdt";
 			form.submit();
 		}
 	}

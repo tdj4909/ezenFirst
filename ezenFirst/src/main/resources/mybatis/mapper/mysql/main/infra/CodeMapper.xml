@@ -121,7 +121,7 @@
 		FROM
 			code
 		WHERE
-			seq = #{seq}
+			seq = #{ifcgSeq}
 	</delete>
 
 	<update id="uelete">

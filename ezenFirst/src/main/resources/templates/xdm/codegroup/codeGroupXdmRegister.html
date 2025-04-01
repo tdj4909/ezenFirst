@@ -89,7 +89,7 @@
 
 								<div class="row">
 									<div class="col">
-										<a href="/codeGroupXdmList" class="btn btn-outline-secondary"> <i
+										<a href="/Xdm/codeGroupXdmList" class="btn btn-outline-secondary"> <i
 											class="ri-list-check"></i>
 										</a>
 									</div>
@@ -136,11 +136,11 @@
 	document.getElementById("btnSubmit").onclick = function () {
 		if(seq.value == "0" || seq.value == "") {				// Insert
 			if(validation() == false) return false;
-			form.action = "/codeGroupXdmInst";
+			form.action = "/Xdm/codeGroupXdmInst";
 			form.submit();
 		} else {												// Update
 			if(validation() == false) return false;
-			form.action = "/codeGroupXdmUpdt";
+			form.action = "/Xdm/codeGroupXdmUpdt";
 			form.submit();
 		}
 	}
