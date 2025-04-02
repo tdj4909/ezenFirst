@@ -76,4 +76,21 @@ public class OrdersController{
 		return "redirect:/Xdm/ordersXdmList";
 	}
 	
+	@RequestMapping(value = "/Xdm/ordersXdmOne")
+	public String ordersXdmOne(Model model, HttpSession httpSession, @RequestParam("choice") String seq) {
+		
+		// login 검사
+		if(httpSession.getAttribute("user") == null) {
+			return "redirect:/Xdm/loginXdm";
+		}
+		model.addAttribute("user", httpSession.getAttribute("user"));
+
+		OrdersDto dto = new OrdersDto();
+		dto.setSeq(seq);
+		model.addAttribute("lists", service.selectOneList(dto));
+		
+	
+		return "/xdm/orders/ordersXdmOne";
+	}
+	
 }

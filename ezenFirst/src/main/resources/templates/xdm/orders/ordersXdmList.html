@@ -11,6 +11,7 @@
 			default="1" /> 
 		<input type="hidden" id="rowNumToShow"
 			name="rowNumToShow" th:value="${vo.rowNumToShow}" />
+		<input type="hidden" name="choice">
 		
 		<div class="pagetitle">
 
@@ -135,7 +136,10 @@
 											</td>
 											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 											
-											<td th:text="${list.seq}"></td>
+											<td class="align-middle fw-semi-bold">
+												<a href="javascript:void(0);" th:text="${list.seq}" th:attr="onclick=|goForm('${list.seq}')|"></a>
+											</td>
+											
 											<td th:text="${list.nickname}"></td>
 											<td th:text="${list.ordersDate}"></td>
 											
@@ -366,6 +370,14 @@
 		        
 		    });
 		});
+		
+		let seq = document.querySelector("input[name=choice]");
+		
+		goForm = function (keyValue) {
+		    seq.value = keyValue;
+		    form.action = "/Xdm/ordersXdmOne";
+		    form.submit();
+		}
 	
 	</script>
 

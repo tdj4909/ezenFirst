@@ -28,8 +28,8 @@ public class OrdersService {
 		return dao.selectOneCount(vo);
 	}
 	
-	public OrdersDto selectOne(OrdersDto dto) {
-		return dao.selectOne(dto);
+	public OrdersDto selectOneList(OrdersDto dto) {
+		return dao.selectOneList(dto);
 	}
 	
 	public List<OrdersDto> selectList(OrdersVo vo) {

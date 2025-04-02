@@ -15,7 +15,7 @@ public interface OrdersDao {
 	public int delete(OrdersDto dto);
 	public int update(OrdersDto dto);
 	public int selectOneCount(OrdersVo vo);
-	public OrdersDto selectOne(OrdersDto dto);
+	public OrdersDto selectOneList(OrdersDto dto);
 	public List<OrdersDto> selectList(OrdersVo vo);
 
 }

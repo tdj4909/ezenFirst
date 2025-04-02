@@ -49,7 +49,7 @@
 	</select>
  -->
  
- 	<select id="selectOne" resultMap="resultMapObj">
+ 	<select id="selectOneList" resultMap="resultMapObj">
  		SELECT
 			u.nickname
 		    ,o.seq
@@ -58,10 +58,10 @@
 		    ,o.totalPrice
 		    ,o.takeOut
 		    ,o.ordersDelNy
-		<include refid="selectCommon"></include>
+		FROM
+			orders o
+			JOIN user u ON u.seq = o.user_seq   
 		AND o.seq = #{seq}
-		ORDER BY
-			seq DESC
 		
  	</select>
  
