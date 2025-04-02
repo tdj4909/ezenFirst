@@ -13,12 +13,12 @@
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-					<li class="breadcrumb-item">회원관리</li>
-					<li class="breadcrumb-item active">회원관리</li>
+					<li class="breadcrumb-item">서비스관리</li>
+					<li class="breadcrumb-item active">주문관리</li>
 				</ol>
 			</nav>
 
-			<h1 style="font-weight: bold;">회원관리</h1>
+			<h1 style="font-weight: bold;">주문관리</h1>
 
 
 		</div>
@@ -34,7 +34,7 @@
 						<div class="card">
 
 							<h5 class="card-header"
-								style="font-weight: bold; color: #4b4b4b;">기본정보</h5>
+								style="font-weight: bold; color: #4b4b4b;">주문상세</h5>
 
 							<div class="card-body m-2">
 
@@ -153,16 +153,9 @@
 
 								<div class="row">
 									<div class="col">
-										<a href="/Xdm/memberXdmList" class="btn btn-outline-secondary"> <i
+										<a href="/Xdm/ordersXdmList" class="btn btn-outline-secondary"> <i
 											class="ri-list-check"></i>
 										</a>
-									</div>
-									<div class="col">
-										<div style="float: right;">
-											<button type="button" class="btn btn-primary" id="btnSubmit">
-												<i class="bi bi-database-fill"></i>
-											</button>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -180,132 +173,7 @@
 	<!-- temp -->
 
 	<script>
-	
-	const form = document.querySelector('.needs-validation'); // 단일 폼 선택
-    
-    const inputEmail = form.querySelector("input[name='email']");
-    const inputPwd = form.querySelector("input[name='password']");
-    const inputPwdChk = form.querySelector("input[name='passwordChk']");
-    
-    const inputNickNm = form.querySelector("input[name='nickname']");
-    const inputLastNm = form.querySelector("input[name='lastNm']");
-    const inputFirstNm = form.querySelector("input[name='firstNm']");
-    const selectGender = form.querySelector("select[name='gender']");
-    const inputUserDob = form.querySelector("input[name='userDob']");
 
-    const selectMobileCarrier = form.querySelector("select[name='mobileCarrier']");
-    const inputPhone = form.querySelector("input[name='phone']");
-    
-	// 유효성 검사
-	function validation() {
-	    
-	    let isValid = true;
-	    
-	    if (!inputEmail.value.trim() && (seq.value == "0" || seq.value == "")) {		// Email
-	    	inputEmail.focus();
-	        isValid = false;
-	    } else if (!inputPwd.value.trim() && (seq.value == "0" || seq.value == "")) {	// Password
-	    	inputPwd.focus();
-	        isValid = false;
-	    } else if (!inputPwdChk.value.trim() && (seq.value == "0" || seq.value == "")) {		// PaswordChk
-	    	inputPwdChk.focus();
-	        isValid = false;
-	    } else if (!inputNickNm.value.trim()) {		// Nickname
-	    	inputNickNm.focus();
-	        isValid = false;
-	    } else if (!inputLastNm.value.trim()) {		// LastNm
-	    	inputLastNm.focus();
-	        isValid = false;
-	    } else if (!inputFirstNm.value.trim()) {	// FirstNm
-	    	inputFirstNm.focus();
-	        isValid = false;
-	    } else if (!selectGender.value) {		// Gender
-	    	selectGender.focus();
-	        isValid = false;
-	    } else if (!inputUserDob.value.trim()) {		// UserDob
-	    	inputUserDob.focus();
-	        isValid = false;
-	    } else if (!selectMobileCarrier.value) {	// MobileCarrier
-	    	selectMobileCarrier.focus();
-	        isValid = false;
-	    } else if (!inputPhone.value.trim()) { // Phone
-	    	inputPhone.focus();
-	        isValid = false;
-	    }
-	    
-	    
-	    if(!isValid){
-	    	form.classList.add("was-validated");
-	    }
-	
-	    return isValid;
-	}
-    
-	document.addEventListener("DOMContentLoaded", function () {
-
-		// 첫 글자가 공백이면 자동 제거
-	    inputEmail.addEventListener("input", function () {
-	        this.value = this.value.replace(/^\s+/, "");
-	    });
-	    inputPwd.addEventListener("input", function () {
-	        this.value = this.value.replace(/^\s+/, "");
-	    });
-	    inputPwdChk.addEventListener("input", function () {
-	        this.value = this.value.replace(/^\s+/, "");
-	    });
-	    inputNickNm.addEventListener("input", function () {
-	        this.value = this.value.replace(/^\s+/, "");
-	    });
-	    inputLastNm.addEventListener("input", function () {
-	        this.value = this.value.replace(/^\s+/, "");
-	    });
-	    inputFirstNm.addEventListener("input", function () {
-	        this.value = this.value.replace(/^\s+/, "");
-	    });
-	    inputPhone.addEventListener("input", function () {
-	        this.value = this.value.replace(/^\s+/, "");
-	    });
-	    inputUserDob.addEventListener("input", function () {
-	        this.value = this.value.replace(/^\s+/, "");
-	    });
-	});
-	
-/* 	function pwdChk(){
-		console.log("@@@@@@@@@@@@@@");
-		if (inputPwd.value.trim() && inputPwdChk.value.trim() && inputPwd.value !== inputPwdChk.value) {
-			inputPwdChk.classList.remove("is-valid", "is-invalid");
-			inputPwdChk.classList.add("is-invalid");
-	        inputPwdChk.nextElementSibling.textContent = "비밀번호가 일치하지 않습니다.";
-	        console.log('!!!!!!!!!!!!!!!!');
-	        return false;
-	    }
-		
-		return true;
-	} */
-	
-	
-	
-	let seq = document.querySelector("input[name=ifcgSeq]");
-	
-	document.getElementById("btnSubmit").onclick = function(){
-		if(seq.value == "0" || seq.value == "") {				// Insert
-			if(validation() == false) return false;
-// 			if(pwdChk() == false) return false;
-			form.action = "/Xdm/memberXdmRegisterInst";
-			form.submit();
-		} else {												// Update
-			if(validation() == false) return false;
-// 			if(pwdChk() == false) return false;
-			form.action = "/Xdm/memberXdmRegisterUpdt";
-			form.submit();
-		}
-	}
-
-    
-    jQuery('#datetimepicker').datetimepicker({
-		timepicker:false,
-		format:'Y-m-d'
-	});
     
 	</script>
 	
