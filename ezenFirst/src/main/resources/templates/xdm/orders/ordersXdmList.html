@@ -18,11 +18,11 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
 					<li class="breadcrumb-item">서비스관리</li>
-					<li class="breadcrumb-item active">리뷰관리</li>
+					<li class="breadcrumb-item active">주문관리</li>
 				</ol>
 			</nav>
 
-			<h1 style="font-weight: bold;">리뷰관리</h1>
+			<h1 style="font-weight: bold;">주문관리</h1>
 
 			<div class="row mb-3 mt-3">
 				<div class="col-2">
@@ -33,6 +33,21 @@
 					</select>
 				</div>
 				
+				<div class="col-2">
+					<select id="shStatus" name="shStatus" class="form-select">
+						<option value="" th:selected="${vo.shStatus == null}">주문상태</option>
+						<option value="0" th:selected="${vo.shStatus == 0}">준비중</option>
+						<option value="1" th:selected="${vo.shStatus == 1}">주문완료</option>
+					</select>
+				</div>
+				
+				<div class="col-2">
+					<select id="shTakeOut" name="shTakeOut" class="form-select">
+						<option value="" th:selected="${vo.shTakeOut == null}">포장</option>
+						<option value="0" th:selected="${vo.shTakeOut == 0}">X</option>
+						<option value="1" th:selected="${vo.shTakeOut == 1}">O</option>
+					</select>
+				</div>
 				
 			</div>
 			
@@ -41,9 +56,8 @@
 				<div class="col-2">
 					<select id="shOption" name="shOption" class="form-select">
 						<option value="" th:selected="${vo.shOption == null}">검색구분</option>
-						<option value="1" th:selected="${vo.shOption == 1}">메뉴</option>
+						<option value="1" th:selected="${vo.shOption == 1}">주문번호</option>
 						<option value="2" th:selected="${vo.shOption == 2}">닉네임</option>
-						<option value="3" th:selected="${vo.shOption == 3}">설명</option>
 					</select>
 				</div>
 				<div class="col-2">
@@ -100,11 +114,12 @@
 														id="selectAllCheckbox" onclick="toggleSelectAll(this)">
 											</th>
 											<th>#</th>
-											<th>메뉴</th>
+											<th>주문번호</th>
 											<th>닉네임</th>
-											<th>평점</th>
-											<th>내용</th>
-											<th>작성일</th>
+											<th>날짜</th>
+											<th>주문상태</th>
+											<th>총합</th>
+											<th>포장</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -120,17 +135,20 @@
 											</td>
 											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 											
-											<td th:text="${list.menuNm}"></td>
+											<td th:text="${list.seq}"></td>
 											<td th:text="${list.nickname}"></td>
-											<td th:text="${list.reviewRate}"></td>
+											<td th:text="${list.ordersDate}"></td>
 											
-											<td style="width: 300px; word-break: break-word; white-space: normal;">
-											    <div style="max-height: 30px; overflow-y: auto;">
-											        <span th:text="${list.reviewDescription}"></span>
-											    </div>
+											<td>
+												<select class="form-select form-select-sm" id="selectOrdersStatus" th:data-seq="${list.seq}">
+													<option value="0" th:selected="${list.ordersStatus == 0}">준비중</option>
+													<option value="1" th:selected="${list.ordersStatus == 1}">주문완료</option>
+												</select>
 											</td>
+														
+											<td th:text="${list.totalPrice}"></td>
 											
-											<td th:text="${list.reviewDate}"></td>
+											<td th:text="${list.takeOut == 1 ? 'O' : 'X'}"></td>
 											
 										</tr>
 
@@ -233,27 +251,28 @@
 		let form = document.querySelector("form[name=formList]");
 		goList = function (thisPage) {
 		    document.querySelector("input[name=thisPage]").value = thisPage;
-		    form.action = "/Xdm/reviewXdmList";
+		    form.action = "/Xdm/ordersXdmList";
 		    form.submit();
 		}
 				
 		// 검색
 		document.getElementById("btnSearch").onclick = function () {
-		    form.action = "/Xdm/reviewXdmList";
+		    form.action = "/Xdm/ordersXdmList";
 		    form.submit();
 		};
 		
 		// 테이블 행 출력 개수
 		document.getElementById("changeRowNum").onchange = function () {
 		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-		    form.action = "/Xdm/reviewXdmList";
+		    form.action = "/Xdm/ordersXdmList";
 		    form.submit();
 		}
 		
 		
-		// 사이드바 현재화면 위치 active
+		
 		document.addEventListener("DOMContentLoaded", function () {
 
+			// 사이드바 현재화면 위치 active
 		    links.forEach(link => {
 		        if (link.getAttribute("href") === currentPath) {
 		        	const navContent = link.closest(".nav-content");
@@ -295,7 +314,7 @@
 				s.value = '';
 			});
 
-			form.action = "/Xdm/reviewXdmUele";
+			form.action = "/Xdm/ordersXdmUele";
 			form.submit();
 		}
 		
@@ -318,9 +337,35 @@
 				s.value = '';
 			});
 
-			form.action = "/Xdm/reviewXdmDele";
+			form.action = "/Xdm/ordersXdmDele";
 			form.submit();
 		}
+		
+		// 주문상태 변경
+		document.querySelectorAll("#selectOrdersStatus").forEach(select => {
+		    select.addEventListener("change", function() {
+		        const seq = this.getAttribute("data-seq");  // 행의 seq 값 가져오기
+		        const newStatus = this.value;  // 변경된 값 가져오기
+
+		        $.ajax({
+					async: true 
+					,cache: false
+					,type: "post"
+					,url: "/Xdm/ordersXdmUdpt"
+					,data : { 
+						"seq" : seq
+						,"ordersStatus" : newStatus
+						}
+		        	,success : function(){
+						alert("변경되었습니다.");
+					}
+					,error : function(jqXHR, textStatus, errorThrown){
+						alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					}
+				});
+		        
+		    });
+		});
 	
 	</script>
 
