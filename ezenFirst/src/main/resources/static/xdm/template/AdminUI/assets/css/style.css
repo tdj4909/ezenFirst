@@ -830,7 +830,12 @@ h6 {
   background: #e0f8e9;
 }
 
-.dashboard .customers-card .card-icon {
+.dashboard .reviews-card .card-icon {
+  color: #aeb300;
+  background: #fffee1;
+}
+
+.dashboard .members-card .card-icon {
   color: #ff771d;
   background: #ffecdf;
 }

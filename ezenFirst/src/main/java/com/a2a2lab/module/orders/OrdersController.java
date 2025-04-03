@@ -87,6 +87,7 @@ public class OrdersController{
 
 		OrdersDto dto = new OrdersDto();
 		dto.setSeq(seq);
+		model.addAttribute("list", service.selectOne(dto));
 		model.addAttribute("lists", service.selectOneList(dto));
 		
 	

@@ -37,8 +37,10 @@
 				<div class="col-2">
 					<select id="shStatus" name="shStatus" class="form-select">
 						<option value="" th:selected="${vo.shStatus == null}">주문상태</option>
-						<option value="0" th:selected="${vo.shStatus == 0}">준비중</option>
-						<option value="1" th:selected="${vo.shStatus == 1}">주문완료</option>
+						<option value="0" th:selected="${vo.shStatus == 0}">주문접수</option>
+						<option value="1" th:selected="${vo.shStatus == 1}">준비중</option>
+						<option value="2" th:selected="${vo.shStatus == 2}">주문완료</option>
+						<option value="3" th:selected="${vo.shStatus == 3}">주문취소</option>
 					</select>
 				</div>
 				
@@ -145,8 +147,10 @@
 											
 											<td>
 												<select class="form-select form-select-sm" id="selectOrdersStatus" th:data-seq="${list.seq}">
-													<option value="0" th:selected="${list.ordersStatus == 0}">준비중</option>
-													<option value="1" th:selected="${list.ordersStatus == 1}">주문완료</option>
+													<option value="0" th:selected="${list.ordersStatus == 0}">주문접수</option>
+													<option value="1" th:selected="${list.ordersStatus == 1}">준비중</option>
+													<option value="2" th:selected="${list.ordersStatus == 2}">주문완료</option>
+													<option value="3" th:selected="${list.ordersStatus == 3}">주문취소</option>
 												</select>
 											</td>
 														

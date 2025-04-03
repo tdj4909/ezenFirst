@@ -37,119 +37,42 @@
 								style="font-weight: bold; color: #4b4b4b;">주문상세</h5>
 
 							<div class="card-body m-2">
-
-
-
-								<!-- Pagination with icons -->
-								<div class="row mb-3 mt-3">
-
-									<div class="row mb-3">
-										<div class="col-4">
-											<label for="email" class="form-label">이메일<b style="color: red;">*</b></label> 
-											<input type="email" id="email" name="email" class="form-control" placeholder="이메일" th:value="${item?.email}" th:disabled="${item?.email != null}" required>
-											<div class="invalid-feedback">이메일을 입력하세요.</div>
-										</div>
-										<div class="col-4">
-											<label for="nickname" class="form-label">닉네임<b
-												style="color: red;">*</b></label> 
-											<input type="text" id="nickname" name="nickname" class="form-control" placeholder="한글,영대소문자,숫자" th:value="${item?.nickname}" required>
-											<div class="invalid-feedback">닉네임을 입력하세요.</div>
-										</div>
-										<div class="col-4">
-											<label for="userDob" class="form-label">생년월일<b style="color: red;">*</b></label> 
-											<input id="datetimepicker" name="userDob" type="text" class="form-control" placeholder="생년월일" th:value="${item?.userDob}" required>
-											<div class="invalid-feedback">생년월일을 입력하세요.</div>
-										</div>
-
-									</div>
-
-									<div class="row mb-3">
-										<div class="col-4">
-											<label for="password" class="form-label">비밀번호<b
-												style="color: red;">*</b></label> 
-											<input type="password" id="password" name="password" class="form-control" th:placeholder="${item?.password == null ? '비밀번호' : ''}" th:disabled="${item?.password != null}" required>
-											<div class="invalid-feedback">비밀번호를 입력하세요.</div>
-										</div>
-										<div class="col-4">
-											<div class="row">
-												<div class="col">
-													<label for="lastNm" class="form-label">성<b
-												style="color: red;">*</b></label> 
-											<input type="text" id="lastNm" name="lastNm" class="form-control" placeholder="한글,영대소문자" th:value="${item?.lastNm}" required>
-											<div class="invalid-feedback">성을 입력하세요.</div>
-												</div>
-												<div class="col">
-													<label for="firstNm" class="form-label">이름<b
-												style="color: red;">*</b></label> 
-											<input type="text" id="firstNm" name="firstNm" class="form-control" placeholder="한글,영대소문자" th:value="${item?.firstNm}" required>
-											<div class="invalid-feedback">이름을 입력하세요.</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-4">
-											<div class="row">
-												<div class="col-4">
-													<label for="mobileCarrier" class="form-label">통신사<b
-															style="color: red;">*</b></label> 
-													<select class="form-select" name="mobileCarrier" required>
-														<option disabled hidden selected value="">통신사</option>
-														<option th:each="group : ${mobileCarrierGroup}" 
-																th:value="${group.codeSeq}"
-																th:text="${group.codeNm}"
-																th:selected="${group.codeNm == item?.codeNm}"
-																>
-														</option>
-													</select>
-												</div>
-												<div class="col-8">
-													<label for="phone" class="form-label">휴대폰 번호<b
-														style="color: red;">*</b></label> 
-													<input type="text" id="phone" name="phone" class="form-control" th:value="${item?.phone}" required>
-													<div class="invalid-feedback">휴대폰 번호를 입력하세요.</div>
-												</div>
-											</div>
-										</div>
-
-									</div>
-									
-									<div class="row mb-3">
-										<div class="col-4">
-											<label for="passwordChk" class="form-label">비밀번호 확인<b
-												style="color: red;">*</b></label> 
-											<input type="password" id="passwordChk" name="passwordChk" class="form-control" th:placeholder="${item?.password == null ? '비밀번호 확인' : ''}" th:disabled="${item?.password != null}" required>
-											<div class="invalid-feedback">비밀번호를 입력하세요.</div>
-										</div>
-										<div class="col-4">
-											<label for="gender" class="form-label">성별<b style="color: red;">*</b></label> 
-											<select name="gender" class="form-select" required>
-												<option disabled hidden selected value="">성별</option>
-												<option value="1" th:selected="${item?.gender == 1}">남자</option>
-												<option value="2" th:selected="${item?.gender == 2}">여자</option>
-												<option value="3" th:selected="${item?.gender == 3}">공개안함</option>
-											</select>
-										</div>
-										<div class="col-4">
-											<br>
-											<div class="form-check">
-											  <input class="form-check-input" type="radio" name="admin" id="userMember" value="0" th:checked="${item?.admin == 0 || item?.admin == null}">
-											  <label class="form-check-label" for="userMember">
-											    사용자
-											  </label>
-											</div>
-											<div class="form-check">
-											  <input class="form-check-input" type="radio" name="admin" id="adminMember" value="1" th:checked="${item?.admin == 1}">
-											  <label class="form-check-label" for="adminMember">
-											    관리자
-											  </label>
-											</div>
-										</div>
-
-									</div>
-									
-									
-
+	
+								<!-- Table with stripped rows -->
+								<div class="row p-3">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>주문번호</th>
+												<th>닉네임</th>
+												<th>날짜</th>
+												<th>주문상태</th>
+												<th>총합</th>
+												<th>포장</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											<tr>
+												<td th:text="${list.seq}"></td>
+												<td th:text="${list.nickname}"></td>
+												<td th:text="${list.ordersDate}"></td>
+												
+												<td th:text="${
+												    list.ordersStatus == 0 ? '주문접수' :
+												    list.ordersStatus == 1 ? '준비중' :
+												    list.ordersStatus == 2 ? '주문완료' : '주문취소'
+													}">
+												</td>
+												
+												<td th:text="${list.totalPrice}"></td>
+												<td th:text="${list.takeOut == 1 ? 'O' : 'X'}"></td>
+											</tr>
+	
+										</tbody>
+									</table>
 								</div>
-								<!-- End Pagination with icons -->
+								<!-- End Table with stripped rows -->
 
 								<div class="row">
 									<div class="col">
@@ -158,6 +81,43 @@
 										</a>
 									</div>
 								</div>
+							</div>
+						</div>
+						
+						<div class="card">
+							<div class="card-body m-2">
+							<!-- Table with stripped rows -->
+								<div class="row p-3">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>메뉴명</th>
+												<th>가격</th>
+												<th>개수</th>
+												<th>합계</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											<tr th:each="list : ${lists}">
+												<td th:text="${list.menuNm}"></td>
+												<td th:text="${list.price}"></td>
+												<td th:text="${list.quantity}"></td>												
+												<td th:text="${list.oneTotal}"></td>
+											</tr>
+	
+										</tbody>
+										<tfoot>
+											<tr>
+												<td></td>
+												<td></td>
+												<td>TOTAL</td>
+												<td th:text="${list.totalPrice}"></td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+								<!-- End Table with stripped rows -->
 							</div>
 						</div>
 

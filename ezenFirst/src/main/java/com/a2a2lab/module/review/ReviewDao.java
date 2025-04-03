@@ -14,6 +14,7 @@ public interface ReviewDao {
 	public int uelete(ReviewDto dto);
 	public int delete(ReviewDto dto);
 	public int selectOneCount(ReviewVo vo);
+	public int reviewCount();
 	public List<ReviewDto> selectList(ReviewVo vo);
 
 }

@@ -24,6 +24,10 @@ public class ReviewService {
 		return dao.selectOneCount(vo);
 	}
 	
+	public int reviewCount() {
+		return dao.reviewCount();
+	}
+	
 	public List<ReviewDto> selectList(ReviewVo vo) {
 		return dao.selectList(vo);
 	}

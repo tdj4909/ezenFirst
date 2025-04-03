@@ -16,7 +16,6 @@
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-					<li class="breadcrumb-item">회원관리</li>
 					<li class="breadcrumb-item active">회원관리</li>
 				</ol>
 			</nav>
@@ -280,16 +279,12 @@
 		document.addEventListener("DOMContentLoaded", function () {
 
 			// 사이드바 현재화면 위치 active
-		    links.forEach(link => {
-		        if (link.getAttribute("href") === currentPath) {
-		        	const navContent = link.closest(".nav-content");
-		            const navLink = navContent.previousElementSibling; // 부모 메뉴의 <a> 태그 찾기
-		            
-		            link.classList.add("active");
-		            navContent.classList.add("show"); // 메뉴 열기
-		            navLink.classList.remove("collapsed"); // collapsed 제거
-		        }
-		    });
+			document.querySelectorAll(".nav-link").forEach(link => {
+	            if (link.getAttribute("href") === currentPath) {
+	                link.classList.remove("collapsed");
+	                link.classList.add("active");  // 'active' 클래스 추가
+	            }
+	        });
 			
 		 	// 체크박스
 		    rowCheckboxes.forEach(checkbox => {

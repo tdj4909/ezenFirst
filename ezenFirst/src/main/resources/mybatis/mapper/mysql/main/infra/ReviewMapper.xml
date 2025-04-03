@@ -26,6 +26,15 @@
 		SELECT COUNT(*)
 		<include refid="selectCommon"></include>
 	</select>
+	
+	<select id="reviewCount" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM
+			review
+		WHERE
+			reviewDelNy = 0
+	</select>
 
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT 

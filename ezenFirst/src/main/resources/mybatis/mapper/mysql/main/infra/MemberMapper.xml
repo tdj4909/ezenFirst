@@ -22,6 +22,15 @@
 			
 	</sql>
 
+	<select id="memberCount" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM
+			user
+		WHERE
+			userDelNy = 0
+	</select>
+	
 	<select id="selectOneCount" resultType="Integer">
 		SELECT COUNT(*)
 		<include refid="selectCommon"></include>

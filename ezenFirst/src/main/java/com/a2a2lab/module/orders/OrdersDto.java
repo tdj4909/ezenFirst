@@ -22,7 +22,10 @@ public class OrdersDto{
 	private Integer price;
 	private String orders_seq;
 	private String menu_seq;
+	
+	private Integer oneTotal;
 		
+	
 	// menu
 	private String menuImg;
 	private String menuNm;
@@ -98,7 +101,7 @@ public class OrdersDto{
 	public String getOrders_seq() {
 		return orders_seq;
 	}
-	public void setOrdesr_seq(String orders_seq) {
+	public void setOrders_seq(String orders_seq) {
 		this.orders_seq = orders_seq;
 	}
 	public String getMenu_seq() {
@@ -124,6 +127,13 @@ public class OrdersDto{
 	}
 	public void setMenuPrice(Integer menuPrice) {
 		this.menuPrice = menuPrice;
+	}
+	
+	public Integer getOneTotal() {
+		return oneTotal;
+	}
+	public void setOneTotal(Integer oneTotal) {
+		this.oneTotal = oneTotal;
 	}
 	
 
