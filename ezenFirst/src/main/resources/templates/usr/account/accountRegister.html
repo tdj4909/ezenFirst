@@ -16,15 +16,15 @@
 
 					<div class="col-md-12 col-lg-6 col-xl-5">
 						<div class="form-item my-3">
-							<input type="email" class="form-control" placeholder="이메일" name="email" th:value="${user?.email}" th:hidden="${user != null}" required>
-							<div class="invalid-feedback">이메일을 입력하세요.</div>
+							<input type="email" class="form-control" placeholder="이메일" id="email" name="email" th:value="${user?.email}" th:hidden="${user != null}" required>
+							<div class="invalid-feedback">사용할 수 없는 이메일입니다.</div>
 						</div>
 						<div class="form-item my-3">
 							<input type="password" class="form-control" placeholder="비밀번호" name="password" th:value="${user?.password}" th:hidden="${user != null}" required>
 							<div class="invalid-feedback">비밀번호를 입력하세요.</div>
 						</div>
 						<div class="form-item my-3">
-							<input type="password" class="form-control" placeholder="비밀번호 확인" th:hidden="${user != null}" required>
+							<input type="password" class="form-control" placeholder="비밀번호 확인" name="passwordChk" th:hidden="${user != null}" required>
 							<div class="invalid-feedback">비밀번호를 입력하세요.</div>
 						</div>
 						<div class="form-item my-3">
@@ -222,6 +222,35 @@
 	jQuery('#datetimepicker').datetimepicker({
 		timepicker:false,
 		format:'Y-m-d'
+	});
+	
+
+	$("#email").on("blur", function(){
+		
+		const $input = $(this);
+		
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/TableOrder/emailChk"
+			,data : { 
+				"email" : $input.val()
+				}
+			,success: function(response) {
+
+				$input.removeClass("is-valid is-invalid");
+				
+				if(response.rt == "success") {
+					$input.addClass("is-valid");
+				} else {
+					$input.addClass("is-invalid");
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
 	});
 	
 </script>

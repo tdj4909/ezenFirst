@@ -51,7 +51,23 @@ public class AccountController {
 		return "redirect:/TableOrder/shopList";
 	}
 	// 회원가입 email 중복검사
-	
+	@ResponseBody
+	@RequestMapping(value = "/TableOrder/emailChk")
+	public Map<String, Object> emailChk(MemberDto dto) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		// dto의 (email, password)와 DB의 (email, password)가 일치하는지 검사
+		int result = memberService.emailChk(dto);
+		
+		// 검사결과 map에 put해서 리턴
+		if(result == 0 && dto.getEmail() != "") {
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		
+		return returnMap;
+	}
 
 //  사용자 로그인, 로그아웃-----------------------------------------------------------------
 	// 로그인 화면

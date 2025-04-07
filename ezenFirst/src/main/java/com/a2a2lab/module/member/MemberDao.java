@@ -19,6 +19,7 @@ public interface MemberDao {
 	public int selectOneCount(MemberVo vo);
 	public MemberDto selectOne(MemberVo vo);
 	public MemberDto loginChk(MemberDto dto);
+	public int emailChk(MemberDto dto);
 	public List<MemberDto> selectList(MemberVo vo);
 	public List<MemberDto> selectMobileCarrierGroup();
 

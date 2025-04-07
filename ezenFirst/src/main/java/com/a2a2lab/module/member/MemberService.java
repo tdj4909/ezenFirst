@@ -49,6 +49,10 @@ public class MemberService {
 	public MemberDto loginChk(MemberDto dto) {
 		return dao.loginChk(dto);
 	}
+	
+	public int emailChk(MemberDto dto) {
+		return dao.emailChk(dto);
+	}
 
 	public List<MemberDto> selectList(MemberVo vo) {
 		return dao.selectList(vo);
