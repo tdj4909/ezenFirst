@@ -18,6 +18,8 @@ public class OrdersController{
 	@Autowired
 	OrdersService service;
 	
+    // 관리자
+	// 주문관리 화면
 	@RequestMapping(value = "/Xdm/ordersXdmList")
 	public String ordersXdmList(@ModelAttribute("vo") OrdersVo vo, Model model, HttpSession httpSession) {
 		
@@ -35,7 +37,7 @@ public class OrdersController{
 	
 		return "/xdm/orders/ordersXdmList";
 	}
-	
+	// 주문관리 Uelete
 	@RequestMapping(value = "/Xdm/ordersXdmUele")
 	public String ordersXdmUele(@RequestParam("seq") List<String> seqs) {
 		
@@ -48,7 +50,7 @@ public class OrdersController{
 		}
 		return "redirect:/Xdm/ordersXdmList";
 	}
-	
+	// 주문관리 Delete
 	@RequestMapping(value = "/Xdm/ordersXdmDele")
 	public String ordersXdmDele(@RequestParam("seq") List<String> seqs) {
 		
@@ -61,7 +63,7 @@ public class OrdersController{
 		}
 		return "redirect:/Xdm/ordersXdmList";
 	}
-	
+	// 주문관리 Update
 	@RequestMapping(value = "/Xdm/ordersXdmUdpt")
 	@ResponseBody
 	public String ordersXdmUdpt(@RequestParam("seq") List<String> seqs, @RequestParam("ordersStatus") List<Integer> ordersStatuses) {
@@ -75,7 +77,7 @@ public class OrdersController{
 
 		return "redirect:/Xdm/ordersXdmList";
 	}
-	
+	// 주문관리 상세
 	@RequestMapping(value = "/Xdm/ordersXdmOne")
 	public String ordersXdmOne(Model model, HttpSession httpSession, @RequestParam("choice") String seq) {
 		
@@ -92,6 +94,28 @@ public class OrdersController{
 		
 	
 		return "/xdm/orders/ordersXdmOne";
+	}
+	
+//	*************************************************************************
+	
+    // 사용자
+	// 결제 화면
+	@RequestMapping(value = "/TableOrder/ordersCheckout")
+	public String ordersCheckout() {
+	
+		return "/usr/orders/ordersCheckout";
+	}
+	// 주문 상세 화면
+	@RequestMapping(value = "/TableOrder/ordersDetail")
+	public String ordersDetail() {
+	
+		return "/usr/orders/ordersDetail";
+	}
+	// 주문 목록
+	@RequestMapping(value = "/TableOrder/ordersHistory")
+	public String ordersHistory() {
+	
+		return "/usr/orders/ordersHistory";
 	}
 	
 }

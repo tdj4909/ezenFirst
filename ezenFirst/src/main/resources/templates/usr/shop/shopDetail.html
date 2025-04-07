@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{usr/include/head :: head}"></div>
+
+
+    <!-- Single Product Start -->
+    <div class="container-fluid py-5 mt-5">
+        <div class="container py-5">
+            <div class="row g-4 mb-5">
+
+
+                <div class="col">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="border rounded">
+                                <img src="/usr/template/onlineMenuBoard/assets/img/margherita-pizza.jpg" class="img-fluid rounded" alt="Image">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+
+                            <h4 class="fw-bold mb-3">마르게리타</h4>
+                            <h5 class="fw-bold mb-3">18,000 원</h5>
+                            <div class="d-flex mb-4">
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <p class="mb-4">생 모짜렐라 치즈와 토마토 소스, 바질을 곁들인 담백한 맛의 클래식 마르게리타 피자</p>
+                            <div class="input-group quantity mb-4" style="width: 100px;">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <a href="#"
+                                class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">장바구니</a>
+
+
+                            <div class="col">
+                                <div class="row bg-light align-items-center text-center justify-content-center py-2">
+                                    <div class="col-6">
+                                        <p class="mb-0">열량(kcal)</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="mb-0">720</p>
+                                    </div>
+                                </div>
+                                <div class="row text-center align-items-center justify-content-center py-2">
+                                    <div class="col-6">
+                                        <p class="mb-0">당류(g)</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="mb-0">0</p>
+                                    </div>
+                                </div>
+                                <div class="row bg-light text-center align-items-center justify-content-center py-2">
+                                    <div class="col-6">
+                                        <p class="mb-0">단백질(g)</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="mb-0">22</p>
+                                    </div>
+                                </div>
+                                <div class="row text-center align-items-center justify-content-center py-2">
+                                    <div class="col-6">
+                                        <p class="mb-0">포화지방(g)</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="mb-0">4.2</p>
+                                    </div>
+                                </div>
+                                <div class="row bg-light text-center align-items-center justify-content-center py-2">
+                                    <div class="col-6">
+                                        <p class="mb-0">나트륨(mg)</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="mb-0">544</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                        </div>
+
+                        <!-- 상세정보, 리뷰 Start -->
+                        <div class="col-lg-12">
+                            <nav>
+                                <div class="nav nav-tabs mb-3">
+                                    <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
+                                        id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
+                                        aria-controls="nav-mission" aria-selected="true">
+                                        리뷰
+                                    </button>
+                                </div>
+                            </nav>
+
+                            <div class="tab-content mb-5">
+
+                                
+
+                                <!-- 리뷰 Start -->
+                                <div class="tab-pane active" id="nav-mission" role="tabpanel"
+                                    aria-labelledby="nav-mission-tab">
+                                    <div class="d-flex mb-5">
+                                        <div class="">
+                                            <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                            <div class="row justify-content-between">
+                                                <h5>졸린감자</h5>
+                                                <div class="mb-2">
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p>피자와 샐러드 맛있었지만, 비쌉니다. </p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex mb-5">
+                                        <div class="">
+                                            <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                            <div class="justify-content-between">
+                                                <h5>치킨져앙</h5>
+                                                <div class="mb-2">
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                </div>
+                                            </div>
+                                            <p class="text-dark">피자 잘 안먹는 저도 맛있게 먹었어요. </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 리뷰 Start -->
+
+
+                            </div>
+                        </div>
+                        <!-- 상세정보, 리뷰 End -->
+
+                        <!-- Review Start -->
+                        <form action="#">
+                            <h4 class="mb-3 fw-bold">리뷰 남기기</h4>
+
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <button type="button"
+                                        class="btn btn-primary border-0 border-secondary py-3 px-4 rounded-pill text-white"
+                                        onclick="location.href='login.html'">
+                                        로그인
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-lg-6">
+                                    <div class="border-bottom rounded">
+                                        <input type="text" class="form-control border-0 me-4" placeholder="이름" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="border-bottom rounded">
+                                        <input type="email" class="form-control border-0" placeholder="이메일" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="border-bottom rounded my-3">
+                                        <textarea name="" id="" class="form-control border-0" cols="30" rows="8"
+                                            placeholder="내용 *" spellcheck="false"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between py-3 mb-5">
+                                        <div class="d-flex align-items-center">
+                                            <p class="mb-0 me-3">평점 :</p>
+                                            <div class="d-flex align-items-center" style="font-size: 12px;">
+                                                <i class="fa fa-star text-muted"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <a href="#"
+                                            class="btn border border-secondary text-primary rounded-pill px-4 py-3">저장</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Review End -->
+
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <!-- Single Product End -->
+
+<div th:replace="~{usr/include/footer :: footer}"></div>

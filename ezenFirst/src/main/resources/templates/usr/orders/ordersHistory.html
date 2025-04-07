@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{usr/include/head :: head}"></div>
+
+    <!-- Cart Page Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5 mt-5">
+            <div>
+                <h1>주문 내역</h1>
+            </div>
+            <div class="table-responsive mt-5">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Order</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <p class="mt-2"><a href="/TableOrder/ordersDetail">#4310</a></p>
+                            </th>
+                            <td>
+                                <p class="mt-2">2025.02.10 12:30</p>
+                            </td>
+                            <td>
+                                <p class="mt-2">주문 완료</p>
+                            </td>
+                            <td>
+                                <p class="mt-2">82,000 원</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <p class="mt-2"><a href="#">#4310</a></p>
+                            </th>
+                            <td>
+                                <p class="mt-2">2025.02.10 12:30</p>
+                            </td>
+                            <td>
+                                <p class="mt-2">주문 완료</p>
+                            </td>
+                            <td>
+                                <p class="mt-2">82,000 원</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <p class="mt-2"><a href="#">#4310</a></p>
+                            </th>
+                            <td>
+                                <p class="mt-2">2025.02.10 12:30</p>
+                            </td>
+                            <td>
+                                <p class="mt-2">주문 완료</p>
+                            </td>
+                            <td>
+                                <p class="mt-2">82,000 원</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pageing Start -->
+
+            <div class="pagination d-flex justify-content-center mt-5">
+                <a href="#" class="rounded">&laquo;</a>
+                <a href="#" class="active rounded">1</a>
+                <a href="#" class="rounded">2</a>
+                <a href="#" class="rounded">3</a>
+                <a href="#" class="rounded">4</a>
+                <a href="#" class="rounded">5</a>
+                <a href="#" class="rounded">6</a>
+                <a href="#" class="rounded">&raquo;</a>
+            </div>
+
+            <!-- Pageing End -->
+
+        </div>
+    </div>
+    <!-- Cart Page End -->
+
+
+<div th:replace="~{usr/include/footer :: footer}"></div>

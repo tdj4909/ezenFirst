@@ -16,7 +16,7 @@
 
 					<div class="col-md-12 col-lg-6 col-xl-5">
 						<div class="form-item my-3">
-							<input type="email" class="form-control" placeholder="이메일" id="email" name="email" th:value="${user?.email}" th:hidden="${user != null}" required>
+							<input type="email" class="form-control" placeholder="이메일" id="email" name="email" th:value="${user?.email}" th:hidden="${user != null}" autocomplete="off" required>
 							<div class="invalid-feedback">사용할 수 없는 이메일입니다.</div>
 						</div>
 						<div class="form-item my-3">

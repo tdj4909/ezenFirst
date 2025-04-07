@@ -32,4 +32,17 @@ public class ShopController {
 		return "/usr/shop/shopList";
 	}
 	
+	// 상품 상세 화면
+	@RequestMapping(value = "/TableOrder/shopDetail")
+	public String shopDetail(Model model, HttpSession httpSession) {
+		
+		// login 검사
+		if(httpSession.getAttribute("user") == null) {
+			return "redirect:/TableOrder/accountLogin";
+		}
+		model.addAttribute("user", httpSession.getAttribute("user"));
+		
+		return "/usr/shop/shopDetail";
+	}
+	
 }

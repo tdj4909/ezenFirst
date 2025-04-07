@@ -127,5 +127,13 @@ public class AccountController {
 		
 		return "redirect:/TableOrder/shopList";
 	}
+	// 비밀번호 수정 화면
+	@RequestMapping(value = "/TableOrder/accountChangePwd")
+	public String accountChangePwd(Model model, HttpSession httpSession) {
+		
+		model.addAttribute("user", httpSession.getAttribute("user"));
+		
+		return "/usr/account/accountChangePwd";
+	}
 	
 }
