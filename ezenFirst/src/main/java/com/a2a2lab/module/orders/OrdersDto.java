@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class OrdersDto{
 	
 	// order
-	private LocalDateTime ordersDate;
+	private String ordersDate;
 	private String seq;
 	private Integer ordersStatus;
 	private Integer totalPrice;
@@ -32,10 +32,10 @@ public class OrdersDto{
 	private Integer menuPrice;
 	
 	
-	public LocalDateTime getOrdersDate() {
+	public String getOrdersDate() {
 		return ordersDate;
 	}
-	public void setOrdersDate(LocalDateTime ordersDate) {
+	public void setOrdersDate(String ordersDate) {
 		this.ordersDate = ordersDate;
 	}
 	public String getSeq() {

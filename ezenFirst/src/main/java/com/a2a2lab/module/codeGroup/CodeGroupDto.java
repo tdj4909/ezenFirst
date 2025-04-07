@@ -1,6 +1,7 @@
 package com.a2a2lab.module.codeGroup;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CodeGroupDto {
 
@@ -8,8 +9,8 @@ public class CodeGroupDto {
 	private Integer codeGroupUse;
 	private String codeGroupCd;
 	private String codeGroupNm;
-	private LocalDateTime codeGroupRegDateTime;
-	private LocalDateTime codeGroupModDateTime;
+	private String codeGroupRegDateTime;
+	private String codeGroupModDateTime;
 	private Integer codeGroupDelNy;
 	
 	private Integer codeCnt;
@@ -59,16 +60,16 @@ public class CodeGroupDto {
 	public void setIfcgSeq(String ifcgSeq) {
 		this.ifcgSeq = ifcgSeq;
 	}
-	public LocalDateTime getCodeGroupRegDateTime() {
+	public String getCodeGroupRegDateTime() {
 		return codeGroupRegDateTime;
 	}
-	public void setCodeGroupRegDateTime(LocalDateTime codeGroupRegDateTime) {
+	public void setCodeGroupRegDateTime(String codeGroupRegDateTime) {
 		this.codeGroupRegDateTime = codeGroupRegDateTime;
 	}
-	public LocalDateTime getCodeGroupModDateTime() {
+	public String getCodeGroupModDateTime() {
 		return codeGroupModDateTime;
 	}
-	public void setCodeGroupModDateTime(LocalDateTime codeGroupModDateTime) {
+	public void setCodeGroupModDateTime(String codeGroupModDateTime) {
 		this.codeGroupModDateTime = codeGroupModDateTime;
 	}
 }

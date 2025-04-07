@@ -11,8 +11,8 @@ public class CodeDto {
 	private String codeCd;
 	private String codeNm;
 	private Integer codeUse;
-	private LocalDateTime codeRegDateTime;
-	private LocalDateTime codeModDateTime;
+	private String codeRegDateTime;
+	private String codeModDateTime;
 	private Integer codeDelNy;
 	private String codeGroup_seq;
 	
@@ -85,16 +85,16 @@ public class CodeDto {
 		this.ifcgSeq = ifcgSeq;
 	}
 	
-	public LocalDateTime getCodeRegDateTime() {
+	public String getCodeRegDateTime() {
 		return codeRegDateTime;
 	}
-	public void setCodeRegDateTime(LocalDateTime codeRegDateTime) {
+	public void setCodeRegDateTime(String codeRegDateTime) {
 		this.codeRegDateTime = codeRegDateTime;
 	}
-	public LocalDateTime getCodeModDateTime() {
+	public String getCodeModDateTime() {
 		return codeModDateTime;
 	}
-	public void setCodeModDateTime(LocalDateTime codeModDateTime) {
+	public void setCodeModDateTime(String codeModDateTime) {
 		this.codeModDateTime = codeModDateTime;
 	}
 	

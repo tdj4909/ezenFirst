@@ -50,6 +50,8 @@ public class AccountController {
 		httpSession.setAttribute("user", result);
 		return "redirect:/TableOrder/shopList";
 	}
+	// 회원가입 email 중복검사
+	
 
 //  사용자 로그인, 로그아웃-----------------------------------------------------------------
 	// 로그인 화면

@@ -3,7 +3,7 @@
 
 <div th:replace="~{usr/include/head :: head}"></div>
 
-<form action="" method="post" id="form">
+<form action="" method="post" id="form" class="needs-validation" novalidate>
 	<input type="hidden"name="ifcgSeq" th:value="${user?.seq}">
 	<input type="hidden"name="admin" th:value="${user?.admin}">
 	<!-- Checkout Page Start -->
@@ -52,7 +52,7 @@
 						
 						<div class="row my-3">
 							<div class="col">
-								<select class="form-select" name="gender">
+								<select class="form-select" name="gender" required>
 		                            <option disabled hidden selected value="">성별</option>
 		                            <option value="1" th:selected="${user?.gender == 1}">남자</option>
 		                            <option value="2" th:selected="${user?.gender == 2}">여자</option>
@@ -63,14 +63,14 @@
 						
 						<div class="row my-3">
 							<div class="col">
-	                            <input id="datetimepicker" name="userDob" type="text" class="form-control" placeholder="생년월일" th:value="${user?.userDob}" required>
+	                            <input id="datetimepicker" name="userDob" type="text" class="form-control" placeholder="생년월일" th:value="${user?.userDob}" autocomplete='off' required>
 								<div class="invalid-feedback">생년월일을 입력하세요.</div>
 							</div>
                         </div>
 
 						<div class="row my-3">
 							<div class="col-md-12 col-lg-4">
-								<select class="form-select" name="mobileCarrier">
+								<select class="form-select" name="mobileCarrier" required>
 									<option disabled hidden selected value="">통신사</option>
 									<option th:each="group : ${mobileCarrierGroup}" 
 											th:value="${group.codeSeq}"
@@ -114,11 +114,100 @@
 <script type="text/javascript">
 
 
+	const form = document.querySelector('.needs-validation'); // 단일 폼 선택
+	
+	const inputEmail = form.querySelector("input[name='email']");
+	const inputPwd = form.querySelector("input[name='password']");
+	const inputPwdChk = form.querySelector("input[name='passwordChk']");
+	
+	const inputNickNm = form.querySelector("input[name='nickname']");
+	const inputLastNm = form.querySelector("input[name='lastNm']");
+	const inputFirstNm = form.querySelector("input[name='firstNm']");
+	const selectGender = form.querySelector("select[name='gender']");
+	const inputUserDob = form.querySelector("input[name='userDob']");
+	
+	const selectMobileCarrier = form.querySelector("select[name='mobileCarrier']");
+	const inputPhone = form.querySelector("input[name='phone']");
+
+	function validation() {
+	    
+	    let isValid = true;
+	    
+	    if (!inputEmail.value.trim() && (seq.value == "0" || seq.value == "")) {		// Email
+	    	inputEmail.focus();
+	        isValid = false;
+	    } else if (!inputPwd.value.trim() && (seq.value == "0" || seq.value == "")) {	// Password
+	    	inputPwd.focus();
+	        isValid = false;
+	    } else if (!inputPwdChk.value.trim() && (seq.value == "0" || seq.value == "")) {		// PaswordChk
+	    	inputPwdChk.focus();
+	        isValid = false;
+	    } else if (!inputNickNm.value.trim()) {		// Nickname
+	    	inputNickNm.focus();
+	        isValid = false;
+	    } else if (!inputLastNm.value.trim()) {		// LastNm
+	    	inputLastNm.focus();
+	        isValid = false;
+	    } else if (!inputFirstNm.value.trim()) {	// FirstNm
+	    	inputFirstNm.focus();
+	        isValid = false;
+	    } else if (!selectGender.value) {		// Gender
+	    	selectGender.focus();
+	        isValid = false;
+	    } else if (!inputUserDob.value.trim()) {		// UserDob
+	    	inputUserDob.focus();
+	        isValid = false;
+	    } else if (!selectMobileCarrier.value) {	// MobileCarrier
+	    	selectMobileCarrier.focus();
+	        isValid = false;
+	    } else if (!inputPhone.value.trim()) { // Phone
+	    	inputPhone.focus();
+	        isValid = false;
+	    }
+	    
+	    
+	    if(!isValid){
+	    	form.classList.add("was-validated");
+	    }
+	
+	    return isValid;
+	}
+
+	document.addEventListener("DOMContentLoaded", function () {
+
+		// 첫 글자가 공백이면 자동 제거
+	    inputEmail.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputPwd.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputPwdChk.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputNickNm.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputLastNm.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputFirstNm.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputPhone.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	    inputUserDob.addEventListener("input", function () {
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	});
+	
+	
 	let seq = document.querySelector("input[name=ifcgSeq]");
 	
 	document.getElementById("btnSubmit").onclick = function(){
 		if(seq.value == "0" || seq.value == "") {				// Insert
-// 			if(validation() == false) return false;
+			if(validation() == false) return false;
 // 			if(pwdChk() == false) return false;
 			form.action = "/TableOrder/accountRegisterInst";
 			form.submit();
