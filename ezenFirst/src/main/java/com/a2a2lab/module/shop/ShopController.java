@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.a2a2lab.module.member.MemberService;
+import com.a2a2lab.module.product.ProductService;
+import com.a2a2lab.module.product.ProductVo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -18,16 +20,20 @@ public class ShopController {
 //	ShopService service;
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	ProductService productService;
 	
 	// 상품 리스트 화면
 	@RequestMapping(value = "/TableOrder/shopList")
-	public String shopList(Model model, HttpSession httpSession) {
+	public String shopList(Model model, HttpSession httpSession, ProductVo vo) {
 		
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
 			return "redirect:/TableOrder/accountLogin";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
+		
+		model.addAttribute("lists", productService.selectShopList(vo));
 		
 		return "/usr/shop/shopList";
 	}

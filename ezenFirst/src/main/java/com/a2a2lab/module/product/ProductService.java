@@ -1,16 +1,9 @@
 package com.a2a2lab.module.product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.a2a2lab.module.code.CodeDto;
-import com.a2a2lab.module.codeGroup.CodeGroupDto;
-import com.a2a2lab.module.codeGroup.CodeGroupVo;
-
-import jakarta.annotation.PostConstruct;
 
 @Service
 public class ProductService {
@@ -57,6 +50,10 @@ public class ProductService {
 		}
 		
 		return dtos;
+	}
+	
+	public List<ProductDto> selectShopList(ProductVo vo) {
+		return dao.selectList(vo);
 	}
 
 }

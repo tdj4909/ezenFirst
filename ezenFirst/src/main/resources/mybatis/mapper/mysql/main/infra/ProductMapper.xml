@@ -146,5 +146,18 @@
 			seq = #{seq}
 	</delete>
 
+	<select id="selectShopList" resultMap="resultMapObj">
+		SELECT 
+			seq
+			,menuNm
+			,menuPrice
+			,menuRating
+		FROM 
+			menu
+		WHERE
+			1=1
+			AND menuDelNy = 0;
+<!-- 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql} -->
+	</select>
 	
 </mapper>

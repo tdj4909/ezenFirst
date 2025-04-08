@@ -15,8 +15,11 @@ public class ProductDto {
 	private Integer menuType;
 	private Integer recommand;
 	private Integer menuNew;
-	private Integer orderCnt;
+	private Integer menuOrderCnt;
 	private Integer menuStock;
+	private Integer menuRating;
+	private String menuRegDateTime;
+	private String menuModDateTime;
 	private Integer menuDelNy;
 	
 	private String menuTypeNm;
@@ -103,12 +106,6 @@ public class ProductDto {
 	public void setMenuNew(Integer menuNew) {
 		this.menuNew = menuNew;
 	}
-	public Integer getOrderCnt() {
-		return orderCnt;
-	}
-	public void setOrderCnt(Integer orderCnt) {
-		this.orderCnt = orderCnt;
-	}
 	public Integer getMenuStock() {
 		return menuStock;
 	}
@@ -126,6 +123,30 @@ public class ProductDto {
 	}
 	public void setMenuTypeNm(String menuTypeNm) {
 		this.menuTypeNm = menuTypeNm;
+	}
+	public Integer getMenuOrderCnt() {
+		return menuOrderCnt;
+	}
+	public void setMenuOrderCnt(Integer menuOrderCnt) {
+		this.menuOrderCnt = menuOrderCnt;
+	}
+	public Integer getMenuRating() {
+		return menuRating;
+	}
+	public void setMenuRating(Integer menuRating) {
+		this.menuRating = menuRating;
+	}
+	public String getMenuRegDateTime() {
+		return menuRegDateTime;
+	}
+	public void setMenuRegDateTime(String menuRegDateTime) {
+		this.menuRegDateTime = menuRegDateTime;
+	}
+	public String getMenuModDateTime() {
+		return menuModDateTime;
+	}
+	public void setMenuModDateTime(String menuModDateTime) {
+		this.menuModDateTime = menuModDateTime;
 	}
 	
 	
