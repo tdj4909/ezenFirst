@@ -66,11 +66,6 @@
 										<input type="text" id="ifcgSeq" name="ifcgSeq" th:value="${item?.ifcgSeq}" maxlength="20" placeholder="자동생성" disabled class="form-control"/>
 									</div>
 									<div class="col-3">
-										<label for="codeCd" class="form-label">코드 (ANOTHER)</label> <input
-											name="codeCd" type="text" class="form-control" th:value="${item?.codeCd}"
-											placeholder="영대소문자,숫자">
-									</div>
-									<div class="col-3">
 										<label for="codeNm" class="form-label">코드 이름<b style="color: red;">*</b></label> 
 										<input name="codeNm" id="codeNm" th:value="${item?.codeNm}" 
 												type="text" class="form-control" placeholder="한글,영대소문자,숫자" required>
@@ -88,16 +83,6 @@
 									</div>
 								</div>
 
-								<div class="row mb-3">
-									<div class="col-6">
-										<label for="textarea1" class="form-label">설명</label>
-										<textarea class="form-control" id="textarea1" rows="3"></textarea>
-									</div>
-									<div class="col-3">
-										<label for="text5" class="form-label">순서</label> <input
-											id="text5" type="text" class="form-control">
-									</div>
-								</div>
 
 							</div>
 							<!-- End Pagination with icons -->

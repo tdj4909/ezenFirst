@@ -46,7 +46,7 @@
 					</select>
 				</div>
 				<div class="col-2">
-					<input id="datetimepickerStart" name="shDateStart" type="text" class="form-control" placeholder="시작일" th:value="${vo.shDateStart}">
+					<input id="datetimepickerStart" name="shDateStart" type="text" class="form-control" placeholder="시작일" th:value="${vo.shDateStart}" autocomplete="off">
 					
 <!-- 					<input type="text" id="shDateStart" name="shDateStart"  -->
 <!-- 					placeholder="시작일" class="form-control" autocomplete="off"> -->
@@ -54,7 +54,7 @@
 <!-- 					th:value="${#strings.substring(vo.shDateStart, 0, 10)}"  -->
 				</div>
 				<div class="col-2">
-					<input id="datetimepickerEnd" name="shDateEnd" type="text" class="form-control" placeholder="종료일" th:value="${vo.shDateEnd}">
+					<input id="datetimepickerEnd" name="shDateEnd" type="text" class="form-control" placeholder="종료일" th:value="${vo.shDateEnd}" autocomplete="off">
 <!-- 					<input type="text" id="shDateEnd" name="shDateEnd"  -->
 <!-- 					placeholder="종료일" class="form-control" autocomplete="off"> -->
 <!-- 					th:value="${#strings.substring(vo.shDateEnd, 0, 10)}"  -->
@@ -123,7 +123,6 @@
 											<th>코드그룹 이름</th>
 											<th>코드</th>
 											<th>코드 이름</th>
-											<th>순서</th>
 											<th>등록일</th>
 											<th>수정일</th>
 										</tr>
@@ -131,7 +130,7 @@
 									<tbody>
 
 										<tr th:if="${#lists.isEmpty(lists)}">
-											<td colspan=10 style="text-align: center">
+											<td colspan=9 style="text-align: center">
 												<p>There are no data!</p>
 											</td>
 										</tr>
@@ -142,13 +141,12 @@
 											</td>
 											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 											<td th:text="${list.codeUse} == 1 ? 'Y' : 'N' "></td>
-											<td th:text="${list.codeGroupCd == null || list.codeGroupCd == '' ? list.codeGroup_seq : list.codeGroupCd}"></td>
+											<td th:text="${list.codeGroup_seq}"></td>
 											<td th:text="${list.codeGroupNm}"></td>
-											<td th:text="${list.codeCd == null || list.codeCd == '' ? list.seq : list.codeCd}"></td>
+											<td th:text="${list.seq}"></td>
 											<td class="align-middle fw-semi-bold">
 												<a href="javascript:void(0);" th:text="${list.codeNm}" th:attr="onclick=|goForm(${list.ifcgSeq})|"></a>
 											</td>
-											<td></td>
 											<td th:text="${list.codeRegDateTime}"></td>
 											<td th:text="${list.codeModDateTime}"></td>
 										</tr>

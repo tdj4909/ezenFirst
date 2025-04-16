@@ -183,6 +183,7 @@
     </form>
     
     <script>
+    
 	// 페이징
 	let form = document.querySelector("form[name=formList]");
 	goList = function (thisPage) {
@@ -191,8 +192,58 @@
 	    form.submit();
 	}
 	
-	//장바구니
-	document.addEventListener('DOMC')
     </script>
+    
+    
+	<script>
+	  // 장바구니
+	  document.addEventListener("DOMContentLoaded", function () {
+	    const cartItemsContainer = document.getElementById("cart-items");
+	
+	    document.querySelectorAll(".add-to-cart").forEach((button) => {
+	      button.addEventListener("click", function () {
+	        const name = this.getAttribute("data-name");
+	        const price = parseInt(this.getAttribute("data-price")).toLocaleString();
+	        const img = this.getAttribute("data-img");
+	
+	        const cartItem = `
+	          <div class="row py-3 border-top">
+	            <div class="col">
+	              <img src="${img}" class="img-fluid rounded" alt="${name}">
+	            </div>
+	            <div class="col">
+	              <h6 class="mb-2">${name}</h6>
+	              <div class="mb-2">
+	                <i class="fa fa-star text-secondary"></i>
+	                <i class="fa fa-star text-secondary"></i>
+	                <i class="fa fa-star text-secondary"></i>
+	                <i class="fa fa-star text-secondary"></i>
+	                <i class="fa fa-star"></i>
+	              </div>
+	              <div class="mb-2">
+	                <h5 class="fw-bold me-2">${price} 원</h5>
+	              </div>
+	              <div class="input-group quantity mb-2" style="width: 100px;">
+	                <div class="input-group-btn">
+	                  <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+	                    <i class="fa fa-minus"></i>
+	                  </button>
+	                </div>
+	                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
+	                <div class="input-group-btn">
+	                  <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+	                    <i class="fa fa-plus"></i>
+	                  </button>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	        `;
+	
+	        cartItemsContainer.insertAdjacentHTML("beforeend", cartItem);
+	      });
+	    });
+	  });
+	</script>
 
 <div th:replace="~{usr/include/footer :: footer}"></div>
