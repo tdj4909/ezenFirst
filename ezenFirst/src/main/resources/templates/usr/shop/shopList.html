@@ -85,7 +85,7 @@
                                             <h4 class="mb-3">합계:</h4>
                                         </div>
                                         <div class="col text-end">
-                                            <h4 class="mb-3">41,000 원</h4>
+                                            <h4 class="mb-3"><span id="cart-total">0 원</span></h4>
                                         </div>
                                     </div>
 
@@ -214,6 +214,7 @@
 	            const cartItem = addedItems.get(name);
 	            const qtyInput = cartItem.querySelector("input");
 	            qtyInput.value = parseInt(qtyInput.value) + 1;
+	            updateCartTotal();
 	            return;
 	        }
 	        
@@ -240,7 +241,7 @@
 	              <i class="fa fa-star"></i>
 	            </div>
 	            <div class="mb-2">
-	              <h5 class="fw-bold me-2">${price} 원</h5>
+	              <h5 class="fw-bold me-2 item-price" data-price="${parseInt(price)}">${price} 원</h5>
 	            </div>
 	            <div class="input-group quantity mb-2" style="width: 100px;">
 	              <div class="input-group-btn">
@@ -260,6 +261,7 @@
 
 	        // 장바구니에 추가
 	        cartItemsContainer.appendChild(cartItemHTML);
+	        updateCartTotal();
 
 	        // Map에 추가해서 추후 수량 증가 처리
 	        addedItems.set(name, cartItemHTML);
@@ -271,6 +273,7 @@
 	      if (e.target.closest(".btn-plus")) {
 	        const qtyInput = e.target.closest(".quantity").querySelector(".item-qty");
 	        qtyInput.value = parseInt(qtyInput.value) + 1;
+	        updateCartTotal();
 	      }
 	      // - 버튼
 	      if (e.target.closest(".btn-minus")) {
@@ -278,6 +281,7 @@
 	        const currentVal = parseInt(qtyInput.value);
 	        if (currentVal > 1) {
 	          qtyInput.value = currentVal - 1;
+	          updateCartTotal();
 	        }
 	      }
 	   	  // 삭제 버튼
@@ -287,11 +291,24 @@
 	            const itemName = itemRow.getAttribute("data-name");
 	            addedItems.delete(itemName); // Map에서도 삭제해줘야 중복 방지됨
 	            itemRow.remove();
+	            updateCartTotal();
 	        }
 	      }
 	    });
 	   
 	  });
+	  
+      // 합계 계산 함수
+	  function updateCartTotal() {
+	    let total = 0;
+	    document.querySelectorAll("#cart-items .cart-item").forEach(item => {
+	      const qty = parseInt(item.querySelector(".item-qty").value);
+	      const unitPrice = parseInt(item.querySelector(".item-price").getAttribute("data-price"));
+	      total += qty * unitPrice;
+	    });
+
+	    document.getElementById("cart-total").textContent = total.toLocaleString() + " 원";
+	  }
 	</script>
 
 <div th:replace="~{usr/include/footer :: footer}"></div>
