@@ -3,7 +3,7 @@ package com.a2a2lab.module.shop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.a2a2lab.module.member.MemberService;
@@ -25,7 +25,7 @@ public class ShopController {
 	
 	// 상품 리스트 화면
 	@RequestMapping(value = "/TableOrder/shopList")
-	public String shopList(Model model, HttpSession httpSession, ProductVo vo) {
+	public String shopList(Model model, HttpSession httpSession, @ModelAttribute("vo") ProductVo vo) {
 		
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
@@ -33,7 +33,10 @@ public class ShopController {
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
-		model.addAttribute("lists", productService.selectShopList(vo));
+		vo.setRowNumToShow(6);
+		vo.setParamsPaging(productService.selectOneCount(vo));
+		
+		model.addAttribute("list", productService.selectShopList(vo));
 		
 		return "/usr/shop/shopList";
 	}

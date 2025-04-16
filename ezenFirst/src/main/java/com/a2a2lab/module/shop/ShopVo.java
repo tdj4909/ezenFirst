@@ -24,8 +24,8 @@ public class ShopVo {
 
 	//	paging
 	private int thisPage = 1;									// 현재 페이지
-	private int rowNumToShow = 5;								// 화면에 보여줄 데이터 줄 갯수
-	private int pageNumToShow = 5;								// 화면에 보여줄 페이징 번호 갯수
+	private int rowNumToShow = 6;								// 화면에 보여줄 데이터 줄 갯수
+	private int pageNumToShow = 6;								// 화면에 보여줄 페이징 번호 갯수
 
 	private int totalRows;										// 전체 데이터 갯수
 	private int totalPages;										// 전체 페이지 번호

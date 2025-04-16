@@ -95,6 +95,7 @@
 			,recommand
 			,menuNew
 			,menuStock
+			,menuRegDateTime
 			,menuDelNy
 		) VALUES(
 			#{menuNm}
@@ -109,6 +110,7 @@
 			,#{recommand}
 			,#{menuNew}
 			,#{menuStock}
+			,now()
 			,0
 		)
 	</insert>
@@ -127,6 +129,7 @@
 			,recommand = #{recommand}
 			,menuNew = #{menuNew}
 			,menuStock = #{menuStock}
+			,menuModDateTime = #{menuModDateTime}
 		WHERE
 			seq = #{ifcgSeq}
 	</update>
@@ -156,8 +159,10 @@
 			menu
 		WHERE
 			1=1
-			AND menuDelNy = 0;
-<!-- 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql} -->
+			AND menuDelNy = 0
+		ORDER BY
+			seq DESC
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	
 </mapper>

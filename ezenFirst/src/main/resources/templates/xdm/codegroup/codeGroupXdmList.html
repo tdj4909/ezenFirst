@@ -129,7 +129,6 @@
 											<th>코드그룹 코드</th>
 											<th>코드그룹 이름</th>
 											<th>갯수</th>
-											<th>순서</th>
 											<th>등록일</th>
 											<th>수정일</th>
 										</tr>
@@ -137,7 +136,7 @@
 									<tbody>
 									
 										<tr th:if="${#lists.isEmpty(lists)}">
-											<td colspan=9 style="text-align: center"><p>There
+											<td colspan=8 style="text-align: center"><p>There
 													are no data!</p></td>
 										</tr>
 										<tr th:each="list : ${lists}">
@@ -149,14 +148,13 @@
 
 											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 											<td th:text="${list.codeGroupUse} == 1 ? 'Y' : 'N' "></td>
-											<td th:text="${list.codeGroupCd == null || list.codeGroupCd == '' ? list.seq : list.codeGroupCd}"></td>
+											<td th:text="${list.seq}"></td>
 											
 											<td class="align-middle fw-semi-bold">
 												<a href="javascript:void(0);" th:text="${list.codeGroupNm}" th:attr="onclick=|goForm(${list.ifcgSeq})|"></a>
 											</td>
 											
 											<td th:text="${list.codeCnt}"></td>
-											<td></td>
 											<td th:text="${list.codeGroupRegDateTime}"></td>
 											<td th:text="${list.codeGroupModDateTime}"></td>
 										</tr>

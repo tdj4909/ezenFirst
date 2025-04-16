@@ -113,7 +113,6 @@
 		WHERE
 			1=1
 			AND email = #{email}
-			AND password = #{password}
 	</select>
 	
 	<select id="emailChk" resultType="Integer">

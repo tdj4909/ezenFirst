@@ -53,7 +53,7 @@ public class ProductService {
 	}
 	
 	public List<ProductDto> selectShopList(ProductVo vo) {
-		return dao.selectList(vo);
+		return dao.selectShopList(vo);
 	}
 
 }

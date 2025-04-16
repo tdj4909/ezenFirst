@@ -50,18 +50,12 @@
 												style="color: red;">*</b></label>
 											<input type="text" id="ifcgSeq" name="ifcgSeq" th:value="${item?.ifcgSeq}" maxlength="20" placeholder="자동생성" disabled class="form-control"/>
 										</div>
-										<div class="col-3">
-											<label for="text2" class="form-label">코드그룹 코드
-												(ANOTHER)</label> <input type="text" class="form-control" name="codeGroupCd" th:value="${item?.codeGroupCd}"
-												placeholder="영대소문자,숫자">
-										</div>
+										
 										<div class="col-3">
 											<label for="text3" class="form-label">코드그룹 이름<b style="color: red;">*</b></label>
-											<input name="codeGroupNm" type="text" th:value="${item?.codeGroupNm}"
-												class="form-control" placeholder="한글,영대소문자,숫자" required>
-											<div class="invalid-feedback">
-												코드그룹 이름을 입력하세요.
-											</div>
+											<input id="codeGroupNm" name="codeGroupNm" type="text" th:value="${item?.codeGroupNm}"
+												class="form-control" placeholder="한글,영대소문자,숫자">
+											<div class="invalid-feedback" id="codeGroupNmFeedback"></div>
 										</div>
 										<div class="col-3">
 											<label for="codeGroupUse" class="form-label">사용여부<b
@@ -70,17 +64,6 @@
 												<option value="1" th:selected="${item?.codeGroupUse == 1}">사용</option>
 												<option value="0" th:selected="${item?.codeGroupUse == 0}">사용안함</option>
 											</select>
-										</div>
-									</div>
-
-									<div class="row mb-3">
-										<div class="col-6">
-											<label for="textarea1" class="form-label">설명</label>
-											<textarea class="form-control" id="textarea1" rows="3"></textarea>
-										</div>
-										<div class="col-3">
-											<label for="text5" class="form-label">순서</label> 
-											<input id="text5" type="text" class="form-control">
 										</div>
 									</div>
 
@@ -117,16 +100,45 @@
 	<script type="text/javascript">
 	
 	let seq = document.querySelector("input[name=ifcgSeq]");
+	
+	document.getElementById("codeGroupNm").addEventListener("input", function(){
+		codeGroupNmValidation();
+	});
+	
+	// 코드그룹 이름 Validation
+	function codeGroupNmValidation() {
+
+	    const input = document.getElementById("codeGroupNm");
+	    const value = input.value.trim();
+	    const pattern = /^[a-zA-Z가-힣0-9]{1,10}$/;
+	    const feedback = document.getElementById("codeGroupNmFeedback");
+	    
+	    let isValid = true;
+
+	    if (value === "") {
+	    	input.classList.add("is-invalid");
+	    	input.classList.remove("is-valid");
+	    	feedback.textContent = "코드그룹 이름을 입력해 주세요.";
+	        isValid = false;
+	    } else if (!pattern.test(value)) {
+	    	input.classList.add("is-invalid");
+	    	input.classList.remove("is-valid");
+	    	feedback.textContent = "코드그룹 이름은 공백 없이 한글, 영대소문자, 숫자만 입력해 주세요. (1~10자)";
+	        isValid = false;
+	    } else {
+	    	input.classList.remove("is-invalid");
+	    	input.classList.add("is-valid");
+	    }
+	 	
+	    return isValid;
+	}
+	
 
 	// 유효성 검사
 	function validation() {
 
-		const form = document.querySelector(".needs-validation"); // 폼 선택
-	    const inputField = form.querySelector("input[name='codeGroupNm']"); // 입력 필드 찾기
-
-	    if (!inputField.value.trim()) { 
-	        form.classList.add("was-validated"); // 부트스트랩 유효성 스타일 적용
-	        inputField.focus();
+	    if (!codeGroupNmValidation()) { 
+	    	document.getElementById("codeGroupNm").focus();
 	        return false; // 제출 차단
 	    }
 

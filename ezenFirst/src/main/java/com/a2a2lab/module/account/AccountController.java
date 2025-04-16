@@ -39,6 +39,7 @@ public class AccountController {
 	@RequestMapping(value = "/TableOrder/accountRegisterInst")
 	public String accountUsrRegisterInst(MemberDto dto) {
 		dto.setAdmin(0);
+		dto.setPassword(memberService.encodeBcrypt(dto.getPassword(), 10));
 		memberService.insert(dto);
 		return "redirect:/TableOrder/shopList";
 	}
@@ -74,8 +75,8 @@ public class AccountController {
 	@RequestMapping(value = "/TableOrder/accountLogin")
 	public String accountLogin(Model model) {
 		// 임시 로그인 계정
-		String tmpEmail = "sample@example.com";
-		String tmpPwd = "12345678";
+		String tmpEmail = "ServiceAdmin@gmail.com";
+		String tmpPwd = "a1234567";
 		model.addAttribute("tmpEmail", tmpEmail);
 		model.addAttribute("tmpPwd", tmpPwd);
 		return "/usr/account/accountLogin";
@@ -88,10 +89,9 @@ public class AccountController {
 		
 		// dto의 (email, password)와 DB의 (email, password)가 일치하는지 검사
 		MemberDto result = memberService.loginChk(dto);
-		System.out.println(result);
 		
 		// 검사결과 map에 put해서 리턴
-		if(result != null) {
+		if(result != null && memberService.matchesBcrypt(dto.getPassword(), result.getPassword(), 10)) {
 			httpSession.setAttribute("user", result);
 			returnMap.put("rt", "success");
 		} else {
