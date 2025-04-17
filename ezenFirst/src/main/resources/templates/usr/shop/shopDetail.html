@@ -19,7 +19,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-
+							<input type="hidden" id="menu_seq" name="menu_seq" th:value="${item.seq}">
                             <h4 class="fw-bold mb-3" th:text="${item.menuNm}"></h4>
                             <h5 class="fw-bold mb-3" th:text="${#numbers.formatInteger(item.menuPrice, 3, 'COMMA')} + ' 원'"></h5>
                             <div class="d-flex mb-4">
@@ -77,90 +77,36 @@
 
                         </div>
 
-                        <!-- 상세정보, 리뷰 Start -->
-                        <div class="col-lg-12">
-                            <nav>
-                                <div class="nav nav-tabs mb-3">
-                                    <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
-                                        id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
-                                        aria-controls="nav-mission" aria-selected="true">
-                                        리뷰
-                                    </button>
-                                </div>
-                            </nav>
+						<!-- ReviewList Start -->
+						<div class="col-lg-12 ReviewList">
+						
+						    <h4 class="mb-4 border-bottom py-3">리뷰</h4>
+						
+						    <!-- 리뷰 반복 출력 -->
+						    <div th:each="review : ${reviewList}" class="d-flex mb-4 border-bottom pb-3">
+						        <div class="w-100">
+						            <div class="d-flex justify-content-between align-items-center mb-1">
+						                <h5 class="mb-0" th:text="${review.nickname}">닉네임</h5>
+						                <p class="mb-0 text-muted" style="font-size: 14px;" th:text="${review.reviewDate}">작성일</p>
+						            </div>
+						
+						            <div class="mb-2">
+						                <span th:each="i : ${#numbers.sequence(1, 5)}">
+						                    <i class="fa fa-star" th:classappend="${i <= review.reviewRate} ? ' text-secondary' : ' text-muted'"></i>
+						                </span>
+						            </div>
+						
+						            <p class="mb-0" th:text="${review.reviewDescription}">리뷰 내용</p>
+						        </div>
+						    </div>
+						
+						</div>
+						<!-- ReviewList End -->
 
-                            <div class="tab-content mb-5">
-
-                                
-
-                                <!-- 리뷰 Start -->
-                                <div class="tab-pane active" id="nav-mission" role="tabpanel"
-                                    aria-labelledby="nav-mission-tab">
-                                    
-                                    <div class="d-flex mb-5">
-                                        <div>
-                                            <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-                                            <div class="row justify-content-between">
-                                                <h5>졸린감자</h5>
-                                                <div class="mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                            </div>
-                                            <p>피자와 샐러드 맛있었지만, 비쌉니다. </p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex mb-5">
-                                        <div class="">
-                                            <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-                                            <div class="justify-content-between">
-                                                <h5>치킨져앙</h5>
-                                                <div class="mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                </div>
-                                            </div>
-                                            <p class="text-dark">피자 잘 안먹는 저도 맛있게 먹었어요. </p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="d-flex mb-5" th:each="review : ${reviewList}">
-                                        <div>
-                                            <p class="mb-2" style="font-size: 14px;" th:text="${review.reviewDate}"></p>
-                                            <div class="row justify-content-between">
-                                                <h5 th:text="${review.nickname}"></h5>
-                                                <div class="mb-2">
-												    <!-- 별점 루프 (1부터 5까지 반복) -->
-												    <span th:each="i : ${#numbers.sequence(1, 5)}">
-												        <!-- 현재 review.rating보다 작거나 같으면 채운 별 -->
-												        <i class="fa fa-star" 
-												           th:classappend="${i <= review.reviewRate} ? ' text-secondary' : ''">
-												        </i>
-												    </span>
-                                                </div>
-                                            </div>
-                                            <p th:text="${review.reviewDescription}"></p>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                
-                                <!-- 리뷰 Start -->
-
-
-                            </div>
-                        </div>
-                        <!-- 상세정보, 리뷰 End -->
-
-                        <!-- Review Start -->
+                        <!-- Writing Review Start -->
                         <form action="#">
                             <h4 class="mb-3 fw-bold">리뷰 남기기</h4>
+                            <input type="hidden" id="user_seq" name="user_seq" th:value="${user.seq}">
 
                             <div class="row g-3">
                                 <div class="col-lg-6">
@@ -183,21 +129,26 @@
                                     <div class="d-flex justify-content-between py-3 mb-5">
                                         <div class="d-flex align-items-center">
                                             <p class="mb-0 me-3">평점 :</p>
-                                            <div class="d-flex align-items-center" style="font-size: 12px;">
-                                                <i class="fa fa-star text-muted"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
+                                            <!-- 평점 선택 영역 -->
+											<div class="d-flex align-items-center">
+											    <input type="hidden" id="reviewRate" value="0">
+											    <i class="fa fa-star rating-star" data-rate="1"></i>
+											    <i class="fa fa-star rating-star" data-rate="2"></i>
+											    <i class="fa fa-star rating-star" data-rate="3"></i>
+											    <i class="fa fa-star rating-star" data-rate="4"></i>
+											    <i class="fa fa-star rating-star" data-rate="5"></i>
+											</div>
                                         </div>
-                                        <a href="#"
-                                            class="btn border border-secondary text-primary rounded-pill px-4 py-3">저장</a>
+                                        <button type="button" 
+                                        		id="btnSave" 
+                                        		class="btn border border-secondary text-primary rounded-pill px-4 py-3">
+                                        		저장
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <!-- Review End -->
+                        <!-- Writing Review End -->
 
                     </div>
                 </div>
@@ -207,5 +158,120 @@
         </div>
     </div>
     <!-- Single Product End -->
+    
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+	// 별점
+    const stars = document.querySelectorAll('.rating-star');
+    const reviewRateInput = document.getElementById('reviewRate');
+
+    let selectedRating = 0; // 실제로 선택된 별점
+
+    // ⭐ 별점 클릭 이벤트
+    stars.forEach((star, index) => {
+        const ratingValue = index + 1;
+
+        // 클릭 - 실제 선택된 별점 설정
+        star.addEventListener('click', () => {
+            selectedRating = ratingValue;
+            reviewRateInput.value = selectedRating;
+            updateStars(selectedRating);
+        });
+
+        // 마우스 오버 - 임시로 별 채움
+        star.addEventListener('mouseover', () => {
+            updateStars(ratingValue);
+        });
+
+        // 마우스 아웃 - 다시 선택된 값으로 되돌림
+        star.addEventListener('mouseout', () => {
+            updateStars(selectedRating);
+        });
+    });
+
+    function updateStars(rate) {
+        stars.forEach((star, i) => {
+            if (i < rate) {
+                star.classList.add('text-secondary');
+            } else {
+                star.classList.remove('text-secondary');
+            }
+        });
+    }
+
+    // 📤 저장 버튼 클릭 시 Ajax 요청
+    const saveBtn = document.getElementById('btnSave');
+
+    saveBtn.addEventListener('click', function () {
+        // 1. 입력값 가져오기
+        const userId = document.getElementById('user_seq').value;
+        const nickname = document.querySelector('input[type="text"]').value;
+        const email = document.querySelector('input[type="email"]').value;
+        const content = document.querySelector('textarea').value.trim();
+        const rate = document.getElementById('reviewRate').value;
+
+        // 2. 입력 안 했을 때 알림
+        if (!content || rate === "0") {
+            alert("리뷰 내용과 평점을 모두 입력해주세요.");
+            return;
+        }
+
+        // 3. 서버에 보낼 정보
+        const review = {
+            userSeq: userId,
+            nickname: nickname,
+            email: email,
+            reviewDescription: content,
+            reviewRate: rate
+        };
+
+        // 4. 서버에 저장 요청 보내기
+        fetch('/review/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(review)
+        })
+        .then(res => res.json())
+        .then(newReview => {
+            alert("리뷰가 저장되었습니다!");
+
+            // 5. 새 리뷰 화면에 보여주기
+            const box = document.createElement('div');
+            box.className = 'd-flex mb-4 border-bottom pb-3';
+
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += `<i class="fa fa-star ${i <= newReview.reviewRate ? 'text-secondary' : 'text-muted'}"></i>`;
+            }
+
+            box.innerHTML = `
+                <div class="w-100">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <h5 class="mb-0">${newReview.nickname}</h5>
+                        <p class="mb-0 text-muted" style="font-size: 14px;">${newReview.reviewDate}</p>
+                    </div>
+                    <div class="mb-2">${stars}</div>
+                    <p class="mb-0">${newReview.reviewDescription}</p>
+                </div>
+            `;
+
+            // 6. 제일 위에 추가
+            const reviewList = document.querySelector('.ReviewList > div:last-child');
+            reviewList.prepend(box);
+
+            // 7. 입력창 초기화
+            document.querySelector('textarea').value = '';
+            document.getElementById('reviewRate').value = 0;
+            document.querySelectorAll('.rating-star').forEach(star => star.classList.remove('text-secondary'));
+        })
+        .catch(err => {
+            console.error(err);
+            alert("저장 중 오류가 발생했습니다.");
+        });
+    });
+    
+});
+</script>
 
 <div th:replace="~{usr/include/footer :: footer}"></div>

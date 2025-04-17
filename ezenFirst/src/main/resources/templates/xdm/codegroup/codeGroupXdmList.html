@@ -3,8 +3,6 @@
 
 <div th:replace="~{xdm/include/head :: head}"></div>
 
-<!-- Main -->
-
 <main id="main" class="main">
 	<form name="formList" id="formList" method="post" autocomplete="off">
 		<input type="hidden" name="thisPage" th:value="${vo.thisPage}"
@@ -25,71 +23,64 @@
 
 			<h1 style="font-weight: bold;">Code Group</h1>
 
-			<div class="row mb-3 mt-3">
-				<div class="col-2">
-					<select id="shDelNy" name="shDelNy" class="form-select">
-						<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
-						<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
-						<option value="0" th:selected="${vo.shDelNy == 0}">N</option>
-					</select>
+			<!-- Search -->
+			<div>
+				<div class="row mb-3 mt-3">
+					<div class="col-2">
+						<select id="shDelNy" name="shDelNy" class="form-select">
+							<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
+							<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
+							<option value="0" th:selected="${vo.shDelNy == 0}">N</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select id="shUseNy" name="shUseNy" class="form-select">
+							<option value="" th:selected="${vo.shUseNy == null}">사용여부</option>
+							<option value="1" th:selected="${vo.shUseNy == 1}">Y</option>
+							<option value="0" th:selected="${vo.shUseNy == 0}">N</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select id="shOptionDate" name="shOptionDate" class="form-select">
+							<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
+							<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
+							<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<input id="datetimepickerStart" name="shDateStart" type="text" class="form-control" placeholder="시작일" th:value="${vo.shDateStart}">
+					</div>
+					<div class="col-2">
+						<input id="datetimepickerEnd" name="shDateEnd" type="text" class="form-control" placeholder="종료일" th:value="${vo.shDateEnd}">
+					</div>
 				</div>
-				<div class="col-2">
-					<select id="shUseNy" name="shUseNy" class="form-select">
-						<option value="" th:selected="${vo.shUseNy == null}">사용여부</option>
-						<option value="1" th:selected="${vo.shUseNy == 1}">Y</option>
-						<option value="0" th:selected="${vo.shUseNy == 0}">N</option>
-					</select>
-				</div>
-				<div class="col-2">
-					<select id="shOptionDate" name="shOptionDate" class="form-select">
-						<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
-						<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
-						<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
-					</select>
-				</div>
-				<div class="col-2">
-					<input id="datetimepickerStart" name="shDateStart" type="text" class="form-control" placeholder="시작일" th:value="${vo.shDateStart}">
-					
-<!-- 					<input type="text" id="shDateStart" name="shDateStart"  -->
-<!-- 					placeholder="시작일" class="form-control" autocomplete="off"> -->
-					
-<!-- 					th:value="${#strings.substring(vo.shDateStart, 0, 10)}"  -->
-				</div>
-				<div class="col-2">
-					<input id="datetimepickerEnd" name="shDateEnd" type="text" class="form-control" placeholder="종료일" th:value="${vo.shDateEnd}">
-<!-- 					<input type="text" id="shDateEnd" name="shDateEnd"  -->
-<!-- 					placeholder="종료일" class="form-control" autocomplete="off"> -->
-<!-- 					th:value="${#strings.substring(vo.shDateEnd, 0, 10)}"  -->
-				</div>
-			</div>
-
-			<div class="row mb-3 mt-3">
-				<div class="col-2">
-					<select id="shOption" name="shOption" class="form-select">
-						<option value="" th:selected="${vo.shOption == null}">검색구분</option>
-						<option value="1" th:selected="${vo.shOption == 1}">코드그룹 코드</option>
-						<option value="2" th:selected="${vo.shOption == 2}">코드그룹 이름</option>
-					</select>
-				</div>
-				<div class="col-2">
-					<input id="shValue" name="shValue" type="text" th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control">
-					<div class="invalid-feedback" id="shValueFeedback"></div>
-				</div>
-				<div class="col-2">
-					<button type="button" class="btn btn-outline-secondary"
-						id="btnSearch"> <i
-						class="ri-search-line"></i>
-					</button>
-					<a href="" class="btn btn-outline-secondary">
-						<i class="ri-reset-right-line"></i>
-					</a>
+		
+				<div class="row mb-3 mt-3">
+					<div class="col-2">
+						<select id="shOption" name="shOption" class="form-select">
+							<option value="" th:selected="${vo.shOption == null}">검색구분</option>
+							<option value="1" th:selected="${vo.shOption == 1}">코드그룹 코드</option>
+							<option value="2" th:selected="${vo.shOption == 2}">코드그룹 이름</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<input id="shValue" name="shValue" type="text" th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control">
+						<div class="invalid-feedback" id="shValueFeedback"></div>
+					</div>
+					<div class="col-2">
+						<button type="button" class="btn btn-outline-secondary"
+							id="btnSearch"> <i
+							class="ri-search-line"></i>
+						</button>
+						<a href="" class="btn btn-outline-secondary">
+							<i class="ri-reset-right-line"></i>
+						</a>
+					</div>
 				</div>
 			</div>
-
+			<!-- End Search -->
+			
 		</div>
-
-		<!-- End Page Title -->
-
 
 		<section class="section">
 			<div class="row">
@@ -113,10 +104,8 @@
 									</select>
 								</div>
 							</div>
-
 							
-							
-							<!-- Table with stripped rows -->
+							<!-- Table -->
 							<div class="row">
 								<table class="table table-hover">
 									<thead>
@@ -162,9 +151,9 @@
 									</tbody>
 								</table>
 							</div>
-							<!-- End Table with stripped rows -->
+							<!-- End Table -->
 
-							<!-- Pagination with icons -->
+							<!-- Pagination -->
 							<div class="row">
 								<nav aria-label="Page navigation">
 									<ul class="pagination justify-content-center">
@@ -193,7 +182,7 @@
 									</ul>
 								</nav>
 							</div>
-							<!-- End Pagination with icons -->
+							<!-- End Pagination -->
 
 							<div class="row">
 								<div class="col">
@@ -242,160 +231,139 @@
 				</div>
 			</div>
 	
-	
 		</section>
 
 	</form>
 </main>
 
-<!-- End #main -->
-
-<!-- temp -->
 <script type="text/javascript">
-
 
 	let selectAllCheckbox = document.getElementById("selectAllCheckbox");
 	let rowCheckboxes = document.querySelectorAll(".rowCheckbox");
     let currentPath = window.location.pathname;
     let links = document.querySelectorAll(".nav-content a");
     let seq = document.querySelector("input[name=ifcgSeq]");
-
 	
-		// 전체 선택/해제 함수
-		function toggleSelectAll(source) {
-		    // 모든 체크박스에 대해 상태를 '전체 선택' 체크박스 상태에 맞게 설정
-		    rowCheckboxes.forEach((checkbox) => {
-		        checkbox.checked = source.checked;
-		    });
-		}
-		
-		// 페이징
-		let form = document.querySelector("form[name=formList]");
-		goList = function (thisPage) {
-		    document.querySelector("input[name=thisPage]").value = thisPage;
-		    form.action = "/Xdm/codeGroupXdmList";
-		    form.submit();
-		}
-				
-		// 검색
-		document.getElementById("btnSearch").onclick = function () {
-		    form.action = "/Xdm/codeGroupXdmList";
-		    form.submit();
-		};
-		
-		// 테이블 행 개수 Select
-		document.getElementById("changeRowNum").onchange = function () {
-		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-		    form.action = "/Xdm/codeGroupXdmList";
-		    form.submit();
-		}
-		
-		
-		document.addEventListener("DOMContentLoaded", function () {
-
-		    // 사이드바 현재화면 위치 active
-		    links.forEach(link => {
-		        if (link.getAttribute("href") === currentPath) {
-		        	const navContent = link.closest(".nav-content");
-		            const navLink = navContent.previousElementSibling; // 부모 메뉴의 <a> 태그 찾기
-		            
-		            link.classList.add("active");
-		            navContent.classList.add("show"); // 메뉴 열기
-		            navLink.classList.remove("collapsed"); // collapsed 제거
-		        }
-		    });
-		    
-		    // 체크박스
-		    rowCheckboxes.forEach(checkbox => {
-	            checkbox.addEventListener("change", function () {
-	                let allChecked = document.querySelectorAll(".rowCheckbox:checked").length === rowCheckboxes.length;
-	                selectAllCheckbox.checked = allChecked;
-	            });
-	        });
-
-		});
+	// 전체 선택/해제 함수
+	function toggleSelectAll(source) {
+	    // 모든 체크박스에 대해 상태를 '전체 선택' 체크박스 상태에 맞게 설정
+	    rowCheckboxes.forEach((checkbox) => {
+	        checkbox.checked = source.checked;
+	    });
+	}
 	
-		
-		
-		//Insert or Update
-		//Insert
-		document.getElementById("btnForm").onclick = function () {
-		    goForm(0);
-		};
-		//Update
-		goForm = function (keyValue) {
-			seq.value = keyValue;
-		    form.action = "/Xdm/codeGroupXdmRegister";
-		    form.submit();
-		};
-		
-		
-		// Uelete
-		// Modal 먼저 실행
-		document.getElementById("btnUelete").onclick = function () {
-			document.querySelector("#modalConfirmTitle").textContent = "확 인";
-			document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
-			document.querySelector("#btnModalUelete").style.display = '';
-			document.querySelector("#btnModalDelete").style.display = 'none';
+	// 페이징
+	let form = document.querySelector("form[name=formList]");
+	goList = function (thisPage) {
+	    document.querySelector("input[name=thisPage]").value = thisPage;
+	    form.action = "/Xdm/codeGroupXdmList";
+	    form.submit();
+	}
 			
-			let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
-            modal.show();     	
-		}
+	// 검색
+	document.getElementById("btnSearch").onclick = function () {
+	    form.action = "/Xdm/codeGroupXdmList";
+	    form.submit();
+	};
+	
+	// 테이블 행 개수 Select
+	document.getElementById("changeRowNum").onchange = function () {
+	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+	    form.action = "/Xdm/codeGroupXdmList";
+	    form.submit();
+	}
+	
+	
+	document.addEventListener("DOMContentLoaded", function () {
+
+	    // 사이드바 현재화면 위치 active
+	    links.forEach(link => {
+	        if (link.getAttribute("href") === currentPath) {
+	        	const navContent = link.closest(".nav-content");
+	            const navLink = navContent.previousElementSibling; // 부모 메뉴의 <a> 태그 찾기
+	            
+	            link.classList.add("active");
+	            navContent.classList.add("show"); // 메뉴 열기
+	            navLink.classList.remove("collapsed"); // collapsed 제거
+	        }
+	    });
+	    // 체크박스
+	    rowCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", function () {
+                let allChecked = document.querySelectorAll(".rowCheckbox:checked").length === rowCheckboxes.length;
+                selectAllCheckbox.checked = allChecked;
+            });
+        });
+
+	});
+
+	//Insert
+	document.getElementById("btnForm").onclick = function () {
+	    goForm(0);
+	};
+	//Update
+	goForm = function (keyValue) {
+		seq.value = keyValue;
+	    form.action = "/Xdm/codeGroupXdmRegister";
+	    form.submit();
+	};
+	// Uelete
+	// Modal 먼저 실행
+	document.getElementById("btnUelete").onclick = function () {
+		document.querySelector("#modalConfirmTitle").textContent = "확 인";
+		document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+		document.querySelector("#btnModalUelete").style.display = '';
+		document.querySelector("#btnModalDelete").style.display = 'none';
 		
-		// Modal에서 확인 버튼 누르면
-		document.getElementById("btnModalUelete").onclick = function () {
+		let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
+           modal.show();     	
+	}
+	// Modal에서 확인 버튼 누르면
+	document.getElementById("btnModalUelete").onclick = function () {
 
-/* 			let selected = document.querySelector(".rowCheckbox:checked");
-			delSeq.value = selected.value; */
-			
-// 			document.getElementById("delSeq_" + selected.value).value = selected.value;
-			
-
-			let selected = document.querySelectorAll(".rowCheckbox:checked");
-			selected.forEach((s) => {
-				document.querySelector(`input[id="delSeq_${s.value}"]`).value = s.value;
-			});
-
-			 
-			form.action = "/Xdm/codeGroupXdmUele";
-			form.submit();
-		}
-		
-		// Delete
-		// Modal 먼저 실행
-		document.getElementById("btnDelete").onclick = function () {
-			document.querySelector("#modalConfirmTitle").textContent = "확 인";
-			document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
-			document.querySelector("#btnModalUelete").style.display = 'none';
-			document.querySelector("#btnModalDelete").style.display = '';
-			
-			let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
-            modal.show();     	
-		}
-		// Modal에서 확인 버튼 누르면
-		document.getElementById("btnModalDelete").onclick = function () {
-
-			let selected = document.querySelectorAll(".rowCheckbox:checked");
-			selected.forEach((s) => {
-				document.querySelector(`input[id="delSeq_${s.value}"]`).value = s.value;
-			});
-
-			form.action = "/Xdm/codeGroupXdmDele";
-			form.submit();
-		}
-		
-		// 날짜 검색 조건
-		jQuery('#datetimepickerStart').datetimepicker({
-			timepicker:false,
-			format:'Y-m-d'
+		let selected = document.querySelectorAll(".rowCheckbox:checked");
+		selected.forEach((s) => {
+			document.querySelector(`input[id="delSeq_${s.value}"]`).value = s.value;
 		});
-		jQuery('#datetimepickerEnd').datetimepicker({
-			timepicker:false,
-			format:'Y-m-d'
-		});
-		
-	</script>
 
-<!-- ******************************************************************************* -->
+		 
+		form.action = "/Xdm/codeGroupXdmUele";
+		form.submit();
+	}
+	
+	// Delete
+	// Modal 먼저 실행
+	document.getElementById("btnDelete").onclick = function () {
+		document.querySelector("#modalConfirmTitle").textContent = "확 인";
+		document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+		document.querySelector("#btnModalUelete").style.display = 'none';
+		document.querySelector("#btnModalDelete").style.display = '';
+		
+		let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
+           modal.show();     	
+	}
+	// Modal에서 확인 버튼 누르면
+	document.getElementById("btnModalDelete").onclick = function () {
+
+		let selected = document.querySelectorAll(".rowCheckbox:checked");
+		selected.forEach((s) => {
+			document.querySelector(`input[id="delSeq_${s.value}"]`).value = s.value;
+		});
+
+		form.action = "/Xdm/codeGroupXdmDele";
+		form.submit();
+	}
+	
+	// 날짜 검색 조건
+	jQuery('#datetimepickerStart').datetimepicker({
+		timepicker:false,
+		format:'Y-m-d'
+	});
+	jQuery('#datetimepickerEnd').datetimepicker({
+		timepicker:false,
+		format:'Y-m-d'
+	});
+		
+</script>
 
 <div th:replace="~{xdm/include/footer :: footer}"></div>

@@ -9,22 +9,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.a2a2lab.module.code.CodeService;
-import com.a2a2lab.module.code.CodeVo;
-
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class CodeGroupController {
 
-    private final CodeService codeService;
-
 	@Autowired
 	CodeGroupService codeGroupService;
-	
-    CodeGroupController(CodeService codeService) {
-        this.codeService = codeService;
-    }
 	
 	@RequestMapping(value = "/Xdm/codeGroupXdmList")
 	public String codeGroupXdmList(@ModelAttribute("vo") CodeGroupVo vo, Model model, HttpSession httpSession) throws Exception {

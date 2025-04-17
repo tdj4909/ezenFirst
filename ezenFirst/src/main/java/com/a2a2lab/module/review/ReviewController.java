@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -62,4 +63,15 @@ public class ReviewController{
 		return "redirect:/Xdm/reviewXdmList";
 	}
 	
+	@RequestMapping("/review/save")
+	@ResponseBody
+	public ReviewDto saveReview(@RequestBody ReviewDto reviewDto) {
+//	    // 저장
+//		ReviewDto saved = service.save(reviewDto);
+	    
+//	    // 저장된 시간 포맷 예시
+//	    saved.setReviewDate(LocalDate.now().toString()); // "2025-04-11"
+
+	    return reviewDto;
+	}
 }

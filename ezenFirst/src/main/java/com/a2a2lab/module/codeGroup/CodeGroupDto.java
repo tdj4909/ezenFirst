@@ -1,8 +1,5 @@
 package com.a2a2lab.module.codeGroup;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class CodeGroupDto {
 
 	private String seq;
