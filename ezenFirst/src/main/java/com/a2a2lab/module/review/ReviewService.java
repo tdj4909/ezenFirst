@@ -31,5 +31,9 @@ public class ReviewService {
 	public List<ReviewDto> selectList(ReviewVo vo) {
 		return dao.selectList(vo);
 	}
+	
+	public List<ReviewDto> getReviewListByMenuSeq(String menu_seq) {
+		return dao.getReviewListByMenuSeq(menu_seq);
+	}
 
 }

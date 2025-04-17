@@ -5,6 +5,7 @@
 
 	<form name="formList" id="formList" method="post" autocomplete="off">
 		<input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1" /> 
+		<input type="hidden" name="formSeq">
     <!-- Fruits Shop Start-->
     <div class="container-fluid fruite py-5">
         <div class="container py-5">
@@ -109,7 +110,7 @@
 
                                 <div class="col-md-6 col-lg-6 col-xl-4" th:each="item : ${list}">
                                     <div class="rounded position-relative fruite-item">
-                                        <a href="shop-detail.html">
+                                        <a th:attr="onclick=|goDetail(${item.seq})|">
                                             <div class="fruite-img">
                                                 <img src="/usr/template/onlineMenuBoard/assets/img/margherita-pizza.jpg" 
                                                 	class="img-fluid w-100 rounded-top"
@@ -184,11 +185,19 @@
     
     <script>
     
-	// 페이징
+	
 	let form = document.querySelector("form[name=formList]");
+	
+	// 페이징
 	goList = function (thisPage) {
 	    document.querySelector("input[name=thisPage]").value = thisPage;
 	    form.action = "/TableOrder/shopList";
+	    form.submit();
+	}
+	// 상품 상세
+	goDetail = function (value) {
+	    document.querySelector("input[name=formSeq]").value = value;
+	    form.action = "/TableOrder/shopDetail";
 	    form.submit();
 	}
 	
@@ -241,7 +250,7 @@
 	              <i class="fa fa-star"></i>
 	            </div>
 	            <div class="mb-2">
-	              <h5 class="fw-bold me-2 item-price" data-price="${parseInt(price)}">${price} 원</h5>
+	              <h5 class="fw-bold me-2 item-price" data-price="${parseInt(price.replace(/,/g, ""))}">${price} 원</h5>
 	            </div>
 	            <div class="input-group quantity mb-2" style="width: 100px;">
 	              <div class="input-group-btn">

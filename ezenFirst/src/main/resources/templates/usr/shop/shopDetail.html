@@ -20,8 +20,8 @@
                         </div>
                         <div class="col-lg-6">
 
-                            <h4 class="fw-bold mb-3">마르게리타</h4>
-                            <h5 class="fw-bold mb-3">18,000 원</h5>
+                            <h4 class="fw-bold mb-3" th:text="${item.menuNm}"></h4>
+                            <h5 class="fw-bold mb-3" th:text="${#numbers.formatInteger(item.menuPrice, 3, 'COMMA')} + ' 원'"></h5>
                             <div class="d-flex mb-4">
                                 <i class="fa fa-star text-secondary"></i>
                                 <i class="fa fa-star text-secondary"></i>
@@ -29,31 +29,15 @@
                                 <i class="fa fa-star text-secondary"></i>
                                 <i class="fa fa-star"></i>
                             </div>
-                            <p class="mb-4">생 모짜렐라 치즈와 토마토 소스, 바질을 곁들인 담백한 맛의 클래식 마르게리타 피자</p>
-                            <div class="input-group quantity mb-4" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <a href="#"
-                                class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">장바구니</a>
+                            <p class="mb-4" th:text="${item.menuDescription}"></p>
 
-
-                            <div class="col">
+                            <div class="col p-3">
                                 <div class="row bg-light align-items-center text-center justify-content-center py-2">
                                     <div class="col-6">
                                         <p class="mb-0">열량(kcal)</p>
                                     </div>
                                     <div class="col-6">
-                                        <p class="mb-0">720</p>
+                                        <p class="mb-0" th:text="${item.calories}"></p>
                                     </div>
                                 </div>
                                 <div class="row text-center align-items-center justify-content-center py-2">
@@ -61,7 +45,7 @@
                                         <p class="mb-0">당류(g)</p>
                                     </div>
                                     <div class="col-6">
-                                        <p class="mb-0">0</p>
+                                        <p class="mb-0" th:text="${item.sugars}"></p>
                                     </div>
                                 </div>
                                 <div class="row bg-light text-center align-items-center justify-content-center py-2">
@@ -69,7 +53,7 @@
                                         <p class="mb-0">단백질(g)</p>
                                     </div>
                                     <div class="col-6">
-                                        <p class="mb-0">22</p>
+                                        <p class="mb-0" th:text="${item.protein}"></p>
                                     </div>
                                 </div>
                                 <div class="row text-center align-items-center justify-content-center py-2">
@@ -77,7 +61,7 @@
                                         <p class="mb-0">포화지방(g)</p>
                                     </div>
                                     <div class="col-6">
-                                        <p class="mb-0">4.2</p>
+                                        <p class="mb-0" th:text="${item.fat}"></p>
                                     </div>
                                 </div>
                                 <div class="row bg-light text-center align-items-center justify-content-center py-2">
@@ -85,7 +69,7 @@
                                         <p class="mb-0">나트륨(mg)</p>
                                     </div>
                                     <div class="col-6">
-                                        <p class="mb-0">544</p>
+                                        <p class="mb-0" th:text="${item.sodium}"></p>
                                     </div>
                                 </div>
                                 
@@ -112,8 +96,9 @@
                                 <!-- 리뷰 Start -->
                                 <div class="tab-pane active" id="nav-mission" role="tabpanel"
                                     aria-labelledby="nav-mission-tab">
+                                    
                                     <div class="d-flex mb-5">
-                                        <div class="">
+                                        <div>
                                             <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
                                             <div class="row justify-content-between">
                                                 <h5>졸린감자</h5>
@@ -144,6 +129,26 @@
                                             <p class="text-dark">피자 잘 안먹는 저도 맛있게 먹었어요. </p>
                                         </div>
                                     </div>
+                                    
+                                    <div class="d-flex mb-5" th:each="review : ${reviewList}">
+                                        <div>
+                                            <p class="mb-2" style="font-size: 14px;" th:text="${review.reviewDate}"></p>
+                                            <div class="row justify-content-between">
+                                                <h5 th:text="${review.nickname}"></h5>
+                                                <div class="mb-2">
+												    <!-- 별점 루프 (1부터 5까지 반복) -->
+												    <span th:each="i : ${#numbers.sequence(1, 5)}">
+												        <!-- 현재 review.rating보다 작거나 같으면 채운 별 -->
+												        <i class="fa fa-star" 
+												           th:classappend="${i <= review.reviewRate} ? ' text-secondary' : ''">
+												        </i>
+												    </span>
+                                                </div>
+                                            </div>
+                                            <p th:text="${review.reviewDescription}"></p>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 
                                 <!-- 리뷰 Start -->
@@ -157,25 +162,15 @@
                         <form action="#">
                             <h4 class="mb-3 fw-bold">리뷰 남기기</h4>
 
-                            <div class="row mb-3">
-                                <div class="col">
-                                    <button type="button"
-                                        class="btn btn-primary border-0 border-secondary py-3 px-4 rounded-pill text-white"
-                                        onclick="location.href='login.html'">
-                                        로그인
-                                    </button>
-                                </div>
-                            </div>
-
                             <div class="row g-3">
                                 <div class="col-lg-6">
                                     <div class="border-bottom rounded">
-                                        <input type="text" class="form-control border-0 me-4" placeholder="이름" disabled>
+                                        <input type="text" class="form-control border-0 me-4" th:value="${user.nickname}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="border-bottom rounded">
-                                        <input type="email" class="form-control border-0" placeholder="이메일" disabled>
+                                        <input type="email" class="form-control border-0" th:value="${user.email}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -204,20 +199,10 @@
                         </form>
                         <!-- Review End -->
 
-
                     </div>
                 </div>
 
-
-
-
-
-
-
             </div>
-
-
-
 
         </div>
     </div>

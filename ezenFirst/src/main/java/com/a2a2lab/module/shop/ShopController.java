@@ -5,11 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.a2a2lab.module.member.MemberService;
 import com.a2a2lab.module.product.ProductService;
 import com.a2a2lab.module.product.ProductVo;
-
+import com.a2a2lab.module.review.ReviewService;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -22,6 +23,8 @@ public class ShopController {
 	MemberService memberService;
 	@Autowired
 	ProductService productService;
+	@Autowired
+	ReviewService reviewService;
 	
 	// 상품 리스트 화면
 	@RequestMapping(value = "/TableOrder/shopList")
@@ -43,13 +46,19 @@ public class ShopController {
 	
 	// 상품 상세 화면
 	@RequestMapping(value = "/TableOrder/shopDetail")
-	public String shopDetail(Model model, HttpSession httpSession) {
+	public String shopDetail(@RequestParam("formSeq") String seq, Model model, HttpSession httpSession) {
 		
 		// login 검사
 		if(httpSession.getAttribute("user") == null) {
 			return "redirect:/TableOrder/accountLogin";
 		}
 		model.addAttribute("user", httpSession.getAttribute("user"));
+		
+		ProductVo vo = new ProductVo();
+		vo.setIfcgSeq(seq);
+		model.addAttribute("item", productService.selectOne(vo));
+		
+		model.addAttribute("reviewList", reviewService.getReviewListByMenuSeq(seq));
 		
 		return "/usr/shop/shopDetail";
 	}

@@ -16,5 +16,6 @@ public interface ReviewDao {
 	public int selectOneCount(ReviewVo vo);
 	public int reviewCount();
 	public List<ReviewDto> selectList(ReviewVo vo);
+	public List<ReviewDto> getReviewListByMenuSeq(String menu_seq);
 
 }

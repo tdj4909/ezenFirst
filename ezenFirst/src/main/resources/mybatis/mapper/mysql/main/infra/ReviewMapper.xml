@@ -48,7 +48,7 @@
 				,a.user_seq
 				,a.menu_seq
 				,u.nickname
-			,m.menuNm
+				,m.menuNm
 			<include refid="selectCommon"></include>
 			) aa
 		ORDER BY
@@ -72,5 +72,20 @@
 			seq = #{seq}
 	</delete>
 
+	<select id="getReviewListByMenuSeq" resultMap="resultMapObj">
+		SELECT
+			r.seq
+			,r.reviewDate
+			,r.reviewRate
+			,r.reviewDescription
+			,u.nickname
+		FROM
+			review r
+			JOIN user u ON u.seq = r.user_seq
+		WHERE
+			1=1
+		    AND r.menu_seq = #{menu_seq}
+		    AND r.reviewDelNy = 0
+	</select>
 	
 </mapper>

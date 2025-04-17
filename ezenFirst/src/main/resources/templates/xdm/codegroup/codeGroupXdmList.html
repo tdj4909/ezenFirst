@@ -269,6 +269,7 @@
 		    });
 		}
 		
+		// 페이징
 		let form = document.querySelector("form[name=formList]");
 		goList = function (thisPage) {
 		    document.querySelector("input[name=thisPage]").value = thisPage;
@@ -282,6 +283,7 @@
 		    form.submit();
 		};
 		
+		// 테이블 행 개수 Select
 		document.getElementById("changeRowNum").onchange = function () {
 		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
 		    form.action = "/Xdm/codeGroupXdmList";
