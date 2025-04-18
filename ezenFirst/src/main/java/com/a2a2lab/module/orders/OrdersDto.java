@@ -1,7 +1,5 @@
 package com.a2a2lab.module.orders;
 
-import java.time.LocalDateTime;
-
 public class OrdersDto{
 	
 	// order
@@ -24,7 +22,7 @@ public class OrdersDto{
 	private String menu_seq;
 	
 	private Integer oneTotal;
-		
+	private String img;
 	
 	// menu
 	private String menuImg;
@@ -135,6 +133,14 @@ public class OrdersDto{
 	public void setOneTotal(Integer oneTotal) {
 		this.oneTotal = oneTotal;
 	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	
+	
 	
 
 }

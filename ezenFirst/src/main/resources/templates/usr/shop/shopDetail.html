@@ -90,7 +90,7 @@
 						                <p class="mb-0 text-muted" style="font-size: 14px;" th:text="${review.reviewDate}">작성일</p>
 						            </div>
 						
-						            <div class="mb-2">
+						            <div class="d-flex mb-2">
 						                <span th:each="i : ${#numbers.sequence(1, 5)}">
 						                    <i class="fa fa-star" th:classappend="${i <= review.reviewRate} ? ' text-secondary' : ' text-muted'"></i>
 						                </span>
