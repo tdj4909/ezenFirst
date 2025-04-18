@@ -56,6 +56,23 @@
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 
+	<insert id="insert">
+		INSERT INTO review(
+			reviewDate
+			,reviewRate
+			,reviewDescription
+			,reviewDelNy
+			,user_seq
+			,menu_seq
+		) VALUES(
+			#{reviewDate}
+			,#{reviewRate}
+			,#{reviewDescription}
+			,0
+			,#{user_seq}
+			,#{menu_seq}
+		)
+	</insert>
 	
 	<update id="uelete">
 		UPDATE review SET
@@ -86,6 +103,8 @@
 			1=1
 		    AND r.menu_seq = #{menu_seq}
 		    AND r.reviewDelNy = 0
+		ORDER BY
+			r.seq DESC
 	</select>
 	
 </mapper>

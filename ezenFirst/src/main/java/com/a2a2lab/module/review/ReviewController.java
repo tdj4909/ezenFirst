@@ -64,17 +64,13 @@ public class ReviewController{
 		return "redirect:/Xdm/reviewXdmList";
 	}
 	
+	// 리뷰 저장
 	@RequestMapping("/review/save")
 	@ResponseBody
 	public ReviewDto saveReview(@RequestBody ReviewDto reviewDto) {
-//	    // 저장
-//		ReviewDto saved = service.save(reviewDto);
-	    
-//	    // 저장된 시간 포맷 예시
-//	    saved.setReviewDate(LocalDate.now().toString()); // "2025-04-11"
 		
-		String now = LocalDate.now().toString();
-		reviewDto.setReviewDate(now);
+		reviewDto.setReviewDate(LocalDate.now().toString());
+		service.insert(reviewDto);
 
 	    return reviewDto;
 	}

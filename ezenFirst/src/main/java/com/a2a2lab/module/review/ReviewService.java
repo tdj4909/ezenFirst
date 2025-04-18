@@ -12,6 +12,10 @@ public class ReviewService {
 	@Autowired
 	ReviewDao dao;
 	
+	public int insert(ReviewDto dto) {
+		return dao.insert(dto);
+	}
+	
 	public int uelete(ReviewDto dto) {
 		return dao.uelete(dto);
 	}

@@ -205,6 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     saveBtn.addEventListener('click', function () {
         // 1. 입력값 가져오기
+        const menuId = document.getElementById('menu_seq').value;
         const userId = document.getElementById('user_seq').value;
         const nickname = document.querySelector('input[type="text"]').value;
         const email = document.querySelector('input[type="email"]').value;
@@ -219,7 +220,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // 3. 서버에 보낼 정보
         const review = {
-            userSeq: userId,
+        	menu_seq: menuId,
+            user_seq: userId,
             nickname: nickname,
             email: email,
             reviewDescription: content,

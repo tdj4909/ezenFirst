@@ -1,17 +1,10 @@
 package com.a2a2lab.module.member;
 
-import java.io.File;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.a2a2lab.module.mail.MailDto;
+import com.a2a2lab.module.mail.MailService;
 
-import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -31,7 +23,7 @@ public class MemberController {
 	MemberService service;
 	
 	@Autowired
-	JavaMailSender javaMailSender;
+	MailService mailService;
 	
 //  관리자---------------------------------------------------------------------------	
 	@RequestMapping(value = "/Xdm/memberXdmList")
@@ -178,19 +170,21 @@ public class MemberController {
     
 //    메일 보내기 test
     @RequestMapping(value = "/mail")
-    public String sendMail(MailDto mailDto) throws Exception {
-    	String addr = "";
-    	mailDto.setAddress(addr);
-    	mailDto.setTitle("SMTP 테스트 " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초")));
-    	mailDto.setMessage("테스트 내용\n" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초")));
-		
-    	MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-    	MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-    	mimeMessageHelper.setTo(mailDto.getAddress());
-    	mimeMessageHelper.setSubject(mailDto.getTitle());
-    	mimeMessageHelper.setText(mailDto.getMessage());
-    	mimeMessageHelper.addInline("sampleImg", new File("src/main/resources/static/xdm/template/AdminUI/assets/img/card.jpg"));
-    	javaMailSender.send(mimeMessage);
+    public String sendMail() {
+    	
+    	Thread thread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					mailService.send();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+    	
+    	thread.start();
     	
     	return "redirect:/Xdm/memberXdmList";
 	}

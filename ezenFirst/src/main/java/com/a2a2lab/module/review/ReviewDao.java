@@ -11,6 +11,7 @@ import com.a2a2lab.module.codeGroup.CodeGroupVo;
 @Repository
 public interface ReviewDao {
 	
+	public int insert(ReviewDto dto);
 	public int uelete(ReviewDto dto);
 	public int delete(ReviewDto dto);
 	public int selectOneCount(ReviewVo vo);
