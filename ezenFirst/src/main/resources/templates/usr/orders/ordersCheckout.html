@@ -67,7 +67,11 @@
                                     </tr>
 
 
-                                    <tr>
+                                    
+                                </tbody>
+                                
+                                <tfoot>
+                                	<tr>
                                         <th scope="row">
                                         </th>
                                         <td class="py-5">
@@ -81,50 +85,55 @@
                                             </div>
                                         </td>
                                     </tr>
-                                </tbody>
+                                </tfoot>
+                                
                             </table>
                         </div>
 
 
 
 
-                        <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                            <div class="col-6"></div>
-                            <div class="col-3">
+                        <div class="row g-4 justify-content-end pt-4">
+                        
+                            <div class="col-12 col-md-3 order-2 order-md-1">
                                 <a href="/TableOrder/shopList"
                                     class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">
                                     <i class="vc_btn3-icon fas fa-arrow-left pe-2"></i>
                                     뒤로가기
                                 </a>
                             </div>
-                            <div class="col-3">
+                            <div class="col-12 col-md-3 order-1 order-md-2">
                                 <button type="button" class="btn btn-primary py-3 px-4 text-uppercase w-100 text-white"
                                     data-bs-toggle="modal" data-bs-target="#checkoutModal">
                                     결제
                                 </button>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="checkoutModal" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="checkoutModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="checkoutModalLabel">결제 완료</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                결제 완료.
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="/TableOrder/ordersDetail" class="btn btn-primary">확인</a>
-                                            </div>
-                                        </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- Modal Start-->
+                        <div class="modal fade" id="checkoutModal" data-bs-backdrop="static"
+                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="checkoutModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="checkoutModalLabel">결제 완료</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        결제 완료.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="/TableOrder/ordersDetail" class="btn btn-primary">확인</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Modal End -->
+                        
+                        
                     </div>
                 </div>
             </form>
