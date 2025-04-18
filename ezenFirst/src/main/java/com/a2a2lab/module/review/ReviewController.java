@@ -1,5 +1,6 @@
 package com.a2a2lab.module.review;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,9 @@ public class ReviewController{
 	    
 //	    // 저장된 시간 포맷 예시
 //	    saved.setReviewDate(LocalDate.now().toString()); // "2025-04-11"
+		
+		String now = LocalDate.now().toString();
+		reviewDto.setReviewDate(now);
 
 	    return reviewDto;
 	}

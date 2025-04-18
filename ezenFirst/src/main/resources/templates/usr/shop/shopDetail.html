@@ -257,8 +257,18 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
 
             // 6. 제일 위에 추가
-            const reviewList = document.querySelector('.ReviewList > div:last-child');
-            reviewList.prepend(box);
+            
+            const reviewListContainer = document.querySelector('.ReviewList');
+			// 제목 h4 다음 자식 요소(첫 번째 리뷰 div) 바로 전에 삽입
+			const firstReview = reviewListContainer.querySelector('div.d-flex');
+			
+			if (firstReview) {
+			    // 리뷰가 존재하면 그 앞에 삽입
+			    reviewListContainer.insertBefore(box, firstReview);
+			} else {
+			    // 리뷰가 하나도 없으면, 제목(h4) 다음에 추가
+			    reviewListContainer.appendChild(box);
+			}
 
             // 7. 입력창 초기화
             document.querySelector('textarea').value = '';
