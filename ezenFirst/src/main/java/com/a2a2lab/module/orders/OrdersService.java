@@ -12,6 +12,10 @@ public class OrdersService {
 	@Autowired
 	OrdersDao dao;
 	
+	public String insertOrder(String user_seq) {
+		return dao.insertOrder(user_seq);
+	}
+	
 	public int uelete(OrdersDto dto) {
 		return dao.uelete(dto);
 	}

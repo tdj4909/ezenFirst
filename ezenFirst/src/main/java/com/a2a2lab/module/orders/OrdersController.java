@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.a2a2lab.module.member.MemberDto;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -107,6 +109,25 @@ public class OrdersController{
 		model.addAttribute("list", dtos);
 		
 		return "/usr/orders/ordersCheckout";
+	}
+	// 결제
+	@RequestMapping(value = "/TableOrder/ordersCompleted")
+	public String ordersCompleted(@RequestParam("menu_seq") List<String> menu_seqList,
+								  @RequestParam("quantity") List<Integer> quantityList,
+								  HttpSession httpSession) {
+		// 주문 Insert
+		MemberDto memberDto = (MemberDto) httpSession.getAttribute("user");
+		String orders_seq = service.insertOrder(memberDto.getSeq());
+		
+		// 개별 주문 Insert
+		OrdersDto dto = new OrdersDto();
+		for(int i = 0; i < menu_seqList.size(); i++) {
+			dto.setOrders_seq(orders_seq);
+			dto.setMenu_seq(menu_seqList.get(i));
+			dto.setQuantity(quantityList.get(i));
+		}
+		
+		return "/usr/orders/ordersDetail";
 	}
 	
 	// 주문 상세 화면

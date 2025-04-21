@@ -87,7 +87,6 @@
 										<thead>
 											<tr>
 												<th>메뉴명</th>
-												<th>가격</th>
 												<th>개수</th>
 												<th>합계</th>
 											</tr>
@@ -96,7 +95,6 @@
 										
 											<tr th:each="list : ${lists}">
 												<td th:text="${list.menuNm}"></td>
-												<td th:text="${list.price}"></td>
 												<td th:text="${list.quantity}"></td>												
 												<td th:text="${list.oneTotal}"></td>
 											</tr>

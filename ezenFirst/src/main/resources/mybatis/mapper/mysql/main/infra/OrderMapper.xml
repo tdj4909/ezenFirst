@@ -86,9 +86,7 @@
  	<select id="selectOneList" resultMap="resultMapObj">
 		SELECT 
 			m.menuNm
-		    ,om.price
 		    ,om.quantity
-		    ,(om.price * om.quantity) AS oneTotal
 		FROM
 			orderMenu om
 		    JOIN menu m ON m.seq = om.menu_seq
@@ -108,6 +106,24 @@
 			seq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
  	</select>
+ 	
+ 	<insert id="insertOrder">
+		INSERT INTO orders(
+			ordersDate
+		    ,ordersStatus
+		    ,ordersDelNy
+		    ,user_seq
+		) VALUES(
+			now()
+		    ,1
+		    ,0
+		    ,#{user_seq}
+		)
+		<selectKey resultType="String" keyProperty="seq"
+			order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
 	
 	<update id="uelete">
 		UPDATE orders SET
