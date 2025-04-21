@@ -34,6 +34,9 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.4.2'
+	
+	// https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
+	implementation 'com.amazonaws:aws-java-sdk:1.12.782'
 }
 
 tasks.named('test') {
