@@ -76,8 +76,6 @@
 		    ,o.seq
 		    ,o.ordersDate
 		    ,o.ordersStatus
-		    ,o.totalPrice
-		    ,o.takeOut
 		    ,o.ordersDelNy
 		FROM
 			orders o
@@ -104,8 +102,6 @@
 		    ,o.seq
 		    ,o.ordersDate
 		    ,o.ordersStatus
-		    ,o.totalPrice
-		    ,o.takeOut
 		    ,o.ordersDelNy
 		<include refid="selectCommon"></include>
 		ORDER BY

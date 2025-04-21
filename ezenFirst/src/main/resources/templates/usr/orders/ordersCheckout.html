@@ -20,58 +20,65 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">메뉴</th>
-                                        <th scope="col">메뉴명</th>
-                                        <th scope="col">가격</th>
-                                        <th scope="col">개수</th>
-                                        <th scope="col">합계</th>
+                                        <th scope="col" class="text-center">메뉴명</th>
+                                        <th scope="col" class="text-center">가격</th>
+                                        <th scope="col" class="text-center">개수</th>
+                                        <th scope="col" class="text-center">합계</th>
+                                        <th scope="col" class="text-center">취소</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tbody">
                                 
-                                    <tr>
+                                    <tr class="item-row" th:each="item : ${list}">
                                         <td scope="row">
-                                            <div class="d-flex align-items-center mt-2">
-                                                <img src="/usr/template/onlineMenuBoard/assets/img/margherita-pizza.jpg" class="img-fluid rounded-circle"
-                                                    style="width: 90px; height: 90px;" alt="">
-                                            </div>
-                                        </td>
-                                        <td class="py-5">마르게리타</td>
-                                        <td class="py-5">18,000 원</td>
-                                        <td class="py-5">2</td>
-                                        <td class="py-5">36,000 원</td>
-                                    </tr>
-                                    
-                                    
-                                    <tr th:each="item : ${list}">
-                                        <td scope="row">
+                                        	<input type="hidden" th:value="${item.seq}">
                                             <div class="d-flex align-items-center mt-2">
                                                 <img th:src="${item.menuImg}"
                                                     class="img-fluid rounded-circle" style="width: 90px; height: 90px;"
                                                     alt="">
                                             </div>
                                         </td>
-                                        <td class="py-5" th:text="${item.menuNm}"></td>
-                                        <td class="py-5" th:text="${item.price} + 원"></td>
-                                        <td class="py-5" th:text="${item.quantity}"></td>
-                                        <td class="py-5" th:text="${item.price * item.quantity} + 원"></td>
+                                        <td class="py-5 text-center" th:text="${item.menuNm}"></td>
+                                        <td class="py-5 text-center" th:text="${item.price} + 원"></td>
+                                        
+                                        <td class="text-center align-middle">
+	                                        <div class="input-group mx-auto text-center" style="width: 100px;">
+	                                          <div class="input-group-btn">
+								                <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border">
+								                  <i class="fa fa-minus"></i>
+								                </button>
+								              </div>
+								              <input type="text" style="background-color:#FFFFFF;" class="form-control form-control-sm text-center border-0 item-qty" th:value="${item.quantity}" readonly>
+								              <div class="input-group-btn">
+								                <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
+								                  <i class="fa fa-plus"></i>
+								                </button>
+								              </div>
+								            </div>
+                                        </td>
+                                        
+                                        <td class="py-5 text-center item-total" th:value="${item.price * item.quantity}" th:text="${item.price * item.quantity} + 원"></td>
+                                    	<td class="text-center align-middle">
+                                    		<button type="button" class="btn btn-md rounded-circle bg-light border btn-delete">
+                                    			<i class="fa fa-times text-danger"></i>
+                                    		</button>
+                                    	</td>
                                     </tr>
-
-
                                     
                                 </tbody>
                                 
                                 <tfoot>
                                 	<tr>
-                                        <th scope="row">
-                                        </th>
+                                        <td class="py-5"></td>
+                                        <td class="py-5"></td>
+                                        <td class="py-5"></td>
+                                        <td class="py-5"></td>
                                         <td class="py-5">
                                             <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
                                         </td>
-                                        <td class="py-5"></td>
-                                        <td class="py-5"></td>
                                         <td class="py-5">
                                             <div class="py-3 border-bottom border-top">
-                                                <p class="mb-0 text-dark">82,000 원</p>
+                                                <p class="mb-0 text-dark total-sum">원</p>
                                             </div>
                                         </td>
                                     </tr>
@@ -130,5 +137,77 @@
         </div>
     </div>
     <!-- Checkout Page End -->
+    
+    <script>
+    	
+    	document.addEventListener("DOMContentLoaded", function(){
+    	    document.getElementById("tbody").addEventListener("click", function(e) {
+    	        // 수량 증가
+    	        if (e.target.closest(".btn-plus")) {
+    	            const row = e.target.closest(".item-row");
+    	            const qtyInput = row.querySelector(".item-qty");
+    	            let quantity = parseInt(qtyInput.value);
+    	            qtyInput.value = ++quantity;
+    	            updateItemTotal(row);
+    	            updateTotalSum();
+    	        }
+
+    	        // 수량 감소
+    	        if (e.target.closest(".btn-minus")) {
+    	            const row = e.target.closest(".item-row");
+    	            const qtyInput = row.querySelector(".item-qty");
+    	            let quantity = parseInt(qtyInput.value);
+    	            if (quantity > 1) {
+    	                qtyInput.value = --quantity;
+    	                updateItemTotal(row);
+    	            }
+    	            updateTotalSum();
+    	        }
+    	    });
+
+    	    function updateItemTotal(row) {
+    	        const priceText = row.querySelector("td:nth-child(3)").innerText.replace("원", "").trim(); // 3번째 <td>
+    	        const quantity = parseInt(row.querySelector(".item-qty").value);
+    	        const totalTd = row.querySelector(".item-total");
+
+    	        const price = parseInt(priceText);
+    	        const total = price * quantity;
+
+    	        totalTd.textContent = total + "원";
+    	    }
+
+    	    updateTotalSum();
+    	});
+    	
+    	// 개별 주문 삭제
+    	document.getElementById("tbody").addEventListener("click", function(e) {
+    		if(e.target.closest(".btn-delete")) {
+				const row = e.target.closest(".item-row");
+				if(row){
+					row.remove();
+					updateTotalSum();
+				}
+    		}
+    	});
+    	
+    	// 총합 계산
+    	function updateTotalSum(){
+    		let sum = 0;
+    		
+    		document.querySelectorAll(".item-row").forEach(function(row) {
+    			
+    	        const totalCell = row.querySelector(".item-total");
+    	        const text = totalCell.textContent.replace("원", "").trim();
+    	        const number = parseInt(text.replace(/,/g, ""));
+    	        sum += number;
+    			
+        	});
+    		
+    		document.querySelector(".total-sum").textContent = sum.toLocaleString() + " 원";
+    	}
+    	
+    	
+    
+    </script>
 
 <div th:replace="~{usr/include/footer :: footer}"></div>

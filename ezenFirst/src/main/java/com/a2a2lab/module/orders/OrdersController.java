@@ -108,7 +108,6 @@ public class OrdersController{
 		
 		return "/usr/orders/ordersCheckout";
 	}
-	//
 	
 	// 주문 상세 화면
 	@RequestMapping(value = "/TableOrder/ordersDetail")

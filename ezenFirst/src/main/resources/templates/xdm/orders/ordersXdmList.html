@@ -121,8 +121,6 @@
 											<th>닉네임</th>
 											<th>주문날짜</th>
 											<th>주문상태</th>
-											<th>총합</th>
-											<th>포장</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -153,10 +151,6 @@
 													<option value="3" th:selected="${list.ordersStatus == 3}">주문취소</option>
 												</select>
 											</td>
-														
-											<td th:text="${list.totalPrice}"></td>
-											
-											<td th:text="${list.takeOut == 1 ? 'O' : 'X'}"></td>
 											
 										</tr>
 

@@ -47,8 +47,6 @@
 												<th>닉네임</th>
 												<th>날짜</th>
 												<th>주문상태</th>
-												<th>총합</th>
-												<th>포장</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -64,9 +62,6 @@
 												    list.ordersStatus == 2 ? '주문완료' : '주문취소'
 													}">
 												</td>
-												
-												<td th:text="${list.totalPrice}"></td>
-												<td th:text="${list.takeOut == 1 ? 'O' : 'X'}"></td>
 											</tr>
 	
 										</tbody>
