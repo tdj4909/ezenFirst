@@ -80,6 +80,7 @@ public class ProductController {
 	@RequestMapping(value = "/Xdm/productXdmUpdt")
 	public String productXdmUpdt(@RequestParam("file") MultipartFile file, ProductDto dto) throws IOException {
 		
+		// 파일 변경했을 때
 		if(file != null) {
 			// File DB upload
 			dto.setFileUploaded_seq(uploadService.localUpload(file));

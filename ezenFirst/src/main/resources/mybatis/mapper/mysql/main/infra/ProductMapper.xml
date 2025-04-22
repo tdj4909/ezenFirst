@@ -32,6 +32,7 @@
 		SELECT 
 			aa.*
 			,aa.seq AS ifcgSeq
+			,fu.path
 		FROM (
 			SELECT
 				a.seq
@@ -47,10 +48,12 @@
 				,a.recommand
 				,a.menuNew
 				,a.menuStock
+				,a.fileUploaded_seq
 			<include refid="selectCommon"></include>
 			ORDER BY
 				seq DESC
 			) aa
+			JOIN fileUploaded fu ON fu.seq = aa.fileUploaded_seq
 		WHERE
 			aa.seq = #{ifcgSeq}
 	</select>
