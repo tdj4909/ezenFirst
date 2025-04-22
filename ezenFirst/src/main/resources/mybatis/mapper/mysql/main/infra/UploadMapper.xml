@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.a2a2lab.module.upload.UploadDao">
+
+	<resultMap id="resultMapObj"
+		type="com.a2a2lab.module.upload.UploadDto"></resultMap>
+
+	<insert id="localUpload">
+		INSERT INTO fileUploaded(
+		    type
+			,sort
+			,path
+			,originalName
+			,uuidName
+			,ext
+			,size
+			,delNy
+			,regDateTime
+		) VALUES(
+			#{type}
+			,#{sort}
+			,#{path}
+			,#{originalName}
+			,#{uuidName}
+			,#{ext}
+			,#{size}
+			,0
+			,now()
+		)
+		<selectKey resultType="String" keyProperty="seq"
+			order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+</mapper>

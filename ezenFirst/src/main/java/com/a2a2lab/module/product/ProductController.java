@@ -1,5 +1,6 @@
 package com.a2a2lab.module.product;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.a2a2lab.module.upload.UploadService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -16,6 +20,8 @@ public class ProductController {
 
 	@Autowired
 	ProductService service;
+	@Autowired
+	UploadService uploadService;
 	
 	
 	@RequestMapping(value = "/Xdm/productXdmList")
@@ -36,6 +42,7 @@ public class ProductController {
 		return "/xdm/product/productXdmList";
 	}
 	
+	// 메뉴등록 화면
 	@RequestMapping(value = "/Xdm/productXdmRegister")
 	public String productXdmRegister(@ModelAttribute("vo") ProductVo vo, Model model, HttpSession httpSession) {
 
@@ -55,15 +62,33 @@ public class ProductController {
 		return "/xdm/product/productXdmRegister";
 	}
 	
+	
+	
+	// 메뉴 등록
 	@RequestMapping(value = "/Xdm/productXdmInst")
-	public String productXdmInst(ProductDto dto) {
+	public String productXdmInst(@RequestParam("file") MultipartFile file, ProductDto dto) throws IOException {
+		
+		// File DB upload
+		dto.setFileUploaded_seq(uploadService.localUpload(file));
+		// 메뉴 등록
 		service.insert(dto);
+		
 		return "redirect:/Xdm/productXdmList";
 	}
 	
+	// 메뉴 갱신
 	@RequestMapping(value = "/Xdm/productXdmUpdt")
-	public String productXdmUpdt(ProductDto dto) {
+	public String productXdmUpdt(@RequestParam("file") MultipartFile file, ProductDto dto) throws IOException {
+		
+		if(file != null) {
+			// File DB upload
+			dto.setFileUploaded_seq(uploadService.localUpload(file));
+			// 파일만 Update
+			service.fileUpdate(dto);
+		}
+		// 메뉴 갱신
 		service.update(dto);
+		
 		return "redirect:/Xdm/productXdmList";
 	}
 	

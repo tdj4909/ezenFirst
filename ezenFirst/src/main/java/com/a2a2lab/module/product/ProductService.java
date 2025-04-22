@@ -26,6 +26,10 @@ public class ProductService {
 	public int update(ProductDto dto) {
 		return dao.update(dto);
 	}
+	
+	public int fileUpdate(ProductDto dto) {
+		return dao.fileUpdate(dto);
+	}
 
 	public int selectOneCount(ProductVo vo) {
 		return dao.selectOneCount(vo);

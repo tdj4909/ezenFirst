@@ -75,7 +75,7 @@
                                     <div class="rounded position-relative fruite-item">
                                         <a th:attr="onclick=|goDetail(${item.seq})|">
                                             <div class="fruite-img">
-                                                <img src="/usr/template/onlineMenuBoard/assets/img/margherita-pizza.jpg" 
+                                                <img th:src="${item?.path}" 
                                                 	class="img-fluid w-100 rounded-top"
                                                     alt="">
                                             </div>

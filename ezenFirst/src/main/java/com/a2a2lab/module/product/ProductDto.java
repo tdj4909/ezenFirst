@@ -21,6 +21,10 @@ public class ProductDto {
 	private String menuRegDateTime;
 	private String menuModDateTime;
 	private Integer menuDelNy;
+	private String fileUploaded_seq;
+	
+	private String path;
+	private String originalName;
 	
 	private String menuTypeNm;
 	
@@ -148,6 +152,23 @@ public class ProductDto {
 	public void setMenuModDateTime(String menuModDateTime) {
 		this.menuModDateTime = menuModDateTime;
 	}
-	
+	public String getFileUploaded_seq() {
+		return fileUploaded_seq;
+	}
+	public void setFileUploaded_seq(String fileUploaded_seq) {
+		this.fileUploaded_seq = fileUploaded_seq;
+	}
+	public String getOriginalName() {
+		return originalName;
+	}
+	public void setOriginalName(String originalName) {
+		this.originalName = originalName;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
 	
 }

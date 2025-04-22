@@ -31,7 +31,7 @@
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT 
 			aa.*
-			,aa.seq AS ifcgSeq 
+			,aa.seq AS ifcgSeq
 		FROM (
 			SELECT
 				a.seq
@@ -97,6 +97,7 @@
 			,menuStock
 			,menuRegDateTime
 			,menuDelNy
+			,fileUploaded_seq
 		) VALUES(
 			#{menuNm}
 			,#{menuPrice}
@@ -112,6 +113,7 @@
 			,#{menuStock}
 			,now()
 			,0
+			,#{fileUploaded_seq}
 		)
 	</insert>
 	
@@ -134,6 +136,13 @@
 			seq = #{ifcgSeq}
 	</update>
 	
+	<update id="fileUpdate">
+		UPDATE menu SET
+			fileUploaded_seq = #{fileUploaded_seq}
+		WHERE
+			seq = #{ifcgSeq}
+	</update>
+	
 	<update id="uelete">
 		UPDATE menu SET
 			menuDelNy = 1
@@ -151,12 +160,14 @@
 
 	<select id="selectShopList" resultMap="resultMapObj">
 		SELECT 
-			seq
-			,menuNm
-			,menuPrice
-			,menuRating
+			m.seq
+			,m.menuNm
+			,m.menuPrice
+			,m.menuRating
+			,fu.path
 		FROM 
-			menu
+			menu m
+			JOIN fileUploaded fu ON fu.seq = m.fileUploaded_seq
 		WHERE
 			1=1
 			AND menuDelNy = 0
