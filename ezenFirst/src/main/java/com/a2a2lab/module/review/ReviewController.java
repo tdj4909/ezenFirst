@@ -65,13 +65,13 @@ public class ReviewController{
 	}
 	
 	// 리뷰 저장
-	@RequestMapping("/review/save")
+	@RequestMapping("/TableOrder/reviewInst")
 	@ResponseBody
-	public ReviewDto saveReview(@RequestBody ReviewDto reviewDto) {
+	public ReviewDto reviewInst(@RequestBody ReviewDto dto) {
 		
-		reviewDto.setReviewDate(LocalDate.now().toString());
-		service.insert(reviewDto);
+		dto.setReviewDate(LocalDate.now().toString());
+		service.insert(dto);
 
-	    return reviewDto;
+	    return dto;
 	}
 }

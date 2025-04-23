@@ -6,14 +6,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.a2a2lab.module.member.MemberDto;
+
 @Service
 public class OrdersService {
 
 	@Autowired
 	OrdersDao dao;
 	
-	public String insertOrder(String user_seq) {
-		return dao.insertOrder(user_seq);
+	public int insertOrder(OrdersDto dto) {
+		return dao.insertOrder(dto);
+	}
+	
+	public int insertOrderMenu(OrdersDto dto) {
+		return dao.insertOrderMenu(dto);
 	}
 	
 	public int uelete(OrdersDto dto) {

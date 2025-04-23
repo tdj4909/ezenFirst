@@ -11,7 +11,8 @@ import com.a2a2lab.module.codeGroup.CodeGroupVo;
 @Repository
 public interface OrdersDao {
 	
-	public String insertOrder(String user_seq);
+	public int insertOrder(OrdersDto dto);
+	public int insertOrderMenu(OrdersDto dto);
 	public int uelete(OrdersDto dto);
 	public int delete(OrdersDto dto);
 	public int update(OrdersDto dto);

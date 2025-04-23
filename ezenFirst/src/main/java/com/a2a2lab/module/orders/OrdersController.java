@@ -117,26 +117,29 @@ public class OrdersController{
 								  HttpSession httpSession) {
 		// 주문 Insert
 		MemberDto memberDto = (MemberDto) httpSession.getAttribute("user");
-		String orders_seq = service.insertOrder(memberDto.getSeq());
+		OrdersDto dto = new OrdersDto();
+		dto.setUser_seq(memberDto.getSeq());
+		service.insertOrder(dto);
 		
 		// 개별 주문 Insert
-		OrdersDto dto = new OrdersDto();
 		for(int i = 0; i < menu_seqList.size(); i++) {
-			dto.setOrders_seq(orders_seq);
 			dto.setMenu_seq(menu_seqList.get(i));
 			dto.setQuantity(quantityList.get(i));
+			service.insertOrderMenu(dto);
 		}
 		
 		return "/usr/orders/ordersDetail";
 	}
 	
-	// 주문 상세 화면
+	// 주문상세 화면
 	@RequestMapping(value = "/TableOrder/ordersDetail")
 	public String ordersDetail() {
 	
 		return "/usr/orders/ordersDetail";
 	}
-	// 주문 목록
+	
+	
+	// 주문내역 화면
 	@RequestMapping(value = "/TableOrder/ordersHistory")
 	public String ordersHistory() {
 	

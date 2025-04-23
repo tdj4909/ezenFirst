@@ -22,7 +22,8 @@
 							<input type="hidden" id="menu_seq" name="menu_seq" th:value="${item.seq}">
                             <h4 class="fw-bold mb-3" th:text="${item.menuNm}"></h4>
                             <h5 class="fw-bold mb-3" th:text="${#numbers.formatInteger(item.menuPrice, 3, 'COMMA')} + ' 원'"></h5>
-                            <div class="d-flex mb-4">
+                            <h5 class="fw-bold mb-3" th:if="${item.menuRating == null}">평점 없음</h5>
+                            <div class="d-flex mb-4" th:if="${item.menuRating != null}">
                                 <i class="fa fa-star text-secondary"></i>
                                 <i class="fa fa-star text-secondary"></i>
                                 <i class="fa fa-star text-secondary"></i>
@@ -229,7 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         // 4. 서버에 저장 요청 보내기
-        fetch('/review/save', {
+        fetch('/TableOrder/reviewInst', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(review)

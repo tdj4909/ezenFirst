@@ -48,6 +48,8 @@
 				,a.recommand
 				,a.menuNew
 				,a.menuStock
+				,a.menuOrderCnt
+				,a.menuRating
 				,a.fileUploaded_seq
 			<include refid="selectCommon"></include>
 			ORDER BY

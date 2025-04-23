@@ -119,10 +119,22 @@
 		    ,0
 		    ,#{user_seq}
 		)
-		<selectKey resultType="String" keyProperty="seq"
+		<selectKey resultType="String" keyProperty="orders_seq"
 			order="AFTER">
 			SELECT last_insert_id()
 		</selectKey>
+	</insert>
+	
+	<insert id="insertOrderMenu">
+		INSERT INTO orderMenu(
+		    quantity
+		    ,orders_seq
+		    ,menu_seq
+		) VALUES(
+			#{quantity}
+		    ,#{orders_seq}
+		    ,#{user_seq}
+		)
 	</insert>
 	
 	<update id="uelete">
