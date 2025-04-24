@@ -40,9 +40,11 @@
 	
 	<select id="ordersSum" resultType="Integer">
 		SELECT 
-			SUM(totalPrice)
+			SUM(m.menuPrice) AS totalPrice
 		FROM
-			orders
+			orders od
+			JOIN orderMenu om ON om.orders_seq = od.seq
+			JOIN menu m ON m.seq = om.menu_seq
 		WHERE
 			ordersStatus != 3
 		    AND ordersDelNy = 0
@@ -77,10 +79,13 @@
 		    ,o.ordersDate
 		    ,o.ordersStatus
 		    ,o.ordersDelNy
+		    ,o.odTotalPrice
 		FROM
 			orders o
-			JOIN user u ON u.seq = o.user_seq   
-		AND o.seq = #{seq}
+			JOIN user u ON u.seq = o.user_seq
+		WHERE
+			1=1
+			AND o.seq = #{seq}
  	</select>
  	
  	<select id="selectOneList" resultMap="resultMapObj">
@@ -107,17 +112,35 @@
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
  	</select>
  	
+ 	<select id="getOrdersListByMemberSeq" resultMap="resultMapObj">
+ 		SELECT
+ 			seq
+		    ,ordersDate
+		    ,ordersStatus
+		    ,odTotalPrice
+		FROM
+			orders
+		WHERE
+			1=1
+			AND user_seq = #{user_seq}
+			AND ordersDelNy = 0
+		ORDER BY
+			seq DESC
+ 	</select>
+ 	
  	<insert id="insertOrder">
 		INSERT INTO orders(
 			ordersDate
 		    ,ordersStatus
 		    ,ordersDelNy
 		    ,user_seq
+		    ,odTotalPrice
 		) VALUES(
 			now()
 		    ,1
 		    ,0
 		    ,#{user_seq}
+		    ,#{odTotalPrice}
 		)
 		<selectKey resultType="String" keyProperty="orders_seq"
 			order="AFTER">

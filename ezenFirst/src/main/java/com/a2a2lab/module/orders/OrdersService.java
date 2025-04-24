@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.a2a2lab.module.member.MemberDto;
-
 @Service
 public class OrdersService {
 
@@ -56,6 +54,10 @@ public class OrdersService {
 	
 	public List<OrdersDto> selectList(OrdersVo vo) {
 		return dao.selectList(vo);
+	}
+	
+	public List<OrdersDto> getOrdersListByMemberSeq(String user_seq) {
+		return dao.getOrdersListByMemberSeq(user_seq);
 	}
 
 }

@@ -114,10 +114,12 @@ public class OrdersController{
 	@RequestMapping(value = "/TableOrder/ordersCompleted")
 	public String ordersCompleted(@RequestParam("menu_seq") List<String> menu_seqList,
 								  @RequestParam("quantity") List<Integer> quantityList,
+								  @RequestParam("odTotalPrice") Integer odTotalPrice,
 								  HttpSession httpSession) {
 		// 주문 Insert
 		MemberDto memberDto = (MemberDto) httpSession.getAttribute("user");
 		OrdersDto dto = new OrdersDto();
+		dto.setOdTotalPrice(odTotalPrice);
 		dto.setUser_seq(memberDto.getSeq());
 		service.insertOrder(dto);
 		
@@ -141,8 +143,12 @@ public class OrdersController{
 	
 	// 주문내역 화면
 	@RequestMapping(value = "/TableOrder/ordersHistory")
-	public String ordersHistory() {
+	public String ordersHistory(Model model, HttpSession httpSession) {
 	
+		MemberDto memberDto = (MemberDto) httpSession.getAttribute("user");
+		
+		model.addAttribute("list", service.getOrdersListByMemberSeq(memberDto.getSeq()));
+		
 		return "/usr/orders/ordersHistory";
 	}
 	

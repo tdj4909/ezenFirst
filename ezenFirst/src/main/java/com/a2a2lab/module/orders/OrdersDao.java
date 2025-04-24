@@ -22,5 +22,6 @@ public interface OrdersDao {
 	public OrdersDto selectOne(OrdersDto dto);
 	public List<OrdersDto> selectOneList(OrdersDto dto);
 	public List<OrdersDto> selectList(OrdersVo vo);
+	public List<OrdersDto> getOrdersListByMemberSeq(String user_seq);
 
 }

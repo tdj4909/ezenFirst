@@ -6,7 +6,7 @@ public class OrdersDto{
 	private String ordersDate;
 	private String seq;
 	private Integer ordersStatus;
-	private Integer totalPrice;
+	private Integer odTotalPrice;
 	private Integer takeOut;
 	private Integer ordersDelNy;
 	private String user_seq;
@@ -48,11 +48,11 @@ public class OrdersDto{
 	public void setOrdersStatus(Integer ordersStatus) {
 		this.ordersStatus = ordersStatus;
 	}
-	public Integer getTotalPrice() {
-		return totalPrice;
+	public Integer getOdTotalPrice() {
+		return odTotalPrice;
 	}
-	public void setTotalPrice(Integer totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setOdTotalPrice(Integer odTotalPrice) {
+		this.odTotalPrice = odTotalPrice;
 	}
 	public Integer getTakeOut() {
 		return takeOut;

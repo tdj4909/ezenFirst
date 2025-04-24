@@ -13,55 +13,35 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Order</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Total</th>
+                            <th scope="col" class="text-center">주문 번호</th>
+                            <th scope="col" class="text-center">주문 날짜</th>
+                            <th scope="col" class="text-center">주문 상태</th>
+                            <th scope="col" class="text-center">총합</th>
+                            <th scope="col" class="text-center">삭제</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">
-                                <p class="mt-2"><a href="/TableOrder/ordersDetail">#4310</a></p>
-                            </th>
-                            <td>
-                                <p class="mt-2">2025.02.10 12:30</p>
+                    
+                        <tr th:each="item : ${list}">
+                            <td scope="row" class="text-center">
+                                <p class="mt-2"><a href="/TableOrder/ordersDetail" th:text="${item.seq}"></a></p>
                             </td>
-                            <td>
-                                <p class="mt-2">주문 완료</p>
+                            <td class="text-center">
+                                <p class="mt-2" th:text="${item.ordersDate}"></p>
                             </td>
-                            <td>
-                                <p class="mt-2">82,000 원</p>
+                            <td class="text-center">
+                                <p class="mt-2" th:text="${item.ordersStatus}"></p>
                             </td>
+                            <td class="text-center">
+                                <p class="mt-2" th:text="${item.odTotalPrice}"></p>
+                            </td>
+                           	<td class="text-center align-middle">
+                           		<button type="button" class="btn btn-md rounded-circle bg-light border btn-delete">
+                           			<i class="fa fa-times text-danger"></i>
+                           		</button>
+                           	</td>
                         </tr>
-                        <tr>
-                            <th scope="row">
-                                <p class="mt-2"><a href="#">#4310</a></p>
-                            </th>
-                            <td>
-                                <p class="mt-2">2025.02.10 12:30</p>
-                            </td>
-                            <td>
-                                <p class="mt-2">주문 완료</p>
-                            </td>
-                            <td>
-                                <p class="mt-2">82,000 원</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <p class="mt-2"><a href="#">#4310</a></p>
-                            </th>
-                            <td>
-                                <p class="mt-2">2025.02.10 12:30</p>
-                            </td>
-                            <td>
-                                <p class="mt-2">주문 완료</p>
-                            </td>
-                            <td>
-                                <p class="mt-2">82,000 원</p>
-                            </td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
