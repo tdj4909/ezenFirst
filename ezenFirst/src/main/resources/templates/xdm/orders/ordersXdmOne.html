@@ -43,20 +43,22 @@
 									<table class="table table-hover">
 										<thead>
 											<tr>
-												<th>주문번호</th>
-												<th>닉네임</th>
-												<th>날짜</th>
-												<th>주문상태</th>
+												<th class="text-center">주문번호</th>
+												<th class="text-center">닉네임</th>
+												<th class="text-center">날짜</th>
+												<th class="text-center">합계</th>
+												<th class="text-center">주문상태</th>
 											</tr>
 										</thead>
 										<tbody>
 										
 											<tr>
-												<td th:text="${list.seq}"></td>
-												<td th:text="${list.nickname}"></td>
-												<td th:text="${list.ordersDate}"></td>
+												<td class="text-center" th:text="${list.seq}"></td>
+												<td class="text-center" th:text="${list.nickname}"></td>
+												<td class="text-center" th:text="${list.ordersDate}"></td>
+												<td class="text-center" th:text="${list.odTotalPrice}"></td>
 												
-												<td th:text="${
+												<td class="text-center" th:text="${
 												    list.ordersStatus == 0 ? '주문접수' :
 												    list.ordersStatus == 1 ? '준비중' :
 												    list.ordersStatus == 2 ? '주문완료' : '주문취소'
@@ -86,17 +88,19 @@
 									<table class="table table-hover">
 										<thead>
 											<tr>
-												<th>메뉴명</th>
-												<th>개수</th>
-												<th>합계</th>
+												<th class="text-center">메뉴명</th>
+												<th class="text-center">가격</th>
+												<th class="text-center">개수</th>
+												<th class="text-center">합계</th>
 											</tr>
 										</thead>
 										<tbody>
 										
 											<tr th:each="list : ${lists}">
-												<td th:text="${list.menuNm}"></td>
-												<td th:text="${list.quantity}"></td>												
-												<td th:text="${list.oneTotal}"></td>
+												<td class="text-center" th:text="${list.menuNm}"></td>
+												<td class="text-center" ></td>
+												<td class="text-center" th:text="${list.quantity}"></td>												
+												<td class="text-center" th:text="${list.oneTotal}"></td>
 											</tr>
 	
 										</tbody>
@@ -104,8 +108,8 @@
 											<tr>
 												<td></td>
 												<td></td>
-												<td>TOTAL</td>
-												<td th:text="${list.totalPrice}"></td>
+												<td class="text-center">TOTAL</td>
+												<td class="text-center" th:text="${list.odTotalPrice}"></td>
 											</tr>
 										</tfoot>
 									</table>

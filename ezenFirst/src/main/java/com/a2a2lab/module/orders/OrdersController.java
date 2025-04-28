@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -134,9 +135,16 @@ public class OrdersController{
 	}
 	
 	// 주문상세 화면
-	@RequestMapping(value = "/TableOrder/ordersDetail")
-	public String ordersDetail() {
+	@RequestMapping(value = "/TableOrder/ordersDetail/{seq}")
+	public String ordersDetail(@PathVariable("seq") String seq, Model model) {
 	
+		OrdersDto dto = new OrdersDto();
+		dto.setSeq(seq);
+		// 주문 selectOne
+		model.addAttribute("order", service.selectOne(dto));
+		// 상세주문 selectAll by oreders_seq
+		
+		
 		return "/usr/orders/ordersDetail";
 	}
 	

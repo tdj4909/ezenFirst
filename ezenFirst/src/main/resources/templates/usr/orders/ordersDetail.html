@@ -23,16 +23,16 @@
                     <tbody>
                         <tr>
                             <th scope="row" class="text-center">
-                                <p class="mt-2"><a href="#">#4310</a></p>
+                                <p class="mt-2" th:text="${order.seq}"></p>
                             </th>
                             <td class="text-center">
-                                <p class="mt-2">2025.02.10 12:30</p>
+                                <p class="mt-2" th:text="${order.ordersDate}"></p>
                             </td>
                             <td class="text-center">
-                                <p class="mt-2">주문 완료</p>
+                                <p class="mt-2" th:text="${order.ordersStatus}"></p>
                             </td>
                             <td class="text-center">
-                                <p class="mt-2">82,000 원</p>
+                                <p class="mt-2" th:text="${order.odTotalPrice}"></p>
                             </td>
                         </tr>
                     </tbody>

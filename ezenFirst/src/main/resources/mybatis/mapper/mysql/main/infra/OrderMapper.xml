@@ -40,7 +40,7 @@
 	
 	<select id="ordersSum" resultType="Integer">
 		SELECT 
-			SUM(m.menuPrice) AS totalPrice
+			SUM(m.menuPrice) AS odTotalPrice
 		FROM
 			orders od
 			JOIN orderMenu om ON om.orders_seq = od.seq

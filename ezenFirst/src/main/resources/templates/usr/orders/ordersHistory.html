@@ -24,7 +24,7 @@
                     
                         <tr th:each="item : ${list}">
                             <td scope="row" class="text-center">
-                                <p class="mt-2"><a href="/TableOrder/ordersDetail" th:text="${item.seq}"></a></p>
+                                <p class="mt-2"><a th:href="@{'/TableOrder/ordersDetail/' + ${item.seq}}" th:text="${item.seq}"></a></p>
                             </td>
                             <td class="text-center">
                                 <p class="mt-2" th:text="${item.ordersDate}"></p>
