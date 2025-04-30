@@ -29,6 +29,9 @@ public class OrdersDto{
 	private String menuNm;
 	private Integer menuPrice;
 	
+	// file
+	private String path;
+	
 	
 	public String getOrdersDate() {
 		return ordersDate;
@@ -138,6 +141,12 @@ public class OrdersDto{
 	}
 	public void setImg(String img) {
 		this.img = img;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
 	

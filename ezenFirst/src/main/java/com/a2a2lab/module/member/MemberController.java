@@ -33,6 +33,7 @@ public class MemberController {
 		if(httpSession.getAttribute("user") == null) {
 			return "redirect:/Xdm/loginXdm";
 		}
+		httpSession.setMaxInactiveInterval(3600);
 		model.addAttribute("user", httpSession.getAttribute("user"));
 		
 		vo.setParamsPaging(service.selectOneCount(vo));

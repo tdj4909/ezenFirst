@@ -14,21 +14,21 @@ public class CheckLoginSessionInterceptor implements HandlerInterceptor{
 		if(request.getRequestURI().contains("Xdm")) {
 			if (request.getSession().getAttribute("user") != null) {
 				// by pass
+				return true;
 			} else {
 				response.sendRedirect("/Xdm/loginXdm");
 		        return false;
 			}
 		} else {
-//			by pass
+			//by pass
+			if (request.getSession().getAttribute("user") != null) {
+				// by pass
+				return true;
+			} else {
+				response.sendRedirect("/TableOrder/accountLogin");
+		        return false;
+			}
 		}
-		/*
-		 * // 사용자용 if(request.getRequestURI().contains("Constants.ABBREVIATION_USER")) {
-		 * if (request.getSession().getAttribute("Constants.SESSION_SEQ_NAME_USR") !=
-		 * null) { // by pass } else {
-		 * response.sendRedirect("Constants.URL_LOGINUSRFORM"); return false; } } else {
-		 * // by pass }
-		 */
 		
-		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
 }

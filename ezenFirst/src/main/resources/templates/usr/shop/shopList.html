@@ -68,7 +68,7 @@
 
 
                         <!-- Menu List Start -->
-                        <div class="col-lg-9">
+                        <div id="menuList" class="col-lg-9">
                             <div class="row g-4 justify-content-center">
 
                                 <div class="col-md-6 col-lg-6 col-xl-4" th:each="item : ${list}">
@@ -106,13 +106,12 @@
                                 </div>
 
 
-                                <!-- Pageing Start -->
-                                <div class="col-12">
+                                <!-- Pagination Start -->
+                                <div id="pagination" class="col-12">
                                     <ul class="pagination d-flex justify-content-center mt-5">
                                     
                                     	<li th:if="${vo.startPage gt vo.pageNumToShow}">
-											<a class="rounded" href="javascript:goList(${vo.startPage - 1})"
-											th:attr="onclick=|goList('${vo.startPage - 1}')|"> 
+											<a class="rounded" th:attr="onclick=|goList('${vo.startPage - 1}')|"> 
 												&laquo;
 											</a>
 										</li>
@@ -129,7 +128,7 @@
 										
                                     </ul>
                                 </div>
-                                <!-- Pageing End -->
+                                <!-- Pagination End -->
 
 
                             </div>

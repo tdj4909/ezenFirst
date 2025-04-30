@@ -91,11 +91,14 @@
  	<select id="selectOneList" resultMap="resultMapObj">
 		SELECT 
 			m.menuNm
+			,m.menuPrice
 		    ,om.quantity
+		    ,f.path
 		FROM
-			orderMenu om
+			orders o
+			JOIN orderMenu om ON om.orders_seq = o.seq
 		    JOIN menu m ON m.seq = om.menu_seq
-		    JOIN orders o ON o.seq = om.orders_seq
+		    JOIN fileUploaded f ON f.seq = m.fileUploaded_seq
 		AND o.seq = #{seq}
  	</select>
  
@@ -156,7 +159,7 @@
 		) VALUES(
 			#{quantity}
 		    ,#{orders_seq}
-		    ,#{user_seq}
+		    ,#{menu_seq}
 		)
 	</insert>
 	

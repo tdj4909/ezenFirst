@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,9 +105,9 @@ public class OrdersController{
 	
     // 사용자
 	// 결제 화면
-	@RequestMapping(value = "/TableOrder/ordersCheckout")
+	@PostMapping("/TableOrder/ordersCheckout")
 	public String ordersCheckout(@RequestBody List<OrdersDto> dtos, Model model) {
-	
+		System.out.println(dtos.get(0).getMenu_seq());
 		model.addAttribute("list", dtos);
 		
 		return "/usr/orders/ordersCheckout";
@@ -131,7 +132,7 @@ public class OrdersController{
 			service.insertOrderMenu(dto);
 		}
 		
-		return "/usr/orders/ordersDetail";
+		return "redirect:/TableOrder/ordersDetail/"+ dto.getOrders_seq();
 	}
 	
 	// 주문상세 화면
@@ -143,7 +144,7 @@ public class OrdersController{
 		// 주문 selectOne
 		model.addAttribute("order", service.selectOne(dto));
 		// 상세주문 selectAll by oreders_seq
-		
+		model.addAttribute("orderMenu", service.selectOneList(dto));
 		
 		return "/usr/orders/ordersDetail";
 	}

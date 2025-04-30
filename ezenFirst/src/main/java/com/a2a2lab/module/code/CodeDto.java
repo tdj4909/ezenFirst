@@ -1,7 +1,5 @@
 package com.a2a2lab.module.code;
 
-import java.time.LocalDateTime;
-
 public class CodeDto {
 
 	private String ifcgSeq;

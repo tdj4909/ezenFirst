@@ -17,8 +17,6 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class ShopController {
 
-//	@Autowired
-//	ShopService service;
 	@Autowired
 	MemberService memberService;
 	@Autowired

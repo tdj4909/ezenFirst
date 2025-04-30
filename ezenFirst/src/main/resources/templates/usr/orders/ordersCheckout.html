@@ -31,7 +31,7 @@
                                 
                                     <tr class="item-row text-center" th:each="item : ${list}">
                                         <td scope="row">
-                                        	<input type="hidden" name="menu_seq" th:value="${item.seq}">
+                                        	<input type="hidden" name="menu_seq" th:value="${item.menu_seq}">
                                             <div class="align-items-center mt-2">
                                                 <img th:src="${item.menuImg}"
                                                     class="img-fluid rounded-circle" style="width: 90px; height: 90px;"
