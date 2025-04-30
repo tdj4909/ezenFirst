@@ -3,8 +3,6 @@
 
 <div th:replace="~{xdm/include/head :: head}"></div>
 
-	<!-- ******************************************************************************* -->
-
 	<!-- Main -->
 	<main id="main" class="main">
 
@@ -13,12 +11,12 @@
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/Xdm/index">Home</a></li>
-					<li class="breadcrumb-item">시스템관리</li>
-					<li class="breadcrumb-item active">코드그룹관리</li>
+					<li class="breadcrumb-item">시스템 관리</li>
+					<li class="breadcrumb-item active">코드 그룹 관리</li>
 				</ol>
 			</nav>
 
-			<h1 style="font-weight: bold;">Code Group</h1>
+			<h1 style="font-weight: bold;">코드 그룹 관리</h1>
 
 
 		</div>
@@ -34,7 +32,7 @@
 						<div class="card">
 
 							<h5 class="card-header"
-								style="font-weight: bold; color: #4b4b4b;">기본정보</h5>
+								style="font-weight: bold; color: #4b4b4b;">기본 정보</h5>
 
 							<div class="card-body m-2">
 
@@ -46,23 +44,22 @@
 									<div class="row mb-3">
 										<div class="col-3">
 											<div th:replace="~{xdm/codegroup/codeGroupXdmVo :: vo}"></div>
-											<label class="form-label">코드그룹 코드<b
-												style="color: red;">*</b></label>
+											<label class="form-label">코드 그룹 번호<b style="color: red;">*</b></label>
 											<input type="text" id="ifcgSeq" name="ifcgSeq" th:value="${item?.ifcgSeq}" maxlength="20" placeholder="자동생성" disabled class="form-control"/>
 										</div>
 										
 										<div class="col-3">
-											<label for="text3" class="form-label">코드그룹 이름<b style="color: red;">*</b></label>
+											<label for="text3" class="form-label">코드 그룹명<b style="color: red;">*</b></label>
 											<input id="codeGroupNm" name="codeGroupNm" type="text" th:value="${item?.codeGroupNm}"
 												class="form-control" placeholder="한글,영대소문자,숫자">
 											<div class="invalid-feedback" id="codeGroupNmFeedback"></div>
 										</div>
 										<div class="col-3">
-											<label for="codeGroupUse" class="form-label">사용여부<b
+											<label for="codeGroupUse" class="form-label">사용 여부<b
 												style="color: red;">*</b></label> 
 											<select name="codeGroupUse" id="codeGroupUse" class="form-select">
 												<option value="1" th:selected="${item?.codeGroupUse == 1}">사용</option>
-												<option value="0" th:selected="${item?.codeGroupUse == 0}">사용안함</option>
+												<option value="0" th:selected="${item?.codeGroupUse == 0}">사용 안 함</option>
 											</select>
 										</div>
 									</div>
@@ -118,12 +115,12 @@
 	    if (value === "") {
 	    	input.classList.add("is-invalid");
 	    	input.classList.remove("is-valid");
-	    	feedback.textContent = "코드그룹 이름을 입력해 주세요.";
+	    	feedback.textContent = "코드 그룹명을 입력해 주세요.";
 	        isValid = false;
 	    } else if (!pattern.test(value)) {
 	    	input.classList.add("is-invalid");
 	    	input.classList.remove("is-valid");
-	    	feedback.textContent = "코드그룹 이름은 공백 없이 한글, 영대소문자, 숫자만 입력해 주세요. (1~10자)";
+	    	feedback.textContent = "코드 그룹명은 공백 없이 한글, 영대소문자, 숫자만 입력해 주세요. (1~10자)";
 	        isValid = false;
 	    } else {
 	    	input.classList.remove("is-invalid");

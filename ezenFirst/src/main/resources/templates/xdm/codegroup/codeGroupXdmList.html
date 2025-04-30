@@ -16,30 +16,16 @@
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/Xdm/index">Home</a></li>
-					<li class="breadcrumb-item">시스템관리</li>
-					<li class="breadcrumb-item active">코드그룹관리</li>
+					<li class="breadcrumb-item">시스템 관리</li>
+					<li class="breadcrumb-item active">코드 그룹 관리</li>
 				</ol>
 			</nav>
 
-			<h1 style="font-weight: bold;">Code Group</h1>
+			<h1 style="font-weight: bold;">코드 그룹 목록</h1>
 
-			<!-- Search -->
-			<div>
+			<!-- Search Start -->
+			<div class="search">
 				<div class="row mb-3 mt-3">
-					<div class="col-2">
-						<select id="shDelNy" name="shDelNy" class="form-select">
-							<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
-							<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
-							<option value="0" th:selected="${vo.shDelNy == 0}">N</option>
-						</select>
-					</div>
-					<div class="col-2">
-						<select id="shUseNy" name="shUseNy" class="form-select">
-							<option value="" th:selected="${vo.shUseNy == null}">사용여부</option>
-							<option value="1" th:selected="${vo.shUseNy == 1}">Y</option>
-							<option value="0" th:selected="${vo.shUseNy == 0}">N</option>
-						</select>
-					</div>
 					<div class="col-2">
 						<select id="shOptionDate" name="shOptionDate" class="form-select">
 							<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
@@ -48,19 +34,36 @@
 						</select>
 					</div>
 					<div class="col-2">
-						<input id="datetimepickerStart" name="shDateStart" type="text" class="form-control" placeholder="시작일" th:value="${vo.shDateStart}">
+						<input id="datetimepickerStart" name="shDateStart" type="text" class="form-control" placeholder="시작일" th:value="${vo.shDateStart}" autocomplete="off">
 					</div>
 					<div class="col-2">
-						<input id="datetimepickerEnd" name="shDateEnd" type="text" class="form-control" placeholder="종료일" th:value="${vo.shDateEnd}">
+						<input id="datetimepickerEnd" name="shDateEnd" type="text" class="form-control" placeholder="종료일" th:value="${vo.shDateEnd}" autocomplete="off">
 					</div>
 				</div>
-		
+				
+				<div class="row mb-3 mt-3">
+					<div class="col-2">
+						<select id="shDelNy" name="shDelNy" class="form-select">
+							<option value="" th:selected="${vo.shDelNy == null}">삭제 여부</option>
+							<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
+							<option value="0" th:selected="${vo.shDelNy == 0}">N</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select id="shUseNy" name="shUseNy" class="form-select">
+							<option value="" th:selected="${vo.shUseNy == null}">사용 여부</option>
+							<option value="1" th:selected="${vo.shUseNy == 1}">Y</option>
+							<option value="0" th:selected="${vo.shUseNy == 0}">N</option>
+						</select>
+					</div>
+				</div>
+	
 				<div class="row mb-3 mt-3">
 					<div class="col-2">
 						<select id="shOption" name="shOption" class="form-select">
 							<option value="" th:selected="${vo.shOption == null}">검색구분</option>
-							<option value="1" th:selected="${vo.shOption == 1}">코드그룹 코드</option>
-							<option value="2" th:selected="${vo.shOption == 2}">코드그룹 이름</option>
+							<option value="1" th:selected="${vo.shOption == 1}">코드 그룹 번호</option>
+							<option value="2" th:selected="${vo.shOption == 2}">코드 그룹명</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -68,9 +71,8 @@
 						<div class="invalid-feedback" id="shValueFeedback"></div>
 					</div>
 					<div class="col-2">
-						<button type="button" class="btn btn-outline-secondary"
-							id="btnSearch"> <i
-							class="ri-search-line"></i>
+						<button type="button" id="btnSearch" class="btn btn-outline-secondary">
+							<i class="ri-search-line"></i>
 						</button>
 						<a href="" class="btn btn-outline-secondary">
 							<i class="ri-reset-right-line"></i>
@@ -78,8 +80,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- End Search -->
-			
+			<!-- Search End -->
 		</div>
 
 		<section class="section">
@@ -105,85 +106,88 @@
 								</div>
 							</div>
 							
-							<!-- Table -->
+							<!-- Table Start -->
 							<div class="row">
 								<table class="table table-hover">
 									<thead>
 										<tr>
-											<th><input class="form-check-input" type="checkbox"
-												id="selectAllCheckbox" onclick="toggleSelectAll(this)">
+											<th class="text-center">
+												<input class="form-check-input" type="checkbox" id="selectAllCheckbox" onclick="toggleSelectAll(this)">
 											</th>
-											<th>#</th>
-											<th>사용</th>
-											<th>코드그룹 코드</th>
-											<th>코드그룹 이름</th>
-											<th>갯수</th>
-											<th>등록일</th>
-											<th>수정일</th>
+											<th class="text-center">#</th>
+											<th class="text-center">사용 여부</th>
+											<th class="text-center">코드 그룹 번호</th>
+											<th class="text-center">코드 그룹명</th>
+											<th class="text-center">개수</th>
+											<th class="text-center">등록일</th>
+											<th class="text-center">수정일</th>
 										</tr>
 									</thead>
 									<tbody>
 									
 										<tr th:if="${#lists.isEmpty(lists)}">
-											<td colspan=8 style="text-align: center"><p>There
-													are no data!</p></td>
+											<td colspan=8 class="text-center">
+												<p>There are no data!</p></td>
 										</tr>
+										
 										<tr th:each="list : ${lists}">
-											<td>
+											<td class="text-center">
 												<input class="form-check-input rowCheckbox" type="checkbox" name="seq" th:value="${list.seq}">
 												<input type="hidden" name="delSeq" th:id="'delSeq_' + ${list.seq}">
 											</td>
 
-
-											<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
-											<td th:text="${list.codeGroupUse} == 1 ? 'Y' : 'N' "></td>
-											<td th:text="${list.seq}"></td>
+											<td class="text-center" th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
+											<td class="text-center" th:text="${list.codeGroupUse} == 1 ? 'Y' : 'N' "></td>
+											<td class="text-center" th:text="${list.seq}"></td>
 											
-											<td class="align-middle fw-semi-bold">
+											<td class="text-center align-middle fw-semi-bold">
 												<a href="javascript:void(0);" th:text="${list.codeGroupNm}" th:attr="onclick=|goForm(${list.ifcgSeq})|"></a>
 											</td>
 											
-											<td th:text="${list.codeCnt}"></td>
-											<td th:text="${list.codeGroupRegDateTime}"></td>
-											<td th:text="${list.codeGroupModDateTime}"></td>
+											<td class="text-center" th:text="${list.codeCnt}"></td>
+											<td class="text-center" th:text="${list.codeGroupRegDateTime}"></td>
+											<td class="text-center" th:text="${list.codeGroupModDateTime}"></td>
 										</tr>
 
 									</tbody>
 								</table>
 							</div>
-							<!-- End Table -->
+							<!-- Table End -->
 
-							<!-- Pagination -->
+							<!-- Pagination Start-->
 							<div class="row">
 								<nav aria-label="Page navigation">
 									<ul class="pagination justify-content-center">
 
-										<li th:if="${vo.startPage gt vo.pageNumToShow}"
-											class="page-item" style="cursor: pointer;"><a
-											class="page-link"
-											href="javascript:goList(${vo.startPage - 1})"
-											th:attr="onclick=|goList('${vo.startPage - 1}')|"> <i
-												class="fa-solid fa-angle-left"></i>
-										</a></li>
-										<li
-											th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}"
+										<li th:if="${vo.startPage gt vo.pageNumToShow}" 
+											class="page-item"
+											style="cursor: pointer;">
+											<a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|">
+												<i class="fa-solid fa-angle-left"></i>
+											</a>
+										</li>
+										
+										<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
 											th:classappend="${num eq vo.thisPage} ? active : ''"
-											class="page-item" style="cursor: pointer;"><a
-											class="page-link" th:attr="onclick=|goList('${num}')|"
-											th:text="${num}">
+											class="page-item" style="cursor: pointer;">
+											<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}">
 												<!-- ${i.index} -->
-										</a></li>
-										<li th:if="${vo.endPage ne vo.totalPages}" class="page-item"
-											style="cursor: pointer;"><a class="page-link"
-											th:attr="onclick=|goList('${vo.endPage + 1}')|"> <i
-												class="fa-solid fa-angle-right"></i>
-										</a></li>
-
+											</a>
+										</li>
+										
+										<li th:if="${vo.endPage ne vo.totalPages}" 
+											class="page-item"
+											style="cursor: pointer;">
+											<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|"> 
+												<i class="fa-solid fa-angle-right"></i>
+											</a>
+										</li>
 									</ul>
 								</nav>
 							</div>
-							<!-- End Pagination -->
+							<!-- Pagination End -->
 
+							<!-- Table Button Start -->
 							<div class="row">
 								<div class="col">
 									<button type="button" id="btnDelete" class="btn btn-danger"> 
@@ -204,8 +208,8 @@
 										</button>
 									</div>
 								</div>
-								
 							</div>
+							<!-- Table Button End -->
 						</div>
 					</div>
 
