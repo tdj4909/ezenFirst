@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- Menu List Start -->
+<div th:fragment="menuListFragment">
+	<div class="row g-4 justify-content-center">
+
+		<div class="col-md-6 col-lg-6 col-xl-4" th:each="item : ${list}">
+			<div class="rounded position-relative fruite-item">
+				<a th:attr="onclick=|goDetail('${item.seq}')|">
+					<div class="fruite-img">
+						<img th:src="${item.path}" class="img-fluid w-100 rounded-top"
+							alt="">
+					</div>
+				</a>
+				<div class="p-4 border border-secondary border-top-0 rounded-bottom">
+					<h4 th:text="${item.menuNm}"></h4>
+					<div class="d-flex mb-4">
+						<i class="fa fa-star text-secondary"></i> <i
+							class="fa fa-star text-secondary"></i> <i
+							class="fa fa-star text-secondary"></i> <i
+							class="fa fa-star text-secondary"></i> <i class="fa fa-star"></i>
+					</div>
+					<div class="d-flex justify-content-between flex-lg-wrap">
+						<p class="text-dark fs-5 fw-bold mb-0"
+							th:text="${#numbers.formatInteger(item.menuPrice, 3, 'COMMA')} + ' 원'"></p>
+						<button type="button"
+							class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart"
+							th:attr="data-seq=${item.seq},
+                                     data-name=${item.menuNm}, 
+									 data-price=${item.menuPrice},
+									 data-img=${item.path}">
+							<i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Pagination Start -->
+		<div class="col-12">
+			<div class="pagination d-flex justify-content-center mt-5">
+
+				<a th:if="${vo.startPage gt vo.pageNumToShow}"  href="javascript:void(0);"
+					class="rounded" th:attr="onclick=|goList('${vo.startPage - 1}')|">
+						&laquo; </a>
+
+				
+				<a th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" class="rounded" th:attr="onclick=|goList('${num}')|"
+					th:text="${num}" href="javascript:void(0);"
+					th:classappend="${num eq vo.thisPage} ? active : ''"></a>
+				
+
+				<a th:if="${vo.endPage ne vo.totalPages}" class="rounded" href="javascript:void(0);"
+					th:attr="onclick=|goList('${vo.endPage + 1}')|"> &raquo; </a>
+
+			</div>
+		</div>
+		<!-- Pagination End -->
+
+	</div>
+</div>
+<!-- Menu List End -->
