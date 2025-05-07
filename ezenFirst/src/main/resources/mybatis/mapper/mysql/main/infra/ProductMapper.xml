@@ -141,6 +141,14 @@
 			seq = #{ifcgSeq}
 	</update>
 	
+	<update id="updateRating">
+		UPDATE menu SET
+			menuRating = #{menuRating}
+			,menuModDateTime = now()
+		WHERE
+			seq = #{seq}
+	</update>
+	
 	<update id="fileUpdate">
 		UPDATE menu SET
 			fileUploaded_seq = #{fileUploaded_seq}

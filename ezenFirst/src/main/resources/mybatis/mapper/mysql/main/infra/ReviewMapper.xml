@@ -27,6 +27,15 @@
 		<include refid="selectCommon"></include>
 	</select>
 	
+	<select id="findAvgRatingByMenuSeq" resultType="Integer">
+		SELECT
+			ROUND(AVG(reviewRate))
+		FROM
+			review
+		WHERE
+			menu_seq = #{menu_seq}
+	</select>
+	
 	<select id="reviewCount" resultType="Integer">
 		SELECT 
 			COUNT(*)

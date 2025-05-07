@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.a2a2lab.module.product.ProductDto;
+import com.a2a2lab.module.product.ProductService;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -20,6 +23,8 @@ public class ReviewController{
 	
 	@Autowired
 	ReviewService service;
+	@Autowired
+	ProductService productService;
 	
 	@RequestMapping(value = "/Xdm/reviewXdmList")
 	public String reviewXdmList(@ModelAttribute("vo") ReviewVo vo, Model model, HttpSession httpSession) {
@@ -72,6 +77,10 @@ public class ReviewController{
 		
 		dto.setReviewDate(LocalDate.now().toString());
 		service.insert(dto);
+		ProductDto productDto = new ProductDto();
+		productDto.setSeq(dto.getMenu_seq());
+		productDto.setMenuRating(service.findAvgRatingByMenuSeq(dto.getMenu_seq()));
+		productService.updateRating(productDto);
 
 	    return dto;
 	}

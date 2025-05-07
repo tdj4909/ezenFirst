@@ -11,6 +11,7 @@ public interface ProductDao {
 	
 	public int insert(ProductDto dto);
 	public int update(ProductDto dto);
+	public int updateRating(ProductDto dto);
 	public int fileUpdate(ProductDto dto);
 	public int uelete(ProductDto dto);
 	public int delete(ProductDto dto);

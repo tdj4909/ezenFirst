@@ -24,11 +24,9 @@
                             <h5 class="fw-bold mb-3" th:text="${#numbers.formatInteger(item.menuPrice, 3, 'COMMA')} + ' 원'"></h5>
                             <h5 class="fw-bold mb-3" th:if="${item.menuRating == null}">평점 없음</h5>
                             <div class="d-flex mb-4" th:if="${item.menuRating != null}">
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star"></i>
+				                <span th:each="i : ${#numbers.sequence(1, 5)}">
+				                    <i class="fa fa-star" th:classappend="${i <= item.menuRating} ? ' text-secondary' : ' text-muted'"></i>
+				                </span>
                             </div>
                             <p class="mb-4" th:text="${item.menuDescription}"></p>
 

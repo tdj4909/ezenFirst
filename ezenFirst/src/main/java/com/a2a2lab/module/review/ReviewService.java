@@ -28,6 +28,10 @@ public class ReviewService {
 		return dao.selectOneCount(vo);
 	}
 	
+	public int findAvgRatingByMenuSeq(String menu_seq) {
+		return dao.findAvgRatingByMenuSeq(menu_seq);
+	}
+	
 	public int reviewCount() {
 		return dao.reviewCount();
 	}

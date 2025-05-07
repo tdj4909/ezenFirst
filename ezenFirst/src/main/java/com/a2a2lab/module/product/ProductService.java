@@ -27,6 +27,10 @@ public class ProductService {
 		return dao.update(dto);
 	}
 	
+	public int updateRating(ProductDto dto) {
+		return dao.updateRating(dto);
+	}
+	
 	public int fileUpdate(ProductDto dto) {
 		return dao.fileUpdate(dto);
 	}

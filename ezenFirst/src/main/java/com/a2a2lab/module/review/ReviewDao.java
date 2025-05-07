@@ -15,6 +15,7 @@ public interface ReviewDao {
 	public int uelete(ReviewDto dto);
 	public int delete(ReviewDto dto);
 	public int selectOneCount(ReviewVo vo);
+	public int findAvgRatingByMenuSeq(String menu_seq);
 	public int reviewCount();
 	public List<ReviewDto> selectList(ReviewVo vo);
 	public List<ReviewDto> getReviewListByMenuSeq(String menu_seq);
