@@ -15,24 +15,28 @@
 					</div>
 				</a>
 				<div class="p-4 border border-secondary border-top-0 rounded-bottom">
-					<h4 th:text="${item.menuNm}"></h4>
-					<div class="d-flex mb-4">
-						<i class="fa fa-star text-secondary"></i> <i
-							class="fa fa-star text-secondary"></i> <i
-							class="fa fa-star text-secondary"></i> <i
-							class="fa fa-star text-secondary"></i> <i class="fa fa-star"></i>
-					</div>
-					<div class="d-flex justify-content-between flex-lg-wrap">
-						<p class="text-dark fs-5 fw-bold mb-0"
-							th:text="${#numbers.formatInteger(item.menuPrice, 3, 'COMMA')} + ' 원'"></p>
-						<button type="button"
-							class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart"
-							th:attr="data-seq=${item.seq},
-                                     data-name=${item.menuNm}, 
-									 data-price=${item.menuPrice},
-									 data-img=${item.path}">
-							<i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-						</button>
+					<div>
+						<h4 th:text="${item.menuNm}"></h4>
+						<div class="mb-4" th:if="${item.menuRating == null}">
+							<h5 class="fw-bold">평점 없음</h5>
+						</div>
+	                    <div class="d-flex mb-4" th:if="${item.menuRating != null}">
+				            <span th:each="i : ${#numbers.sequence(1, 5)}">
+				                <i class="fa fa-star" th:classappend="${i <= item.menuRating} ? ' text-secondary' : ' text-muted'"></i>
+				            </span>
+	                    </div>
+						<div class="d-flex justify-content-between flex-lg-wrap">
+							<p class="text-dark fs-5 fw-bold mb-0"
+								th:text="${#numbers.formatInteger(item.menuPrice, 3, 'COMMA')} + ' 원'"></p>
+							<button type="button"
+								class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart"
+								th:attr="data-seq=${item.seq},
+	                                     data-name=${item.menuNm}, 
+										 data-price=${item.menuPrice},
+										 data-img=${item.path}">
+								<i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -42,7 +42,7 @@ public class ShopController {
 	@GetMapping("/TableOrder/menuList")
 	public String getMenuListFragment(@RequestParam(name = "page", defaultValue = "1") int page, Model model, ProductVo vo) {
 		
-		vo.setRowNumToShow(1);
+		vo.setRowNumToShow(6);
 		vo.setThisPage(page);
 		vo.setParamsPaging(productService.selectOneCount(vo));
 		

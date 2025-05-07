@@ -36,7 +36,11 @@
                                 <p class="mt-2" th:text="${item.odTotalPrice}"></p>
                             </td>
                            	<td class="text-center align-middle">
-                           		<button type="button" class="btn btn-md rounded-circle bg-light border btn-delete">
+                           		<button type="button" 
+                           				class="btn btn-md rounded-circle bg-light border btn-delete" 
+                           				data-bs-toggle="modal" 
+                           				data-bs-target="#modal"
+                           				th:data-seq="${item.seq}">
                            			<i class="fa fa-times text-danger"></i>
                            		</button>
                            	</td>
@@ -64,6 +68,38 @@
         </div>
     </div>
     <!-- Cart Page End -->
+    
+    <!-- Modal -->
+	<div class="modal fade" id="modal" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+	      </div>
+	      <div class="modal-body">
+	        삭제하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary btn-confirm">확인</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
+<script>
+
+let targetRow;
+
+document.querySelectorAll('.btn-delete').forEach(button => {
+    button.addEventListener('click', (event) => {
+        targetRow = event.target.closest('button').getAttribute('data-seq');
+    });
+});
+
+document.querySelector('.btn-confirm').addEventListener('click', () => {
+	alert(targetRow);
+});
+</script>
 
 <div th:replace="~{usr/include/footer :: footer}"></div>
