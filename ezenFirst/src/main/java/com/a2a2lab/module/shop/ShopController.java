@@ -65,7 +65,6 @@ public class ShopController {
 		ProductVo vo = new ProductVo();
 		vo.setIfcgSeq(seq);
 		model.addAttribute("item", productService.selectOne(vo));
-		model.addAttribute("reviewList", reviewService.getReviewListByMenuSeq(seq));
 		
 		return "/usr/shop/shopDetail";
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,5 +74,19 @@ public class ReviewController{
 		service.insert(dto);
 
 	    return dto;
+	}
+	
+	// 리뷰 Ajax
+	@GetMapping("/TableOrder/reviewFragment")
+	public String reviewFragment(@RequestParam("seq") String seq, Model model, HttpSession httpSession) {
+		
+		// login 검사
+		if(httpSession.getAttribute("user") == null) {
+			return "redirect:/TableOrder/accountLogin";
+		}
+		model.addAttribute("user", httpSession.getAttribute("user"));
+		
+		model.addAttribute("reviewList", service.getReviewListByMenuSeq(seq));
+		return "/usr/shop/reviewFragment :: reviewFragment";
 	}
 }

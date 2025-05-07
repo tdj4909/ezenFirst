@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- Review Start -->
+<div th:fragment="reviewFragment">
+	<!-- ReviewList Start -->
+	<div class="col-lg-12 ReviewList">
+	
+	    <h4 class="mb-4 border-bottom py-3">리뷰</h4>
+	
+	    <!-- 리뷰 반복 출력 -->
+	    <div th:each="review : ${reviewList}" class="d-flex mb-4 border-bottom pb-3">
+	        <div class="w-100">
+	            <div class="d-flex justify-content-between align-items-center mb-1">
+	                <h5 class="mb-0" th:text="${review.nickname}"></h5>
+	                <p class="mb-0 text-muted" style="font-size: 14px;" th:text="${review.reviewDate}"></p>
+	            </div>
+	
+	            <div class="d-flex mb-2">
+	                <span th:each="i : ${#numbers.sequence(1, 5)}">
+	                    <i class="fa fa-star" th:classappend="${i <= review.reviewRate} ? ' text-secondary' : ' text-muted'"></i>
+	                </span>
+	            </div>
+	
+	            <p class="mb-0" th:text="${review.reviewDescription}"></p>
+	        </div>
+	    </div>
+	
+	</div>
+	<!-- ReviewList End -->
+	
+	<!-- Writing Review Start -->
+	<h4 class="my-3 fw-bold">리뷰 남기기</h4>
+	<input type="hidden" id="user_seq" name="user_seq" th:value="${user.seq}">
+	
+	<div class="row g-3">
+	    <div class="col-lg-6">
+	        <div class="border-bottom rounded">
+	            <input type="text" class="form-control border-0 me-4" th:value="${user.nickname}" readonly>
+	        </div>
+	    </div>
+	    <div class="col-lg-12">
+	        <div class="border-bottom rounded my-3">
+	            <textarea class="form-control" cols="30" rows="8"
+	                placeholder="내용 *" spellcheck="false"></textarea>
+	        </div>
+	    </div>
+	    <div class="col-lg-12">
+	        <div class="d-flex justify-content-between py-3 mb-5">
+	            <div class="d-flex align-items-center">
+	                <p class="mb-0 me-3">평점 :</p>
+	                <!-- 평점 선택 영역 -->
+					<div class="d-flex align-items-center">
+					    <input type="hidden" id="reviewRate" value="0">
+					    <i class="fa fa-star rating-star" data-rate="1"></i>
+					    <i class="fa fa-star rating-star" data-rate="2"></i>
+					    <i class="fa fa-star rating-star" data-rate="3"></i>
+					    <i class="fa fa-star rating-star" data-rate="4"></i>
+					    <i class="fa fa-star rating-star" data-rate="5"></i>
+					</div>
+	            </div>
+	            <button type="button" 
+	            		id="btnSave" 
+	            		class="btn border border-secondary text-primary rounded-pill px-4 py-3">
+	            		저장
+	            </button>
+	        </div>
+	    </div>
+	</div>
+	<!-- Writing Review End -->
+</div>
+<!-- Review End -->

@@ -64,15 +64,11 @@
                         </div>
                         <!-- Side Bar End -->
 
-
-
                         <!-- Menu List Start -->
                         <div id="menuList" class="col-lg-9">
                             <!-- Ajax -->
                         </div>
                         <!-- Menu List End -->
-
-
 
                     </div>
                 </div>
@@ -92,33 +88,31 @@ goDetail = function (value) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-//****************************************
-//메뉴리스트
+	//메뉴리스트
 	loadMenuList(1); // 처음 로딩 시 page 1
 	
 	window.goList = function (page) {
 	    loadMenuList(page);
 	}
-//****************************************
 });
 	  
 function loadMenuList(page) {
     fetch(`/TableOrder/menuList?page=${page}`)
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById("menuList").innerHTML = html;
-            
-            // 새로 삽입된 장바구니 버튼들 이벤트 바인딩
-            document.querySelectorAll(".add-to-cart").forEach(button => {
-                button.addEventListener("click", () => {
-                	addCart(button);
-                    // 장바구니 처리 함수 실행
-                    console.log("Add to cart:", button.dataset.name);
-                });
-            });
-
-        })
-        .catch(error => console.error("메뉴 로딩 실패:", error));
+   	.then(response => response.text())
+   	.then(html => {
+	    document.getElementById("menuList").innerHTML = html;
+	    
+	    // 새로 삽입된 장바구니 버튼들 이벤트 바인딩
+	    document.querySelectorAll(".add-to-cart").forEach(button => {
+	        button.addEventListener("click", () => {
+	        	addCart(button);
+	            // 장바구니 처리 함수 실행
+	            console.log("Add to cart:", button.dataset.name);
+	        });
+	    });
+	
+	})
+	.catch(error => console.error("메뉴 로딩 실패:", error));
 }
 		    
 // 	*******************************************************************************
