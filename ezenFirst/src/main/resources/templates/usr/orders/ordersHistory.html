@@ -98,8 +98,27 @@ document.querySelectorAll('.btn-delete').forEach(button => {
 });
 
 document.querySelector('.btn-confirm').addEventListener('click', () => {
-	alert(targetRow);
+	
+	fetch('/TableOrder/ordersUsrUele', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			seq: targetRow
+		})
+	})
+	.then(res => res.text())
+	.then(data => {
+		console.log(data);
+		if(data == '삭제 성공'){
+			window.location.href='/TableOrder/ordersHistory';
+		}
+	})
+	.catch(error => console.error(error));
+	
 });
+
 </script>
 
 <div th:replace="~{usr/include/footer :: footer}"></div>

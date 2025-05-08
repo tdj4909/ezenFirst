@@ -1,8 +1,10 @@
 package com.a2a2lab.module.orders;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -159,6 +161,16 @@ public class OrdersController{
 		model.addAttribute("list", service.getOrdersListByMemberSeq(memberDto.getSeq()));
 		
 		return "/usr/orders/ordersHistory";
+	}
+	// 주문내역 삭제
+	@RequestMapping("/TableOrder/ordersUsrUele")
+	public ResponseEntity<String> ordersUsrUele(@RequestBody Map<String, String> map) {
+		
+		OrdersDto dto = new OrdersDto();
+		dto.setSeq(map.get("seq"));
+		service.uelete(dto);
+		
+		return ResponseEntity.ok("삭제 성공");
 	}
 	
 }
