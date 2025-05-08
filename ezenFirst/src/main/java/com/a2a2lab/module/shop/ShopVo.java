@@ -137,7 +137,6 @@ public class ShopVo {
 		
 	// paging Getter, Setter
 	public void setParamsPaging(int totalRows) {
-//		setThisPage(3);
 
 		setTotalRows(totalRows);
 
