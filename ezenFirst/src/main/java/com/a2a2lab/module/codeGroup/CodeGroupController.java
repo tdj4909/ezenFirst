@@ -57,6 +57,13 @@ public class CodeGroupController {
 		return "redirect:/xdm/system/codeGroup/list";
 	}
 	
+	// 코드그룹 수정
+	@RequestMapping("/xdm/system/updateCodeGroup")
+	public String updateCodeGroup(CodeGroupDto codeGroupDto) {
+		service.updateCodeGroup(codeGroupDto);
+		return "redirect:/xdm/system/codeGroup/list";
+	}
+	
 	
 	
 	

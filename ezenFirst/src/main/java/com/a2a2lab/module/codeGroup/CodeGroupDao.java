@@ -15,7 +15,7 @@ public interface CodeGroupDao {
 	public List<CodeGroupDto> findCodeGroupsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드그룹 검색
 	public CodeGroupDto findCodeGroupById(String codegroupId);
 	public int createCodeGroup(CodeGroupDto codeGroupDto);
-	
+	public int updateCodeGroup(CodeGroupDto codeGroupDto);
 	
 	public int selectOneCount(CodeGroupVo vo);
 	public CodeGroupDto selectOne(CodeGroupVo vo);

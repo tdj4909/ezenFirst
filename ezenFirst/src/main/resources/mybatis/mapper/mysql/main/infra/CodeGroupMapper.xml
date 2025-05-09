@@ -60,6 +60,16 @@
 			0
 		)
 	</insert>
+	
+	<update id="updateCodeGroup">
+		UPDATE codegroup SET
+			name = #{name}
+			,is_used = #{isUsed}
+			,updated_at = now()
+		WHERE
+			1=1
+			AND codegroup_id = #{codegroupId}
+	</update>
 
 
 

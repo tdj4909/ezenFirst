@@ -44,7 +44,8 @@
 									<div class="row mb-3">
 										<div class="col-3">
 											<label class="form-label">코드그룹 번호<b style="color: red;">*</b></label>
-											<input type="text" class="form-control" id="codegroupId" name="codegroupId" th:value="${item?.codegroupId}" maxlength="20" placeholder="자동생성" disabled>
+											<input type="text" class="form-control" id="codegroupId"  th:value="${item?.codegroupId}" maxlength="20" placeholder="자동생성" disabled>
+											<input type="hidden" name="codegroupId" th:value="${item?.codegroupId}">
 										</div>
 										
 										<div class="col-3">
@@ -150,8 +151,8 @@
 			form.action = "/xdm/system/createCodeGroup";
 			form.submit();
 		} else {												// Update
-			if(validation() == false) return false;
-			form.action = "/Xdm/codeGroupXdmUpdt";
+// 			if(validation() == false) return false;
+			form.action = "/xdm/system/updateCodeGroup";
 			form.submit();
 		}
 	}

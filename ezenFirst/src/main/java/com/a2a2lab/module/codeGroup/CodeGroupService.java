@@ -30,6 +30,10 @@ public class CodeGroupService {
 		return dao.createCodeGroup(codeGroupDto);
 	}
 	
+	public int updateCodeGroup(CodeGroupDto codeGroupDto) {
+		return dao.updateCodeGroup(codeGroupDto);
+	}
+	
 	
 	
 	
