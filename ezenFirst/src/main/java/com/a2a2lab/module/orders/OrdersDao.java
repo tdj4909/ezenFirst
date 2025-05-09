@@ -2,11 +2,13 @@ package com.a2a2lab.module.orders;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.codeGroup.CodeGroupDto;
 import com.a2a2lab.module.codeGroup.CodeGroupVo;
+import com.a2a2lab.module.vo.PageVo;
 
 @Repository
 public interface OrdersDao {
@@ -22,6 +24,8 @@ public interface OrdersDao {
 	public OrdersDto selectOne(OrdersDto dto);
 	public List<OrdersDto> selectOneList(OrdersDto dto);
 	public List<OrdersDto> selectList(OrdersVo vo);
-	public List<OrdersDto> getOrdersListByMemberSeq(String user_seq);
+	
+	public int countOrdersByMemberSeq(String user_seq);
+	public List<OrdersDto> findOrdersByMemberSeq(@Param("user_seq") String user_seq, @Param("pageVo") PageVo pageVo);
 
 }

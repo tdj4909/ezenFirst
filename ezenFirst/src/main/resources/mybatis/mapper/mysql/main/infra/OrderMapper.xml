@@ -115,7 +115,7 @@
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
  	</select>
  	
- 	<select id="getOrdersListByMemberSeq" resultMap="resultMapObj">
+ 	<select id="findOrdersByMemberSeq" resultMap="resultMapObj">
  		SELECT
  			seq
 		    ,ordersDate
@@ -129,6 +129,18 @@
 			AND ordersDelNy = 0
 		ORDER BY
 			seq DESC
+		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
+ 	</select>
+ 	
+	<select id="countOrdersByMemberSeq" resultType="Integer">
+ 		SELECT
+ 			COUNT(*)
+		FROM
+			orders
+		WHERE
+			1=1
+			AND user_seq = #{user_seq}
+			AND ordersDelNy = 0
  	</select>
  	
  	<insert id="insertOrder">

@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.a2a2lab.module.vo.PageVo;
+
 @Service
 public class OrdersService {
 
@@ -56,8 +58,12 @@ public class OrdersService {
 		return dao.selectList(vo);
 	}
 	
-	public List<OrdersDto> getOrdersListByMemberSeq(String user_seq) {
-		return dao.getOrdersListByMemberSeq(user_seq);
+	public int countOrdersByMemberSeq(String user_seq) {
+		return dao.countOrdersByMemberSeq(user_seq);
+	}
+	
+	public List<OrdersDto> findOrdersByMemberSeq(String user_seq, PageVo pageVo) {
+		return dao.findOrdersByMemberSeq(user_seq, pageVo);
 	}
 
 }

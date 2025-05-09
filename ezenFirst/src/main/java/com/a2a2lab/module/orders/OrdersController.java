@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a2a2lab.module.member.MemberDto;
+import com.a2a2lab.module.vo.PageVo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -154,11 +155,19 @@ public class OrdersController{
 	
 	// 주문내역 화면
 	@RequestMapping(value = "/TableOrder/ordersHistory")
-	public String ordersHistory(Model model, HttpSession httpSession) {
+	public String ordersHistory(@RequestParam(name = "page", defaultValue="1") int page, Model model, HttpSession httpSession) {
 	
+		// 로그인한 member의 id 추출
 		MemberDto memberDto = (MemberDto) httpSession.getAttribute("user");
-		
-		model.addAttribute("list", service.getOrdersListByMemberSeq(memberDto.getSeq()));
+		String user_seq = memberDto.getSeq();
+		// 페이징 설정
+		PageVo pageVo = new PageVo();
+		pageVo.setRowNumToShow(5);
+		pageVo.setThisPage(page);
+		pageVo.setParamsPaging(service.countOrdersByMemberSeq(user_seq));
+		model.addAttribute("pageVo", pageVo);
+		// 주문 목록 출력
+		model.addAttribute("list", service.findOrdersByMemberSeq(user_seq, pageVo));
 		
 		return "/usr/orders/ordersHistory";
 	}

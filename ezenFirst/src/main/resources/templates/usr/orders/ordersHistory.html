@@ -51,18 +51,26 @@
             </div>
 
             <!-- Pageing Start -->
-
             <div class="pagination d-flex justify-content-center mt-5">
-                <a href="#" class="rounded">&laquo;</a>
-                <a href="#" class="active rounded">1</a>
-                <a href="#" class="rounded">2</a>
-                <a href="#" class="rounded">3</a>
-                <a href="#" class="rounded">4</a>
-                <a href="#" class="rounded">5</a>
-                <a href="#" class="rounded">6</a>
-                <a href="#" class="rounded">&raquo;</a>
-            </div>
+                <a th:href="@{'/TableOrder/ordersHistory?page=' + ${pageVo.startPage - 1}}" 
+                   class="rounded" 
+                   th:if="${pageVo.thisPage > pageVo.pageNumToShow}">
+                   &laquo;
+                </a>
+                
+                <a th:href="@{'/TableOrder/ordersHistory?page=' + ${pageNum}}" 
+                   class="rounded" 
+                   th:each="pageNum : ${#numbers.sequence(pageVo.startPage, pageVo.endPage)}"
+                   th:classappend="${pageNum == pageVo.thisPage} ? 'active' : ''"
+                   th:text="${pageNum}">
+                </a>
 
+                <a th:href="@{'/TableOrder/ordersHistory?page=' + ${pageVo.endPage + 1}}" 
+                   class="rounded" 
+                   th:if="${pageVo.endPage < pageVo.totalPages}">
+                   &raquo;
+                </a>
+            </div>
             <!-- Pageing End -->
 
         </div>
