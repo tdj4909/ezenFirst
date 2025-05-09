@@ -9,31 +9,29 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.a2a2lab.module.vo.PageVo;
+import com.a2a2lab.module.vo.SearchVo;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class CodeGroupController {
 
 	@Autowired
-	CodeGroupService codeGroupService;
+	CodeGroupService service;
 	
-	@RequestMapping(value = "/Xdm/codeGroupXdmList")
-	public String codeGroupXdmList(@ModelAttribute("vo") CodeGroupVo vo, Model model, HttpSession httpSession) throws Exception {
+	// 코드 그룹 관리 화면
+	@RequestMapping(value = "/xdm/system/codeGroup/list")
+	public String showCodeGroupManagement(Model model, PageVo pageVo, SearchVo searchVo) {
+
+		// 검색 설정
+		model.addAttribute("searchVo", searchVo);
+		// 페이징 설정
+		pageVo.setParamsPaging(service.countCodeGroupsByVo(searchVo));
+		model.addAttribute("pageVo", pageVo);
 		
-		// login 검사
-		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/Xdm/loginXdm";
-		}
-		model.addAttribute("user", httpSession.getAttribute("user"));
 		
-//		setSearch(vo);
-		System.out.println(vo);
-		vo.setParamsPaging(codeGroupService.selectOneCount(vo));
-		
-		if (vo.getTotalRows() > 0) {
-			model.addAttribute("lists", codeGroupService.selectList(vo));
-		}
-		
+		model.addAttribute("list", service.findCodeGroupsByVo(pageVo, searchVo));
 		
 		return "/xdm/codeGroup/codeGroupXdmList";
 	}

@@ -2,71 +2,42 @@ package com.a2a2lab.module.codeGroup;
 
 public class CodeGroupDto {
 
-	private String seq;
-	private Integer codeGroupUse;
-	private String codeGroupCd;
-	private String codeGroupNm;
-	private String codeGroupRegDateTime;
-	private String codeGroupModDateTime;
-	private Integer codeGroupDelNy;
-	
-	private Integer codeCnt;
-	
-	private String ifcgSeq;
+	private String codegroupId;
+	private String name;
+	private String createdAt;
+	private String updatedAt;
+	private Integer isUsed;
 	
 	
-	public String getSeq() {
-		return seq;
+	// Getter, Setter
+	public String getCodegroupId() {
+		return codegroupId;
 	}
-	public void setSeq(String seq) {
-		this.seq = seq;
+	public void setCodegroupId(String codegroupId) {
+		this.codegroupId = codegroupId;
 	}
-	public Integer getCodeGroupUse() {
-		return codeGroupUse;
+	public String getName() {
+		return name;
 	}
-	public void setCodeGroupUse(Integer codeGroupUse) {
-		this.codeGroupUse = codeGroupUse;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getCodeGroupCd() {
-		return codeGroupCd;
+	public String getCreatedAt() {
+		return createdAt;
 	}
-	public void setCodeGroupCd(String codeGroupCd) {
-		this.codeGroupCd = codeGroupCd;
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
-	public String getCodeGroupNm() {
-		return codeGroupNm;
+	public String getUpdatedAt() {
+		return updatedAt;
 	}
-	public void setCodeGroupNm(String codeGroupNm) {
-		this.codeGroupNm = codeGroupNm;
+	public void setUpdatedAt(String updatedAt) {
+		this.updatedAt = updatedAt;
 	}
-	public Integer getCodeGroupDelNy() {
-		return codeGroupDelNy;
+	public Integer getIsUsed() {
+		return isUsed;
 	}
-	public void setCodeGroupDelNy(Integer codeGroupDelNy) {
-		this.codeGroupDelNy = codeGroupDelNy;
-	}
-	public Integer getCodeCnt() {
-		return codeCnt;
-	}
-	public void setCodeCnt(Integer codeCnt) {
-		this.codeCnt = codeCnt;
-	}
-	public String getIfcgSeq() {
-		return ifcgSeq;
-	}
-	public void setIfcgSeq(String ifcgSeq) {
-		this.ifcgSeq = ifcgSeq;
-	}
-	public String getCodeGroupRegDateTime() {
-		return codeGroupRegDateTime;
-	}
-	public void setCodeGroupRegDateTime(String codeGroupRegDateTime) {
-		this.codeGroupRegDateTime = codeGroupRegDateTime;
-	}
-	public String getCodeGroupModDateTime() {
-		return codeGroupModDateTime;
-	}
-	public void setCodeGroupModDateTime(String codeGroupModDateTime) {
-		this.codeGroupModDateTime = codeGroupModDateTime;
+	public void setIsUsed(Integer isUsed) {
+		this.isUsed = isUsed;
 	}
 }

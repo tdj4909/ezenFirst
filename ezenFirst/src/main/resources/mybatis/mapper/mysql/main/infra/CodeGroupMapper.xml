@@ -6,6 +6,42 @@
 	<resultMap id="resultMapObj"
 		type="com.a2a2lab.module.codeGroup.CodeGroupDto"></resultMap>
 
+	<select id="countCodeGroupsByVo" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM
+			codegroup
+		WHERE
+			1=1
+			AND is_deleted = 0
+			<!-- 검색조건 -->
+	</select>
+
+	<select id="findCodeGroupsByVo" resultMap="resultMapObj">
+		SELECT 
+			codegroup_id AS codegroupId
+			,name
+			,created_at AS createdAt
+			,updated_at AS updatedAt
+			,is_used AS isUsed
+		FROM
+			codegroup
+		WHERE
+			1=1
+			AND is_deleted = 0
+			<!-- 검색조건 -->
+		ORDER BY
+			codegroup_id DESC
+		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
+	</select>
+
+
+
+
+
+
+
+<!-- ******************************************************************************************************* -->
 	<sql id="selectCommon">
 		FROM codegroup a
 		WHERE 1=1
