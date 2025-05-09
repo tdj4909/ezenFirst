@@ -9,7 +9,7 @@
 			default="1" /> 
 		<input type="hidden" id="rowNumToShow"
 			name="rowNumToShow" th:value="${pageVo.rowNumToShow}" />	
-		<input type="hidden" name="ifcgSeq">
+		<input type="hidden" name="codegroupId">
 		
 		<div class="pagetitle">
 
@@ -17,11 +17,11 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/Xdm/index">Home</a></li>
 					<li class="breadcrumb-item">시스템 관리</li>
-					<li class="breadcrumb-item active">코드 그룹 관리</li>
+					<li class="breadcrumb-item active">코드그룹 관리</li>
 				</ol>
 			</nav>
 
-			<h1 style="font-weight: bold;">코드 그룹 목록</h1>
+			<h1 style="font-weight: bold;">코드그룹 목록</h1>
 
 			<!-- Search Start -->
 			<div class="search">
@@ -62,8 +62,8 @@
 					<div class="col-2">
 						<select id="shOption" name="shOption" class="form-select">
 							<option value="" th:selected="${searchVo.shOption == null}">검색구분</option>
-							<option value="1" th:selected="${searchVo.shOption == 1}">코드 그룹 번호</option>
-							<option value="2" th:selected="${searchVo.shOption == 2}">코드 그룹명</option>
+							<option value="1" th:selected="${searchVo.shOption == 1}">코드그룹 번호</option>
+							<option value="2" th:selected="${searchVo.shOption == 2}">코드그룹명</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -116,8 +116,8 @@
 											</th>
 											<th class="text-center">#</th>
 											<th class="text-center">사용 여부</th>
-											<th class="text-center">코드 그룹 번호</th>
-											<th class="text-center">코드 그룹명</th>
+											<th class="text-center">코드그룹 번호</th>
+											<th class="text-center">코드그룹명</th>
 											<th class="text-center">개수</th>
 											<th class="text-center">등록일</th>
 											<th class="text-center">수정일</th>
@@ -132,7 +132,7 @@
 										
 										<tr th:each="item : ${list}">
 											<td class="text-center">
-												<input class="form-check-input rowCheckbox" type="checkbox" name="codegroupId" th:value="${item.codegroupId}">
+												<input class="form-check-input rowCheckbox" type="checkbox" th:value="${item.codegroupId}">
 												<input type="hidden" name="delSeq" th:id="'delSeq_' + ${item.codegroupId}">
 											</td>
 
@@ -244,7 +244,7 @@
 	let rowCheckboxes = document.querySelectorAll(".rowCheckbox");
     let currentPath = window.location.pathname;
     let links = document.querySelectorAll(".nav-content a");
-    let seq = document.querySelector("input[name=ifcgSeq]");
+    let codegroupId = document.querySelector("input[name=codegroupId]");
 	
 	// 전체 선택/해제 함수
 	function toggleSelectAll(source) {
@@ -305,8 +305,8 @@
 	};
 	//Update
 	goForm = function (keyValue) {
-		seq.value = keyValue;
-	    form.action = "/Xdm/codeGroupXdmRegister";
+		codegroupId.value = keyValue;
+	    form.action = "/xdm/system/codeGroup/edit";
 	    form.submit();
 	};
 	// Uelete

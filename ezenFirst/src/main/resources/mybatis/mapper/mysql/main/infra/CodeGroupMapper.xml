@@ -35,8 +35,31 @@
 		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
 	</select>
 
+	<select id="findCodeGroupById" resultMap="resultMapObj">
+		SELECT
+			codegroup_id AS codegroupId
+			,name
+			,is_used AS isUsed
+		FROM 
+			codegroup
+		WHERE
+			1=1
+			AND codegroup_id = #{codegroupId}
+	</select>
 
-
+	<insert id="createCodeGroup">
+		INSERT INTO codegroup(
+			name
+			,created_at
+			,is_used
+			,is_deleted
+		) VALUES(
+			#{name},
+			now(),
+			#{isUsed},
+			0
+		)
+	</insert>
 
 
 

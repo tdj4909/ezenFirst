@@ -22,7 +22,13 @@ public class CodeGroupService {
 		return dao.findCodeGroupsByVo(pageVo, searchVo);
 	}
 	
+	public CodeGroupDto findCodeGroupById(String codegroupId) {
+		return dao.findCodeGroupById(codegroupId);
+	}
 	
+	public int createCodeGroup(CodeGroupDto codeGroupDto) {
+		return dao.createCodeGroup(codeGroupDto);
+	}
 	
 	
 	

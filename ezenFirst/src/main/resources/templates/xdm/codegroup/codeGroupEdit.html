@@ -12,11 +12,11 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/Xdm/index">Home</a></li>
 					<li class="breadcrumb-item">시스템 관리</li>
-					<li class="breadcrumb-item active">코드 그룹 관리</li>
+					<li class="breadcrumb-item active">코드그룹 관리</li>
 				</ol>
 			</nav>
 
-			<h1 style="font-weight: bold;">코드 그룹 관리</h1>
+			<h1 style="font-weight: bold;">코드그룹 관리</h1>
 
 
 		</div>
@@ -43,23 +43,22 @@
 
 									<div class="row mb-3">
 										<div class="col-3">
-											<div th:replace="~{xdm/codegroup/codeGroupXdmVo :: vo}"></div>
-											<label class="form-label">코드 그룹 번호<b style="color: red;">*</b></label>
-											<input type="text" id="ifcgSeq" name="ifcgSeq" th:value="${item?.ifcgSeq}" maxlength="20" placeholder="자동생성" disabled class="form-control"/>
+											<label class="form-label">코드그룹 번호<b style="color: red;">*</b></label>
+											<input type="text" class="form-control" id="codegroupId" name="codegroupId" th:value="${item?.codegroupId}" maxlength="20" placeholder="자동생성" disabled>
 										</div>
 										
 										<div class="col-3">
-											<label for="text3" class="form-label">코드 그룹명<b style="color: red;">*</b></label>
-											<input id="codeGroupNm" name="codeGroupNm" type="text" th:value="${item?.codeGroupNm}"
+											<label for="text3" class="form-label">코드그룹명<b style="color: red;">*</b></label>
+											<input id="name" name="name" type="text" th:value="${item?.name}"
 												class="form-control" placeholder="한글,영대소문자,숫자">
-											<div class="invalid-feedback" id="codeGroupNmFeedback"></div>
+											<div class="invalid-feedback" id="nameFeedback"></div>
 										</div>
 										<div class="col-3">
-											<label for="codeGroupUse" class="form-label">사용 여부<b
+											<label for="isUsed" class="form-label">사용 여부<b
 												style="color: red;">*</b></label> 
-											<select name="codeGroupUse" id="codeGroupUse" class="form-select">
-												<option value="1" th:selected="${item?.codeGroupUse == 1}">사용</option>
-												<option value="0" th:selected="${item?.codeGroupUse == 0}">사용 안 함</option>
+											<select name="isUsed" id="isUsed" class="form-select">
+												<option value="1" th:selected="${item?.isUsed == 1}">사용</option>
+												<option value="0" th:selected="${item?.isUsed == 0}">사용 안 함</option>
 											</select>
 										</div>
 									</div>
@@ -69,7 +68,7 @@
 
 								<div class="row">
 									<div class="col">
-										<a href="/Xdm/codeGroupXdmList" class="btn btn-outline-secondary"> <i
+										<a href="/xdm/system/codeGroup/list" class="btn btn-outline-secondary"> <i
 											class="ri-list-check"></i>
 										</a>
 									</div>
@@ -96,56 +95,59 @@
 	<!-- temp -->
 	<script type="text/javascript">
 	
-	let seq = document.querySelector("input[name=ifcgSeq]");
+// 	let seq = document.querySelector("input[name=ifcgSeq]");
 	
-	document.getElementById("codeGroupNm").addEventListener("input", function(){
-		codeGroupNmValidation();
-	});
+// 	document.getElementById("codeGroupNm").addEventListener("input", function(){
+// 		codeGroupNmValidation();
+// 	});
 	
-	// 코드그룹 이름 Validation
-	function codeGroupNmValidation() {
+// 	// 코드그룹 이름 Validation
+// 	function codeGroupNmValidation() {
 
-	    const input = document.getElementById("codeGroupNm");
-	    const value = input.value.trim();
-	    const pattern = /^[a-zA-Z가-힣0-9]{1,10}$/;
-	    const feedback = document.getElementById("codeGroupNmFeedback");
+// 	    const input = document.getElementById("codeGroupNm");
+// 	    const value = input.value.trim();
+// 	    const pattern = /^[a-zA-Z가-힣0-9]{1,10}$/;
+// 	    const feedback = document.getElementById("codeGroupNmFeedback");
 	    
-	    let isValid = true;
+// 	    let isValid = true;
 
-	    if (value === "") {
-	    	input.classList.add("is-invalid");
-	    	input.classList.remove("is-valid");
-	    	feedback.textContent = "코드 그룹명을 입력해 주세요.";
-	        isValid = false;
-	    } else if (!pattern.test(value)) {
-	    	input.classList.add("is-invalid");
-	    	input.classList.remove("is-valid");
-	    	feedback.textContent = "코드 그룹명은 공백 없이 한글, 영대소문자, 숫자만 입력해 주세요. (1~10자)";
-	        isValid = false;
-	    } else {
-	    	input.classList.remove("is-invalid");
-	    	input.classList.add("is-valid");
-	    }
+// 	    if (value === "") {
+// 	    	input.classList.add("is-invalid");
+// 	    	input.classList.remove("is-valid");
+// 	    	feedback.textContent = "코드그룹명을 입력해 주세요.";
+// 	        isValid = false;
+// 	    } else if (!pattern.test(value)) {
+// 	    	input.classList.add("is-invalid");
+// 	    	input.classList.remove("is-valid");
+// 	    	feedback.textContent = "코드그룹명은 공백 없이 한글, 영대소문자, 숫자만 입력해 주세요. (1~10자)";
+// 	        isValid = false;
+// 	    } else {
+// 	    	input.classList.remove("is-invalid");
+// 	    	input.classList.add("is-valid");
+// 	    }
 	 	
-	    return isValid;
-	}
+// 	    return isValid;
+// 	}
 	
 
-	// 유효성 검사
-	function validation() {
+// 	// 유효성 검사
+// 	function validation() {
 
-	    if (!codeGroupNmValidation()) { 
-	    	document.getElementById("codeGroupNm").focus();
-	        return false; // 제출 차단
-	    }
+// 	    if (!codeGroupNmValidation()) { 
+// 	    	document.getElementById("codeGroupNm").focus();
+// 	        return false; // 제출 차단
+// 	    }
 
-	    return true; // 입력이 올바르면 제출 허용
-	}
+// 	    return true; // 입력이 올바르면 제출 허용
+// 	}
 	
 	document.getElementById("btnSubmit").onclick = function () {
-		if(seq.value == "0" || seq.value == "") {				// Insert
-			if(validation() == false) return false;
-			form.action = "/Xdm/codeGroupXdmInst";
+
+		const id = document.getElementById('codegroupId').value
+		
+		if(id == null || id == "") {				// Insert
+// 			if(validation() == false) return false;
+			form.action = "/xdm/system/createCodeGroup";
 			form.submit();
 		} else {												// Update
 			if(validation() == false) return false;
@@ -154,18 +156,17 @@
 		}
 	}
 	
-	document.addEventListener("DOMContentLoaded", function () {
-	    const inputCodeGroupNm = document.querySelector("input[name='codeGroupNm']");
+// 	document.addEventListener("DOMContentLoaded", function () {
+// 	    const inputCodeGroupNm = document.querySelector("input[name='codeGroupNm']");
 
-	    inputCodeGroupNm.addEventListener("input", function () {
-	        // 첫 글자가 공백이면 자동 제거
-	        this.value = this.value.replace(/^\s+/, "");
-	    });
-	});
+// 	    inputCodeGroupNm.addEventListener("input", function () {
+// 	        // 첫 글자가 공백이면 자동 제거
+// 	        this.value = this.value.replace(/^\s+/, "");
+// 	    });
+// 	});
 	
 	</script>
 	
-	<!-- ******************************************************************************* -->
 
 
 <div th:replace="~{xdm/include/footer :: footer}"></div>

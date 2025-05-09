@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
@@ -17,7 +18,7 @@ public class CodeGroupController {
 	@Autowired
 	CodeGroupService service;
 	
-	// 코드 그룹 관리 화면
+	// 코드그룹 관리 화면
 	@RequestMapping("/xdm/system/codeGroup/list")
 	public String showCodeGroupManagement(Model model, PageVo pageVo, SearchVo searchVo) {
 
@@ -32,17 +33,28 @@ public class CodeGroupController {
 		return "/xdm/codeGroup/codeGroupList";
 	}
 	
-	// 코드 그룹 수정/등록 화면
-	@RequestMapping(value = "/xdm/system/codeGroup/edit")
-	public String showCodeGroupEdit(@ModelAttribute("vo") CodeGroupVo vo, Model model, HttpSession httpSession) throws Exception{
+	// 코드그룹 등록/수정 화면
+	@RequestMapping("/xdm/system/codeGroup/edit")
+	public String showCodeGroupEdit(Model model, @RequestParam("codegroupId") String codegroupId){
 		
-		if (vo.getIfcgSeq().equals("0") || vo.getIfcgSeq().equals("")) {
-//			insert mode
-		} else {
-//			update mode
-			model.addAttribute("item", service.selectOne(vo));
+		if (!codegroupId.equals("") && !codegroupId.equals("0")) {
+			model.addAttribute("item", service.findCodeGroupById(codegroupId));
 		}
+		
+//		if (vo.getIfcgSeq().equals("0") || vo.getIfcgSeq().equals("")) {
+////			insert mode
+//		} else {
+////			update mode
+//			model.addAttribute("item", service.selectOne(vo));
+//		}
 		return "/xdm/codeGroup/codeGroupEdit";
+	}
+	
+	// 코드그룹 추가
+	@RequestMapping("/xdm/system/createCodeGroup")
+	public String createCodeGroup(CodeGroupDto codeGroupDto) {
+		service.createCodeGroup(codeGroupDto);
+		return "redirect:/xdm/system/codeGroup/list";
 	}
 	
 	
