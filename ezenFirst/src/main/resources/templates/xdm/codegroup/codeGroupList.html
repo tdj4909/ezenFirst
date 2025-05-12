@@ -299,16 +299,17 @@
 
 	});
 
-	//Insert
+	// Insert
 	document.getElementById("btnForm").onclick = function () {
 	    goForm(0);
 	};
-	//Update
+	// Update
 	goForm = function (keyValue) {
 		codegroupId.value = keyValue;
 	    form.action = "/xdm/system/codeGroup/edit";
 	    form.submit();
 	};
+	
 	// softDelete
 	// Modal 먼저 실행
 	document.getElementById("btnSoftDelete").onclick = function () {
