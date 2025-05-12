@@ -13,6 +13,7 @@ public interface CodeGroupDao {
 	
 	public int countCodeGroupsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드그룹 개수 검색
 	public List<CodeGroupDto> findCodeGroupsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드그룹 검색
+	public List<CodeGroupDto> findAllCodeGroup(); // 코드그룹 전체검색
 	public CodeGroupDto findCodeGroupById(String codegroupId);
 	public int createCodeGroup(CodeGroupDto codeGroupDto);
 	public int updateCodeGroup(CodeGroupDto codeGroupDto);

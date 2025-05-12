@@ -22,6 +22,10 @@ public class CodeGroupService {
 		return dao.findCodeGroupsByVo(pageVo, searchVo);
 	}
 	
+	public List<CodeGroupDto> findAllCodeGroup() {
+		return dao.findAllCodeGroup();
+	}
+	
 	public CodeGroupDto findCodeGroupById(String codegroupId) {
 		return dao.findCodeGroupById(codegroupId);
 	}

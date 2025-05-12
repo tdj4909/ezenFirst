@@ -66,6 +66,17 @@
 			1=1
 			AND codegroup_id = #{codegroupId}
 	</select>
+	
+	<select id="findAllCodeGroup" resultMap="resultMapObj">
+		SELECT
+			codegroup_id AS codegroupId
+			,name
+		FROM 
+			codegroup
+		WHERE
+			1=1
+			AND is_deleted = 0
+	</select>
 
 	<insert id="createCodeGroup">
 		INSERT INTO codegroup(
@@ -108,10 +119,8 @@
 			codegroup_id = #{codegroupId}
 	</delete>
 
-
-
-
 <!-- ******************************************************************************************************* -->
+<!-- 	
 	<sql id="selectCommon">
 		FROM codegroup a
 		WHERE 1=1
@@ -130,6 +139,5 @@
 		</choose>
 			
 	</sql>
-	
-	
+	 -->
 </mapper>

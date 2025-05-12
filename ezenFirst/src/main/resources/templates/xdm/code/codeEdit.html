@@ -3,8 +3,6 @@
 
 <div th:replace="~{xdm/include/head :: head}"></div>
 
-<!-- ******************************************************************************* -->
-
 <!-- Main -->
 <main id="main" class="main">
 
@@ -37,22 +35,17 @@
 
 						<div class="card-body m-2">
 
-
-
 							<!-- Pagination with icons -->
 							<div class="row mb-3 mt-3">
 								<div class="row mb-3">
 									<div class="col-3">
-										<div th:replace="~{xdm/codegroup/codeGroupXdmVo :: vo}"></div>
-										
-										<label for="codeGroup_seq" class="form-label">코드 그룹<b
-											style="color: red;">*</b></label> 
-										<select name="codeGroup_seq" id="codeGroup_seq" class="form-select" required>
-											<option disabled hidden th:selected="${item?.codeGroup_seq == null}" value="">선택하세요</option>
-											<option th:each="group : ${codeGroup}"
-													th:value="${group.seq}" 
-													th:text="${group.codeGroupNm}" 
-													th:selected="${group.seq == item?.codeGroup_seq}">
+										<label for="codegroupId" class="form-label">코드그룹<b style="color: red;">*</b></label> 
+										<select name="codegroupId" id="codegroupId" class="form-select" required>
+											<option disabled hidden th:selected="${item?.codegroupId == null}" value="">선택하세요</option>
+											<option th:each="codegroup : ${codegroupList}"
+													th:value="${codegroup.codegroupId}" 
+													th:text="${codegroup.name}" 
+													th:selected="${codegroup.codegroupId == item?.codegroupId}">
 											</option>
 										</select>
 									</div>
@@ -60,25 +53,20 @@
 
 								<div class="row mb-3">
 									<div class="col-3">
-										<label class="form-label">코드 번호<b
-											style="color: red;">*</b></label> 
-
-										<input type="text" id="ifcgSeq" name="ifcgSeq" th:value="${item?.ifcgSeq}" maxlength="20" placeholder="자동생성" disabled class="form-control"/>
+										<label class="form-label">코드 번호<b style="color: red;">*</b></label> 
+										<input type="text" id="codeId" th:value="${item?.codeId}" maxlength="20" placeholder="자동생성" class="form-control" disabled>
+										<input type="hidden" name="codeId" th:value="${item?.codeId}">
 									</div>
 									<div class="col-3">
-										<label for="codeNm" class="form-label">코드 이름<b style="color: red;">*</b></label> 
-										<input name="codeNm" id="codeNm" th:value="${item?.codeNm}" 
-												type="text" class="form-control" placeholder="한글,영대소문자,숫자" required>
-										<div class="invalid-feedback">
-									      코드 이름을 입력하세요.
-									    </div>
+										<label for="name" class="form-label">코드 이름<b style="color: red;">*</b></label> 
+										<input name="name" id="name" th:value="${item?.name}" type="text" class="form-control" placeholder="한글,영대소문자,숫자" required>
+										<div class="invalid-feedback" id="nameFeedback"></div>
 									</div>
 									<div class="col-3">
-										<label for="codeUse" class="form-label">사용 여부<b
-											style="color: red;">*</b></label> 
-										<select name="codeUse" id="codeUse" class="form-select">
-											<option value="1" th:selected="${item?.codeUse == 1}">사용</option>
-											<option value="0" th:selected="${item?.codeUse == 0}">사용 안 함</option>
+										<label for="isUsed" class="form-label">사용 여부<b style="color: red;">*</b></label> 
+										<select name="isUsed" id="isUsed" class="form-select">
+											<option value="1" th:selected="${item?.isUsed == 1}">사용</option>
+											<option value="0" th:selected="${item?.isUsed == 0}">사용 안 함</option>
 										</select>
 									</div>
 								</div>
@@ -89,8 +77,8 @@
 
 							<div class="row">
 								<div class="col">
-									<a href="/Xdm/codeXdmList" class="btn btn-outline-secondary"
-										title="Upload new profile image"> <i class="ri-list-check"></i>
+									<a href="/xdm/system/code/list" class="btn btn-outline-secondary">
+										<i class="ri-list-check"></i>
 									</a>
 								</div>
 								<div class="col">
@@ -101,26 +89,10 @@
 									</div>
 								</div>
 							</div>
+							
 						</div>
 					</div>
 
-				</div>
-			</div>
-
-			<!-- Modal -->
-			<div class="modal fade" id="exampleModal" tabindex="-1">
-				<div class="modal-dialog">
-					<div class="modal-content" id="modalContent">
-						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="exampleModalLabel">모달 제목</h1>
-						</div>
-						<div class="modal-body">모달 내용</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" id="close">Close</button>
-							<button type="button" class="btn btn-primary">Save
-								changes</button>
-						</div>
-					</div>
 				</div>
 			</div>
 
@@ -135,10 +107,10 @@
 <!-- temp -->
 <script type="text/javascript">
 
-	let codeNm = document.getElementById("codeNm");
-	let exampleModal = document.getElementById('exampleModal');
-	let close = document.getElementById('close');
-	let modalContent = document.getElementById('modalContent');
+// 	let codeNm = document.getElementById("codeNm");
+// 	let exampleModal = document.getElementById('exampleModal');
+// 	let close = document.getElementById('close');
+// 	let modalContent = document.getElementById('modalContent');
 	
 	  
 /* 	document.getElementById("btnSubmit").onclick = function() {
@@ -205,7 +177,7 @@
 	  })
 	})() */
 	
-	let seq = document.querySelector("input[name=ifcgSeq]");							/* ### */
+	let id = document.querySelector("input[name=codeId]");							/* ### */
 	
 // 	function validationInst() {
 // 	    if(validationUpdt() == false) return false;
@@ -217,50 +189,50 @@
 // 	}
 
 
-	// 유효성 검사
-	function validation() {
-	    const form = document.querySelector('.needs-validation'); // 단일 폼 선택
-	    const inputCodeNm = form.querySelector("input[name='codeNm']"); // 코드 이름 입력 필드
-	    const selectCodeGroupSeq = form.querySelector("select[name='codeGroup_seq']"); // 코드 그룹 선택 필드
+// 	// 유효성 검사
+// 	function validation() {
+// 	    const form = document.querySelector('.needs-validation'); // 단일 폼 선택
+// 	    const inputCodeNm = form.querySelector("input[name='codeNm']"); // 코드 이름 입력 필드
+// 	    const selectCodeGroupSeq = form.querySelector("select[name='codeGroup_seq']"); // 코드 그룹 선택 필드
 	
-	    // 코드 그룹이 선택되지 않은 경우
-	    if (!selectCodeGroupSeq.value) { 
-	        form.classList.add("was-validated");
-	        selectCodeGroupSeq.focus();
-	        return false;
-	    }
-	    // 코드 이름이 비어 있는 경우
-	    if (!inputCodeNm.value.trim()) {
-	        form.classList.add("was-validated");
-	        inputCodeNm.focus();
-	        return false;
-	    }
+// 	    // 코드 그룹이 선택되지 않은 경우
+// 	    if (!selectCodeGroupSeq.value) { 
+// 	        form.classList.add("was-validated");
+// 	        selectCodeGroupSeq.focus();
+// 	        return false;
+// 	    }
+// 	    // 코드 이름이 비어 있는 경우
+// 	    if (!inputCodeNm.value.trim()) {
+// 	        form.classList.add("was-validated");
+// 	        inputCodeNm.focus();
+// 	        return false;
+// 	    }
 	
-	    return true;
-	}
+// 	    return true;
+// 	}
 	
 	document.getElementById("btnSubmit").onclick = function () {
-		if(seq.value == "0" || seq.value == "") {
-			if(validation() == false) return false;
+		if(id.value == "0" || id.value == "") {
+// 			if(validation() == false) return false;
 // 			$("#modalLoading").modal("show");
-			form.action = "/Xdm/codeXdmInst";
+			form.action = "/xdm/system/code/create";
 			form.submit();
 		} else {
-			if(validation() == false) return false;
+// 			if(validation() == false) return false;
 // 			$("#modalLoading").modal("show");
-			form.action = "/Xdm/codeXdmUpdt";
+			form.action = "/xdm/system/code/update";
 			form.submit();
 		}
 	}
 	
-	document.addEventListener("DOMContentLoaded", function () {
-	    const inputCodeNm = document.querySelector("input[name='codeNm']");
+// 	document.addEventListener("DOMContentLoaded", function () {
+// 	    const inputCodeNm = document.querySelector("input[name='codeNm']");
 
-	    inputCodeNm.addEventListener("input", function () {
-	        // 첫 글자가 공백이면 자동 제거
-	        this.value = this.value.replace(/^\s+/, "");
-	    });
-	});
+// 	    inputCodeNm.addEventListener("input", function () {
+// 	        // 첫 글자가 공백이면 자동 제거
+// 	        this.value = this.value.replace(/^\s+/, "");
+// 	    });
+// 	});
 	
 </script>
 

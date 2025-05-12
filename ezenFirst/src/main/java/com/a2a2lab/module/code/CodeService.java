@@ -5,42 +5,41 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.a2a2lab.module.vo.PageVo;
+import com.a2a2lab.module.vo.SearchVo;
+
 @Service
 public class CodeService {
 
 	@Autowired
-	CodeDao codeDao;
+	CodeDao dao;
 	
-	public int selectOneCount(CodeVo vo) {
-		return codeDao.selectOneCount(vo);
-	}
-	
-	public CodeDto selectOne(CodeVo vo) {
-		return codeDao.selectOne(vo);
+	public int countCodesByVo(PageVo pageVo, SearchVo searchVo) {
+		return dao.countCodesByVo(pageVo, searchVo);
 	}
 	
-	public List<CodeDto> selectList(CodeVo vo) {
-		return codeDao.selectList(vo);
+	public List<CodeDto> findCodesByVo(PageVo pageVo, SearchVo searchVo) {
+		return dao.findCodesByVo(pageVo, searchVo);
 	}
 	
-	public int insert(CodeDto codeDto) {
-		return codeDao.insert(codeDto);
-	}
-
-	public int delete(CodeDto codeDto) {
-		return codeDao.delete(codeDto);
-	}
-
-	public int uelete(CodeDto codeDto) {
-		return codeDao.uelete(codeDto);
+	public CodeDto findCodeById(String codegroupId) {
+		return dao.findCodeById(codegroupId);
 	}
 	
-	public int update(CodeDto codeDto) {
-		return codeDao.update(codeDto);
+	public int createCode(CodeDto dto) {
+		return dao.createCode(dto);
 	}
 	
-	public List<CodeDto> selectCodeGroup() {
-		return codeDao.selectCodeGroup();
+	public int updateCode(CodeDto dto) {
+		return dao.updateCode(dto);
+	}
+	
+	public int softDeleteCode(String codeId) {
+		return dao.softDeleteCode(codeId);
+	}
+	
+	public int hardDeleteCode(String codeId) {
+		return dao.hardDeleteCode(codeId);
 	}
 
 }

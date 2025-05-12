@@ -5,7 +5,118 @@
 
 	<resultMap id="resultMapObj"
 		type="com.a2a2lab.module.code.CodeDto"></resultMap>
+		
+	<select id="countCodesByVo" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM
+			code
+		WHERE
+			1=1
+			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND is_used = #{searchVo.shIsUse}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
+			
+			<choose>
+				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND code_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose>
+	</select>
 
+	<select id="findCodesByVo" resultMap="resultMapObj">
+		SELECT 
+			c.code_id AS codeId
+			,c.name
+			,c.created_at AS createdAt
+			,c.updated_at AS updatedAt
+			,c.is_used AS isUsed
+			,c.codegroup_id AS codegroupId
+			,cg.name AS codegroupName
+		FROM
+			code c
+			JOIN codegroup cg ON cg.codegroup_id = c.codegroup_id
+		WHERE
+			1=1
+			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND c.is_used = #{searchVo.shIsUse}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND c.is_deleted = #{searchVo.shIsDel}</if>
+			
+			<choose>
+				<when test="searchVo.shOptionDate == 1">AND c.created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 2">AND c.updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND c.code_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND c.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose>
+		ORDER BY
+			code_id DESC
+		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
+	</select>
+
+	<select id="findCodeById" resultMap="resultMapObj">
+		SELECT
+			code_id AS codeId
+			,name
+			,is_used AS isUsed
+			,codegroup_id AS codegroupId
+		FROM 
+			code
+		WHERE
+			1=1
+			AND code_id = #{codeId}
+	</select>
+
+	<insert id="createCode">
+		INSERT INTO code(
+			name
+			,created_at
+			,is_used
+			,is_deleted
+			,codegroup_id
+		) VALUES(
+			#{name},
+			now(),
+			#{isUsed},
+			0,
+			#{codegroupId}
+		)
+	</insert>
+	
+	<update id="updateCode">
+		UPDATE code SET
+			name = #{name}
+			,is_used = #{isUsed}
+			,updated_at = now()
+			,codegroup_id = #{codegroupId}
+		WHERE
+			1=1
+			AND code_id = #{codeId}
+	</update>
+	
+	<update id="softDeleteCode">
+		UPDATE code SET
+			is_deleted = 1
+			,updated_at = now()
+		WHERE
+			1=1
+			AND code_id = #{codeId}
+	</update>
+	
+	<delete id="hardDeleteCode">
+		DELETE
+		FROM
+			code
+		WHERE
+			code_id = #{codeId}
+	</delete>
+
+<!-- ******************************************************************************************************* -->
+<!-- 
 	<sql id="selectCommon">
 		FROM code a
 		WHERE 1=1
@@ -24,123 +135,5 @@
 		</choose>
 
 	</sql>
-
-	<select id="selectOneCount" resultType="Integer">
-		SELECT COUNT(*)
-		<include refid="selectCommon"></include>
-	</select>
-
-	<select id="selectOne" resultMap="resultMapObj">
-		SELECT 
-			aa.*
-			,aa.seq AS ifcgSeq
-		FROM (
-			SELECT
-				b.seq,
-				b.codeUse,
-				b.codeGroup_seq,
-				c.codeGroupCd,
-				c.codeGroupNm,
-				b.codeCd,
-				b.codeNm,
-				b.codeRegDateTime,
-				b.codeModDateTime
-			FROM codegroup c
-				JOIN (SELECT * 
-				<include refid="selectCommon"></include>
-				) b
-				ON c.seq = b.codeGroup_seq
-			ORDER BY
-				seq DESC
-		) aa
-		WHERE
-			aa.seq = #{ifcgSeq}
-	</select>
-	
-	<select id="selectList" resultMap="resultMapObj">
-		SELECT 
-			aa.*
-			,aa.seq AS ifcgSeq
-		FROM (
-			SELECT
-				b.seq,
-				b.codeUse,
-				b.codeGroup_seq,
-				c.codeGroupCd,
-				c.codeGroupNm,
-				b.codeCd,
-				b.codeNm,
-				b.codeRegDateTime,
-				b.codeModDateTime
-			FROM codegroup c
-				JOIN (SELECT * 
-				<include refid="selectCommon"></include>
-				) b
-				ON c.seq = b.codeGroup_seq
-			ORDER BY
-				seq DESC
-		) aa
-		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
-	</select>
-	
-	<select id="selectCodeGroup" resultMap="resultMapObj">
-		SELECT
-			seq,
-			codeGroupCd,
-		    codeGroupNm
-		FROM
-			codegroup
-		WHERE
-			codeGroupDelNy = 0
-	</select>
-
-	<insert id="insert">
-		INSERT INTO code(
-		    codeCd,
-			codeNm,
-			codeUse,
-			codeRegDateTime,
-		    codeDelNy,
-		    codeGroup_seq
-		) VALUES(
-		NULLIF(#{codeCd}, ''),
-		#{codeNm},
-		#{codeUse},
-		now(),
-		0,
-		#{codeGroup_seq}
-		)
-		<selectKey resultType="String" keyProperty="seq"
-			order="AFTER">
-			SELECT last_insert_id()
-		</selectKey>
-	</insert>
-
-	<delete id="delete">
-		DELETE
-		FROM
-			code
-		WHERE
-			seq = #{ifcgSeq}
-	</delete>
-
-	<update id="uelete">
-		UPDATE code SET
-			codeDelNy = 1
-		WHERE
-			seq = #{ifcgSeq}
-	</update>
-	
-	<update id="update">
-		UPDATE code SET
-			codeCd = #{codeCd},
-			codeNm = #{codeNm},
-			codeUse = #{codeUse},
-		    codeGroup_seq = #{codeGroup_seq},
-		    codeModDateTime = now()
-		WHERE
-			seq = #{ifcgSeq}
-	</update>
-
-
+ -->
 </mapper>

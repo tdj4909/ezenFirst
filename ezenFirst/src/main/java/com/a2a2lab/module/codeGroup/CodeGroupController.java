@@ -46,20 +46,20 @@ public class CodeGroupController {
 	
 	// 코드그룹 추가
 	@RequestMapping("/xdm/system/codeGroup/create")
-	public String createCodeGroup(CodeGroupDto codeGroupDto) {
-		service.createCodeGroup(codeGroupDto);
+	public String createCodeGroup(CodeGroupDto dto) {
+		service.createCodeGroup(dto);
 		return "redirect:/xdm/system/codeGroup/list";
 	}
 	
 	// 코드그룹 수정
 	@RequestMapping("/xdm/system/codeGroup/update")
-	public String updateCodeGroup(CodeGroupDto codeGroupDto) {
-		service.updateCodeGroup(codeGroupDto);
+	public String updateCodeGroup(CodeGroupDto dto) {
+		service.updateCodeGroup(dto);
 		return "redirect:/xdm/system/codeGroup/list";
 	}
 	
 	// 코드그룹 softDelete
-	@RequestMapping(value = "/xdm/system/codeGroup/softDelete")
+	@RequestMapping("/xdm/system/codeGroup/softDelete")
 	public String softDeleteCodeGroup(@RequestParam("delSeq") List<String> codegroupIdList) {
 
 		for(String codegroupId : codegroupIdList) {
@@ -72,7 +72,7 @@ public class CodeGroupController {
 	}
 	
 	// 코드그룹 hardDelete
-	@RequestMapping(value = "/xdm/system/codeGroup/hardDelete")
+	@RequestMapping("/xdm/system/codeGroup/hardDelete")
 	public String hardDeleteCodeGroup(@RequestParam("delSeq") List<String> codegroupIdList) {
 
 		for(String codegroupId : codegroupIdList) {
