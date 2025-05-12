@@ -42,35 +42,4 @@ public class CodeGroupService {
 		return dao.hardDeleteCodeGroup(codegroupId);
 	}
 	
-	
-	
-	
-	public int selectOneCount(CodeGroupVo vo) {
-		return dao.selectOneCount(vo);
-	}
-	
-	public CodeGroupDto selectOne(CodeGroupVo vo) {
-		return dao.selectOne(vo);
-	}
-	
-	public List<CodeGroupDto> selectList(CodeGroupVo vo) {
-		return dao.selectList(vo);
-	}
-	
-	public int insert(CodeGroupDto codeGroupDto) {
-		return dao.insert(codeGroupDto);
-	}
-	
-	public int update(CodeGroupDto codeGroupDto) {
-		return dao.update(codeGroupDto);
-	}
-
-	public int delete(CodeGroupDto codeGroupDto) {
-		return dao.delete(codeGroupDto);
-	}
-
-	public int uelete(CodeGroupDto codeGroupDto) {
-		return dao.uelete(codeGroupDto);
-	}
-
 }

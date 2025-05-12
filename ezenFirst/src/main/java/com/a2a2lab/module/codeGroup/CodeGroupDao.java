@@ -19,11 +19,4 @@ public interface CodeGroupDao {
 	public int softDeleteCodeGroup(String codegroupId);
 	public int hardDeleteCodeGroup(String codegroupId);
 	
-	public int selectOneCount(CodeGroupVo vo);
-	public CodeGroupDto selectOne(CodeGroupVo vo);
-	public List<CodeGroupDto> selectList(CodeGroupVo vo);
-	public int insert(CodeGroupDto codeGroupDto);
-	public int update(CodeGroupDto codeGroupDto);
-	public int delete(CodeGroupDto codeGroupDto);
-	public int uelete(CodeGroupDto codeGroupDto);
 }
