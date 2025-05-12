@@ -11,11 +11,13 @@ import com.a2a2lab.module.vo.SearchVo;
 @Repository
 public interface CodeGroupDao {
 	
-	public int countCodeGroupsByVo(SearchVo searchVo); // vo로 코드그룹 개수 검색
+	public int countCodeGroupsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드그룹 개수 검색
 	public List<CodeGroupDto> findCodeGroupsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드그룹 검색
 	public CodeGroupDto findCodeGroupById(String codegroupId);
 	public int createCodeGroup(CodeGroupDto codeGroupDto);
 	public int updateCodeGroup(CodeGroupDto codeGroupDto);
+	public int softDeleteCodeGroup(String codegroupId);
+	public int hardDeleteCodeGroup(String codegroupId);
 	
 	public int selectOneCount(CodeGroupVo vo);
 	public CodeGroupDto selectOne(CodeGroupVo vo);

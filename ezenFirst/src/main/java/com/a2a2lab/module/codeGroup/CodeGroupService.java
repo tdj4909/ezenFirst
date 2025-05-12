@@ -14,11 +14,11 @@ public class CodeGroupService {
 	@Autowired
 	CodeGroupDao dao;
 	
-	public int countCodeGroupsByVo(SearchVo searchVo) {
-		return dao.countCodeGroupsByVo(searchVo);
+	public int countCodeGroupsByVo(PageVo pageVo, SearchVo searchVo) {
+		return dao.countCodeGroupsByVo(pageVo, searchVo);
 	}
 	
-	public List<CodeGroupDto> findCodeGroupsByVo(PageVo pageVo,  SearchVo searchVo) {
+	public List<CodeGroupDto> findCodeGroupsByVo(PageVo pageVo, SearchVo searchVo) {
 		return dao.findCodeGroupsByVo(pageVo, searchVo);
 	}
 	
@@ -32,6 +32,14 @@ public class CodeGroupService {
 	
 	public int updateCodeGroup(CodeGroupDto codeGroupDto) {
 		return dao.updateCodeGroup(codeGroupDto);
+	}
+	
+	public int softDeleteCodeGroup(String codegroupId) {
+		return dao.softDeleteCodeGroup(codegroupId);
+	}
+	
+	public int hardDeleteCodeGroup(String codegroupId) {
+		return dao.hardDeleteCodeGroup(codegroupId);
 	}
 	
 	

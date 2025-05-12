@@ -7,8 +7,8 @@ public class SearchVo {
 	private Integer shOptionDate;
 	private String shDateStart;
 	private String shDateEnd;
-	private Integer shIsDel;
-	private Integer shIsUse;
+	private Integer shIsDel = 0;
+	private Integer shIsUse = 1;
 
 	
 	// Getter, Setter

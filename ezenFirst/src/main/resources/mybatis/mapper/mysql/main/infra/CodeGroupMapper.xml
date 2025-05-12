@@ -13,8 +13,18 @@
 			codegroup
 		WHERE
 			1=1
-			AND is_deleted = 0
-			<!-- 검색조건 -->
+			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND is_used = #{searchVo.shIsUse}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
+			
+			<choose>
+				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND codegroup_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose>
 	</select>
 
 	<select id="findCodeGroupsByVo" resultMap="resultMapObj">
@@ -28,8 +38,18 @@
 			codegroup
 		WHERE
 			1=1
-			AND is_deleted = 0
-			<!-- 검색조건 -->
+			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND is_used = #{searchVo.shIsUse}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
+			
+			<choose>
+				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND codegroup_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose>
 		ORDER BY
 			codegroup_id DESC
 		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
@@ -70,6 +90,23 @@
 			1=1
 			AND codegroup_id = #{codegroupId}
 	</update>
+	
+	<update id="softDeleteCodeGroup">
+		UPDATE codegroup SET
+			is_deleted = 1
+			,updated_at = now()
+		WHERE
+			1=1
+			AND codegroup_id = #{codegroupId}
+	</update>
+	
+	<delete id="hardDeleteCodeGroup">
+		DELETE
+		FROM
+			codegroup
+		WHERE
+			codegroup_id = #{codegroupId}
+	</delete>
 
 
 
