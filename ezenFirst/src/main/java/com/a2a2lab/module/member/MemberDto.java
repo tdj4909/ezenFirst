@@ -5,132 +5,105 @@ import java.util.List;
 
 public class MemberDto {
 	
-	private String ifcgSeq;
-
-	private String seq;
+	private String memberId;
 	private String email;
 	private String password;
-	private String nickname;
-	private String lastNm;
-	private String firstNm;
+	private String name;
 	private Integer gender;
-	private String userDob;
+	private String birthday;
 	private Integer mobileCarrier;
 	private String phone;
-	private Integer admin;
-	private Integer userDelNy;
-	
-	private String userFullNm;
-	private String codeSeq;
-	private String codeNm;
+	private Integer createdAt;
+	private Integer updatedAt;
+	private Integer isAdmin;
 	
 	public static List<MemberDto> cachedCodeArrayList = new ArrayList<MemberDto>();
-	
-	
-	
-	@Override
-	public String toString() {
-		return "MemberDto [ifcgSeq=" + ifcgSeq + ", seq=" + seq + ", email=" + email + ", password=" + password
-				+ ", nickname=" + nickname + ", lastNm=" + lastNm + ", firstNm=" + firstNm + ", gender=" + gender
-				+ ", userDob=" + userDob + ", mobileCarrier=" + mobileCarrier + ", phone=" + phone + ", admin=" + admin
-				+ ", userDelNy=" + userDelNy + ", userFullNm=" + userFullNm + ", codeSeq=" + codeSeq + ", codeNm="
-				+ codeNm + "]";
+
+	public String getMemberId() {
+		return memberId;
 	}
-	public String getSeq() {
-		return seq;
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
-	public void setSeq(String seq) {
-		this.seq = seq;
-	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getNickname() {
-		return nickname;
+
+	public String getName() {
+		return name;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getLastNm() {
-		return lastNm;
-	}
-	public void setLastNm(String lastNm) {
-		this.lastNm = lastNm;
-	}
-	public String getFirstNm() {
-		return firstNm;
-	}
-	public void setFirstNm(String firstNm) {
-		this.firstNm = firstNm;
-	}
+
 	public Integer getGender() {
 		return gender;
 	}
+
 	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
-	
-	public String getUserDob() {
-		return userDob;
+
+	public String getBirthday() {
+		return birthday;
 	}
-	public void setUserDob(String userDob) {
-		this.userDob = userDob;
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
 	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public Integer getAdmin() {
-		return admin;
-	}
-	public void setAdmin(Integer admin) {
-		this.admin = admin;
-	}
-	public Integer getUserDelNy() {
-		return userDelNy;
-	}
-	public void setUserDelNy(Integer userDelNy) {
-		this.userDelNy = userDelNy;
-	}
-	public String getCodeSeq() {
-		return codeSeq;
-	}
-	public void setCodeSeq(String codeSeq) {
-		this.codeSeq = codeSeq;
-	}
-	public String getCodeNm() {
-		return codeNm;
-	}
-	public void setCodeNm(String codeNm) {
-		this.codeNm = codeNm;
-	}
+
 	public Integer getMobileCarrier() {
 		return mobileCarrier;
 	}
+
 	public void setMobileCarrier(Integer mobileCarrier) {
 		this.mobileCarrier = mobileCarrier;
 	}
-	
-	public String getUserFullNm() {
-		return lastNm + firstNm;
+
+	public String getPhone() {
+		return phone;
 	}
-	
-	public String getIfcgSeq() {
-		return ifcgSeq;
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-	public void setIfcgSeq(String ifcgSeq) {
-		this.ifcgSeq = ifcgSeq;
+
+	public Integer getCreatedAt() {
+		return createdAt;
 	}
-	
+
+	public void setCreatedAt(Integer createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Integer getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Integer updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public Integer getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Integer isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 }

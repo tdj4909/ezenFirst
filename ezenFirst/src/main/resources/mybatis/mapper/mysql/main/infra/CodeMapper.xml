@@ -10,20 +10,23 @@
 		SELECT 
 			COUNT(*)
 		FROM
-			code
+			code c
+			JOIN codegroup cg ON cg.codegroup_id = c.codegroup_id
 		WHERE
 			1=1
-			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND is_used = #{searchVo.shIsUse}</if>
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
+			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND c.is_used = #{searchVo.shIsUse}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND c.is_deleted = #{searchVo.shIsDel}</if>
 			
 			<choose>
-				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
-				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 1">AND c.created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 2">AND c.updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
 			</choose>
 			
 			<choose>
-				<when test="searchVo.shOption == 1">AND code_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 1">AND c.codegroup_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND cg.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 3">AND c.code_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 4">AND c.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
 			</choose>
 	</select>
 
@@ -50,8 +53,10 @@
 			</choose>
 			
 			<choose>
-				<when test="searchVo.shOption == 1">AND c.code_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND c.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 1">AND c.codegroup_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND cg.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 3">AND c.code_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 4">AND c.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
 			</choose>
 		ORDER BY
 			code_id DESC

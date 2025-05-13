@@ -40,7 +40,6 @@ public class CodeController {
 	@RequestMapping("/xdm/system/code/edit")
 	public String showCodeEdit(Model model, @RequestParam("codeId") String codeId){
 		
-		
 		model.addAttribute("codegroupList", codeGroupService.findAllCodeGroup());
 		// codeId가 있으면 수정, 없으면 등록
 		if (!codeId.equals("") && !codeId.equals("0")) {

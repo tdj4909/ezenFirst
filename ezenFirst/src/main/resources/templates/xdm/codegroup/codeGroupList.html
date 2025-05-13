@@ -80,6 +80,7 @@
 				</div>
 			</div>
 			<!-- Search End -->
+			
 		</div>
 
 		<section class="section">
@@ -212,6 +213,7 @@
 				</div>
 			</div>
 			
+			<!-- Modal Start -->
 			<div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
@@ -230,6 +232,7 @@
 					</div>
 				</div>
 			</div>
+			<!-- Modal End -->
 	
 		</section>
 
@@ -242,7 +245,7 @@
 	let rowCheckboxes = document.querySelectorAll(".rowCheckbox");
     let currentPath = window.location.pathname;
     let links = document.querySelectorAll(".nav-content a");
-    let codegroupId = document.querySelector("input[name=codegroupId]");
+    let id = document.querySelector("input[name=codegroupId]");
 	
 	// 전체 선택/해제 함수
 	function toggleSelectAll(source) {
@@ -303,7 +306,7 @@
 	};
 	// Update
 	goForm = function (keyValue) {
-		codegroupId.value = keyValue;
+		id.value = keyValue;
 	    form.action = "/xdm/system/codeGroup/edit";
 	    form.submit();
 	};

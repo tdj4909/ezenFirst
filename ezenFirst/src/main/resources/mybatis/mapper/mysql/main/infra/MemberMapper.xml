@@ -3,10 +3,86 @@
 
 <mapper namespace="com.a2a2lab.module.member.MemberDao">
 
-	<resultMap id="resultMapObj"
-		type="com.a2a2lab.module.member.MemberDto"></resultMap>
+	<resultMap id="resultMapObj" type="com.a2a2lab.module.member.MemberDto"></resultMap>
+		
+	<select id="countMembersByVo" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM
+			member
+		WHERE
+			1=1
+			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND is_used = #{searchVo.shIsUse}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
+			
+			<choose>
+				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND member_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose>
+	</select>
 
-	<sql id="selectCommon">
+	<select id="findMembersByVo" resultMap="resultMapObj">
+		SELECT 
+			member_id AS memberId
+			,email
+			,name
+			,gender
+			,birthday
+			,mobile_carrier AS mobileCarrier
+			,phone
+			,created_at AS createdAt
+			,updated_at AS updatedAt
+			,is_admin AS isAdmin
+		FROM
+			member
+		WHERE
+			1=1
+			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND is_used = #{searchVo.shIsUse}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
+			
+			<choose>
+				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND member_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose>
+		ORDER BY
+			member_id DESC
+		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
+	</select>
+	
+	<select id="findMemberById" resultMap="resultMapObj">
+		SELECT
+			member_id AS memberId
+			,email
+			,name
+			,gender
+			,birthday
+			,mobile_carrier AS mobileCarrier
+			,phone
+			,is_admin AS isAdmin
+		FROM 
+			member
+		WHERE
+			1=1
+			AND member_id = #{memberId}
+	</select>
+		
+		
+		
+		
+		
+<!-- ***************************************************************************************************		 -->
+
+<!-- 	<sql id="selectCommon">
 		FROM user a
 		WHERE 1=1
 			
@@ -197,7 +273,7 @@
 			seq = #{seq}
 	</delete>
 	
-		<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
+	<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
 		SELECT 
 			seq
 			, gender
@@ -206,6 +282,6 @@
 		WHERE 1=1
 			AND userDelNy = 0
 
-   </select>
+   </select> -->
 	
 </mapper>
