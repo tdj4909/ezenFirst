@@ -31,17 +31,17 @@ public class IndexController{
 	@Autowired
 	MemberService memberService;
 	
-	@RequestMapping(value = "/Xdm/index")
+	@RequestMapping(value = "/xdm/index")
 	public String index(Model model, HttpSession httpSession) throws Exception {
 		
-		// login 검사
-		if(httpSession.getAttribute("user") == null) {
-			return "redirect:/Xdm/loginXdm";
-		}
-		model.addAttribute("user", httpSession.getAttribute("user"));
-		model.addAttribute("ordersCount", ordersService.ordersCount());
-		model.addAttribute("ordersSum", ordersService.ordersSum());
-		model.addAttribute("reviewCount", reviewService.reviewCount());
+//		// login 검사
+//		if(httpSession.getAttribute("user") == null) {
+//			return "redirect:/Xdm/loginXdm";
+//		}
+//		model.addAttribute("user", httpSession.getAttribute("user"));
+//		model.addAttribute("ordersCount", ordersService.ordersCount());
+//		model.addAttribute("ordersSum", ordersService.ordersSum());
+//		model.addAttribute("reviewCount", reviewService.reviewCount());
 //		model.addAttribute("memberCount", memberService.memberCount());
 		
 		

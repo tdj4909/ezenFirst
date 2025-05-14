@@ -7,11 +7,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.a2a2lab.module.code.CodeService;
+import com.a2a2lab.module.codeGroup.CodeGroupDto;
 import com.a2a2lab.module.mail.MailService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
@@ -23,6 +27,9 @@ public class MemberController {
 
 	@Autowired
 	MemberService service;
+	
+	@Autowired
+	CodeService codeService;
 	
 	@Autowired
 	MailService mailService;
@@ -46,7 +53,7 @@ public class MemberController {
 	public String showMemberEdit(Model model, @RequestParam("memberId") String memberId){
 		
 		// 통신사
-//		model.addAttribute("codegroupList", service.findAllCodeGroup());
+		model.addAttribute("codeList", codeService.findCodesByCodeGroupId("1"));
 		
 		// memberId가 있으면 수정, 없으면 등록
 		if (!memberId.equals("") && !memberId.equals("0")) {
@@ -54,6 +61,13 @@ public class MemberController {
 		}
 		
 		return "/xdm/member/memberEdit";
+	}
+	
+	// 멤버 추가
+	@RequestMapping("/xdm/member/create")
+	public String createMember(MemberDto dto) {
+		service.createMember(dto);
+		return "redirect:/xdm/member/list";
 	}
 	
 	

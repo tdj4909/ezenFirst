@@ -26,7 +26,7 @@
 		<section class="section">
 		
 			<form action="" method="post" id="form" class="needs-validation" novalidate>
-				<input type="hidden" name="memberId" th:value="${item?.memberId}">
+				<input type="hidden" id="memberId" name="memberId" th:value="${item?.memberId}">
 			
 				<div class="row">
 					<div class="col-lg-12">
@@ -69,12 +69,12 @@
 													<label for="mobileCarrier" class="form-label">통신사<b style="color: red;">*</b></label> 
 													<select class="form-select" name="mobileCarrier" required>
 														<option disabled hidden selected value="">통신사</option>
-														<!-- <option th:each="mobileCarrier : ${mobileCarrierList}" 
-																th:value="${mobileCarrier.codeSeq}"
-																th:text="${mobileCarrier.codeNm}"
-																th:selected="${mobileCarrier.codeNm == item?.mobileCarrier}"
+														<option th:each="code : ${codeList}" 
+																th:value="${code.codeId}"
+																th:text="${code.name}"
+																th:selected="${code.codeId == item?.mobileCarrier}"
 																>
-														</option> -->
+														</option>
 													</select>
 												</div>
 												<div class="col-8">
@@ -149,7 +149,7 @@
 
 	<!-- temp -->
 
-	<script>
+<script>
 	
 	const form = document.querySelector('.needs-validation'); // 단일 폼 선택
     
@@ -257,7 +257,7 @@
 	
 	document.getElementById("btnSubmit").onclick = function () {
 
-		const id = document.getElementById('memberId').value
+		const id = document.getElementById('memberId').value;
 		
 		if(id == null || id == "") {				// Insert
 // 			if(validation() == false) return false;

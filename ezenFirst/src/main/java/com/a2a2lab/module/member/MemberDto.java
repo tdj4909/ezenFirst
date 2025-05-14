@@ -13,8 +13,8 @@ public class MemberDto {
 	private String birthday;
 	private Integer mobileCarrier;
 	private String phone;
-	private Integer createdAt;
-	private Integer updatedAt;
+	private String createdAt;
+	private String updatedAt;
 	private Integer isAdmin;
 	
 	public static List<MemberDto> cachedCodeArrayList = new ArrayList<MemberDto>();
@@ -83,19 +83,19 @@ public class MemberDto {
 		this.phone = phone;
 	}
 
-	public Integer getCreatedAt() {
+	public String getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Integer createdAt) {
+	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Integer getUpdatedAt() {
+	public String getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(Integer updatedAt) {
+	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 

@@ -75,6 +75,19 @@
 			1=1
 			AND code_id = #{codeId}
 	</select>
+	
+	<select id="findCodesByCodeGroupId" resultMap="resultMapObj">
+		SELECT
+			code_id AS codeId
+			,name
+		FROM 
+			code
+		WHERE
+			1=1
+			AND is_used = 1
+			AND is_deleted = 0
+			AND codegroup_id = #{codegroupId}
+	</select>
 
 	<insert id="createCode">
 		INSERT INTO code(

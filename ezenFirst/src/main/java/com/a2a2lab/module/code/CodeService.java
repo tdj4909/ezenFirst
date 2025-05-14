@@ -22,8 +22,12 @@ public class CodeService {
 		return dao.findCodesByVo(pageVo, searchVo);
 	}
 	
-	public CodeDto findCodeById(String codegroupId) {
-		return dao.findCodeById(codegroupId);
+	public CodeDto findCodeById(String codeId) {
+		return dao.findCodeById(codeId);
+	}
+	
+	public List<CodeDto> findCodesByCodeGroupId(String codegroupId) {
+		return dao.findCodesByCodeGroupId(codegroupId);
 	}
 	
 	public int createCode(CodeDto dto) {

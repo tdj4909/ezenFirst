@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import com.a2a2lab.module.codeGroup.CodeGroupDto;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -14,7 +15,7 @@ public interface MemberDao {
 	public int countMembersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드 개수 검색
 	public List<MemberDto> findMembersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드 검색
 	public MemberDto findMemberById(String memberId);
-	
+	public int createMember(MemberDto dto);
 	
 	
 	public int insert(MemberDto dto);

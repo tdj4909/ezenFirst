@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.a2a2lab.module.codeGroup.CodeGroupDto;
@@ -19,6 +20,9 @@ public class MemberService {
 	@Autowired
 	MemberDao dao;
 	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 	public int countMembersByVo(PageVo pageVo, SearchVo searchVo) {
 		return dao.countMembersByVo(pageVo, searchVo);
 	}
@@ -29,6 +33,11 @@ public class MemberService {
 	
 	public MemberDto findMemberById(String memberId) {
 		return dao.findMemberById(memberId);
+	}
+	
+	public int createMember(MemberDto dto) {
+		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+		return dao.createMember(dto);
 	}
 	
 	

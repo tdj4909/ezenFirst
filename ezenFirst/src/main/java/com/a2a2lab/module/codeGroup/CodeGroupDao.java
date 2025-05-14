@@ -15,8 +15,8 @@ public interface CodeGroupDao {
 	public List<CodeGroupDto> findCodeGroupsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드그룹 검색
 	public List<CodeGroupDto> findAllCodeGroup(); // 코드그룹 전체검색
 	public CodeGroupDto findCodeGroupById(String codegroupId);
-	public int createCodeGroup(CodeGroupDto codeGroupDto);
-	public int updateCodeGroup(CodeGroupDto codeGroupDto);
+	public int createCodeGroup(CodeGroupDto dto);
+	public int updateCodeGroup(CodeGroupDto dto);
 	public int softDeleteCodeGroup(String codegroupId);
 	public int hardDeleteCodeGroup(String codegroupId);
 	

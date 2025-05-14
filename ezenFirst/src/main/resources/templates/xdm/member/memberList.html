@@ -114,19 +114,19 @@
 								<table class="table table-hover">
 									<thead>
 										<tr>
-											<th>
+											<th class="text-center">
 												<input class="form-check-input" type="checkbox" id="selectAllCheckbox" onclick="toggleSelectAll(this)">
 											</th>
-											<th>#</th>
-											<th>이메일</th>
-											<th>이름</th>
-											<th>성</th>
-											<th>생년월일</th>
-											<th>통신사</th>
-											<th>전화번호</th>
-											<th>등록일</th>
-											<th>수정일</th>
-											<th>관리자</th>
+											<th class="text-center">#</th>
+											<th class="text-center">이메일</th>
+											<th class="text-center">이름</th>
+											<th class="text-center">성</th>
+											<th class="text-center">생년월일</th>
+											<th class="text-center">통신사</th>
+											<th class="text-center">전화번호</th>
+											<th class="text-center">등록일</th>
+											<th class="text-center">수정일</th>
+											<th class="text-center">관리자</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -138,27 +138,27 @@
 										</tr>
 										
 										<tr th:each="item : ${list}">
-											<td>
+											<td class="text-center">
 												<input class="form-check-input rowCheckbox" type="checkbox" th:value="${item.memberId}">
 												<input type="hidden" name="delSeq" th:id="'delSeq_' + ${item.memberId}">
 											</td>
 											<td class="text-center" th:text="${pageVo.totalRows - ((pageVo.thisPage - 1) * pageVo.rowNumToShow + itemStat.index)}"></td>
-											<td th:text="${item.email}"></td>
+											<td class="text-center" th:text="${item.email}"></td>
 											
-											<td class="align-middle fw-semi-bold">
-												<a href="javascript:void(0);" th:text="${item.name}" th:attr="onclick=|goForm(${list.memberId})|"></a>
+											<td class="text-center align-middle fw-semi-bold">
+												<a href="javascript:void(0);" th:text="${item.name}" th:attr="onclick=|goForm(${item.memberId})|"></a>
 											</td>
 											
-											<td th:text="${list.gender}"></td>	
+											<td class="text-center" th:text="${item.gender}"></td>	
 
 											<!-- <td th:text="${@memberService.selectOneCachedCode(list.gender)}"></td> -->
 											
-											<td th:text="${item.birthday}"></td>											
-											<td th:text="${item.mobileCarrier}"></td>
-											<td th:text="${item.phone}"></td>
-											<td th:text="${item.createdAt}"></td>
-											<td th:text="${item.updatedAt}"></td>
-											<td th:text="${item.isAdmin} == 1 ? 'Y' : 'N' "></td>
+											<td class="text-center" th:text="${item.birthday}"></td>											
+											<td class="text-center" th:text="${item.mobileCarrier}"></td>
+											<td class="text-center" th:text="${item.phone}"></td>
+											<td class="text-center" th:text="${item.createdAt}"></td>
+											<td class="text-center" th:text="${item.updatedAt}"></td>
+											<td class="text-center" th:text="${item.isAdmin} == 1 ? 'Y' : 'N' "></td>
 										</tr>
 
 									</tbody>

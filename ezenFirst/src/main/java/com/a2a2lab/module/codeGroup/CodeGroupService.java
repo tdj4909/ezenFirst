@@ -30,12 +30,12 @@ public class CodeGroupService {
 		return dao.findCodeGroupById(codegroupId);
 	}
 	
-	public int createCodeGroup(CodeGroupDto codeGroupDto) {
-		return dao.createCodeGroup(codeGroupDto);
+	public int createCodeGroup(CodeGroupDto dto) {
+		return dao.createCodeGroup(dto);
 	}
 	
-	public int updateCodeGroup(CodeGroupDto codeGroupDto) {
-		return dao.updateCodeGroup(codeGroupDto);
+	public int updateCodeGroup(CodeGroupDto dto) {
+		return dao.updateCodeGroup(dto);
 	}
 	
 	public int softDeleteCodeGroup(String codegroupId) {

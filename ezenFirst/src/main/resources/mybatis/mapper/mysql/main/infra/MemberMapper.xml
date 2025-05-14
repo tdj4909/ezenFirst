@@ -76,6 +76,31 @@
 			AND member_id = #{memberId}
 	</select>
 		
+	<insert id="createMember">
+		INSERT INTO member(
+			email
+			,password
+			,name
+			,gender
+			,birthday
+			,mobile_carrier
+			,phone
+			,created_at
+			,is_admin
+			,is_deleted
+		) VALUES(
+			#{email}
+			,#{password}
+			,#{name}
+			,#{gender}
+			,#{birthday}
+			,#{mobileCarrier}
+			,#{phone}
+			,now()
+			,#{isAdmin}
+			,0
+		)
+	</insert>
 		
 		
 		
