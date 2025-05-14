@@ -42,7 +42,7 @@ public class IndexController{
 		model.addAttribute("ordersCount", ordersService.ordersCount());
 		model.addAttribute("ordersSum", ordersService.ordersSum());
 		model.addAttribute("reviewCount", reviewService.reviewCount());
-		model.addAttribute("memberCount", memberService.memberCount());
+//		model.addAttribute("memberCount", memberService.memberCount());
 		
 		
 //		******************************************************************

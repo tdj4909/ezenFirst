@@ -125,7 +125,7 @@ public class OrdersController{
 		MemberDto memberDto = (MemberDto) httpSession.getAttribute("user");
 		OrdersDto dto = new OrdersDto();
 		dto.setOdTotalPrice(odTotalPrice);
-		dto.setUser_seq(memberDto.getSeq());
+//		dto.setUser_seq(memberDto.getSeq());
 		service.insertOrder(dto);
 		
 		// 개별 주문 Insert
@@ -159,15 +159,15 @@ public class OrdersController{
 	
 		// 로그인한 member의 id 추출
 		MemberDto memberDto = (MemberDto) httpSession.getAttribute("user");
-		String user_seq = memberDto.getSeq();
+//		String user_seq = memberDto.getSeq();
 		// 페이징 설정
 		PageVo pageVo = new PageVo();
 		pageVo.setRowNumToShow(5);
 		pageVo.setThisPage(page);
-		pageVo.setParamsPaging(service.countOrdersByMemberSeq(user_seq));
+//		pageVo.setParamsPaging(service.countOrdersByMemberSeq(user_seq));
 		model.addAttribute("pageVo", pageVo);
 		// 주문 목록 출력
-		model.addAttribute("list", service.findOrdersByMemberSeq(user_seq, pageVo));
+//		model.addAttribute("list", service.findOrdersByMemberSeq(user_seq, pageVo));
 		
 		return "/usr/orders/ordersHistory";
 	}
