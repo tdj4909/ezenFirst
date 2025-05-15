@@ -14,7 +14,7 @@
 
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="/Xdm/index">Home</a></li>
+					<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
 					<li class="breadcrumb-item">시스템 관리</li>
 					<li class="breadcrumb-item active">코드그룹 관리</li>
 				</ol>
@@ -259,20 +259,20 @@
 	let form = document.querySelector("form[name=formList]");
 	goList = function (thisPage) {
 	    document.querySelector("input[name=thisPage]").value = thisPage;
-	    form.action = "/xdm/system/codeGroup/list";
+	    form.action = "/xdm/system/codegroup/list";
 	    form.submit();
 	}
 			
 	// 검색
 	document.getElementById("btnSearch").onclick = function () {
-	    form.action = "/xdm/system/codeGroup/list";
+	    form.action = "/xdm/system/codegroup/list";
 	    form.submit();
 	};
 	
 	// 테이블 행 개수 Select
 	document.getElementById("changeRowNum").onchange = function () {
 	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-	    form.action = "/xdm/system/codeGroup/list";
+	    form.action = "/xdm/system/codegroup/list";
 	    form.submit();
 	}
 	
@@ -307,7 +307,7 @@
 	// Update
 	goForm = function (keyValue) {
 		id.value = keyValue;
-	    form.action = "/xdm/system/codeGroup/edit";
+	    form.action = "/xdm/system/codegroup/edit";
 	    form.submit();
 	};
 	
@@ -330,7 +330,7 @@
 			document.querySelector(`input[id="delSeq_${s.value}"]`).value = s.value;
 		});
 		 
-		form.action = "/xdm/system/codeGroup/softDelete";
+		form.action = "/xdm/system/codegroup/softDelete";
 		form.submit();
 	}
 	
@@ -353,7 +353,7 @@
 			document.querySelector(`input[id="delSeq_${s.value}"]`).value = s.value;
 		});
 
-		form.action = "/xdm/system/codeGroup/hardDelete";
+		form.action = "/xdm/system/codegroup/hardDelete";
 		form.submit();
 	}
 	
