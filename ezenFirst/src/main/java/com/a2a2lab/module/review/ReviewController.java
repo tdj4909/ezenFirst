@@ -80,7 +80,7 @@ public class ReviewController{
 		ProductDto productDto = new ProductDto();
 		productDto.setSeq(dto.getMenu_seq());
 		productDto.setMenuRating(service.findAvgRatingByMenuSeq(dto.getMenu_seq()));
-		productService.updateRating(productDto);
+//		productService.updateRating(productDto);
 
 	    return dto;
 	}

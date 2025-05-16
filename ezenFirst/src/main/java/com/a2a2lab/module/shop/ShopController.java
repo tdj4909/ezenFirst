@@ -44,10 +44,10 @@ public class ShopController {
 		
 		vo.setRowNumToShow(6);
 		vo.setThisPage(page);
-		vo.setParamsPaging(productService.selectOneCount(vo));
+//		vo.setParamsPaging(productService.selectOneCount(vo));
 		
 		model.addAttribute("vo", vo);
-		model.addAttribute("list", productService.selectShopList(vo));
+//		model.addAttribute("list", productService.selectShopList(vo));
 		
 		return "usr/shop/menuList :: menuListFragment";
 	}
@@ -64,7 +64,7 @@ public class ShopController {
 		
 		ProductVo vo = new ProductVo();
 		vo.setIfcgSeq(seq);
-		model.addAttribute("item", productService.selectOne(vo));
+//		model.addAttribute("item", productService.selectOne(vo));
 		
 		return "/usr/shop/shopDetail";
 	}
