@@ -65,11 +65,11 @@ public class CodeController {
 	
 	// 코드 softDelete
 	@RequestMapping("/xdm/system/code/softDelete")
-	public String softDeleteCode(@RequestParam("delSeq") List<String> codeIdList) {
+	public String softDeleteCode(@RequestParam("delSeq") List<String> idList) {
 
-		for(String codeId : codeIdList) {
-			if(!codeId.equals("")) {
-				service.softDeleteCode(codeId);
+		for(String id : idList) {
+			if(!id.equals("")) {
+				service.softDeleteCode(id);
 			}
 		}
 		
@@ -78,11 +78,11 @@ public class CodeController {
 	
 	// 코드 hardDelete
 	@RequestMapping("/xdm/system/code/hardDelete")
-	public String hardDeleteCode(@RequestParam("delSeq") List<String> codeIdList) {
+	public String hardDeleteCode(@RequestParam("delSeq") List<String> idList) {
 
-		for(String codeId : codeIdList) {
-			if(!codeId.equals("")) {
-				service.hardDeleteCode(codeId);
+		for(String id : idList) {
+			if(!id.equals("")) {
+				service.hardDeleteCode(id);
 			}
 		}
 		

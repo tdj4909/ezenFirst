@@ -1,11 +1,15 @@
 package com.a2a2lab.module.member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.a2a2lab.module.code.CodeDao;
+import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -16,6 +20,9 @@ public class MemberService {
 	MemberDao dao;
 	
 	@Autowired
+	CodeDao codeDao;
+	
+	@Autowired
 	PasswordEncoder passwordEncoder;
 	
 	public int countMembersByVo(PageVo pageVo, SearchVo searchVo) {
@@ -23,7 +30,18 @@ public class MemberService {
 	}
 	
 	public List<MemberDto> findMembersByVo(PageVo pageVo, SearchVo searchVo) {
-		return dao.findMembersByVo(pageVo, searchVo);
+		// 통신사 이름 세팅
+		Map<Integer, String> map = new HashMap<>();
+		List<CodeDto> codeDtos= codeDao.findCodesByCodeGroupId("1");
+		for(CodeDto codeDto : codeDtos) {
+			map.put(Integer.parseInt(codeDto.getCodeId()), codeDto.getName());
+		}
+		
+		List<MemberDto> dtos = dao.findMembersByVo(pageVo, searchVo);
+		for(MemberDto dto : dtos) {
+			dto.setMobileCarrierName(map.get(dto.getMobileCarrier()));
+		}
+		return dtos;
 	}
 	
 	public MemberDto findMemberById(String memberId) {
@@ -35,6 +53,17 @@ public class MemberService {
 		return dao.createMember(dto);
 	}
 	
+//	public int updateMember(MemberDto dto) {
+//		return dao.updateMember(dto);
+//	}
+	
+	public int softDeleteMember(String id) {
+		return dao.softDeleteMember(id);
+	}
+	
+	public int hardDeleteMember(String id) {
+		return dao.hardDeleteMember(id);
+	}
 	
 	
 	

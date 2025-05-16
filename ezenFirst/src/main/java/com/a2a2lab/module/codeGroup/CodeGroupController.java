@@ -60,11 +60,11 @@ public class CodeGroupController {
 	
 	// 코드그룹 softDelete
 	@RequestMapping("/xdm/system/codegroup/softDelete")
-	public String softDeleteCodeGroup(@RequestParam("delSeq") List<String> codegroupIdList) {
+	public String softDeleteCodeGroup(@RequestParam("delSeq") List<String> idList) {
 
-		for(String codegroupId : codegroupIdList) {
-			if(!codegroupId.equals("")) {
-				service.softDeleteCodeGroup(codegroupId);
+		for(String id : idList) {
+			if(!id.equals("")) {
+				service.softDeleteCodeGroup(id);
 			}
 		}
 		
@@ -73,11 +73,11 @@ public class CodeGroupController {
 	
 	// 코드그룹 hardDelete
 	@RequestMapping("/xdm/system/codegroup/hardDelete")
-	public String hardDeleteCodeGroup(@RequestParam("delSeq") List<String> codegroupIdList) {
+	public String hardDeleteCodeGroup(@RequestParam("delSeq") List<String> idList) {
 
-		for(String codegroupId : codegroupIdList) {
-			if(!codegroupId.equals("")) {
-				service.hardDeleteCodeGroup(codegroupId);
+		for(String id : idList) {
+			if(!id.equals("")) {
+				service.hardDeleteCodeGroup(id);
 			}
 		}
 		

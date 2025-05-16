@@ -22,8 +22,8 @@ public class CodeService {
 		return dao.findCodesByVo(pageVo, searchVo);
 	}
 	
-	public CodeDto findCodeById(String codeId) {
-		return dao.findCodeById(codeId);
+	public CodeDto findCodeById(String id) {
+		return dao.findCodeById(id);
 	}
 	
 	public List<CodeDto> findCodesByCodeGroupId(String codegroupId) {
@@ -38,12 +38,12 @@ public class CodeService {
 		return dao.updateCode(dto);
 	}
 	
-	public int softDeleteCode(String codeId) {
-		return dao.softDeleteCode(codeId);
+	public int softDeleteCode(String id) {
+		return dao.softDeleteCode(id);
 	}
 	
-	public int hardDeleteCode(String codeId) {
-		return dao.hardDeleteCode(codeId);
+	public int hardDeleteCode(String id) {
+		return dao.hardDeleteCode(id);
 	}
 
 }

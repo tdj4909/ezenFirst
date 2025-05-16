@@ -9,6 +9,9 @@ public class SearchVo {
 	private String shDateEnd;
 	private Integer shIsDel = 0;
 	private Integer shIsUse;
+	private Integer shGender;
+	private Integer shTel;
+	private Integer shIsAdmin;
 
 	
 	// Getter, Setter
@@ -53,5 +56,23 @@ public class SearchVo {
 	}
 	public void setShIsUse(Integer shIsUse) {
 		this.shIsUse = shIsUse;
+	}
+	public Integer getShGender() {
+		return shGender;
+	}
+	public void setShGender(Integer shGender) {
+		this.shGender = shGender;
+	}
+	public Integer getShTel() {
+		return shTel;
+	}
+	public void setShTel(Integer shTel) {
+		this.shTel = shTel;
+	}
+	public Integer getShIsAdmin() {
+		return shIsAdmin;
+	}
+	public void setShIsAdmin(Integer shIsAdmin) {
+		this.shIsAdmin = shIsAdmin;
 	}
 }

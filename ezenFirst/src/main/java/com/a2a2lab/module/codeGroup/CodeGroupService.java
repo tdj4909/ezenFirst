@@ -26,8 +26,8 @@ public class CodeGroupService {
 		return dao.findAllCodeGroup();
 	}
 	
-	public CodeGroupDto findCodeGroupById(String codegroupId) {
-		return dao.findCodeGroupById(codegroupId);
+	public CodeGroupDto findCodeGroupById(String id) {
+		return dao.findCodeGroupById(id);
 	}
 	
 	public int createCodeGroup(CodeGroupDto dto) {
@@ -38,12 +38,12 @@ public class CodeGroupService {
 		return dao.updateCodeGroup(dto);
 	}
 	
-	public int softDeleteCodeGroup(String codegroupId) {
-		return dao.softDeleteCodeGroup(codegroupId);
+	public int softDeleteCodeGroup(String id) {
+		return dao.softDeleteCodeGroup(id);
 	}
 	
-	public int hardDeleteCodeGroup(String codegroupId) {
-		return dao.hardDeleteCodeGroup(codegroupId);
+	public int hardDeleteCodeGroup(String id) {
+		return dao.hardDeleteCodeGroup(id);
 	}
 	
 }

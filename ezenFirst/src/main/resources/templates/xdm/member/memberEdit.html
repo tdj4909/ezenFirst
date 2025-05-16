@@ -97,8 +97,8 @@
 											<label for="gender" class="form-label">성별<b style="color: red;">*</b></label> 
 											<select name="gender" class="form-select" required>
 												<option disabled hidden selected value="">성별</option>
-												<option value="1" th:selected="${item?.gender == 1}">남자</option>
-												<option value="2" th:selected="${item?.gender == 2}">여자</option>
+												<option value="1" th:selected="${item?.gender == 1}">남성</option>
+												<option value="2" th:selected="${item?.gender == 2}">여성</option>
 												<option value="3" th:selected="${item?.gender == 3}">공개안함</option>
 											</select>
 										</div>
@@ -265,8 +265,8 @@
 			form.submit();
 		} else {												// Update
 // 			if(validation() == false) return false;
-			form.action = "/xdm/member/update";
-			form.submit();
+// 			form.action = "/xdm/member/update";
+// 			form.submit();
 		}
 	}
 

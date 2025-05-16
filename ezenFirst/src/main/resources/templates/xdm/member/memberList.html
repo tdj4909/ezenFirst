@@ -16,8 +16,8 @@
 
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="/Xdm/index">Home</a></li>
-					<li class="breadcrumb-item active">회원관리</li>
+					<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
+					<li class="breadcrumb-item active">회원 관리</li>
 				</ol>
 			</nav>
 
@@ -31,6 +31,7 @@
 							<option value="" th:selected="${searchVo.shOptionDate == null}">날짜</option>
 							<option value="1" th:selected="${searchVo.shOptionDate == 1}">등록일</option>
 							<option value="2" th:selected="${searchVo.shOptionDate == 2}">수정일</option>
+							<option value="3" th:selected="${searchVo.shOptionDate == 3}">생년월일</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -50,10 +51,29 @@
 						</select>
 					</div>
 					<div class="col-2">
-						<select id="shIsUse" name="shIsUse" class="form-select">
-							<option value="" th:selected="${searchVo.shIsUse == null}">사용 여부</option>
-							<option value="1" th:selected="${searchVo.shIsUse == 1}">Y</option>
-							<option value="0" th:selected="${searchVo.shIsUse == 0}">N</option>
+						<select id="shIsAdmin" name="shIsAdmin" class="form-select">
+							<option value="" th:selected="${searchVo.shIsAdmin == null}">권한</option>
+							<option value="1" th:selected="${searchVo.shIsAdmin == 1}">관리자</option>
+							<option value="0" th:selected="${searchVo.shIsAdmin == 0}">사용자</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select id="shGender" name="shGender" class="form-select">
+							<option value="" th:selected="${searchVo.shGender == null}">성별</option>
+							<option value="1" th:selected="${searchVo.shGender == 1}">남성</option>
+							<option value="2" th:selected="${searchVo.shGender == 2}">여성</option>
+							<option value="3" th:selected="${searchVo.shGender == 3}">공개안함</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select id="shTel" name="shTel" class="form-select">
+							<option value="" th:selected="${searchVo.shTel == null}">통신사</option>
+							<option th:each="code : ${codeList}" 
+									th:value="${code.codeId}"
+									th:text="${code.name}"
+									th:selected="${code.codeId == (searchVo.shTel != null ? searchVo.shTel.toString() : '')}"
+									>
+							</option>
 						</select>
 					</div>
 				</div>
@@ -62,8 +82,9 @@
 					<div class="col-2">
 						<select id="shOption" name="shOption" class="form-select">
 							<option value="" th:selected="${searchVo.shOption == null}">검색구분</option>
-							<option value="1" th:selected="${searchVo.shOption == 1}">코드그룹 번호</option>
-							<option value="2" th:selected="${searchVo.shOption == 2}">코드그룹명</option>
+							<option value="1" th:selected="${searchVo.shOption == 1}">이메일</option>
+							<option value="2" th:selected="${searchVo.shOption == 2}">이름</option>
+							<option value="3" th:selected="${searchVo.shOption == 3}">전화번호</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -120,13 +141,13 @@
 											<th class="text-center">#</th>
 											<th class="text-center">이메일</th>
 											<th class="text-center">이름</th>
-											<th class="text-center">성</th>
+											<th class="text-center">성별</th>
 											<th class="text-center">생년월일</th>
 											<th class="text-center">통신사</th>
 											<th class="text-center">전화번호</th>
 											<th class="text-center">등록일</th>
 											<th class="text-center">수정일</th>
-											<th class="text-center">관리자</th>
+											<th class="text-center">권한</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -144,21 +165,21 @@
 											</td>
 											<td class="text-center" th:text="${pageVo.totalRows - ((pageVo.thisPage - 1) * pageVo.rowNumToShow + itemStat.index)}"></td>
 											<td class="text-center" th:text="${item.email}"></td>
-											
-											<td class="text-center align-middle fw-semi-bold">
-												<a href="javascript:void(0);" th:text="${item.name}" th:attr="onclick=|goForm(${item.memberId})|"></a>
+											<td class="text-center" th:text="${item.name}"></td>
+											<td class="text-center" th:switch="${item.gender}">
+											    <span th:case="'1'">남성</span>
+											    <span th:case="'2'">여성</span>
+											    <span th:case="*">공개안함</span>
 											</td>
-											
-											<td class="text-center" th:text="${item.gender}"></td>	
 
 											<!-- <td th:text="${@memberService.selectOneCachedCode(list.gender)}"></td> -->
 											
 											<td class="text-center" th:text="${item.birthday}"></td>											
-											<td class="text-center" th:text="${item.mobileCarrier}"></td>
+											<td class="text-center" th:text="${item.mobileCarrierName}"></td>
 											<td class="text-center" th:text="${item.phone}"></td>
 											<td class="text-center" th:text="${item.createdAt}"></td>
 											<td class="text-center" th:text="${item.updatedAt}"></td>
-											<td class="text-center" th:text="${item.isAdmin} == 1 ? 'Y' : 'N' "></td>
+											<td class="text-center" th:text="${item.isAdmin} == 1 ? '관리자' : '사용자' "></td>
 										</tr>
 
 									</tbody>
@@ -261,7 +282,6 @@
 	
 	let selectAllCheckbox = document.getElementById("selectAllCheckbox");
 	let rowCheckboxes = document.querySelectorAll(".rowCheckbox");
-	let currentPath = window.location.pathname;
 	let links = document.querySelectorAll(".nav-content a");
 	let id = document.querySelector("input[name=memberId]");
 	
@@ -298,16 +318,13 @@
 	document.addEventListener("DOMContentLoaded", function () {
 	
 	    // 사이드바 현재화면 위치 active
-	    links.forEach(link => {
-	        if (link.getAttribute("href") === currentPath) {
-	        	const navContent = link.closest(".nav-content");
-	            const navLink = navContent.previousElementSibling; // 부모 메뉴의 <a> 태그 찾기
-	            
-	            link.classList.add("active");
-	            navContent.classList.add("show"); // 메뉴 열기
-	            navLink.classList.remove("collapsed"); // collapsed 제거
-	        }
-	    });
+	    const currentPath = window.location.pathname; // 현재 페이지의 경로
+        document.querySelectorAll(".nav-link").forEach(link => {
+            if (link.getAttribute("href") === currentPath) {
+                link.classList.remove("collapsed");
+                link.classList.add("active");  // 'active' 클래스 추가
+            }
+        });
 	    // 체크박스
 	    rowCheckboxes.forEach(checkbox => {
 	        checkbox.addEventListener("change", function () {

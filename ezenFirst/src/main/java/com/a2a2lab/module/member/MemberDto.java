@@ -12,6 +12,7 @@ public class MemberDto {
 	private Integer gender;
 	private String birthday;
 	private Integer mobileCarrier;
+	private String mobileCarrierName;
 	private String phone;
 	private String createdAt;
 	private String updatedAt;
@@ -73,6 +74,14 @@ public class MemberDto {
 
 	public void setMobileCarrier(Integer mobileCarrier) {
 		this.mobileCarrier = mobileCarrier;
+	}
+
+	public String getMobileCarrierName() {
+		return mobileCarrierName;
+	}
+
+	public void setMobileCarrierName(String mobileCarrierName) {
+		this.mobileCarrierName = mobileCarrierName;
 	}
 
 	public String getPhone() {

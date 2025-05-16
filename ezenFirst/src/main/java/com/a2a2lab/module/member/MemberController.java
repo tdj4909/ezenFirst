@@ -1,5 +1,7 @@
 package com.a2a2lab.module.member;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,11 @@ public class MemberController {
 	@Autowired
 	MailService mailService;
 	
+	
+//	************************************************************
+//	관리자
+//	************************************************************
+
 	// 멤버 관리 화면
 	@RequestMapping("/xdm/member/list")
 	public String showMemberManagement(Model model, PageVo pageVo, SearchVo searchVo) {
@@ -32,6 +39,9 @@ public class MemberController {
 		pageVo.setParamsPaging(service.countMembersByVo(pageVo, searchVo));
 		model.addAttribute("pageVo", pageVo);
 		
+		// 통신사
+		model.addAttribute("codeList", codeService.findCodesByCodeGroupId("1"));
+				
 		model.addAttribute("list", service.findMembersByVo(pageVo, searchVo));
 		
 		return "/xdm/member/memberList";
@@ -40,15 +50,12 @@ public class MemberController {
 	// 멤버 등록/수정 화면
 	@RequestMapping("/xdm/member/edit")
 	public String showMemberEdit(Model model, @RequestParam("memberId") String memberId){
-		
 		// 통신사
 		model.addAttribute("codeList", codeService.findCodesByCodeGroupId("1"));
-		
 		// memberId가 있으면 수정, 없으면 등록
 		if (!memberId.equals("") && !memberId.equals("0")) {
 			model.addAttribute("item", service.findMemberById(memberId));
 		}
-		
 		return "/xdm/member/memberEdit";
 	}
 	
@@ -56,6 +63,35 @@ public class MemberController {
 	@RequestMapping("/xdm/member/create")
 	public String createMember(MemberDto dto) {
 		service.createMember(dto);
+		return "redirect:/xdm/member/list";
+	}
+	
+//	// 멤버 수정
+//	@RequestMapping("/xdm/member/update")
+//	public String updateMember(MemberDto dto) {
+//		service.updateMember(dto);
+//		return "redirect:/xdm/member/list";
+//	}
+	
+	// 멤버 softDelete
+	@RequestMapping("/xdm/member/softDelete")
+	public String softDeleteMember(@RequestParam("delSeq") List<String> idList) {
+		for(String id : idList) {
+			if(!id.equals("")) {
+				service.softDeleteMember(id);
+			}
+		}
+		return "redirect:/xdm/member/list";
+	}
+	
+	// 멤버 hardDelete
+	@RequestMapping("/xdm/member/hardDelete")
+	public String hardDeleteMember(@RequestParam("delSeq") List<String> idList) {
+		for(String id : idList) {
+			if(!id.equals("")) {
+				service.hardDeleteMember(id);
+			}
+		}
 		return "redirect:/xdm/member/list";
 	}
 	

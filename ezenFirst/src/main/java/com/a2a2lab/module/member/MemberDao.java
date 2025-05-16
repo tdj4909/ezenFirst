@@ -15,19 +15,21 @@ public interface MemberDao {
 	public List<MemberDto> findMembersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드 검색
 	public MemberDto findMemberById(String memberId);
 	public int createMember(MemberDto dto);
+//	public int updateMember(MemberDto dto);
+	public int softDeleteMember(String memberId);
+	public int hardDeleteMember(String memberId);
 	
-	
-	public int insert(MemberDto dto);
-	public int update(MemberDto dto);
-	public int uelete(MemberDto dto);
-	public int delete(MemberDto dto);
-	public int memberCount();
-	public int selectOneCount(MemberVo vo);
-	public MemberDto selectOne(MemberVo vo);
-	public MemberDto loginChk(MemberDto dto);
-	public int emailChk(MemberDto dto);
-	public List<MemberDto> selectList(MemberVo vo);
-	public List<MemberDto> selectMobileCarrierGroup();
+//	public int insert(MemberDto dto);
+//	public int update(MemberDto dto);
+//	public int uelete(MemberDto dto);
+//	public int delete(MemberDto dto);
+//	public int memberCount();
+//	public int selectOneCount(MemberVo vo);
+//	public MemberDto selectOne(MemberVo vo);
+//	public MemberDto loginChk(MemberDto dto);
+//	public int emailChk(MemberDto dto);
+//	public List<MemberDto> selectList(MemberVo vo);
+//	public List<MemberDto> selectMobileCarrierGroup();
 
 	public List<MemberDto> selectListCachedCodeArrayList();
 }
