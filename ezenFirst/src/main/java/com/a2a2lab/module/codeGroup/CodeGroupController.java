@@ -48,14 +48,14 @@ public class CodeGroupController {
 	@RequestMapping("/xdm/system/codegroup/create")
 	public String createCodeGroup(CodeGroupDto dto) {
 		service.createCodeGroup(dto);
-		return "redirect:xdm/system/codegroup/list";
+		return "redirect:/xdm/system/codegroup/list";
 	}
 	
 	// 코드그룹 수정
 	@RequestMapping("/xdm/system/codegroup/update")
 	public String updateCodeGroup(CodeGroupDto dto) {
 		service.updateCodeGroup(dto);
-		return "redirect:xdm/system/codegroup/list";
+		return "redirect:/xdm/system/codegroup/list";
 	}
 	
 	// 코드그룹 softDelete
@@ -68,7 +68,7 @@ public class CodeGroupController {
 			}
 		}
 		
-		return "redirect:xdm/system/codegroup/list";
+		return "redirect:/xdm/system/codegroup/list";
 	}
 	
 	// 코드그룹 hardDelete
@@ -81,7 +81,7 @@ public class CodeGroupController {
 			}
 		}
 		
-		return "redirect:xdm/system/codegroup/list";
+		return "redirect:/xdm/system/codegroup/list";
 	}
 	
 }

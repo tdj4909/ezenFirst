@@ -33,7 +33,7 @@ public class CodeController {
 		
 		model.addAttribute("list", service.findCodesByVo(pageVo, searchVo));
 		
-		return "/xdm/code/codeList";
+		return "xdm/code/codeList";
 	}
 	
 	// 코드 등록/수정 화면
@@ -46,7 +46,7 @@ public class CodeController {
 			model.addAttribute("item", service.findCodeById(codeId));
 		}
 		
-		return "/xdm/code/codeEdit";
+		return "xdm/code/codeEdit";
 	}
 	
 	// 코드 추가

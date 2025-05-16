@@ -8,6 +8,8 @@ public class CodeGroupDto {
 	private String updatedAt;
 	private Integer isUsed;
 	
+	private Integer codeCount;
+	
 	
 	// Getter, Setter
 	public String getCodegroupId() {
@@ -39,5 +41,11 @@ public class CodeGroupDto {
 	}
 	public void setIsUsed(Integer isUsed) {
 		this.isUsed = isUsed;
+	}
+	public Integer getCodeCount() {
+		return codeCount;
+	}
+	public void setCodeCount(Integer codeCount) {
+		this.codeCount = codeCount;
 	}
 }

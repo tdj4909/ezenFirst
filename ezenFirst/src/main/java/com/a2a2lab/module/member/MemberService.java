@@ -1,18 +1,13 @@
 package com.a2a2lab.module.member;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.a2a2lab.module.codeGroup.CodeGroupDto;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
-
-import jakarta.annotation.PostConstruct;
 
 @Service
 public class MemberService {
