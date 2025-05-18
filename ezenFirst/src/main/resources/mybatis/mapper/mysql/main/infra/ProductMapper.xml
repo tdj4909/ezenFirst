@@ -6,6 +6,118 @@
 	<resultMap id="resultMapObj"
 		type="com.a2a2lab.module.product.ProductDto"></resultMap>
 
+	<select id="countProductsByVo" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM
+			product
+		WHERE
+			1=1
+<!--			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND is_used = #{searchVo.shIsUse}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
+			
+			<choose>
+				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND codegroup_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose>-->
+	</select>
+
+	<select id="findProductsByVo" resultMap="resultMapObj">
+		SELECT 
+			cg.codegroup_id AS codegroupId
+			,cg.name
+			,cg.created_at AS createdAt
+			,cg.updated_at AS updatedAt
+			,cg.is_used AS isUsed
+			,(
+			SELECT
+				COUNT(*)
+			FROM
+				code cd
+			WHERE
+				cd.codegroup_id = cg.codegroup_id
+			) AS codeCount
+		FROM
+			product cg
+		WHERE
+			1=1
+<!--			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND cg.is_used = #{searchVo.shIsUse}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND cg.is_deleted = #{searchVo.shIsDel}</if>
+			
+			<choose>
+				<when test="searchVo.shOptionDate == 1">AND cg.created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 2">AND cg.updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND cg.codegroup_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND cg.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose>-->
+		ORDER BY
+			product_id DESC
+		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
+	</select>
+
+	<select id="findProductById" resultMap="resultMapObj">
+		SELECT
+			product_id AS productId
+			,name
+			,is_used AS isUsed
+		FROM 
+			product
+		WHERE
+			1=1
+			AND product_id = #{productId}
+	</select>
+
+	<insert id="createProduct">
+		INSERT INTO product(
+			name
+			,created_at
+			,is_used
+			,is_deleted
+		) VALUES(
+			#{name},
+			now(),
+			#{isUsed},
+			0
+		)
+	</insert>
+	
+	<update id="updateProduct">
+		UPDATE product SET
+			name = #{name}
+			,is_used = #{isUsed}
+			,updated_at = now()
+		WHERE
+			1=1
+			AND product_id = #{productId}
+	</update>
+	
+	<update id="softDeleteProduct">
+		UPDATE product SET
+			is_deleted = 1
+			,updated_at = now()
+		WHERE
+			1=1
+			AND product_id = #{productId}
+	</update>
+	
+	<delete id="hardDeleteProduct">
+		DELETE
+		FROM
+			product
+		WHERE
+			product_id = #{productId}
+	</delete>
+
+
+
 
 
 <!--	<sql id="selectCommon">
