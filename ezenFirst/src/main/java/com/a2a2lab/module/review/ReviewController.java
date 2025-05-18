@@ -1,6 +1,5 @@
 package com.a2a2lab.module.review;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.a2a2lab.module.product.ProductDto;
 import com.a2a2lab.module.product.ProductService;
 
 import jakarta.servlet.http.HttpSession;
@@ -70,20 +66,20 @@ public class ReviewController{
 		return "redirect:/Xdm/reviewXdmList";
 	}
 	
-	// 리뷰 저장
-	@RequestMapping("/TableOrder/reviewInst")
-	@ResponseBody
-	public ReviewDto reviewInst(@RequestBody ReviewDto dto) {
-		
-		dto.setReviewDate(LocalDate.now().toString());
-		service.insert(dto);
-		ProductDto productDto = new ProductDto();
-		productDto.setSeq(dto.getMenu_seq());
-		productDto.setMenuRating(service.findAvgRatingByMenuSeq(dto.getMenu_seq()));
-//		productService.updateRating(productDto);
-
-	    return dto;
-	}
+//	// 리뷰 저장
+//	@RequestMapping("/TableOrder/reviewInst")
+//	@ResponseBody
+//	public ReviewDto reviewInst(@RequestBody ReviewDto dto) {
+//		
+//		dto.setReviewDate(LocalDate.now().toString());
+//		service.insert(dto);
+//		ProductDto productDto = new ProductDto();
+//		productDto.setSeq(dto.getMenu_seq());
+//		productDto.setMenuRating(service.findAvgRatingByMenuSeq(dto.getMenu_seq()));
+////		productService.updateRating(productDto);
+//
+//	    return dto;
+//	}
 	
 	// 리뷰 Ajax
 	@GetMapping("/TableOrder/reviewFragment")

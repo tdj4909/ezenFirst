@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
@@ -50,7 +51,12 @@ public class ProductController {
 	
 	// 메뉴 추가
 	@RequestMapping("/xdm/service/product/create")
-	public String createProduct(ProductDto dto) {
+	public String createProduct(@RequestParam("file") MultipartFile file, ProductDto dto) {
+		
+		// File DB upload
+//		dto.setFileUploaded_seq(uploadService.localUpload(file));
+		dto.setFileId(null);
+		
 		service.createProduct(dto);
 		return "redirect:/xdm/service/product/list";
 	}

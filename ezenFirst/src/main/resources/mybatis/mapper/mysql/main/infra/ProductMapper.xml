@@ -94,6 +94,7 @@
 			,is_recommand
 			,created_at
 			,is_deleted
+			,file_id
 		) VALUES(
 			#{type}
 			,#{name}
@@ -110,6 +111,7 @@
 			,#{isRecommand}
 			,now()
 			,0
+			,#{fileId}
 		)
 	</insert>
 	

@@ -12,7 +12,7 @@
 
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="/Xdm/index">Home</a></li>
+					<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
 					<li class="breadcrumb-item">서비스관리</li>
 					<li class="breadcrumb-item active">제품관리</li>
 				</ol>
@@ -26,7 +26,7 @@
 
 		<section class="section">
 
-			<form action="" method="post" id="form" class="needs-validation" novalidate>
+			<form action="" method="post" id="form" class="needs-validation" enctype="multipart/form-data" novalidate>
 				<input type="hidden" id="productId" name="productId" th:value="${item?.productId}">
 				
 				<div class="row">
@@ -128,8 +128,8 @@
 									<!-- 3행 -->
 									<div class="row mb-3">
 										<div class="col-4">
-											<label for="formFile" class="form-label">메뉴 사진</label>
-  											<input class="form-control" type="file" id="formFile" name="file">
+											<label for="file" class="form-label">메뉴 사진</label>
+  											<input class="form-control" type="file" id="file" name="file">
 										</div>
 									</div>
 									
@@ -162,9 +162,9 @@
 	</main>
 	<!-- End #main -->
 
-<script type="text/javascript">
+<script>
 	
-	const form = document.querySelector('.needs-validation'); // 단일 폼 선택
+/*	const form = document.querySelector('.needs-validation'); // 단일 폼 선택
     
     const inputMenuNm = form.querySelector("input[name='menuNm']");
     const inputCalories = form.querySelector("input[name='calories']");
@@ -255,11 +255,11 @@
 	    });
 	});
 	
-	
-	let seq = document.querySelector("input[name=ifcgSeq]");
-	
+	*/
 	document.getElementById("btnSubmit").onclick = function(){
-		if(seq.value == "0" || seq.value == "") {
+		const id = document.getElementById('productId').value;
+		
+		if(id == null || id == "") {
 			//if(validation() == false) return false;
 			form.action = "/xdm/service/product/create";
 			form.submit();
