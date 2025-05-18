@@ -3,7 +3,7 @@ package com.a2a2lab.module.product;
 public class ProductDto {
 	
 
-	private String product_id;
+	private String productId;
 	private Integer type;
 	private String name;
 	private String description;
@@ -31,11 +31,11 @@ public class ProductDto {
 //	private String ifcgSeq;
 	
 	
-	public String getProduct_id() {
-		return product_id;
+	public String getProductId() {
+		return productId;
 	}
-	public void setProduct_id(String product_id) {
-		this.product_id = product_id;
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 	public Integer getType() {
 		return type;

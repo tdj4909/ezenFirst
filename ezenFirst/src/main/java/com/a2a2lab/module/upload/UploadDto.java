@@ -2,7 +2,7 @@ package com.a2a2lab.module.upload;
 
 public class UploadDto {
 
-	private String seq;
+	private String fileId;
 	private Integer type;
 	private Integer sort;
 	private String path;
@@ -10,15 +10,15 @@ public class UploadDto {
 	private String uuidName;
 	private String ext;
 	private Long size;
-	private Integer delNy;
-	private String regDateTime;
+	private String createdAt;
+	private Integer isDeleted;
 	
 	
-	public String getSeq() {
-		return seq;
+	public String getFileId() {
+		return fileId;
 	}
-	public void setSeq(String seq) {
-		this.seq = seq;
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 	public Integer getType() {
 		return type;
@@ -62,18 +62,16 @@ public class UploadDto {
 	public void setSize(Long size) {
 		this.size = size;
 	}
-	public Integer getDelNy() {
-		return delNy;
+	public String getCreatedAt() {
+		return createdAt;
 	}
-	public void setDelNy(Integer delNy) {
-		this.delNy = delNy;
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
-	public String getRegDateTime() {
-		return regDateTime;
+	public Integer getIsDeleted() {
+		return isDeleted;
 	}
-	public void setRegDateTime(String regDateTime) {
-		this.regDateTime = regDateTime;
+	public void setIsDeleted(Integer isDeleted) {
+		this.isDeleted = isDeleted;
 	}
-	
-	
 }

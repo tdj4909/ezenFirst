@@ -7,16 +7,16 @@
 		type="com.a2a2lab.module.upload.UploadDto"></resultMap>
 
 	<insert id="localUpload">
-		INSERT INTO fileUploaded(
+		INSERT INTO file(
 		    type
 			,sort
 			,path
-			,originalName
-			,uuidName
+			,original_name
+			,uuid_name
 			,ext
 			,size
-			,delNy
-			,regDateTime
+			,created_at
+			,is_deleted
 		) VALUES(
 			#{type}
 			,#{sort}
@@ -25,11 +25,10 @@
 			,#{uuidName}
 			,#{ext}
 			,#{size}
-			,0
 			,now()
+			,0
 		)
-		<selectKey resultType="String" keyProperty="seq"
-			order="AFTER">
+		<selectKey resultType="String" keyProperty="fileId" order="AFTER">
 			SELECT last_insert_id()
 		</selectKey>
 	</insert>

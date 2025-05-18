@@ -1,5 +1,6 @@
 package com.a2a2lab.module.product;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.a2a2lab.module.upload.UploadService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -17,8 +19,8 @@ public class ProductController {
 
 	@Autowired
 	ProductService service;
-//	@Autowired
-//	UploadService uploadService;
+	@Autowired
+	UploadService uploadService;
 	
 	
 //	************************************************************
@@ -51,11 +53,10 @@ public class ProductController {
 	
 	// 메뉴 추가
 	@RequestMapping("/xdm/service/product/create")
-	public String createProduct(@RequestParam("file") MultipartFile file, ProductDto dto) {
+	public String createProduct(@RequestParam("file") MultipartFile file, ProductDto dto) throws IOException {
 		
 		// File DB upload
-//		dto.setFileUploaded_seq(uploadService.localUpload(file));
-		dto.setFileId(null);
+		dto.setFileId(uploadService.localUpload(file));
 		
 		service.createProduct(dto);
 		return "redirect:/xdm/service/product/list";

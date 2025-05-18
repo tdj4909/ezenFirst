@@ -29,7 +29,7 @@
 
 	<select id="findProductsByVo" resultMap="resultMapObj">
 		SELECT 
-			product_id AS memberId
+			product_id AS productId
 			,type
 			,name
 			,price
@@ -106,7 +106,7 @@
 			,#{fat}
 			,#{sodium}
 			,#{stock}
-			,#{orderCount}
+			,0
 			,#{rating}
 			,#{isRecommand}
 			,now()
