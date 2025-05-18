@@ -25,9 +25,10 @@
 		<!-- End Page Title -->
 
 		<section class="section">
-<!-- ********************************************************************************************* -->
-			<form action="" method="post" id="form" class="needs-validation" enctype="multipart/form-data" novalidate>
-				<input type="hidden"name="ifcgSeq" th:value="${item?.ifcgSeq}">
+
+			<form action="" method="post" id="form" class="needs-validation" novalidate>
+				<input type="hidden" id="productId" name="productId" th:value="${item?.productId}">
+				
 				<div class="row">
 					<div class="col-lg-12">
 
@@ -46,16 +47,30 @@
 									<!-- 1행 -->
 									<div class="row mb-3">
 										<div class="col-4">
-											<label for="text" class="form-label">메뉴명<b style="color: red;">*</b></label> 
-											<input type="text" id="menuNm" name="menuNm" class="form-control" placeholder="메뉴명" th:value="${item?.menuNm}" required>
-											<div class="invalid-feedback">메뉴명을 입력하세요.</div>
+											<div class="row">
+												<div class="col-4">
+													<label for="type" class="form-label">종류<b style="color: red;">*</b></label> 
+													<select class="form-select" id="type" name="type" required>
+														<option hidden disabled value="" selected>종류</option>
+														<option value="1" th:selected="${item?.type == 1}">세트</option>
+														<option value="2" th:selected="${item?.type == 2}">단품</option>
+														<option value="3" th:selected="${item?.type == 3}">사이드</option>
+														<option value="4" th:selected="${item?.type == 4}">음료</option>
+													</select>
+												</div>
+												<div class="col-8">
+													<label for="name" class="form-label">메뉴명<b style="color: red;">*</b></label> 
+													<input type="text" id="name" name="name" class="form-control" placeholder="메뉴명" th:value="${item?.name}" required>
+													<div class="invalid-feedback">메뉴명을 입력하세요.</div>
+												</div>
+											</div>
 										</div>
-										<div class="col-4">
+										<div class="col-2">
 											<label for="calories" class="form-label">열량(kcal)<b style="color: red;">*</b></label> 
 											<input type="text" id="calories" name="calories" class="form-control" placeholder="숫자" th:value="${item?.calories}" required>
 											<div class="invalid-feedback">열량을 입력하세요.</div>
 										</div>
-										<div class="col-4">
+										<div class="col-6">
 											<div class="row">
 												<div class="col-3">
 													<label for="sugars" class="form-label">당류(g)<b style="color: red;">*</b></label> 
@@ -77,69 +92,40 @@
 													<input type="text" id="sodium" name="sodium" class="form-control" placeholder="숫자" th:value="${item?.sodium}" required>
 													<div class="invalid-feedback">나트륨을 입력하세요.</div>
 												</div>
-												
 											</div>
 										</div>
-
 									</div>
 				
 									<!-- 2행 -->
 									<div class="row mb-3">
 										<div class="col-4">
-											<label for="text" class="form-label">가격<b
-												style="color: red;">*</b></label> 
-											<input type="text" id="menuPrice" name="menuPrice" class="form-control" placeholder="숫자" th:value="${item?.menuPrice}" required>
-											<div class="invalid-feedback">가격을 입력하세요.</div>
-										</div>
-										<div class="col-4">
-											<label for="menuType" class="form-label">종류<b style="color: red;">*</b></label> 
-											<select class="form-select" name="menuType" required>
-												<option hidden disabled value="" selected>종류</option>
-												<option value="1" th:selected="${item?.menuType == 1}">세트</option>
-												<option value="2" th:selected="${item?.menuType == 2}">단품</option>
-												<option value="3" th:selected="${item?.menuType == 3}">사이드</option>
-												<option value="4" th:selected="${item?.menuType == 4}">음료</option>
-											</select>
-										</div>
-										<div class="col-4">
-											<label for="menuStock" class="form-label">재고<b
-												style="color: red;">*</b></label> 
-											<input type="text" id="menuStock" name="menuStock" class="form-control" placeholder="숫자" th:value="${item?.menuStock}" required>
-											<div class="invalid-feedback">재고를 입력하세요.</div>
-										</div>
-
-									</div>
-									
-									<!-- 3행 -->
-									<div class="row mb-3">
-										<div class="col-8">
-											<label for="menuDescription" class="form-label">설명</label>
-											<textarea class="form-control" id="menuDescription" name="menuDescription" rows="2" placeholder="최대 200자" th:text="${item?.menuDescription}" maxlength="200"></textarea>
-										</div>
-										<div class="col-4">
 											<div class="row">
-												<div class="col-6">
-													<label for="recommand" class="form-label">추천<b
-														style="color: red;">*</b></label> 
-													<select name="recommand" id="recommand" class="form-select" required>
-														<option value="1" th:selected="${item?.recommand == 1}">Y</option>
-														<option value="0" th:selected="${item?.recommand == 0}">N</option>
-													</select>
+												<div class="col-4">
+													<label for="price" class="form-label">가격(￦)<b style="color: red;">*</b></label> 
+													<input type="text" id="price" name="price" class="form-control" placeholder="숫자" th:value="${item?.price}" required>
+													<div class="invalid-feedback">가격을 입력하세요.</div>
 												</div>
-												<div class="col-6">
-													<label for="menuNew" class="form-label">신메뉴<b
-														style="color: red;">*</b></label> 
-													<select name="menuNew" id="menuNew" class="form-select" required>
-														<option value="1" th:selected="${item?.menuNew == 1}">Y</option>
-														<option value="0" th:selected="${item?.menuNew == 0}">N</option>
+												<div class="col-4">
+													<label for="stock" class="form-label">재고<b style="color: red;">*</b></label> 
+													<input type="text" id="stock" name="stock" class="form-control" placeholder="숫자" th:value="${item?.stock}" required>
+													<div class="invalid-feedback">재고를 입력하세요.</div>
+												</div>
+												<div class="col-4">
+													<label for="isRecommand" class="form-label">추천<b style="color: red;">*</b></label> 
+													<select name="isRecommand" id="isRecommand" class="form-select" required>
+														<option value="1" th:selected="${item?.isRecommand == 1}">Y</option>
+														<option value="0" th:selected="${item?.isRecommand == 0}">N</option>
 													</select>
 												</div>
 											</div>
-	
 										</div>
-										
+										<div class="col-8">
+											<label for="description" class="form-label">설명</label>
+											<textarea class="form-control" id="description" name="description" rows="2" placeholder="최대 200자" th:text="${item?.description}" maxlength="200"></textarea>
+										</div>
 									</div>
 									
+									<!-- 3행 -->
 									<div class="row mb-3">
 										<div class="col-4">
 											<label for="formFile" class="form-label">메뉴 사진</label>
@@ -147,14 +133,12 @@
 										</div>
 									</div>
 									
-
 								</div>
-								<!-- End Pagination with icons -->
 
 								<div class="row">
 									<div class="col">
-										<a href="/Xdm/productXdmList" class="btn btn-outline-secondary"> <i
-											class="ri-list-check"></i>
+										<a href="/xdm/service/product/list" class="btn btn-outline-secondary">
+											<i class="ri-list-check"></i>
 										</a>
 									</div>
 									<div class="col">
@@ -165,6 +149,7 @@
 										</div>
 									</div>
 								</div>
+								
 							</div>
 						</div>
 
@@ -177,8 +162,7 @@
 	</main>
 	<!-- End #main -->
 
-	<!-- temp -->
-	<script type="text/javascript">
+<script type="text/javascript">
 	
 	const form = document.querySelector('.needs-validation'); // 단일 폼 선택
     
@@ -276,19 +260,16 @@
 	
 	document.getElementById("btnSubmit").onclick = function(){
 		if(seq.value == "0" || seq.value == "") {
-			if(validation() == false) return false;
-			form.action = "/Xdm/productXdmInst";
+			//if(validation() == false) return false;
+			form.action = "/xdm/service/product/create";
 			form.submit();
 		} else {
-			if(validation() == false) return false;
-			form.action = "/Xdm/productXdmUpdt";
+			//if(validation() == false) return false;
+			form.action = "/xdm/service/product/update";
 			form.submit();
 		}
 	}
 	
-	</script>
-	
-	<!-- ******************************************************************************* -->
-
+</script>
 
 <div th:replace="~{xdm/include/footer :: footer}"></div>

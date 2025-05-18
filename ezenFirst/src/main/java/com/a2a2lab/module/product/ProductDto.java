@@ -3,64 +3,63 @@ package com.a2a2lab.module.product;
 public class ProductDto {
 	
 
-	private String seq;
-	private String menuNm;
-	private Integer menuPrice;
-	private String menuDescription;
+	private String product_id;
+	private Integer type;
+	private String name;
+	private String description;
+	private Integer price;
 	private Integer calories;
 	private Integer sugars;
 	private Integer protein;
 	private Integer fat;
 	private Integer sodium;
-	private Integer menuType;
-	private Integer recommand;
-	private Integer menuNew;
-	private Integer menuOrderCnt;
-	private Integer menuStock;
-	private Integer menuRating;
-	private String menuRegDateTime;
-	private String menuModDateTime;
-	private Integer menuDelNy;
-	private String fileUploaded_seq;
+	private Integer isRecommand;
+	private Integer orderCount;
+	private Integer stock;
+	private Integer rating;
+	private String createdAt;
+	private String updatedAt;
+	private Integer isDeleted;
+	private String fileId;
+
 	
-	private String path;
-	private String originalName;
-	
-	private String menuTypeNm;
-	
-	private String ifcgSeq;
-	
+//	private String path;
+//	private String originalName;
+//	
+//	private String menuTypeNm;
+//	
+//	private String ifcgSeq;
 	
 	
-	public String getIfcgSeq() {
-		return ifcgSeq;
+	public String getProduct_id() {
+		return product_id;
 	}
-	public void setIfcgSeq(String ifcgSeq) {
-		this.ifcgSeq = ifcgSeq;
+	public void setProduct_id(String product_id) {
+		this.product_id = product_id;
 	}
-	public String getSeq() {
-		return seq;
+	public Integer getType() {
+		return type;
 	}
-	public void setSeq(String seq) {
-		this.seq = seq;
+	public void setType(Integer type) {
+		this.type = type;
 	}
-	public String getMenuNm() {
-		return menuNm;
+	public String getName() {
+		return name;
 	}
-	public void setMenuNm(String menuNm) {
-		this.menuNm = menuNm;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public Integer getMenuPrice() {
-		return menuPrice;
+	public String getDescription() {
+		return description;
 	}
-	public void setMenuPrice(Integer menuPrice) {
-		this.menuPrice = menuPrice;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	public String getMenuDescription() {
-		return menuDescription;
+	public Integer getPrice() {
+		return price;
 	}
-	public void setMenuDescription(String menuDescription) {
-		this.menuDescription = menuDescription;
+	public void setPrice(Integer price) {
+		this.price = price;
 	}
 	public Integer getCalories() {
 		return calories;
@@ -92,83 +91,52 @@ public class ProductDto {
 	public void setSodium(Integer sodium) {
 		this.sodium = sodium;
 	}
-	public Integer getMenuType() {
-		return menuType;
+	public Integer getIsRecommand() {
+		return isRecommand;
 	}
-	public void setMenuType(Integer menuType) {
-		this.menuType = menuType;
+	public void setIsRecommand(Integer isRecommand) {
+		this.isRecommand = isRecommand;
 	}
-	public Integer getRecommand() {
-		return recommand;
+	public Integer getOrderCount() {
+		return orderCount;
 	}
-	public void setRecommand(Integer recommand) {
-		this.recommand = recommand;
+	public void setOrderCount(Integer orderCount) {
+		this.orderCount = orderCount;
 	}
-	public Integer getMenuNew() {
-		return menuNew;
+	public Integer getStock() {
+		return stock;
 	}
-	public void setMenuNew(Integer menuNew) {
-		this.menuNew = menuNew;
+	public void setStock(Integer stock) {
+		this.stock = stock;
 	}
-	public Integer getMenuStock() {
-		return menuStock;
+	public Integer getRating() {
+		return rating;
 	}
-	public void setMenuStock(Integer menuStock) {
-		this.menuStock = menuStock;
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
-	public Integer getMenuDelNy() {
-		return menuDelNy;
+	public String getCreatedAt() {
+		return createdAt;
 	}
-	public void setMenuDelNy(Integer menuDelNy) {
-		this.menuDelNy = menuDelNy;
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
-	public String getMenuTypeNm() {
-		return menuTypeNm;
+	public String getUpdatedAt() {
+		return updatedAt;
 	}
-	public void setMenuTypeNm(String menuTypeNm) {
-		this.menuTypeNm = menuTypeNm;
+	public void setUpdatedAt(String updatedAt) {
+		this.updatedAt = updatedAt;
 	}
-	public Integer getMenuOrderCnt() {
-		return menuOrderCnt;
+	public Integer getIsDeleted() {
+		return isDeleted;
 	}
-	public void setMenuOrderCnt(Integer menuOrderCnt) {
-		this.menuOrderCnt = menuOrderCnt;
+	public void setIsDeleted(Integer isDeleted) {
+		this.isDeleted = isDeleted;
 	}
-	public Integer getMenuRating() {
-		return menuRating;
+	public String getFileId() {
+		return fileId;
 	}
-	public void setMenuRating(Integer menuRating) {
-		this.menuRating = menuRating;
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
-	public String getMenuRegDateTime() {
-		return menuRegDateTime;
-	}
-	public void setMenuRegDateTime(String menuRegDateTime) {
-		this.menuRegDateTime = menuRegDateTime;
-	}
-	public String getMenuModDateTime() {
-		return menuModDateTime;
-	}
-	public void setMenuModDateTime(String menuModDateTime) {
-		this.menuModDateTime = menuModDateTime;
-	}
-	public String getFileUploaded_seq() {
-		return fileUploaded_seq;
-	}
-	public void setFileUploaded_seq(String fileUploaded_seq) {
-		this.fileUploaded_seq = fileUploaded_seq;
-	}
-	public String getOriginalName() {
-		return originalName;
-	}
-	public void setOriginalName(String originalName) {
-		this.originalName = originalName;
-	}
-	public String getPath() {
-		return path;
-	}
-	public void setPath(String path) {
-		this.path = path;
-	}
-	
 }

@@ -29,34 +29,36 @@
 
 	<select id="findProductsByVo" resultMap="resultMapObj">
 		SELECT 
-			cg.codegroup_id AS codegroupId
-			,cg.name
-			,cg.created_at AS createdAt
-			,cg.updated_at AS updatedAt
-			,cg.is_used AS isUsed
-			,(
-			SELECT
-				COUNT(*)
-			FROM
-				code cd
-			WHERE
-				cd.codegroup_id = cg.codegroup_id
-			) AS codeCount
+			product_id AS memberId
+			,type
+			,name
+			,price
+			,calories
+			,is_recommand AS isRecommand
+			,order_count AS orderCount
+			,stock
+			,rating
+			,created_at AS createdAt
+			,updated_at AS updatedAt
 		FROM
-			product cg
+			product
 		WHERE
 			1=1
-<!--			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND cg.is_used = #{searchVo.shIsUse}</if>
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND cg.is_deleted = #{searchVo.shIsDel}</if>
+<!--			<if test="searchVo.shIsAdmin != null and !searchVo.shIsAdmin.equals('')">AND is_admin = #{searchVo.shIsAdmin}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
+			<if test="searchVo.shGender != null and !searchVo.shGender.equals('')">AND gender = #{searchVo.shGender}</if>
+			<if test="searchVo.shTel != null and !searchVo.shTel.equals('')">AND mobile_carrier = #{searchVo.shTel}</if>
 			
 			<choose>
-				<when test="searchVo.shOptionDate == 1">AND cg.created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
-				<when test="searchVo.shOptionDate == 2">AND cg.updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+				<when test="searchVo.shOptionDate == 3">AND birthday BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
 			</choose>
 			
 			<choose>
-				<when test="searchVo.shOption == 1">AND cg.codegroup_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND cg.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 1">AND email LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 3">AND phone LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
 			</choose>-->
 		ORDER BY
 			product_id DESC
@@ -77,15 +79,37 @@
 
 	<insert id="createProduct">
 		INSERT INTO product(
-			name
+			type
+			,name
+			,price
+			,description
+			,calories
+			,sugars
+			,protein
+			,fat
+			,sodium
+			,stock
+			,order_count
+			,rating
+			,is_recommand
 			,created_at
-			,is_used
 			,is_deleted
 		) VALUES(
-			#{name},
-			now(),
-			#{isUsed},
-			0
+			#{type}
+			,#{name}
+			,#{price}
+			,#{description}
+			,#{calories}
+			,#{sugars}
+			,#{protein}
+			,#{fat}
+			,#{sodium}
+			,#{stock}
+			,#{orderCount}
+			,#{rating}
+			,#{isRecommand}
+			,now()
+			,0
 		)
 	</insert>
 	
