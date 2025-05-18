@@ -6,7 +6,9 @@
 	<resultMap id="resultMapObj"
 		type="com.a2a2lab.module.product.ProductDto"></resultMap>
 
-	<sql id="selectCommon">
+
+
+<!--	<sql id="selectCommon">
 		FROM menu a
 		WHERE 1=1
 			
@@ -188,5 +190,5 @@
 			seq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
-	
+-->	
 </mapper>

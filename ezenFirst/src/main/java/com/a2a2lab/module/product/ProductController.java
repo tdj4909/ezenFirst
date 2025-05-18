@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.a2a2lab.module.upload.UploadService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -17,8 +16,8 @@ public class ProductController {
 
 	@Autowired
 	ProductService service;
-	@Autowired
-	UploadService uploadService;
+//	@Autowired
+//	UploadService uploadService;
 	
 	
 //	************************************************************
