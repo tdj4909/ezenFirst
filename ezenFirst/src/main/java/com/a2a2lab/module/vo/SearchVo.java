@@ -7,11 +7,16 @@ public class SearchVo {
 	private Integer shOptionDate;
 	private String shDateStart;
 	private String shDateEnd;
+	private Integer shOptionRange;
+	private Integer shRangeStart;
+	private Integer shRangeEnd;
 	private Integer shIsDel = 0;
 	private Integer shIsUse;
 	private Integer shGender;
 	private Integer shTel;
 	private Integer shIsAdmin;
+	private Integer shRecommand;
+	private Integer shType;
 
 	
 	// Getter, Setter
@@ -45,6 +50,24 @@ public class SearchVo {
 	public void setShDateEnd(String shDateEnd) {
 		this.shDateEnd = shDateEnd;
 	}
+	public Integer getShOptionRange() {
+		return shOptionRange;
+	}
+	public void setShOptionRange(Integer shOptionRange) {
+		this.shOptionRange = shOptionRange;
+	}
+	public Integer getShRangeStart() {
+		return shRangeStart;
+	}
+	public void setShRangeStart(Integer shRangeStart) {
+		this.shRangeStart = shRangeStart;
+	}
+	public Integer getShRangeEnd() {
+		return shRangeEnd;
+	}
+	public void setShRangeEnd(Integer shRangeEnd) {
+		this.shRangeEnd = shRangeEnd;
+	}
 	public Integer getShIsDel() {
 		return shIsDel;
 	}
@@ -74,5 +97,17 @@ public class SearchVo {
 	}
 	public void setShIsAdmin(Integer shIsAdmin) {
 		this.shIsAdmin = shIsAdmin;
+	}
+	public Integer getShRecommand() {
+		return shRecommand;
+	}
+	public void setShRecommand(Integer shRecommand) {
+		this.shRecommand = shRecommand;
+	}
+	public Integer getShType() {
+		return shType;
+	}
+	public void setShType(Integer shType) {
+		this.shType = shType;
 	}
 }

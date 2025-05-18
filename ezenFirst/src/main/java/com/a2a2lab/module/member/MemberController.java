@@ -38,7 +38,6 @@ public class MemberController {
 		// 페이징 설정
 		pageVo.setParamsPaging(service.countMembersByVo(pageVo, searchVo));
 		model.addAttribute("pageVo", pageVo);
-		
 		// 통신사
 		model.addAttribute("codeList", codeService.findCodesByCodeGroupId("1"));
 				

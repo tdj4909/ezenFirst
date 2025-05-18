@@ -51,11 +51,13 @@
 												<div class="col-4">
 													<label for="type" class="form-label">종류<b style="color: red;">*</b></label> 
 													<select class="form-select" id="type" name="type" required>
-														<option hidden disabled value="" selected>종류</option>
-														<option value="1" th:selected="${item?.type == 1}">세트</option>
-														<option value="2" th:selected="${item?.type == 2}">단품</option>
-														<option value="3" th:selected="${item?.type == 3}">사이드</option>
-														<option value="4" th:selected="${item?.type == 4}">음료</option>
+														<option disabled hidden selected value="">종류</option>
+														<option th:each="code : ${codeList}" 
+																th:value="${code.codeId}"
+																th:text="${code.name}"
+																th:selected="${code.codeId == item?.type}"
+																>
+														</option>
 													</select>
 												</div>
 												<div class="col-8">

@@ -18,9 +18,30 @@
 			<if test="searchVo.shTel != null and !searchVo.shTel.equals('')">AND mobile_carrier = #{searchVo.shTel}</if>
 			
 			<choose>
-				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
-				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
-				<when test="searchVo.shOptionDate == 3">AND birthday BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			    <when test="searchVo.shOptionDate == 1">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionDate == 2">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionDate == 3">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND birthday &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND birthday &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
 			</choose>
 			
 			<choose>
@@ -52,9 +73,30 @@
 			<if test="searchVo.shTel != null and !searchVo.shTel.equals('')">AND mobile_carrier = #{searchVo.shTel}</if>
 			
 			<choose>
-				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
-				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
-				<when test="searchVo.shOptionDate == 3">AND birthday BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			    <when test="searchVo.shOptionDate == 1">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionDate == 2">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionDate == 3">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND birthday &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND birthday &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
 			</choose>
 			
 			<choose>

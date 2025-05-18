@@ -13,18 +13,68 @@
 			product
 		WHERE
 			1=1
-<!--			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND is_used = #{searchVo.shIsUse}</if>
 			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
+			<if test="searchVo.shType != null and !searchVo.shType.equals('')">AND type = #{searchVo.shType}</if>
+			<if test="searchVo.shRecommand != null and !searchVo.shRecommand.equals('')">AND is_recommand = #{searchVo.shRecommand}</if>
 			
 			<choose>
-				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
-				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			    <when test="searchVo.shOptionDate == 1">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionDate == 2">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
 			</choose>
 			
 			<choose>
-				<when test="searchVo.shOption == 1">AND codegroup_id = #{searchVo.shValue}</when>
+			    <when test="searchVo.shOptionRange eq 1">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND price &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND price &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionRange eq 2">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND calories &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND calories &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionRange eq 3">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND order_count &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND order_count &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionRange eq 4">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND stock &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND stock &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND product_id = #{searchVo.shValue}</when>
 				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>-->
+			</choose>
 	</select>
 
 	<select id="findProductsByVo" resultMap="resultMapObj">
@@ -44,22 +94,68 @@
 			product
 		WHERE
 			1=1
-<!--			<if test="searchVo.shIsAdmin != null and !searchVo.shIsAdmin.equals('')">AND is_admin = #{searchVo.shIsAdmin}</if>
 			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
-			<if test="searchVo.shGender != null and !searchVo.shGender.equals('')">AND gender = #{searchVo.shGender}</if>
-			<if test="searchVo.shTel != null and !searchVo.shTel.equals('')">AND mobile_carrier = #{searchVo.shTel}</if>
+			<if test="searchVo.shType != null and !searchVo.shType.equals('')">AND type = #{searchVo.shType}</if>
+			<if test="searchVo.shRecommand != null and !searchVo.shRecommand.equals('')">AND is_recommand = #{searchVo.shRecommand}</if>
 			
 			<choose>
-				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
-				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
-				<when test="searchVo.shOptionDate == 3">AND birthday BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			    <when test="searchVo.shOptionDate == 1">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionDate == 2">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
 			</choose>
 			
 			<choose>
-				<when test="searchVo.shOption == 1">AND email LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			    <when test="searchVo.shOptionRange eq 1">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND price &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND price &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionRange eq 2">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND calories &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND calories &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionRange eq 3">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND order_count &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND order_count &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionRange eq 4">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND stock &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND stock &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND product_id = #{searchVo.shValue}</when>
 				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-				<when test="searchVo.shOption == 3">AND phone LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>-->
+			</choose>
 		ORDER BY
 			product_id DESC
 		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
@@ -138,8 +234,7 @@
 			,is_recommand = #{isRecommand}
 			,updated_at = now()
 		WHERE
-			1=1
-			AND product_id = #{productId}
+			product_id = #{productId}
 	</update>
 	
 	<update id="softDeleteProduct">
@@ -147,8 +242,7 @@
 			is_deleted = 1
 			,updated_at = now()
 		WHERE
-			1=1
-			AND product_id = #{productId}
+			product_id = #{productId}
 	</update>
 	
 	<delete id="hardDeleteProduct">

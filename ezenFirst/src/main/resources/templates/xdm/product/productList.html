@@ -22,7 +22,7 @@
 				</ol>
 			</nav>
 
-			<h1 style="font-weight: bold;">제품관리</h1>
+			<h1 style="font-weight: bold;">제품 목록</h1>
 			
 			<!-- Search Start -->
 			<div class="search">
@@ -32,7 +32,6 @@
 							<option value="" th:selected="${searchVo.shOptionDate == null}">날짜</option>
 							<option value="1" th:selected="${searchVo.shOptionDate == 1}">등록일</option>
 							<option value="2" th:selected="${searchVo.shOptionDate == 2}">수정일</option>
-							<option value="3" th:selected="${searchVo.shOptionDate == 3}">생년월일</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -45,6 +44,24 @@
 				
 				<div class="row mb-3 mt-3">
 					<div class="col-2">
+						<select id="shOptionRange" name="shOptionRange" class="form-select">
+							<option value="" th:selected="${searchVo.shOptionRange == null}">범위</option>
+							<option value="1" th:selected="${searchVo.shOptionRange == 1}">가격</option>
+							<option value="2" th:selected="${searchVo.shOptionRange == 2}">열량</option>
+							<option value="3" th:selected="${searchVo.shOptionRange == 3}">누적 주문 수</option>
+							<option value="4" th:selected="${searchVo.shOptionRange == 4}">재고</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<input id="shRangeStart" name="shRangeStart" type="text" class="form-control" placeholder="최소" th:value="${searchVo.shRangeStart}" autocomplete="off">
+					</div>
+					<div class="col-2">
+						<input id="shRangeEnd" name="shRangeEnd" type="text" class="form-control" placeholder="최대" th:value="${searchVo.shRangeEnd}" autocomplete="off">
+					</div>
+				</div>
+				
+				<div class="row mb-3 mt-3">
+					<div class="col-2">
 						<select id="shIsDel" name="shIsDel" class="form-select">
 							<option value="" th:selected="${searchVo.shIsDel == null}">삭제 여부</option>
 							<option value="1" th:selected="${searchVo.shIsDel == 1}">Y</option>
@@ -52,29 +69,21 @@
 						</select>
 					</div>
 					<div class="col-2">
-						<select id="shIsAdmin" name="shIsAdmin" class="form-select">
-							<option value="" th:selected="${searchVo.shIsAdmin == null}">권한</option>
-							<option value="1" th:selected="${searchVo.shIsAdmin == 1}">관리자</option>
-							<option value="0" th:selected="${searchVo.shIsAdmin == 0}">사용자</option>
-						</select>
-					</div>
-					<div class="col-2">
-						<select id="shGender" name="shGender" class="form-select">
-							<option value="" th:selected="${searchVo.shGender == null}">성별</option>
-							<option value="1" th:selected="${searchVo.shGender == 1}">남성</option>
-							<option value="2" th:selected="${searchVo.shGender == 2}">여성</option>
-							<option value="3" th:selected="${searchVo.shGender == 3}">공개안함</option>
-						</select>
-					</div>
-					<div class="col-2">
-						<select id="shTel" name="shTel" class="form-select">
-							<option value="" th:selected="${searchVo.shTel == null}">통신사</option>
+						<select id="shType" name="shType" class="form-select">
+							<option value="" th:selected="${searchVo.shType == null}">종류</option>
 							<option th:each="code : ${codeList}" 
 									th:value="${code.codeId}"
 									th:text="${code.name}"
-									th:selected="${code.codeId == (searchVo.shTel != null ? searchVo.shTel.toString() : '')}"
+									th:selected="${code.codeId == (searchVo.shType != null ? searchVo.shType.toString() : '')}"
 									>
 							</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select id="shRecommand" name="shRecommand" class="form-select">
+							<option value="" th:selected="${searchVo.shRecommand == null}">추천 여부</option>
+							<option value="1" th:selected="${searchVo.shRecommand == 1}">Y</option>
+							<option value="0" th:selected="${searchVo.shRecommand == 0}">N</option>
 						</select>
 					</div>
 				</div>
@@ -83,9 +92,8 @@
 					<div class="col-2">
 						<select id="shOption" name="shOption" class="form-select">
 							<option value="" th:selected="${searchVo.shOption == null}">검색구분</option>
-							<option value="1" th:selected="${searchVo.shOption == 1}">이메일</option>
-							<option value="2" th:selected="${searchVo.shOption == 2}">이름</option>
-							<option value="3" th:selected="${searchVo.shOption == 3}">전화번호</option>
+							<option value="1" th:selected="${searchVo.shOption == 1}">메뉴 번호</option>
+							<option value="2" th:selected="${searchVo.shOption == 2}">메뉴명</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -103,66 +111,6 @@
 				</div>
 			</div>
 			<!-- Search End -->
-						
-			<!--<div class="row mb-3 mt-3">
-				<div class="col-2">
-					<select id="shDelNy" name="shDelNy" class="form-select">
-						<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
-						<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
-						<option value="0" th:selected="${vo.shDelNy == 0}">N</option>
-					</select>
-				</div>
-				<div class="col-2">
-					<select id="shType" name="shType" class="form-select">
-						<option value="" th:selected="${vo.shType == null}">종류</option>
-						<option value="1" th:selected="${vo.shType == 1}">세트</option>
-						<option value="2" th:selected="${vo.shType == 2}">단품</option>
-						<option value="3" th:selected="${vo.shType == 3}">사이드</option>
-						<option value="4" th:selected="${vo.shType == 4}">음료</option>
-					</select>
-				</div>
-				<div class="col-2">
-					<select id="shRecommand" name="shRecommand" class="form-select">
-						<option value="" th:selected="${vo.shRecommand == null}">추천</option>
-						<option value="1" th:selected="${vo.shRecommand == 1}">Y</option>
-						<option value="0" th:selected="${vo.shRecommand == 0}">N</option>
-					</select>
-				</div>
-				<div class="col-2">
-					<select id="shNew" name="shNew" class="form-select">
-						<option value="" th:selected="${vo.shNew == null}">신메뉴</option>
-						<option value="1" th:selected="${vo.shNew == 1}">Y</option>
-						<option value="0" th:selected="${vo.shNew == 0}">N</option>
-					</select>
-				</div>
-				
-			</div>
-			
-			<div class="row mb-3 mt-3">
-			
-				<div class="col-2">
-					<select id="shOption" name="shOption" class="form-select">
-						<option value="" th:selected="${vo.shOption == null}">검색구분</option>
-						<option value="1" th:selected="${vo.shOption == 1}">메뉴명</option>
-						<option value="2" th:selected="${vo.shOption == 2}">설명</option>
-					</select>
-				</div>
-				<div class="col-2">
-					<input id="shValue" name="shValue" type="text" th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control">
-					<div class="invalid-feedback" id="shValueFeedback"></div>
-				</div>
-				<div class="col-2">
-					<button type="button" class="btn btn-outline-secondary" id="btnSearch"> 
-						<i class="ri-search-line"></i>
-					</button> 
-					<a href="" class="btn btn-outline-secondary">
-						<i class="ri-reset-right-line"></i>
-					</a>
-				</div>
-				
-			</div>-->
-
-
 		</div>
 
 		<!-- End Page Title -->
@@ -228,7 +176,7 @@
 											</td>
 											<td class="text-center" th:text="${pageVo.totalRows - ((pageVo.thisPage - 1) * pageVo.rowNumToShow + itemStat.index)}"></td>
 											<td class="text-center" th:text="${item.productId}"></td>
-											<td class="text-center" th:text="${item.type}"></td>
+											<td class="text-center" th:text="${item.typeName}"></td>
 											
 											<td class="text-center align-middle fw-semi-bold">
 												<a href="javascript:void(0);" th:text="${item.name}" th:attr="onclick=|goForm(${item.productId})|"></a>

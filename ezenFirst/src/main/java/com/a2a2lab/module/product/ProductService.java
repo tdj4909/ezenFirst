@@ -1,10 +1,14 @@
 package com.a2a2lab.module.product;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.a2a2lab.module.code.CodeDao;
+import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -13,13 +17,27 @@ public class ProductService {
 
 	@Autowired
 	ProductDao dao;
+	@Autowired
+	CodeDao codeDao;
 
 	public int countProductsByVo(PageVo pageVo, SearchVo searchVo) {
 		return dao.countProductsByVo(pageVo, searchVo);
 	}
 	
 	public List<ProductDto> findProductsByVo(PageVo pageVo, SearchVo searchVo) {
-		return dao.findProductsByVo(pageVo, searchVo);
+		// 메뉴 종류 이름 세팅
+		Map<Integer, String> map = new HashMap<>();
+		List<CodeDto> codeDtos= codeDao.findCodesByCodeGroupId("2");
+		for(CodeDto codeDto : codeDtos) {
+			map.put(Integer.parseInt(codeDto.getCodeId()), codeDto.getName());
+		}
+		
+		List<ProductDto> dtos = dao.findProductsByVo(pageVo, searchVo);
+		for(ProductDto dto : dtos) {
+			dto.setTypeName(map.get(dto.getType()));
+		}
+		
+		return dtos;
 	}
 	
 	public ProductDto findProductById(String id) {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.a2a2lab.module.code.CodeService;
 import com.a2a2lab.module.upload.UploadService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
@@ -19,6 +20,8 @@ public class ProductController {
 
 	@Autowired
 	ProductService service;
+	@Autowired
+	CodeService codeService;
 	@Autowired
 	UploadService uploadService;
 	
@@ -35,6 +38,8 @@ public class ProductController {
 		// 페이징 설정
 		pageVo.setParamsPaging(service.countProductsByVo(pageVo, searchVo));
 		model.addAttribute("pageVo", pageVo);
+		// 메뉴 종류
+		model.addAttribute("codeList", codeService.findCodesByCodeGroupId("2"));
 		
 		model.addAttribute("list", service.findProductsByVo(pageVo, searchVo));
 		
@@ -44,6 +49,8 @@ public class ProductController {
 	// 메뉴 등록/수정 화면
 	@RequestMapping("/xdm/service/product/edit")
 	public String showProductEdit(Model model, @RequestParam("productId") String productId){
+		// 메뉴 종류
+		model.addAttribute("codeList", codeService.findCodesByCodeGroupId("2"));
 		// productId가 있으면 수정, 없으면 등록
 		if (!productId.equals("") && !productId.equals("0")) {
 			model.addAttribute("item", service.findProductById(productId));

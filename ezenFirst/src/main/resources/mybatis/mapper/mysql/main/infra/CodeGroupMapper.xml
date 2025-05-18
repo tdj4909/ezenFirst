@@ -17,8 +17,22 @@
 			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
 			
 			<choose>
-				<when test="searchVo.shOptionDate == 1">AND created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
-				<when test="searchVo.shOptionDate == 2">AND updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			    <when test="searchVo.shOptionDate == 1">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionDate == 2">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
 			</choose>
 			
 			<choose>
@@ -50,8 +64,22 @@
 			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND cg.is_deleted = #{searchVo.shIsDel}</if>
 			
 			<choose>
-				<when test="searchVo.shOptionDate == 1">AND cg.created_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
-				<when test="searchVo.shOptionDate == 2">AND cg.updated_at BETWEEN CONCAT(#{searchVo.shDateStart}, 'T00:00:00') AND CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')</when>
+			    <when test="searchVo.shOptionDate == 1">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
+			    <when test="searchVo.shOptionDate == 2">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
 			</choose>
 			
 			<choose>

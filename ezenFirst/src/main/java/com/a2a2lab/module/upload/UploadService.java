@@ -14,10 +14,11 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 @Service
 public class UploadService {
 	
-	@Autowired
-	private AmazonS3Client amazonS3Client;
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
+	
+	@Autowired
+	private AmazonS3Client amazonS3Client;
 	
 	@Autowired
 	UploadDao dao;
