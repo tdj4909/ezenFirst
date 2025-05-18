@@ -42,6 +42,9 @@ public class ProductService {
 		return dao.hardDeleteProduct(id);
 	}
 	
+	public int fileUpdate(ProductDto dto) {
+		return dao.fileUpdate(dto);
+	}
 	
 //	public int insert(ProductDto dto) {
 //		return dao.insert(dto);

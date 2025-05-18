@@ -205,6 +205,7 @@
 											<th class="text-center">메뉴명</th>
 											<th class="text-center">가격</th>
 											<th class="text-center">열량</th>
+											<th class="text-center">평점</th>
 											<th class="text-center">누적 주문 수</th>
 											<th class="text-center">재고</th>
 											<th class="text-center">등록일</th>
@@ -235,6 +236,7 @@
 											
 											<td class="text-center" th:text="${item.price}"></td>
 											<td class="text-center" th:text="${item.calories}"></td>											
+											<td class="text-center" th:text="${item.rating} == null ? '평점 없음' : ${item.rating}"></td>											
 											<td class="text-center" th:text="${item.orderCount}"></td>
 											<td class="text-center" th:text="${item.stock}"></td>
 											<td class="text-center" th:text="${item.createdAt}"></td>

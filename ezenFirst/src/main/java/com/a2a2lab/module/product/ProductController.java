@@ -54,7 +54,6 @@ public class ProductController {
 	// 메뉴 추가
 	@RequestMapping("/xdm/service/product/create")
 	public String createProduct(@RequestParam("file") MultipartFile file, ProductDto dto) throws IOException {
-		
 		// File DB upload
 		dto.setFileId(uploadService.localUpload(file));
 		
@@ -64,7 +63,15 @@ public class ProductController {
 	
 	// 메뉴 수정
 	@RequestMapping("/xdm/service/product/update")
-	public String updateProduct(ProductDto dto) {
+	public String updateProduct(@RequestParam("file") MultipartFile file, ProductDto dto) throws IOException {
+		// 파일 변경했을 때
+		if(file != null) {
+			// File DB upload
+			dto.setFileId(uploadService.localUpload(file));
+			// 파일만 Update
+			service.fileUpdate(dto);
+		}
+		// 메뉴 갱신
 		service.updateProduct(dto);
 		return "redirect:/xdm/service/product/list";
 	}

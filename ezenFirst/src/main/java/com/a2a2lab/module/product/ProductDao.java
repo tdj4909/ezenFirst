@@ -18,7 +18,7 @@ public interface ProductDao {
 	public int updateProduct(ProductDto dto);
 	public int softDeleteProduct(String productId);
 	public int hardDeleteProduct(String productId);
-	
+	public int fileUpdate(ProductDto dto);
 	
 //	public int insert(ProductDto dto);
 //	public int update(ProductDto dto);

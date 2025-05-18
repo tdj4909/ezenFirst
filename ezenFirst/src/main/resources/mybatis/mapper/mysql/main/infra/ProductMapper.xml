@@ -68,8 +68,18 @@
 	<select id="findProductById" resultMap="resultMapObj">
 		SELECT
 			product_id AS productId
+			,type
 			,name
-			,is_used AS isUsed
+			,price
+			,description
+			,calories
+			,sugars
+			,protein
+			,fat
+			,sodium
+			,stock
+			,is_recommand AS isRecommand
+			,file_id AS fileId
 		FROM 
 			product
 		WHERE
@@ -90,7 +100,6 @@
 			,sodium
 			,stock
 			,order_count
-			,rating
 			,is_recommand
 			,created_at
 			,is_deleted
@@ -107,7 +116,6 @@
 			,#{sodium}
 			,#{stock}
 			,0
-			,#{rating}
 			,#{isRecommand}
 			,now()
 			,0
@@ -117,8 +125,17 @@
 	
 	<update id="updateProduct">
 		UPDATE product SET
-			name = #{name}
-			,is_used = #{isUsed}
+			type = #{type}
+			,name = #{name}
+			,price = #{price}
+			,description = #{description}
+			,calories = #{calories}
+			,sugars = #{sugars}
+			,protein = #{protein}
+			,fat = #{fat}
+			,sodium = #{sodium}
+			,stock = #{stock}
+			,is_recommand = #{isRecommand}
 			,updated_at = now()
 		WHERE
 			1=1
@@ -142,7 +159,12 @@
 			product_id = #{productId}
 	</delete>
 
-
+	<update id="fileUpdate">
+		UPDATE product SET
+			file_id = #{fileId}
+		WHERE
+			product_id = #{productId}
+	</update>
 
 
 
