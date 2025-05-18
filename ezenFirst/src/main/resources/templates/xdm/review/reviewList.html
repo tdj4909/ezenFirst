@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{xdm/include/head :: head}"></div>
+
+<!-- Main -->
+
+<main id="main" class="main">
+	<form name="formList" id="formList" method="post" autocomplete="off">
+		<!-- Pageing hidden -->
+		<input type="hidden" name="thisPage" th:value="${pageVo.thisPage}"> 
+		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${pageVo.rowNumToShow}">	
+		
+		<div class="pagetitle">
+
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
+					<li class="breadcrumb-item">서비스 관리</li>
+					<li class="breadcrumb-item active">리뷰 관리</li>
+				</ol>
+			</nav>
+
+			<h1 style="font-weight: bold;">리뷰 목록</h1>
+
+			<!-- Search Start -->
+			<div class="search">
+				<div class="row mb-3 mt-3">
+					<div class="col-2">
+						<select id="shOptionDate" name="shOptionDate" class="form-select">
+							<option value="" th:selected="${searchVo.shOptionDate == null}">날짜</option>
+							<option value="1" th:selected="${searchVo.shOptionDate == 1}">등록일</option>
+							<option value="2" th:selected="${searchVo.shOptionDate == 2}">수정일</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<input id="datetimepickerStart" name="shDateStart" type="text" class="form-control" placeholder="시작일" th:value="${searchVo.shDateStart}" autocomplete="off">
+					</div>
+					<div class="col-2">
+						<input id="datetimepickerEnd" name="shDateEnd" type="text" class="form-control" placeholder="종료일" th:value="${searchVo.shDateEnd}" autocomplete="off">
+					</div>
+				</div>
+				
+				<div class="row mb-3 mt-3">
+					<div class="col-2">
+						<select id="shIsDel" name="shIsDel" class="form-select">
+							<option value="" th:selected="${searchVo.shIsDel == null}">삭제 여부</option>
+							<option value="1" th:selected="${searchVo.shIsDel == 1}">Y</option>
+							<option value="0" th:selected="${searchVo.shIsDel == 0}">N</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select id="shIsAdmin" name="shIsAdmin" class="form-select">
+							<option value="" th:selected="${searchVo.shIsAdmin == null}">권한</option>
+							<option value="1" th:selected="${searchVo.shIsAdmin == 1}">관리자</option>
+							<option value="0" th:selected="${searchVo.shIsAdmin == 0}">사용자</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select id="shGender" name="shGender" class="form-select">
+							<option value="" th:selected="${searchVo.shGender == null}">성별</option>
+							<option value="1" th:selected="${searchVo.shGender == 1}">남성</option>
+							<option value="2" th:selected="${searchVo.shGender == 2}">여성</option>
+							<option value="3" th:selected="${searchVo.shGender == 3}">공개안함</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select id="shTel" name="shTel" class="form-select">
+							<option value="" th:selected="${searchVo.shTel == null}">통신사</option>
+							<option th:each="code : ${codeList}" 
+									th:value="${code.codeId}"
+									th:text="${code.name}"
+									th:selected="${code.codeId == (searchVo.shTel != null ? searchVo.shTel.toString() : '')}"
+									>
+							</option>
+						</select>
+					</div>
+				</div>
+	
+				<div class="row mb-3 mt-3">
+					<div class="col-2">
+						<select id="shOption" name="shOption" class="form-select">
+							<option value="" th:selected="${searchVo.shOption == null}">검색구분</option>
+							<option value="1" th:selected="${searchVo.shOption == 1}">이메일</option>
+							<option value="2" th:selected="${searchVo.shOption == 2}">이름</option>
+							<option value="3" th:selected="${searchVo.shOption == 3}">전화번호</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<input id="shValue" name="shValue" type="text" th:value="${searchVo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control">
+						<div class="invalid-feedback" id="shValueFeedback"></div>
+					</div>
+					<div class="col-2">
+						<button type="button" id="btnSearch" class="btn btn-outline-secondary">
+							<i class="ri-search-line"></i>
+						</button>
+						<a href="" class="btn btn-outline-secondary">
+							<i class="ri-reset-right-line"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- Search End -->
+
+
+		</div>
+
+		<!-- End Page Title -->
+
+
+		<section class="section">
+			<div class="row">
+				<div class="col-lg-12">
+
+					<div class="card">
+						<div class="card-body m-2">
+
+							<div class="row">
+								<div class="col">
+									<h5 class="card-title" th:text="'Total: ' + ${pageVo.totalRows}"></h5>
+								</div>
+								<div class="col-2 pt-2" style="float: right;">
+									<select id="changeRowNum" name="changeRowNum" class="form-select">
+										<option value="5" th:selected="${pageVo.rowNumToShow eq 5}">5</option>
+										<option value="10" th:selected="${pageVo.rowNumToShow eq 10}">10</option>
+										<option value="30" th:selected="${pageVo.rowNumToShow eq 30}">30</option>
+										<option value="50" th:selected="${pageVo.rowNumToShow eq 50}">50</option>
+										<option value="80" th:selected="${pageVo.rowNumToShow eq 80}">80</option>
+										<option value="100" th:selected="${pageVo.rowNumToShow eq 100}">100</option> 
+									</select>
+								</div>
+							</div>
+
+							<!-- Table Start -->
+							<div class="row">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th class="text-center">
+												<input class="form-check-input" type="checkbox" id="selectAllCheckbox" onclick="toggleSelectAll(this)">
+											</th>
+											<th class="text-center">#</th>
+											<th class="text-center">리뷰 번호</th>
+											<th class="text-center">메뉴명</th>
+											<th class="text-center">이름</th>
+											<th class="text-center">평점</th>
+											<th class="text-center">내용</th>
+											<th class="text-center">등록일</th>
+										</tr>
+									</thead>
+									<tbody>
+									
+										<tr th:if="${list == null || list.isEmpty()}">
+											<td colspan=8 style="text-align: center">
+												<p>There are no data!</p>
+											</td>
+										</tr>
+										
+										<tr th:each="item : ${list}">
+											<td class="text-center">
+												<input class="form-check-input rowCheckbox" type="checkbox" th:value="${item.reviewId}">
+												<input type="hidden" name="delSeq" th:id="'delSeq_' + ${item.reviewId}">
+											</td>
+											<td class="text-center" th:text="${pageVo.totalRows - ((pageVo.thisPage - 1) * pageVo.rowNumToShow + itemStat.index)}"></td>
+											<td class="text-center" th:text="${item.reviewId}"></td>
+											<td class="text-center" th:text="${item.menuName}"></td>
+											<td class="text-center" th:text="${item.memberName}"></td>
+											<td style="width: 300px; word-break: break-word; white-space: normal;">
+											    <div style="max-height: 30px; overflow-y: auto;">
+											        <span th:text="${list.description}"></span>
+											    </div>
+											</td>
+											<td class="text-center" th:text="${item.createdAt}"></td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+							<!-- Table End -->
+
+							<!-- Pagination Start-->
+							<div class="row">
+								<nav>
+									<ul class="pagination justify-content-center">
+
+										<li th:if="${pageVo.startPage gt pageVo.pageNumToShow}" 
+											class="page-item"
+											style="cursor: pointer;">
+											<a class="page-link" href="javascript:goList(${pageVo.startPage - 1})" th:attr="onclick=|goList('${pageVo.startPage - 1}')|">
+												<i class="fa-solid fa-angle-left"></i>
+											</a>
+										</li>
+										
+										<li th:each="pageNum: ${#numbers.sequence(pageVo.startPage, pageVo.endPage)}" 
+											th:classappend="${pageNum eq pageVo.thisPage} ? active : ''"
+											class="page-item" style="cursor: pointer;">
+											<a class="page-link" th:attr="onclick=|goList('${pageNum}')|" th:text="${pageNum}"></a>
+										</li>
+										
+										<li th:if="${pageVo.endPage ne pageVo.totalPages}" 
+											class="page-item"
+											style="cursor: pointer;">
+											<a class="page-link" th:attr="onclick=|goList('${pageVo.endPage + 1}')|"> 
+												<i class="fa-solid fa-angle-right"></i>
+											</a>
+										</li>
+										
+									</ul>
+								</nav>
+							</div>
+							<!-- Pagination End -->
+
+							<div class="row">
+								<div class="col">
+									<button type="button" id="btnDelete" class="btn btn-danger"> 
+										<i class="ri-close-large-line"></i>
+									</button>
+									<button type="button" id="btnUelete" class="btn btn-danger"> 
+										<i class="ri-delete-bin-line"></i>
+									</button>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+
+				</div>
+			</div>
+			
+			<!-- Modal Start -->
+			<div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body" id="modalConfirmBody">
+							body
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-secondary btn-sm btn_custom" data-bs-dismiss="modal"><i class="fa-solid fa-angle-left fa-lg"></i></button>
+							<button type="button" class="btn btn-danger btn-sm btn_custom" name="" id="btnModalHardDelete"><i class="fa-solid fa-x fa-lg"></i></button>
+							<button type="button" class="btn btn-danger btn-sm btn_custom" name="" id="btnModalSoftDelete"><i class="far fa-trash-alt fa-lg"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Modal End -->	
+			
+		</section>
+
+	</form>
+</main>
+<!-- End #main -->
+
+<script type="text/javascript">
+	
+	let selectAllCheckbox = document.getElementById("selectAllCheckbox");
+	let rowCheckboxes = document.querySelectorAll(".rowCheckbox");
+	let currentPath = window.location.pathname;
+	let links = document.querySelectorAll(".nav-content a");
+
+	// 전체 선택/해제 함수
+	function toggleSelectAll(source) {
+	    // 모든 체크박스에 대해 상태를 '전체 선택' 체크박스 상태에 맞게 설정
+	    rowCheckboxes.forEach((checkbox) => {
+	        checkbox.checked = source.checked;
+	    });
+	}
+
+	// 페이징
+	let form = document.querySelector("form[name=formList]");
+	goList = function (thisPage) {
+	    document.querySelector("input[name=thisPage]").value = thisPage;
+	    form.action = "/xdm/service/review/list";
+	    form.submit();
+	}
+			
+	// 검색
+	document.getElementById("btnSearch").onclick = function () {
+	    form.action = "/xdm/service/review/list";
+	    form.submit();
+	};
+
+	// 테이블 행 개수 Select
+	document.getElementById("changeRowNum").onchange = function () {
+	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+	    form.action = "/xdm/service/review/list";
+	    form.submit();
+	}
+
+
+	document.addEventListener("DOMContentLoaded", function () {
+
+	    // 사이드바 현재화면 위치 active
+	    links.forEach(link => {
+	        if (link.getAttribute("href") === currentPath) {
+	        	const navContent = link.closest(".nav-content");
+	            const navLink = navContent.previousElementSibling; // 부모 메뉴의 <a> 태그 찾기
+	            
+	            link.classList.add("active");
+	            navContent.classList.add("show"); // 메뉴 열기
+	            navLink.classList.remove("collapsed"); // collapsed 제거
+	        }
+	    });
+	    // 체크박스
+	    rowCheckboxes.forEach(checkbox => {
+	        checkbox.addEventListener("change", function () {
+	            let allChecked = document.querySelectorAll(".rowCheckbox:checked").length === rowCheckboxes.length;
+	            selectAllCheckbox.checked = allChecked;
+	        });
+	    });
+
+	});
+
+	// softDelete
+	// Modal 먼저 실행
+	document.getElementById("btnSoftDelete").onclick = function () {
+		document.querySelector("#modalConfirmTitle").textContent = "확 인";
+		document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+		document.querySelector("#btnModalSoftDelete").style.display = '';
+		document.querySelector("#btnModalHardDelete").style.display = 'none';
+		
+		let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
+	       modal.show();     	
+	}
+	// Modal에서 확인 버튼 누르면
+	document.getElementById("btnModalSoftDelete").onclick = function () {
+
+		let selected = document.querySelectorAll(".rowCheckbox:checked");
+		selected.forEach((s) => {
+			document.querySelector(`input[id="delSeq_${s.value}"]`).value = s.value;
+		});
+		 
+		form.action = "/xdm/service/review/softDelete";
+		form.submit();
+	}
+
+	// Delete
+	// Modal 먼저 실행
+	document.getElementById("btnHardDelete").onclick = function () {
+		document.querySelector("#modalConfirmTitle").textContent = "확 인";
+		document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+		document.querySelector("#btnModalSoftDelete").style.display = 'none';
+		document.querySelector("#btnModalHardDelete").style.display = '';
+		
+		let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
+	       modal.show();     	
+	}
+	// Modal에서 확인 버튼 누르면
+	document.getElementById("btnModalHardDelete").onclick = function () {
+
+		let selected = document.querySelectorAll(".rowCheckbox:checked");
+		selected.forEach((s) => {
+			document.querySelector(`input[id="delSeq_${s.value}"]`).value = s.value;
+		});
+
+		form.action = "/xdm/service/review/hardDelete";
+		form.submit();
+	}
+
+	// 날짜 검색 조건
+	jQuery('#datetimepickerStart').datetimepicker({
+		timepicker:false,
+		format:'Y-m-d'
+	});
+	jQuery('#datetimepickerEnd').datetimepicker({
+		timepicker:false,
+		format:'Y-m-d'
+	});
+	
+</script>
+
+<div th:replace="~{xdm/include/footer :: footer}"></div>

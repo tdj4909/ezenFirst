@@ -2,71 +2,63 @@ package com.a2a2lab.module.review;
 
 public class ReviewDto{
 	
-	private String seq;
-	private String reviewDate;
-	private Integer reviewRate;
-	private String reviewDescription;
-	private Integer reviewDelNy;
-	private String user_seq;
-	private String menu_seq;
+	private String reviewId;
+	private Integer rating;
+	private String description;
+	private String createAt;
+	private String memberId;
+	private String menuId;
 	
-	private String nickname;
-	private String menuNm;
+	private String memberName;
+	private String menuName;
 	
 	
-	public String getSeq() {
-		return seq;
+	public String getReviewId() {
+		return reviewId;
 	}
-	public void setSeq(String seq) {
-		this.seq = seq;
+	public void setReviewId(String reviewId) {
+		this.reviewId = reviewId;
 	}
-	public String getReviewDate() {
-		return reviewDate;
+	public Integer getRating() {
+		return rating;
 	}
-	public void setReviewDate(String reviewDate) {
-		this.reviewDate = reviewDate;
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
-	public Integer getReviewRate() {
-		return reviewRate;
+	public String getDescription() {
+		return description;
 	}
-	public void setReviewRate(Integer reviewRate) {
-		this.reviewRate = reviewRate;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	public String getReviewDescription() {
-		return reviewDescription;
+	public String getCreateAt() {
+		return createAt;
 	}
-	public void setReviewDescription(String reviewDescription) {
-		this.reviewDescription = reviewDescription;
+	public void setCreateAt(String createAt) {
+		this.createAt = createAt;
 	}
-	public Integer getReviewDelNy() {
-		return reviewDelNy;
+	public String getMemberId() {
+		return memberId;
 	}
-	public void setReviewDelNy(Integer reviewDelNy) {
-		this.reviewDelNy = reviewDelNy;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
-	public String getUser_seq() {
-		return user_seq;
+	public String getMenuId() {
+		return menuId;
 	}
-	public void setUser_seq(String user_seq) {
-		this.user_seq = user_seq;
+	public void setMenuId(String menuId) {
+		this.menuId = menuId;
 	}
-	public String getMenu_seq() {
-		return menu_seq;
+	public String getMemberName() {
+		return memberName;
 	}
-	public void setMenu_seq(String menu_seq) {
-		this.menu_seq = menu_seq;
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
-	public String getNickname() {
-		return nickname;
+	public String getMenuName() {
+		return menuName;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
 	}
-	public String getMenuNm() {
-		return menuNm;
-	}
-	public void setMenuNm(String menuNm) {
-		this.menuNm = menuNm;
-	}
-
 }

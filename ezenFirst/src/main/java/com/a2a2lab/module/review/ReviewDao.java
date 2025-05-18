@@ -2,18 +2,27 @@ package com.a2a2lab.module.review;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import com.a2a2lab.module.vo.PageVo;
+import com.a2a2lab.module.vo.SearchVo;
 
 @Repository
 public interface ReviewDao {
 	
-	public int insert(ReviewDto dto);
-	public int uelete(ReviewDto dto);
-	public int delete(ReviewDto dto);
-	public int selectOneCount(ReviewVo vo);
-	public int findAvgRatingByMenuSeq(String menu_seq);
-	public int reviewCount();
-	public List<ReviewDto> selectList(ReviewVo vo);
-	public List<ReviewDto> getReviewListByMenuSeq(String menu_seq);
+	public int countReviewsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 리뷰 개수 검색
+	public List<ReviewDto> findReviewsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 리뷰 검색
+	public int softDeleteReview(String reviewId);
+	public int hardDeleteReview(String reviewId);
+	
+//	public int insert(ReviewDto dto);
+//	public int uelete(ReviewDto dto);
+//	public int delete(ReviewDto dto);
+//	public int selectOneCount(ReviewVo vo);
+//	public int findAvgRatingByMenuSeq(String menu_seq);
+//	public int reviewCount();
+//	public List<ReviewDto> selectList(ReviewVo vo);
+//	public List<ReviewDto> getReviewListByMenuSeq(String menu_seq);
 
 }
