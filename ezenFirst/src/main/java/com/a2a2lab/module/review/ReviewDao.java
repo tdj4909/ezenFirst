@@ -13,6 +13,7 @@ public interface ReviewDao {
 	
 	public int countReviewsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 리뷰 개수 검색
 	public List<ReviewDto> findReviewsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 리뷰 검색
+	public int countAllReview();
 	public int softDeleteReview(String reviewId);
 	public int hardDeleteReview(String reviewId);
 	

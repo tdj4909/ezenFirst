@@ -23,6 +23,10 @@ public class ReviewService {
 		return dao.findReviewsByVo(pageVo, searchVo);
 	}
 	
+	public int countAllReview() {
+		return dao.countAllReview();
+	}
+	
 	public int softDeleteReview(String id) {
 		return dao.softDeleteReview(id);
 	}

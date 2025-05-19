@@ -22,6 +22,8 @@ public class ProductDto {
 	private String updatedAt;
 	private Integer isDeleted;
 	private String fileId;
+	
+	private String filePath;
 
 	
 //	private String path;
@@ -146,4 +148,11 @@ public class ProductDto {
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
 	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	
 }

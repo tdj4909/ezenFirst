@@ -3,138 +3,106 @@
 
 <div th:replace="~{xdm/include/head :: head}"></div>
 
-	<!-- ******************************************************************************* -->
+<!-- Main -->
+<main id="main" class="main">
+	<!-- Page Title Start -->
+	<div class="pagetitle mb-5">
+		<nav>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
+				<li class="breadcrumb-item">서비스 관리</li>
+				<li class="breadcrumb-item active">주문 관리</li>
+			</ol>
+		</nav>
+		<h1 style="font-weight: bold;">주문 관리</h1>
+	</div>
+	<!-- Page Title End -->
 
-	<!-- Main -->
-	<main id="main" class="main">
-
-		<div class="pagetitle mb-5">
-
-			<nav>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="/Xdm/index">Home</a></li>
-					<li class="breadcrumb-item">서비스관리</li>
-					<li class="breadcrumb-item active">주문관리</li>
-				</ol>
-			</nav>
-
-			<h1 style="font-weight: bold;">주문관리</h1>
-
-
-		</div>
-		<!-- End Page Title -->
-
-		<section class="section">
-<!-- ********************************************************************************************* -->
-			<form action="" method="post" id="form" class="needs-validation" novalidate>
-				<input type="hidden"name="ifcgSeq" th:value="${item?.ifcgSeq}">
-				<div class="row">
-					<div class="col-lg-12">
-
-						<div class="card">
-
-							<h5 class="card-header"
-								style="font-weight: bold; color: #4b4b4b;">주문상세</h5>
-
-							<div class="card-body m-2">
-	
-								<!-- Table with stripped rows -->
-								<div class="row p-3">
-									<table class="table table-hover">
-										<thead>
-											<tr>
-												<th class="text-center">주문번호</th>
-												<th class="text-center">닉네임</th>
-												<th class="text-center">날짜</th>
-												<th class="text-center">합계</th>
-												<th class="text-center">주문상태</th>
-											</tr>
-										</thead>
-										<tbody>
-										
-											<tr>
-												<td class="text-center" th:text="${list.seq}"></td>
-												<td class="text-center" th:text="${list.nickname}"></td>
-												<td class="text-center" th:text="${list.ordersDate}"></td>
-												<td class="text-center" th:text="${list.odTotalPrice}"></td>
-												
-												<td class="text-center" th:text="${
-												    list.ordersStatus == 0 ? '주문접수' :
-												    list.ordersStatus == 1 ? '준비중' :
-												    list.ordersStatus == 2 ? '주문완료' : '주문취소'
-													}">
-												</td>
-											</tr>
-	
-										</tbody>
-									</table>
-								</div>
-								<!-- End Table with stripped rows -->
-
-								<div class="row">
-									<div class="col">
-										<a href="/Xdm/ordersXdmList" class="btn btn-outline-secondary"> <i
-											class="ri-list-check"></i>
-										</a>
-									</div>
-								</div>
-							</div>
+	<section class="section">
+		<input type="hidden"name="ifcgSeq" th:value="${item?.ifcgSeq}">
+		<div class="row">
+			<div class="col-lg-12">
+				<!-- Order Master Card Start -->
+				<div class="card">
+					<h5 class="card-header" style="font-weight: bold; color: #4b4b4b;">주문 상세</h5>
+					<div class="card-body m-2">
+						<div class="row p-3">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th class="text-center">주문 번호</th>
+										<th class="text-center">이름</th>
+										<th class="text-center">주문일</th>
+										<th class="text-center">가격</th>
+										<th class="text-center">주문 상태</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-center" th:text="${orderMaster.orderMasterId}"></td>
+										<td class="text-center" th:text="${orderMaster.memberName}"></td>
+										<td class="text-center" th:text="${orderMaster.createdAt}"></td>
+										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(orderMaster.price, 3, 'COMMA')}"></td>
+										<td class="text-center" th:text="${
+										    orderMaster.status == 0 ? '주문접수' :
+										    orderMaster.status == 1 ? '준비중' :
+										    orderMaster.status == 2 ? '주문완료' : '주문취소'
+											}">
+										</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 						
-						<div class="card">
-							<div class="card-body m-2">
-							<!-- Table with stripped rows -->
-								<div class="row p-3">
-									<table class="table table-hover">
-										<thead>
-											<tr>
-												<th class="text-center">메뉴명</th>
-												<th class="text-center">가격</th>
-												<th class="text-center">개수</th>
-												<th class="text-center">합계</th>
-											</tr>
-										</thead>
-										<tbody>
-										
-											<tr th:each="list : ${lists}">
-												<td class="text-center" th:text="${list.menuNm}"></td>
-												<td class="text-center" ></td>
-												<td class="text-center" th:text="${list.quantity}"></td>												
-												<td class="text-center" th:text="${list.oneTotal}"></td>
-											</tr>
-	
-										</tbody>
-										<tfoot>
-											<tr>
-												<td></td>
-												<td></td>
-												<td class="text-center">TOTAL</td>
-												<td class="text-center" th:text="${list.odTotalPrice}"></td>
-											</tr>
-										</tfoot>
-									</table>
-								</div>
-								<!-- End Table with stripped rows -->
+						<div class="row">
+							<div class="col">
+								<a href="/xdm/service/order/list" class="btn btn-outline-secondary">
+									<i class="ri-list-check"></i>
+								</a>
 							</div>
 						</div>
-
 					</div>
 				</div>
-			</form>
-
-		</section>
-
-	</main>
-	<!-- End #main -->
-
-	<!-- temp -->
-
-	<script>
-
-    
-	</script>
-	
-	<!-- ******************************************************************************* -->
-
+				<!-- Order Master Card End -->
+				
+				<!-- Order Details Card Start -->
+				<div class="card">
+					<div class="card-body m-2">
+						<div class="row p-3">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th class="text-center">메뉴명</th>
+										<th class="text-center">가격</th>
+										<th class="text-center">개수</th>
+										<th class="text-center">합계</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="item : ${list}">
+										<td class="text-center" th:text="${item.menuName}"></td>
+										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(item.price, 3, 'COMMA')}"></td>
+										<td class="text-center" th:text="${item.quantity}"></td>												
+										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(item.price * item.quantity, 3, 'COMMA')}"></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td></td>
+										<td></td>
+										<td class="text-center">TOTAL</td>
+										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(orderMaster.price, 3, 'COMMA')}"></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- Order Details Card End -->
+			</div>
+		</div>
+	</section>
+</main>
+<!-- End #main -->
 
 <div th:replace="~{xdm/include/footer :: footer}"></div>

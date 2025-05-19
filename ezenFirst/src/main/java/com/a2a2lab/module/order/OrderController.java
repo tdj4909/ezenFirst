@@ -36,6 +36,14 @@ public class OrderController{
 		return "xdm/order/orderList";
 	}
 	
+	// 주문 상세
+	@RequestMapping("/xdm/service/order/detail")
+	public String ordersXdmOne(Model model, @RequestParam("orderMasterId") String orderMasterId) {
+		model.addAttribute("orderMaster", service.findOrderMasterById(orderMasterId));
+		model.addAttribute("list", service.findOrderDetailsByOrderMasterId(orderMasterId));
+		return "xdm/order/orderDetail";
+	}
+	
 	// 주문 Update
 	@RequestMapping(value = "/xdm/service/order/update")
 	@ResponseBody
@@ -70,6 +78,7 @@ public class OrderController{
 		}
 		return "redirect:/xdm/service/order/list";
 	}
+	
 	
 	
 	

@@ -79,40 +79,42 @@
 
 	<select id="findProductsByVo" resultMap="resultMapObj">
 		SELECT 
-			product_id AS productId
-			,type
-			,name
-			,price
-			,calories
-			,is_recommand AS isRecommand
-			,order_count AS orderCount
-			,stock
-			,rating
-			,created_at AS createdAt
-			,updated_at AS updatedAt
+			p.product_id AS productId
+			,p.type
+			,p.name
+			,p.price
+			,p.calories
+			,p.is_recommand AS isRecommand
+			,p.order_count AS orderCount
+			,p.stock
+			,p.rating
+			,p.created_at AS createdAt
+			,p.updated_at AS updatedAt
+			,f.path AS filePath
 		FROM
-			product
+			product p
+			JOIN file f ON f.file_id = p.file_id
 		WHERE
 			1=1
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
-			<if test="searchVo.shType != null and !searchVo.shType.equals('')">AND type = #{searchVo.shType}</if>
-			<if test="searchVo.shRecommand != null and !searchVo.shRecommand.equals('')">AND is_recommand = #{searchVo.shRecommand}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND p.is_deleted = #{searchVo.shIsDel}</if>
+			<if test="searchVo.shType != null and !searchVo.shType.equals('')">AND p.type = #{searchVo.shType}</if>
+			<if test="searchVo.shRecommand != null and !searchVo.shRecommand.equals('')">AND p.is_recommand = #{searchVo.shRecommand}</if>
 			
 			<choose>
 			    <when test="searchVo.shOptionDate == 1">
 			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			            AND p.created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
 			        </if>
 			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			            AND p.created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
 			        </if>
 			    </when>
 			    <when test="searchVo.shOptionDate == 2">
 			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			            AND p.updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
 			        </if>
 			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			            AND p.updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
 			        </if>
 			    </when>
 			</choose>
@@ -120,44 +122,44 @@
 			<choose>
 			    <when test="searchVo.shOptionRange eq 1">
 			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND price &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			            AND p.price &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
 			        </if>
 			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND price &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			            AND p.price &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
 			        </if>
 			    </when>
 			    <when test="searchVo.shOptionRange eq 2">
 			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND calories &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			            AND p.calories &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
 			        </if>
 			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND calories &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			            AND p.calories &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
 			        </if>
 			    </when>
 			    <when test="searchVo.shOptionRange eq 3">
 			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND order_count &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			            AND p.order_count &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
 			        </if>
 			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND order_count &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			            AND p.order_count &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
 			        </if>
 			    </when>
 			    <when test="searchVo.shOptionRange eq 4">
 			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND stock &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			            AND p.stock &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
 			        </if>
 			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND stock &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			            AND p.stock &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
 			        </if>
 			    </when>
 			</choose>
 			
 			<choose>
-				<when test="searchVo.shOption == 1">AND product_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 1">AND p.product_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND p.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
 			</choose>
 		ORDER BY
-			product_id DESC
+			p.product_id DESC
 		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
 	</select>
 

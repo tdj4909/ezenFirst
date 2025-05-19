@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -104,6 +105,32 @@ public class ProductController {
 		}
 		return "redirect:/xdm/service/product/list";
 	}
+	
+	
+//	************************************************************
+//	사용자
+//	************************************************************
+	
+	// 상품 리스트 화면
+	@RequestMapping("/tableorder/shop/list")
+	public String showShopList(Model model) {
+		return "usr/shop/shopList";
+	}
+	
+	// 메뉴 리스트 Ajax
+	@GetMapping("/tableorder/menulist")
+	public String getMenuListFragment(@RequestParam(name = "page", defaultValue = "1") int page, Model model, PageVo pageVo, SearchVo searchVo) {
+		
+		pageVo.setRowNumToShow(6);
+		pageVo.setThisPage(page);
+		pageVo.setParamsPaging(service.countProductsByVo(pageVo, searchVo));
+		
+		model.addAttribute("pageVo", pageVo);
+		model.addAttribute("list", service.findProductsByVo(pageVo, searchVo));
+		
+		return "usr/shop/menuList :: menuListFragment";
+	}
+	
 	
 	
 //	@RequestMapping(value = "/Xdm/productXdmList")

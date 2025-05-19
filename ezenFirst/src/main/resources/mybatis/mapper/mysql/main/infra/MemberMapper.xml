@@ -125,6 +125,15 @@
 			1=1
 			AND member_id = #{memberId}
 	</select>
+	
+	<select id="countAllMember" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			member
+		WHERE
+			is_deleted = 0
+	</select>
 		
 	<insert id="createMember">
 		INSERT INTO member(

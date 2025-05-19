@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 	  
 function loadMenuList(page) {
-    fetch(`/TableOrder/menuList?page=${page}`)
+    fetch(`/tableorder/menulist?page=${page}`)
    	.then(response => response.text())
    	.then(html => {
 	    document.getElementById("menuList").innerHTML = html;

@@ -23,6 +23,22 @@ public class OrderService {
 		return dao.findOrderMastersByVo(pageVo, searchVo);
 	}
 	
+	public OrderDto findOrderMasterById(String id) {
+		return dao.findOrderMasterById(id);
+	}
+	
+	public List<OrderDto> findOrderDetailsByOrderMasterId(String id) {
+		return dao.findOrderDetailsByOrderMasterId(id);
+	}
+	
+	public int countAllOrder() {
+		return dao.countAllOrder();
+	}
+	
+	public int sumAllOrder() {
+		return dao.sumAllOrder();
+	}
+	
 	public int updateOrderMaster(OrderDto dto) {
 		return dao.updateOrderMaster(dto);
 	}

@@ -16,7 +16,7 @@
 
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="/Xdm/index">Home</a></li>
+					<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
 					<li class="breadcrumb-item">시스템 관리</li>
 					<li class="breadcrumb-item active">코드 관리</li>
 				</ol>
@@ -45,14 +45,14 @@
 				<div class="row mb-3 mt-3">
 					<div class="col-2">
 						<select id="shIsDel" name="shIsDel" class="form-select">
-							<option value="" th:selected="${searchVo.shIsDel == null}">삭제여부</option>
+							<option value="" th:selected="${searchVo.shIsDel == null}">삭제 여부</option>
 							<option value="1" th:selected="${searchVo.shIsDel == 1}">Y</option>
 							<option value="0" th:selected="${searchVo.shIsDel == 0}">N</option>
 						</select>
 					</div>
 					<div class="col-2">
 						<select id="shIsUse" name="shIsUse" class="form-select">
-							<option value="" th:selected="${searchVo.shIsUse == null}">사용여부</option>
+							<option value="" th:selected="${searchVo.shIsUse == null}">사용 여부</option>
 							<option value="1" th:selected="${searchVo.shIsUse == 1}">Y</option>
 							<option value="0" th:selected="${searchVo.shIsUse == 0}">N</option>
 						</select>
@@ -62,7 +62,7 @@
 				<div class="row mb-3 mt-3">
 					<div class="col-2">
 						<select id="shOption" name="shOption" class="form-select">
-							<option value="" th:selected="${searchVo.shOption == null}">검색구분</option>
+							<option value="" th:selected="${searchVo.shOption == null}">검색 구분</option>
 							<option value="1" th:selected="${searchVo.shOption == 1}">코드그룹 번호</option>
 							<option value="2" th:selected="${searchVo.shOption == 2}">코드그룹명</option>
 							<option value="3" th:selected="${searchVo.shOption == 3}">코드 번호</option>

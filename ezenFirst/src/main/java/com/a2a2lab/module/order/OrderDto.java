@@ -2,6 +2,7 @@ package com.a2a2lab.module.order;
 
 public class OrderDto{
 	
+	// orderMaster
 	private String orderMasterId;
 	private Integer status;
 	private Integer price;
@@ -9,8 +10,11 @@ public class OrderDto{
 	private String updatedAt;
 	private Integer isDeleted;
 	private String memberId;
-	
+	// member
 	private String memberName;
+	// orderDetail
+	private String menuName;
+	private Integer quantity;
 	
 	
 	public String getOrderMasterId() {
@@ -60,6 +64,18 @@ public class OrderDto{
 	}
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
+	}
+	public String getMenuName() {
+		return menuName;
+	}
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
+	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 	
 	

@@ -95,6 +95,15 @@
 		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
 	</select>
 	
+	<select id="countAllReview" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			review
+		WHERE
+			is_deleted = 0
+	</select>
+	
 	<update id="softDeleteReview">
 		UPDATE review SET
 			is_deleted = 1

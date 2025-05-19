@@ -48,6 +48,10 @@ public class MemberService {
 		return dao.findMemberById(memberId);
 	}
 	
+	public int countAllMember() {
+		return dao.countAllMember();
+	}
+	
 	public int createMember(MemberDto dto) {
 		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 		return dao.createMember(dto);
