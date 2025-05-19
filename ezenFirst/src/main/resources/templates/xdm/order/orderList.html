@@ -4,11 +4,13 @@
 <div th:replace="~{xdm/include/head :: head}"></div>
 
 <!-- Main -->
+
 <main id="main" class="main">
 	<form name="formList" id="formList" method="post" autocomplete="off">
-		<!-- Pageing hidden -->
+	
 		<input type="hidden" name="thisPage" th:value="${pageVo.thisPage}"> 
-		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${pageVo.rowNumToShow}">
+		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${pageVo.rowNumToShow}">	
+		<input type="hidden" name="orderMasterId">
 		
 		<div class="pagetitle">
 
@@ -16,11 +18,11 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
 					<li class="breadcrumb-item">서비스 관리</li>
-					<li class="breadcrumb-item active">리뷰 관리</li>
+					<li class="breadcrumb-item active">주문 관리</li>
 				</ol>
 			</nav>
 
-			<h1 style="font-weight: bold;">리뷰 목록</h1>
+			<h1 style="font-weight: bold;">주문 목록</h1>
 
 			<!-- Search Start -->
 			<div class="search">
@@ -29,6 +31,7 @@
 						<select id="shOptionDate" name="shOptionDate" class="form-select">
 							<option value="" th:selected="${searchVo.shOptionDate == null}">날짜</option>
 							<option value="1" th:selected="${searchVo.shOptionDate == 1}">등록일</option>
+							<option value="2" th:selected="${searchVo.shOptionDate == 2}">수정일</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -43,7 +46,10 @@
 					<div class="col-2">
 						<select id="shOptionRange" name="shOptionRange" class="form-select">
 							<option value="" th:selected="${searchVo.shOptionRange == null}">범위</option>
-							<option value="1" th:selected="${searchVo.shOptionRange == 1}">평점</option>
+							<option value="1" th:selected="${searchVo.shOptionRange == 1}">가격</option>
+							<option value="2" th:selected="${searchVo.shOptionRange == 2}">열량</option>
+							<option value="3" th:selected="${searchVo.shOptionRange == 3}">누적 주문 수</option>
+							<option value="4" th:selected="${searchVo.shOptionRange == 4}">재고</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -62,16 +68,32 @@
 							<option value="0" th:selected="${searchVo.shIsDel == 0}">N</option>
 						</select>
 					</div>
+					<div class="col-2">
+						<select id="shType" name="shType" class="form-select">
+							<option value="" th:selected="${searchVo.shType == null}">종류</option>
+							<option th:each="code : ${codeList}" 
+									th:value="${code.codeId}"
+									th:text="${code.name}"
+									th:selected="${code.codeId == (searchVo.shType != null ? searchVo.shType.toString() : '')}"
+									>
+							</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<select id="shRecommand" name="shRecommand" class="form-select">
+							<option value="" th:selected="${searchVo.shRecommand == null}">추천 여부</option>
+							<option value="1" th:selected="${searchVo.shRecommand == 1}">Y</option>
+							<option value="0" th:selected="${searchVo.shRecommand == 0}">N</option>
+						</select>
+					</div>
 				</div>
 	
 				<div class="row mb-3 mt-3">
 					<div class="col-2">
 						<select id="shOption" name="shOption" class="form-select">
 							<option value="" th:selected="${searchVo.shOption == null}">검색구분</option>
-							<option value="1" th:selected="${searchVo.shOption == 1}">리뷰 번호</option>
+							<option value="1" th:selected="${searchVo.shOption == 1}">메뉴 번호</option>
 							<option value="2" th:selected="${searchVo.shOption == 2}">메뉴명</option>
-							<option value="3" th:selected="${searchVo.shOption == 3}">이름</option>
-							<option value="4" th:selected="${searchVo.shOption == 4}">내용</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -90,6 +112,7 @@
 			</div>
 			<!-- Search End -->
 		</div>
+
 		<!-- End Page Title -->
 
 
@@ -115,7 +138,7 @@
 									</select>
 								</div>
 							</div>
-
+							
 							<!-- Table Start -->
 							<div class="row">
 								<table class="table table-hover">
@@ -125,40 +148,41 @@
 												<input class="form-check-input" type="checkbox" id="selectAllCheckbox" onclick="toggleSelectAll(this)">
 											</th>
 											<th class="text-center">#</th>
-											<th class="text-center">리뷰 번호</th>
-											<th class="text-center">메뉴명</th>
+											<th class="text-center">주문 번호</th>
 											<th class="text-center">이름</th>
-											<th class="text-center">평점</th>
-											<th class="text-center">내용</th>
-											<th class="text-center">등록일</th>
+											<th class="text-center">주문 날짜</th>
+											<th class="text-center">가격</th>
+											<th class="text-center">주문 상태</th>
 										</tr>
 									</thead>
-									<tbody>
-									
+									<tbody>					
 										<tr th:if="${list == null || list.isEmpty()}">
-											<td colspan=8 style="text-align: center">
+											<td colspan=7 style="text-align: center">
 												<p>There are no data!</p>
 											</td>
 										</tr>
 										
 										<tr th:each="item : ${list}">
 											<td class="text-center">
-												<input class="form-check-input rowCheckbox" type="checkbox" th:value="${item.reviewId}">
-												<input type="hidden" name="delSeq" th:id="'delSeq_' + ${item.reviewId}">
+												<input class="form-check-input rowCheckbox" type="checkbox" th:value="${item.orderMasterId}">
+												<input type="hidden" name="delSeq" th:id="'delSeq_' + ${item.orderMasterId}">
 											</td>
 											<td class="text-center" th:text="${pageVo.totalRows - ((pageVo.thisPage - 1) * pageVo.rowNumToShow + itemStat.index)}"></td>
-											<td class="text-center" th:text="${item.reviewId}"></td>
-											<td class="text-center" th:text="${item.menuName}"></td>
-											<td class="text-center" th:text="${item.memberName}"></td>
-											<td class="text-center" th:text="${item.rating}"></td>
-											<td class="text-center" style="width: 300px; word-break: break-word; white-space: normal;">
-											    <div style="max-height: 30px; overflow-y: auto;">
-											        <span th:text="${item.description}"></span>
-											    </div>
+											<td class="text-center align-middle fw-semi-bold">
+												<a href="javascript:void(0);" th:text="${item.name}" th:attr="onclick=|goForm(${item.orderMasterId})|"></a>
 											</td>
+											<td class="text-center" th:text="${item.memberName}"></td>
 											<td class="text-center" th:text="${item.createdAt}"></td>
+											<td class="text-center" th:text="${item.price}"></td>
+											<td class="text-center">
+												<select class="form-select form-select-sm" id="selectStatus" th:data-seq="${item.orderMasterId}">
+													<option value="0" th:selected="${item.status == 0}">주문접수</option>
+													<option value="1" th:selected="${item.status == 1}">준비중</option>
+													<option value="2" th:selected="${item.status == 2}">주문완료</option>
+													<option value="3" th:selected="${item.status == 3}">주문취소</option>
+												</select>
+											</td>
 										</tr>
-
 									</tbody>
 								</table>
 							</div>
@@ -196,6 +220,7 @@
 							</div>
 							<!-- Pagination End -->
 
+							<!-- Table Button Start -->
 							<div class="row">
 								<div class="col">
 									<button type="button" id="btnHardDelete" class="btn btn-danger"> 
@@ -206,6 +231,7 @@
 									</button>
 								</div>
 							</div>
+							<!-- Table Button End -->
 							
 						</div>
 					</div>
@@ -232,12 +258,13 @@
 					</div>
 				</div>
 			</div>
-			<!-- Modal End -->	
+			<!-- Modal End -->
 			
 		</section>
 
 	</form>
 </main>
+
 <!-- End #main -->
 
 <script type="text/javascript">
@@ -246,7 +273,7 @@
 	let rowCheckboxes = document.querySelectorAll(".rowCheckbox");
 	let currentPath = window.location.pathname;
 	let links = document.querySelectorAll(".nav-content a");
-	
+	let id = document.querySelector("input[name=orderMasterId]");
 
 	// 전체 선택/해제 함수
 	function toggleSelectAll(source) {
@@ -260,20 +287,20 @@
 	let form = document.querySelector("form[name=formList]");
 	goList = function (thisPage) {
 	    document.querySelector("input[name=thisPage]").value = thisPage;
-	    form.action = "/xdm/service/review/list";
+	    form.action = "/xdm/service/order/list";
 	    form.submit();
 	}
 			
 	// 검색
 	document.getElementById("btnSearch").onclick = function () {
-	    form.action = "/xdm/service/review/list";
+	    form.action = "/xdm/service/order/list";
 	    form.submit();
 	};
 
 	// 테이블 행 개수 Select
 	document.getElementById("changeRowNum").onchange = function () {
 	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-	    form.action = "/xdm/service/review/list";
+	    form.action = "/xdm/service/order/list";
 	    form.submit();
 	}
 
@@ -301,6 +328,17 @@
 
 	});
 
+	// Insert
+	document.getElementById("btnForm").onclick = function () {
+	    goForm(0);
+	};
+	// Update
+	goForm = function (keyValue) {
+		id.value = keyValue;
+	    form.action = "/xdm/service/order/edit";
+	    form.submit();
+	};
+
 	// softDelete
 	// Modal 먼저 실행
 	document.getElementById("btnSoftDelete").onclick = function () {
@@ -320,7 +358,7 @@
 			document.querySelector(`input[id="delSeq_${s.value}"]`).value = s.value;
 		});
 		 
-		form.action = "/xdm/service/review/softDelete";
+		form.action = "/xdm/service/order/softDelete";
 		form.submit();
 	}
 
@@ -343,7 +381,7 @@
 			document.querySelector(`input[id="delSeq_${s.value}"]`).value = s.value;
 		});
 
-		form.action = "/xdm/service/review/hardDelete";
+		form.action = "/xdm/service/order/hardDelete";
 		form.submit();
 	}
 
@@ -356,6 +394,40 @@
 		timepicker:false,
 		format:'Y-m-d'
 	});
+	
+/* 	// 주문상태 변경
+	document.querySelectorAll("#selectOrdersStatus").forEach(select => {
+	    select.addEventListener("change", function() {
+	        const seq = this.getAttribute("data-seq");  // 행의 seq 값 가져오기
+	        const newStatus = this.value;  // 변경된 값 가져오기
+
+	        $.ajax({
+				async: true 
+				,cache: false
+				,type: "post"
+				,url: "/Xdm/ordersXdmUdpt"
+				,data : { 
+					"seq" : seq
+					,"ordersStatus" : newStatus
+					}
+	        	,success : function(){
+					alert("변경되었습니다.");
+				}
+				,error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+	        
+	    });
+	});
+	
+	let seq = document.querySelector("input[name=choice]");
+	
+	goForm = function (keyValue) {
+	    seq.value = keyValue;
+	    form.action = "/Xdm/ordersXdmOne";
+	    form.submit();
+	} */
 	
 </script>
 

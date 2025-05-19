@@ -1,12 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.a2a2lab.module.orders.OrdersDao">
+<mapper namespace="com.a2a2lab.module.order.OrderDao">
 
-	<resultMap id="resultMapObj"
-		type="com.a2a2lab.module.orders.OrdersDto"></resultMap>
+	<resultMap id="resultMapObj" type="com.a2a2lab.module.order.OrderDto"></resultMap>
+	
+	<select id="countOrderMastersByVo" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM
+			order_master
+		WHERE
+			1=1
+			<!-- <if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND rw.is_deleted = #{searchVo.shIsDel}</if>
+			
+			<choose>
+			    <when test="searchVo.shOptionDate == 1">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND rw.created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND rw.created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
+			</choose>
+			
+			<choose>
+			    <when test="searchVo.shOptionRange eq 1">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND rw.rating &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND rw.rating &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND rw.review_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND p.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 3">AND mb.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 4">AND rw.description LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose> -->
+	</select>
 
-	<sql id="selectCommon">
+	<select id="findOrderMastersByVo" resultMap="resultMapObj">
+		SELECT 
+			om.order_master_id AS orderMasterId
+			,mb.name AS memberName
+			,om.status AS status
+			,om.price AS price
+			,om.created_at AS createdAt
+		FROM
+			order_master om
+			JOIN member mb ON mb.member_id = om.member_id
+		WHERE
+			1=1
+			<!-- <if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND rw.is_deleted = #{searchVo.shIsDel}</if>
+			
+			<choose>
+			    <when test="searchVo.shOptionDate == 1">
+			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+			            AND rw.created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			        </if>
+			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+			            AND rw.created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			        </if>
+			    </when>
+			</choose>
+			
+			<choose>
+			    <when test="searchVo.shOptionRange eq 1">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND rw.rating &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND rw.rating &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND rw.review_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND p.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 3">AND mb.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 4">AND rw.description LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose> -->
+		ORDER BY
+			om.order_master_id DESC
+		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
+	</select>
+	
+	<update id="softDeleteOrderMaster">
+		UPDATE order_master SET
+			is_deleted = 1
+			,updated_at = now()
+		WHERE
+			order_master_id = #{orderMasterId}
+	</update>
+	
+	<delete id="hardDeleteOrderMaster">
+		DELETE
+		FROM
+			order_master
+		WHERE
+			order_master_id = #{orderMasterId}
+	</delete>
+
+<!-- 	<sql id="selectCommon">
 		FROM
 			orders o
 			JOIN user u ON u.seq = o.user_seq
@@ -50,7 +151,7 @@
 		    AND ordersDelNy = 0
 	</select>
 	
-<!-- 
+
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT 
 			aa.* 
@@ -70,7 +171,7 @@
 			seq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
- -->
+
  
  	<select id="selectOne" resultMap="resultMapObj">
  		SELECT
@@ -195,7 +296,7 @@
 			ordersStatus = #{ordersStatus}
 		WHERE
 			seq = #{seq}
-	</update>
+	</update> -->
 
 	
 </mapper>

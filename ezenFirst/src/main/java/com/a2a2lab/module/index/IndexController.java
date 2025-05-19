@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.a2a2lab.module.member.MemberService;
-import com.a2a2lab.module.orders.OrdersService;
+import com.a2a2lab.module.order.OrderService;
 import com.a2a2lab.module.review.ReviewService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpSession;
 public class IndexController{
 	
 	@Autowired
-	OrdersService ordersService;
+	OrderService ordersService;
 	@Autowired
 	ReviewService reviewService;
 	@Autowired
