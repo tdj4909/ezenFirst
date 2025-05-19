@@ -5,7 +5,7 @@ public class ReviewDto{
 	private String reviewId;
 	private Integer rating;
 	private String description;
-	private String createAt;
+	private String createdAt;
 	private String memberId;
 	private String menuId;
 	
@@ -31,11 +31,11 @@ public class ReviewDto{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getCreateAt() {
-		return createAt;
+	public String getCreatedAt() {
+		return createdAt;
 	}
-	public void setCreateAt(String createAt) {
-		this.createAt = createAt;
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
 	public String getMemberId() {
 		return memberId;

@@ -9,94 +9,87 @@
 		SELECT 
 			COUNT(*)
 		FROM
-			review
+			review rw
+			JOIN member mb ON mb.member_id = rw.member_id
+			JOIN product p ON p.product_id = rw.product_id
 		WHERE
 			1=1
-			<!--<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND c.is_used = #{searchVo.shIsUse}</if>
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND c.is_deleted = #{searchVo.shIsDel}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND rw.is_deleted = #{searchVo.shIsDel}</if>
 			
 			<choose>
 			    <when test="searchVo.shOptionDate == 1">
 			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			            AND rw.created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
 			        </if>
 			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionDate == 2">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			            AND rw.created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
 			        </if>
 			    </when>
 			</choose>
 			
 			<choose>
-				<when test="searchVo.shOption == 1">AND c.codegroup_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND cg.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-				<when test="searchVo.shOption == 3">AND c.code_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 4">AND c.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>-->
+			    <when test="searchVo.shOptionRange eq 1">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND rw.rating &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND rw.rating &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND rw.review_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND p.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 3">AND mb.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 4">AND rw.description LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose>
 	</select>
 
 	<select id="findReviewsByVo" resultMap="resultMapObj">
 		SELECT 
 			rw.review_id AS reviewId
-			,
-			(
-				SELECT
-					p.name
-				FROM
-					product p
-				WHERE
-					p.product_id = rw.product_id
-			) AS menuName
-			,
-			(
-				SELECT
-					mb.name
-				FROM
-					member mb
-				WHERE
-					mb.member_id = rw.member_id
-			) AS memberName
+			,p.name AS menuName
+			,mb.name AS memberName
+			,rw.rating
 			,rw.description
 			,rw.created_at AS createdAt
 		FROM
 			review rw
+			JOIN member mb ON mb.member_id = rw.member_id
+			JOIN product p ON p.product_id = rw.product_id
 		WHERE
 			1=1
-			<!--<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND c.is_used = #{searchVo.shIsUse}</if>
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND c.is_deleted = #{searchVo.shIsDel}</if>
+			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND rw.is_deleted = #{searchVo.shIsDel}</if>
 			
 			<choose>
 			    <when test="searchVo.shOptionDate == 1">
 			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+			            AND rw.created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
 			        </if>
 			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionDate == 2">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+			            AND rw.created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
 			        </if>
 			    </when>
 			</choose>
 			
 			<choose>
-				<when test="searchVo.shOption == 1">AND c.codegroup_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND cg.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-				<when test="searchVo.shOption == 3">AND c.code_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 4">AND c.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>-->
+			    <when test="searchVo.shOptionRange eq 1">
+			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+			            AND rw.rating &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+			        </if>
+			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+			            AND rw.rating &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+			        </if>
+			    </when>
+			</choose>
+			
+			<choose>
+				<when test="searchVo.shOption == 1">AND rw.review_id = #{searchVo.shValue}</when>
+				<when test="searchVo.shOption == 2">AND p.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 3">AND mb.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+				<when test="searchVo.shOption == 4">AND rw.description LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			</choose>
 		ORDER BY
 			rw.review_id DESC
 		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}

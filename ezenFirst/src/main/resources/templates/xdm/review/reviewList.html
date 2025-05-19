@@ -4,12 +4,11 @@
 <div th:replace="~{xdm/include/head :: head}"></div>
 
 <!-- Main -->
-
 <main id="main" class="main">
 	<form name="formList" id="formList" method="post" autocomplete="off">
 		<!-- Pageing hidden -->
 		<input type="hidden" name="thisPage" th:value="${pageVo.thisPage}"> 
-		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${pageVo.rowNumToShow}">	
+		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${pageVo.rowNumToShow}">
 		
 		<div class="pagetitle">
 
@@ -30,7 +29,6 @@
 						<select id="shOptionDate" name="shOptionDate" class="form-select">
 							<option value="" th:selected="${searchVo.shOptionDate == null}">날짜</option>
 							<option value="1" th:selected="${searchVo.shOptionDate == 1}">등록일</option>
-							<option value="2" th:selected="${searchVo.shOptionDate == 2}">수정일</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -43,36 +41,25 @@
 				
 				<div class="row mb-3 mt-3">
 					<div class="col-2">
+						<select id="shOptionRange" name="shOptionRange" class="form-select">
+							<option value="" th:selected="${searchVo.shOptionRange == null}">범위</option>
+							<option value="1" th:selected="${searchVo.shOptionRange == 1}">평점</option>
+						</select>
+					</div>
+					<div class="col-2">
+						<input id="shRangeStart" name="shRangeStart" type="text" class="form-control" placeholder="최소" th:value="${searchVo.shRangeStart}" autocomplete="off">
+					</div>
+					<div class="col-2">
+						<input id="shRangeEnd" name="shRangeEnd" type="text" class="form-control" placeholder="최대" th:value="${searchVo.shRangeEnd}" autocomplete="off">
+					</div>
+				</div>
+				
+				<div class="row mb-3 mt-3">
+					<div class="col-2">
 						<select id="shIsDel" name="shIsDel" class="form-select">
 							<option value="" th:selected="${searchVo.shIsDel == null}">삭제 여부</option>
 							<option value="1" th:selected="${searchVo.shIsDel == 1}">Y</option>
 							<option value="0" th:selected="${searchVo.shIsDel == 0}">N</option>
-						</select>
-					</div>
-					<div class="col-2">
-						<select id="shIsAdmin" name="shIsAdmin" class="form-select">
-							<option value="" th:selected="${searchVo.shIsAdmin == null}">권한</option>
-							<option value="1" th:selected="${searchVo.shIsAdmin == 1}">관리자</option>
-							<option value="0" th:selected="${searchVo.shIsAdmin == 0}">사용자</option>
-						</select>
-					</div>
-					<div class="col-2">
-						<select id="shGender" name="shGender" class="form-select">
-							<option value="" th:selected="${searchVo.shGender == null}">성별</option>
-							<option value="1" th:selected="${searchVo.shGender == 1}">남성</option>
-							<option value="2" th:selected="${searchVo.shGender == 2}">여성</option>
-							<option value="3" th:selected="${searchVo.shGender == 3}">공개안함</option>
-						</select>
-					</div>
-					<div class="col-2">
-						<select id="shTel" name="shTel" class="form-select">
-							<option value="" th:selected="${searchVo.shTel == null}">통신사</option>
-							<option th:each="code : ${codeList}" 
-									th:value="${code.codeId}"
-									th:text="${code.name}"
-									th:selected="${code.codeId == (searchVo.shTel != null ? searchVo.shTel.toString() : '')}"
-									>
-							</option>
 						</select>
 					</div>
 				</div>
@@ -81,9 +68,10 @@
 					<div class="col-2">
 						<select id="shOption" name="shOption" class="form-select">
 							<option value="" th:selected="${searchVo.shOption == null}">검색구분</option>
-							<option value="1" th:selected="${searchVo.shOption == 1}">이메일</option>
-							<option value="2" th:selected="${searchVo.shOption == 2}">이름</option>
-							<option value="3" th:selected="${searchVo.shOption == 3}">전화번호</option>
+							<option value="1" th:selected="${searchVo.shOption == 1}">리뷰 번호</option>
+							<option value="2" th:selected="${searchVo.shOption == 2}">메뉴명</option>
+							<option value="3" th:selected="${searchVo.shOption == 3}">이름</option>
+							<option value="4" th:selected="${searchVo.shOption == 4}">내용</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -101,10 +89,7 @@
 				</div>
 			</div>
 			<!-- Search End -->
-
-
 		</div>
-
 		<!-- End Page Title -->
 
 
@@ -165,9 +150,10 @@
 											<td class="text-center" th:text="${item.reviewId}"></td>
 											<td class="text-center" th:text="${item.menuName}"></td>
 											<td class="text-center" th:text="${item.memberName}"></td>
-											<td style="width: 300px; word-break: break-word; white-space: normal;">
+											<td class="text-center" th:text="${item.rating}"></td>
+											<td class="text-center" style="width: 300px; word-break: break-word; white-space: normal;">
 											    <div style="max-height: 30px; overflow-y: auto;">
-											        <span th:text="${list.description}"></span>
+											        <span th:text="${item.description}"></span>
 											    </div>
 											</td>
 											<td class="text-center" th:text="${item.createdAt}"></td>
@@ -212,10 +198,10 @@
 
 							<div class="row">
 								<div class="col">
-									<button type="button" id="btnDelete" class="btn btn-danger"> 
+									<button type="button" id="btnHardDelete" class="btn btn-danger"> 
 										<i class="ri-close-large-line"></i>
 									</button>
-									<button type="button" id="btnUelete" class="btn btn-danger"> 
+									<button type="button" id="btnSoftDelete" class="btn btn-danger">
 										<i class="ri-delete-bin-line"></i>
 									</button>
 								</div>
@@ -254,12 +240,13 @@
 </main>
 <!-- End #main -->
 
-<script type="text/javascript">
+<script>
 	
 	let selectAllCheckbox = document.getElementById("selectAllCheckbox");
 	let rowCheckboxes = document.querySelectorAll(".rowCheckbox");
 	let currentPath = window.location.pathname;
 	let links = document.querySelectorAll(".nav-content a");
+	
 
 	// 전체 선택/해제 함수
 	function toggleSelectAll(source) {
