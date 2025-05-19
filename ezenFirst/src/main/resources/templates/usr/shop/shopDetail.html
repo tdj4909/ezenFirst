@@ -15,20 +15,20 @@
                     <div class="row g-4">
                         <div class="col-lg-6">
                             <div class="border rounded">
-                                <img th:src="${item.path}" class="img-fluid rounded" alt="Image">
+                                <img th:src="${item.filePath}" class="img-fluid rounded" alt="Image">
                             </div>
                         </div>
                         <div class="col-lg-6">
-							<input type="hidden" id="menu_seq" name="menu_seq" th:value="${item.seq}">
-                            <h4 class="fw-bold mb-3" th:text="${item.menuNm}"></h4>
-                            <h5 class="fw-bold mb-3" th:text="${#numbers.formatInteger(item.menuPrice, 3, 'COMMA')} + ' 원'"></h5>
-                            <h5 class="fw-bold mb-3" th:if="${item.menuRating == null}">평점 없음</h5>
-                            <div class="d-flex mb-4" th:if="${item.menuRating != null}">
+							<input type="hidden" id="productId" name="productId" th:value="${item.productId}">
+                            <h4 class="fw-bold mb-3" th:text="${item.name}"></h4>
+                            <h5 class="fw-bold mb-3" th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + ' 원'"></h5>
+                            <h5 class="fw-bold mb-3" th:if="${item.rating == null}">평점 없음</h5>
+                            <div class="d-flex mb-4" th:if="${item.rating != null}">
 				                <span th:each="i : ${#numbers.sequence(1, 5)}">
-				                    <i class="fa fa-star" th:classappend="${i <= item.menuRating} ? ' text-secondary' : ' text-muted'"></i>
+				                    <i class="fa fa-star" th:classappend="${i <= item.rating} ? ' text-secondary' : ' text-muted'"></i>
 				                </span>
                             </div>
-                            <p class="mb-4" th:text="${item.menuDescription}"></p>
+                            <p class="mb-4" th:text="${item.description}"></p>
 
                             <div class="col p-3">
                                 <div class="row bg-light align-items-center text-center justify-content-center py-2">
@@ -146,9 +146,9 @@ function updateStars(rate) {
 
 // 리뷰 로드
 function loadReview() {
-    const seq = document.getElementById('menu_seq').value;
+    const id = document.getElementById('productId').value;
 
-    fetch(`/TableOrder/reviewFragment?seq=${seq}`)
+    fetch(`/tableorder/reviewfragment?id=${id}`)
         .then(res => res.text())
         .then(html => {
             document.getElementById("review").innerHTML = html;
@@ -159,7 +159,7 @@ function loadReview() {
 
 // 리뷰 저장
 function saveReview() {
-    const menuId = document.getElementById('menu_seq').value;
+    const productId = document.getElementById('productId').value;
     const userId = document.getElementById('user_seq').value;
     const nickname = document.querySelector('input[type="text"]').value.trim();
     const content = document.querySelector('textarea').value.trim();
@@ -171,14 +171,14 @@ function saveReview() {
     }
 
     const review = {
-        menu_seq: menuId,
+    	productId: productId,
         user_seq: userId,
         nickname: nickname,
         reviewDescription: content,
         reviewRate: rate
     };
 
-    fetch('/TableOrder/reviewInst', {
+    fetch('/tableorder/reviewInst', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(review)

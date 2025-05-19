@@ -112,7 +112,7 @@ public class ProductController {
 //	사용자
 //	************************************************************
 	
-	// 상품 리스트 화면
+	// 메뉴 리스트 화면
 	@RequestMapping("/tableorder/shop/list")
 	public String showShopList(Model model) {
 		return "usr/shop/shopList";
@@ -132,13 +132,10 @@ public class ProductController {
 		return "usr/shop/menuList :: menuListFragment";
 	}
 	
-	// 상품 상세 화면
-	@RequestMapping("/tableorder/shop/detail/{seq}")
-	public String shopDetail(@PathVariable("seq") String seq, Model model) {
-		
-//		vo.setIfcgSeq(seq);
-//		model.addAttribute("item", productService.selectOne(vo));
-		
+	// 메뉴 상세 화면
+	@RequestMapping("/tableorder/shop/detail/{id}")
+	public String shopDetail(@PathVariable("id") String id, Model model) {
+		model.addAttribute("item", service.findProductById(id));
 		return "usr/shop/shopDetail";
 	}
 	

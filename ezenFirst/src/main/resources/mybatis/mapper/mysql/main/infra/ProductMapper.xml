@@ -165,24 +165,26 @@
 
 	<select id="findProductById" resultMap="resultMapObj">
 		SELECT
-			product_id AS productId
-			,type
-			,name
-			,price
-			,description
-			,calories
-			,sugars
-			,protein
-			,fat
-			,sodium
-			,stock
-			,is_recommand AS isRecommand
-			,file_id AS fileId
+			p.product_id AS productId
+			,p.type
+			,p.name
+			,p.price
+			,p.description
+			,p.calories
+			,p.sugars
+			,p.protein
+			,p.fat
+			,p.sodium
+			,p.stock
+			,p.is_recommand AS isRecommand
+			,p.file_id AS fileId
+			,f.path AS filePath
 		FROM 
-			product
+			product p
+			JOIN file f ON f.file_id = p.file_id
 		WHERE
 			1=1
-			AND product_id = #{productId}
+			AND p.product_id = #{productId}
 	</select>
 
 	<insert id="createProduct">
