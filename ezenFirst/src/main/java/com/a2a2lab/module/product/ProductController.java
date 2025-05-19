@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -129,6 +130,16 @@ public class ProductController {
 		model.addAttribute("list", service.findProductsByVo(pageVo, searchVo));
 		
 		return "usr/shop/menuList :: menuListFragment";
+	}
+	
+	// 상품 상세 화면
+	@RequestMapping(value = "/tableorder/shop/detail/{seq}")
+	public String shopDetail(@PathVariable("seq") String seq, Model model) {
+		
+//		vo.setIfcgSeq(seq);
+//		model.addAttribute("item", productService.selectOne(vo));
+		
+		return "usr/shop/shopDetail";
 	}
 	
 	
