@@ -133,7 +133,7 @@ public class ProductController {
 	}
 	
 	// 상품 상세 화면
-	@RequestMapping(value = "/tableorder/shop/detail/{seq}")
+	@RequestMapping("/tableorder/shop/detail/{seq}")
 	public String shopDetail(@PathVariable("seq") String seq, Model model) {
 		
 //		vo.setIfcgSeq(seq);
