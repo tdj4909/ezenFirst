@@ -30,8 +30,7 @@
 					<div class="col-2">
 						<select id="shOptionDate" name="shOptionDate" class="form-select">
 							<option value="" th:selected="${searchVo.shOptionDate == null}">날짜</option>
-							<option value="1" th:selected="${searchVo.shOptionDate == 1}">등록일</option>
-							<option value="2" th:selected="${searchVo.shOptionDate == 2}">수정일</option>
+							<option value="1" th:selected="${searchVo.shOptionDate == 1}">주문일</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -47,9 +46,6 @@
 						<select id="shOptionRange" name="shOptionRange" class="form-select">
 							<option value="" th:selected="${searchVo.shOptionRange == null}">범위</option>
 							<option value="1" th:selected="${searchVo.shOptionRange == 1}">가격</option>
-							<option value="2" th:selected="${searchVo.shOptionRange == 2}">열량</option>
-							<option value="3" th:selected="${searchVo.shOptionRange == 3}">누적 주문 수</option>
-							<option value="4" th:selected="${searchVo.shOptionRange == 4}">재고</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -69,21 +65,12 @@
 						</select>
 					</div>
 					<div class="col-2">
-						<select id="shType" name="shType" class="form-select">
-							<option value="" th:selected="${searchVo.shType == null}">종류</option>
-							<option th:each="code : ${codeList}" 
-									th:value="${code.codeId}"
-									th:text="${code.name}"
-									th:selected="${code.codeId == (searchVo.shType != null ? searchVo.shType.toString() : '')}"
-									>
-							</option>
-						</select>
-					</div>
-					<div class="col-2">
-						<select id="shRecommand" name="shRecommand" class="form-select">
-							<option value="" th:selected="${searchVo.shRecommand == null}">추천 여부</option>
-							<option value="1" th:selected="${searchVo.shRecommand == 1}">Y</option>
-							<option value="0" th:selected="${searchVo.shRecommand == 0}">N</option>
+						<select id="shStatus" name="shStatus" class="form-select">
+							<option value="" th:selected="${searchVo.shStatus == null}">주문 상태</option>
+							<option value="0" th:selected="${searchVo.shStatus == 0}">주문 접수</option>
+							<option value="1" th:selected="${searchVo.shStatus == 1}">준비중</option>
+							<option value="2" th:selected="${searchVo.shStatus == 2}">주문 완료</option>
+							<option value="3" th:selected="${searchVo.shStatus == 3}">주문 취소</option>
 						</select>
 					</div>
 				</div>
@@ -91,9 +78,9 @@
 				<div class="row mb-3 mt-3">
 					<div class="col-2">
 						<select id="shOption" name="shOption" class="form-select">
-							<option value="" th:selected="${searchVo.shOption == null}">검색구분</option>
-							<option value="1" th:selected="${searchVo.shOption == 1}">메뉴 번호</option>
-							<option value="2" th:selected="${searchVo.shOption == 2}">메뉴명</option>
+							<option value="" th:selected="${searchVo.shOption == null}">검색 구분</option>
+							<option value="1" th:selected="${searchVo.shOption == 1}">주문 번호</option>
+							<option value="2" th:selected="${searchVo.shOption == 2}">이름</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -150,7 +137,7 @@
 											<th class="text-center">#</th>
 											<th class="text-center">주문 번호</th>
 											<th class="text-center">이름</th>
-											<th class="text-center">주문 날짜</th>
+											<th class="text-center">주문일</th>
 											<th class="text-center">가격</th>
 											<th class="text-center">주문 상태</th>
 										</tr>
@@ -169,17 +156,17 @@
 											</td>
 											<td class="text-center" th:text="${pageVo.totalRows - ((pageVo.thisPage - 1) * pageVo.rowNumToShow + itemStat.index)}"></td>
 											<td class="text-center align-middle fw-semi-bold">
-												<a href="javascript:void(0);" th:text="${item.name}" th:attr="onclick=|goForm(${item.orderMasterId})|"></a>
+												<a href="javascript:void(0);" th:text="${item.orderMasterId}" th:attr="onclick=|goForm(${item.orderMasterId})|"></a>
 											</td>
 											<td class="text-center" th:text="${item.memberName}"></td>
 											<td class="text-center" th:text="${item.createdAt}"></td>
 											<td class="text-center" th:text="${item.price}"></td>
-											<td class="text-center">
-												<select class="form-select form-select-sm" id="selectStatus" th:data-seq="${item.orderMasterId}">
-													<option value="0" th:selected="${item.status == 0}">주문접수</option>
+											<td class="text-center" style="text-align: center">
+												<select class="form-select form-select-sm" style="display: inline-block; width: auto;" id="selectStatus" th:data-seq="${item.orderMasterId}">
+													<option value="0" th:selected="${item.status == 0}">주문 접수</option>
 													<option value="1" th:selected="${item.status == 1}">준비중</option>
-													<option value="2" th:selected="${item.status == 2}">주문완료</option>
-													<option value="3" th:selected="${item.status == 3}">주문취소</option>
+													<option value="2" th:selected="${item.status == 2}">주문 완료</option>
+													<option value="3" th:selected="${item.status == 3}">주문 취소</option>
 												</select>
 											</td>
 										</tr>
@@ -328,16 +315,11 @@
 
 	});
 
-	// Insert
-	document.getElementById("btnForm").onclick = function () {
-	    goForm(0);
-	};
-	// Update
 	goForm = function (keyValue) {
 		id.value = keyValue;
-	    form.action = "/xdm/service/order/edit";
+	    form.action = "/Xdm/ordersXdmOne";
 	    form.submit();
-	};
+	}
 
 	// softDelete
 	// Modal 먼저 실행
@@ -348,7 +330,7 @@
 		document.querySelector("#btnModalHardDelete").style.display = 'none';
 		
 		let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
-	       modal.show();     	
+	    modal.show();     	
 	}
 	// Modal에서 확인 버튼 누르면
 	document.getElementById("btnModalSoftDelete").onclick = function () {
@@ -371,7 +353,7 @@
 		document.querySelector("#btnModalHardDelete").style.display = '';
 		
 		let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
-	       modal.show();     	
+	    modal.show();     	
 	}
 	// Modal에서 확인 버튼 누르면
 	document.getElementById("btnModalHardDelete").onclick = function () {
@@ -395,23 +377,29 @@
 		format:'Y-m-d'
 	});
 	
-/* 	// 주문상태 변경
-	document.querySelectorAll("#selectOrdersStatus").forEach(select => {
+ 	// 주문상태 변경
+	document.querySelectorAll("#selectStatus").forEach(select => {
 	    select.addEventListener("change", function() {
-	        const seq = this.getAttribute("data-seq");  // 행의 seq 값 가져오기
-	        const newStatus = this.value;  // 변경된 값 가져오기
+	        const id = this.getAttribute("data-seq");  // 행의 seq 값 가져오기
+	        const status = this.value;  // 변경된 값 가져오기
 
 	        $.ajax({
 				async: true 
 				,cache: false
 				,type: "post"
-				,url: "/Xdm/ordersXdmUdpt"
+				,url: "/xdm/service/order/update"
 				,data : { 
-					"seq" : seq
-					,"ordersStatus" : newStatus
+					"id" : id
+					,"status" : status
 					}
 	        	,success : function(){
-					alert("변경되었습니다.");
+	        		document.querySelector("#modalConfirmTitle").textContent = "성공";
+	        		document.querySelector("#modalConfirmBody").textContent = "주문 상태가 변경되었습니다.";
+	        		document.querySelector("#btnModalSoftDelete").style.display = 'none';
+	        		document.querySelector("#btnModalHardDelete").style.display = 'none';
+	        		
+	        		let modal = new bootstrap.Modal(document.getElementById("modalConfirm"));
+	        	    modal.show();  
 				}
 				,error : function(jqXHR, textStatus, errorThrown){
 					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
@@ -420,14 +408,7 @@
 	        
 	    });
 	});
-	
-	let seq = document.querySelector("input[name=choice]");
-	
-	goForm = function (keyValue) {
-	    seq.value = keyValue;
-	    form.action = "/Xdm/ordersXdmOne";
-	    form.submit();
-	} */
+
 	
 </script>
 

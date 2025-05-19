@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
@@ -35,9 +36,22 @@ public class OrderController{
 		return "xdm/order/orderList";
 	}
 	
+	// 주문 Update
+	@RequestMapping(value = "/xdm/service/order/update")
+	@ResponseBody
+	public String updateOrderMaster(@RequestParam("id") List<String> idList, @RequestParam("status") List<Integer> statuses) {
+		for(int i = 0; i < idList.size(); i++) {
+			OrderDto dto = new OrderDto();
+			dto.setOrderMasterId(idList.get(i));
+			dto.setStatus(statuses.get(i));
+			service.updateOrderMaster(dto);
+		}
+		return "redirect:/xdm/service/order/list";
+	}
+	
 	// 주문 softDelete
 	@RequestMapping("/xdm/service/order/softDelete")
-	public String softDeleteOrder(@RequestParam("delSeq") List<String> idList) {
+	public String softDeleteOrderMaster(@RequestParam("delSeq") List<String> idList) {
 		for(String id : idList) {
 			if(!id.equals("")) {
 				service.softDeleteOrderMaster(id);
@@ -48,7 +62,7 @@ public class OrderController{
 	
 	// 주문 hardDelete
 	@RequestMapping("/xdm/service/order/hardDelete")
-	public String hardDeleteOrder(@RequestParam("delSeq") List<String> idList) {
+	public String hardDeleteOrderMaster(@RequestParam("delSeq") List<String> idList) {
 		for(String id : idList) {
 			if(!id.equals("")) {
 				service.hardDeleteOrderMaster(id);
@@ -56,6 +70,9 @@ public class OrderController{
 		}
 		return "redirect:/xdm/service/order/list";
 	}
+	
+	
+	
 	
 //    // 관리자
 //	// 주문관리 화면

@@ -23,6 +23,10 @@ public class OrderService {
 		return dao.findOrderMastersByVo(pageVo, searchVo);
 	}
 	
+	public int updateOrderMaster(OrderDto dto) {
+		return dao.updateOrderMaster(dto);
+	}
+	
 	public int softDeleteOrderMaster(String id) {
 		return dao.softDeleteOrderMaster(id);
 	}
@@ -30,6 +34,8 @@ public class OrderService {
 	public int hardDeleteOrderMaster(String id) {
 		return dao.hardDeleteOrderMaster(id);
 	}
+	
+	
 	
 //	public int insertOrder(OrderDto dto) {
 //		return dao.insertOrder(dto);

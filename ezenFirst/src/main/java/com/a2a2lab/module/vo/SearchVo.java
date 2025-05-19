@@ -17,6 +17,7 @@ public class SearchVo {
 	private Integer shIsAdmin;
 	private Integer shRecommand;
 	private Integer shType;
+	private Integer shStatus;
 
 	
 	// Getter, Setter
@@ -109,5 +110,11 @@ public class SearchVo {
 	}
 	public void setShType(Integer shType) {
 		this.shType = shType;
+	}
+	public Integer getShStatus() {
+		return shStatus;
+	}
+	public void setShStatus(Integer shStatus) {
+		this.shStatus = shStatus;
 	}
 }
