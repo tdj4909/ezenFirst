@@ -51,7 +51,7 @@
 												<div class="col-4">
 													<label for="type" class="form-label">종류<b style="color: red;">*</b></label> 
 													<select class="form-select" id="type" name="type" required>
-														<option disabled hidden selected value="">종류</option>
+														<option disabled hidden th:selected="${item?.type == null}" value="">종류</option>
 														<option th:each="code : ${codeList}" 
 																th:value="${code.codeId}"
 																th:text="${code.name}"

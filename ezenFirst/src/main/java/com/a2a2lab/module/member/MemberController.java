@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.a2a2lab.common.config.CustomUserDetails;
 import com.a2a2lab.module.code.CodeService;
 import com.a2a2lab.module.mail.MailService;
 import com.a2a2lab.module.vo.PageVo;
@@ -144,6 +146,22 @@ public class MemberController {
 	    }
 		
 		return returnMap;
+	}
+	// 개인정보 수정 화면
+	@RequestMapping("/tableOrder/sign/editView")
+	public String editView(Model model, Authentication auth) {
+		// 계정 정보
+		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+		model.addAttribute("member", service.findMemberByEmail(userDetails.getUsername()));
+		// 통신사
+		model.addAttribute("codeList", codeService.findCodesByCodeGroupId("1"));
+		return "usr/sign/edit";
+	}
+	// 개인정보 수정 
+	@RequestMapping("/tableOrder/sign/edit")
+	public String editMember(MemberDto dto) {
+		service.updateMember(dto);
+		return "redirect:/tableOrder/shop/list";
 	}
 	
 	

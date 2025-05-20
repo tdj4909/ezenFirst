@@ -172,15 +172,18 @@
 		)
 	</insert>
 		
-<!-- 	<update id="updateMember">
+	<update id="updateMember">
 		UPDATE member SET
 			name = #{name}
-			,is_used = #{isUsed}
+			,gender = #{gender}
+			,birthday = #{birthday}
+			,mobile_carrier = #{mobileCarrier}
+			,phone = #{phone}
 			,updated_at = now()
 		WHERE
 			1=1
 			AND member_id = #{memberId}
-	</update> -->
+	</update>
 	
 	<update id="softDeleteMember">
 		UPDATE member SET

@@ -17,7 +17,7 @@ public interface MemberDao {
 	public MemberDto findMemberByEmail(String email);
 	public int countAllMember();
 	public int createMember(MemberDto dto);
-//	public int updateMember(MemberDto dto);
+	public int updateMember(MemberDto dto);
 	public int softDeleteMember(String memberId);
 	public int hardDeleteMember(String memberId);
 	public int emailChk(String email);

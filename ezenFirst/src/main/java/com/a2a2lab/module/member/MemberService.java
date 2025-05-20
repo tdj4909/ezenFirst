@@ -61,9 +61,9 @@ public class MemberService {
 		return dao.createMember(dto);
 	}
 	
-//	public int updateMember(MemberDto dto) {
-//		return dao.updateMember(dto);
-//	}
+	public int updateMember(MemberDto dto) {
+		return dao.updateMember(dto);
+	}
 	
 	public int softDeleteMember(String id) {
 		return dao.softDeleteMember(id);

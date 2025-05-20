@@ -151,7 +151,7 @@
 											<th class="text-center">종류</th>
 											<th class="text-center">메뉴명</th>
 											<th class="text-center">가격</th>
-											<th class="text-center">열량</th>
+											<th class="text-center">열량(kcal)</th>
 											<th class="text-center">평점</th>
 											<th class="text-center">누적 주문 수</th>
 											<th class="text-center">재고</th>
@@ -163,7 +163,7 @@
 									<tbody>
 																		
 										<tr th:if="${list == null || list.isEmpty()}">
-											<td colspan=12 style="text-align: center">
+											<td colspan=13 style="text-align: center">
 												<p>There are no data!</p>
 											</td>
 										</tr>
