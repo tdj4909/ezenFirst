@@ -95,6 +95,22 @@ public class MemberController {
 	}
 	
 	
+//	************************************************************
+//	사용자
+//	************************************************************
+	// 로그인 화면
+	@RequestMapping("/tableOrder/sign/loginView")
+	public String loginView(Model model) {
+		// 임시 로그인 계정
+		String tmpEmail = "ServiceAdmin@gmail.com";
+		String tmpPwd = "a1234567";
+		model.addAttribute("tmpEmail", tmpEmail);
+		model.addAttribute("tmpPwd", tmpPwd);
+		return "usr/sign/login";
+	}
+	
+	
+	
 //  관리자---------------------------------------------------------------------------	
 //	@RequestMapping(value = "/Xdm/memberXdmList")
 //	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo, HttpSession httpSession) {
