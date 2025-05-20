@@ -1,12 +1,16 @@
 package com.a2a2lab.module.member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a2a2lab.module.code.CodeService;
 import com.a2a2lab.module.mail.MailService;
@@ -99,7 +103,7 @@ public class MemberController {
 //	사용자
 //	************************************************************
 	// 로그인 화면
-	@RequestMapping("/tableOrder/sign/loginView")
+	@GetMapping("/tableOrder/sign/loginView")
 	public String loginView(Model model) {
 		// 임시 로그인 계정
 		String tmpEmail = "ServiceAdmin@gmail.com";
@@ -108,7 +112,39 @@ public class MemberController {
 		model.addAttribute("tmpPwd", tmpPwd);
 		return "usr/sign/login";
 	}
-	
+	// 회원가입 화면
+	@RequestMapping("/tableOrder/sign/registerView")
+	public String registerView(Model model) {
+		// 통신사
+		model.addAttribute("codeList", codeService.findCodesByCodeGroupId("1"));
+		return "usr/sign/register";
+	}
+	// 회원가입
+	@RequestMapping("/tableOrder/sign/register")
+	public String registerMember(MemberDto dto) {
+		service.createMember(dto);
+		return "redirect:/tableOrder/shop/list";
+	}
+	// 회원가입 email 중복검사
+	@ResponseBody
+	@RequestMapping("/tableOrder/emailChk")
+	public Map<String, Object> emailChk(@RequestParam("email") String email) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+	    if (email != null && !email.isEmpty()) {
+	        int result = service.emailChk(email);
+	        if (result == 0) {
+	            returnMap.put("rt", "success");
+	        } else {
+	            returnMap.put("rt", "fail");
+	        }
+	    } else {
+	        returnMap.put("rt", "fail");
+	        returnMap.put("reason", "email is empty");
+	    }
+		
+		return returnMap;
+	}
 	
 	
 //  관리자---------------------------------------------------------------------------	

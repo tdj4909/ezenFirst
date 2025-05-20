@@ -14,11 +14,16 @@ public interface MemberDao {
 	public int countMembersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드 개수 검색
 	public List<MemberDto> findMembersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드 검색
 	public MemberDto findMemberById(String memberId);
+	public MemberDto findMemberByEmail(String email);
 	public int countAllMember();
 	public int createMember(MemberDto dto);
 //	public int updateMember(MemberDto dto);
 	public int softDeleteMember(String memberId);
 	public int hardDeleteMember(String memberId);
+	public int emailChk(String email);
+	
+	
+	
 	
 //	public int insert(MemberDto dto);
 //	public int update(MemberDto dto);

@@ -51,13 +51,6 @@
 						</select>
 					</div>
 					<div class="col-2">
-						<select id="shIsAdmin" name="shIsAdmin" class="form-select">
-							<option value="" th:selected="${searchVo.shIsAdmin == null}">권한</option>
-							<option value="1" th:selected="${searchVo.shIsAdmin == 1}">관리자</option>
-							<option value="0" th:selected="${searchVo.shIsAdmin == 0}">사용자</option>
-						</select>
-					</div>
-					<div class="col-2">
 						<select id="shGender" name="shGender" class="form-select">
 							<option value="" th:selected="${searchVo.shGender == null}">성별</option>
 							<option value="1" th:selected="${searchVo.shGender == 1}">남성</option>
@@ -147,13 +140,12 @@
 											<th class="text-center">전화번호</th>
 											<th class="text-center">등록일</th>
 											<th class="text-center">수정일</th>
-											<th class="text-center">권한</th>
 										</tr>
 									</thead>
 									<tbody>
 									
 										<tr th:if="${list == null || list.isEmpty()}">
-											<td colspan=11 style="text-align: center">
+											<td colspan=10 style="text-align: center">
 												<p>There are no data!</p>
 											</td>
 										</tr>
@@ -179,7 +171,6 @@
 											<td class="text-center" th:text="${item.phone}"></td>
 											<td class="text-center" th:text="${item.createdAt}"></td>
 											<td class="text-center" th:text="${item.updatedAt}"></td>
-											<td class="text-center" th:text="${item.isAdmin} == 1 ? '관리자' : '사용자' "></td>
 										</tr>
 
 									</tbody>

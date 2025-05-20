@@ -48,6 +48,10 @@ public class MemberService {
 		return dao.findMemberById(memberId);
 	}
 	
+	public MemberDto findMemberByEmail(String email) {
+		return dao.findMemberByEmail(email);
+	}
+	
 	public int countAllMember() {
 		return dao.countAllMember();
 	}
@@ -67,6 +71,10 @@ public class MemberService {
 	
 	public int hardDeleteMember(String id) {
 		return dao.hardDeleteMember(id);
+	}
+	
+	public int emailChk(String email) {
+		return dao.emailChk(email);
 	}
 	
 	

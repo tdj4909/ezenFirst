@@ -100,18 +100,6 @@
 												<option value="3" th:selected="${item?.gender == 3}">공개안함</option>
 											</select>
 										</div>
-										<div class="col-4">
-											<br>
-											<div class="form-check">
-											  <input class="form-check-input" type="radio" name="isAdmin" id="userMember" value="0" th:checked="${item?.admin == 0 || item?.admin == null}">
-											  <label class="form-check-label" for="userMember">사용자</label>
-											</div>
-											<div class="form-check">
-											  <input class="form-check-input" type="radio" name="isAdmin" id="adminMember" value="1" th:checked="${item?.admin == 1}">
-											  <label class="form-check-label" for="adminMember">관리자</label>
-											</div>
-										</div>
-
 									</div>
 
 								</div>

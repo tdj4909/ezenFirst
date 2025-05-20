@@ -16,7 +16,6 @@ public class MemberDto {
 	private String phone;
 	private String createdAt;
 	private String updatedAt;
-	private Integer isAdmin;
 	
 	public static List<MemberDto> cachedCodeArrayList = new ArrayList<MemberDto>();
 
@@ -106,13 +105,5 @@ public class MemberDto {
 
 	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-
-	public Integer getIsAdmin() {
-		return isAdmin;
-	}
-
-	public void setIsAdmin(Integer isAdmin) {
-		this.isAdmin = isAdmin;
 	}
 }

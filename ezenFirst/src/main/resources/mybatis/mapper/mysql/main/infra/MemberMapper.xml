@@ -12,7 +12,6 @@
 			member
 		WHERE
 			1=1
-			<if test="searchVo.shIsAdmin != null and !searchVo.shIsAdmin.equals('')">AND is_admin = #{searchVo.shIsAdmin}</if>
 			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
 			<if test="searchVo.shGender != null and !searchVo.shGender.equals('')">AND gender = #{searchVo.shGender}</if>
 			<if test="searchVo.shTel != null and !searchVo.shTel.equals('')">AND mobile_carrier = #{searchVo.shTel}</if>
@@ -62,12 +61,10 @@
 			,phone
 			,created_at AS createdAt
 			,updated_at AS updatedAt
-			,is_admin AS isAdmin
 		FROM
 			member
 		WHERE
 			1=1
-			<if test="searchVo.shIsAdmin != null and !searchVo.shIsAdmin.equals('')">AND is_admin = #{searchVo.shIsAdmin}</if>
 			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
 			<if test="searchVo.shGender != null and !searchVo.shGender.equals('')">AND gender = #{searchVo.shGender}</if>
 			<if test="searchVo.shTel != null and !searchVo.shTel.equals('')">AND mobile_carrier = #{searchVo.shTel}</if>
@@ -118,12 +115,28 @@
 			,birthday
 			,mobile_carrier AS mobileCarrier
 			,phone
-			,is_admin AS isAdmin
 		FROM 
 			member
 		WHERE
 			1=1
 			AND member_id = #{memberId}
+	</select>
+	
+	<select id="findMemberByEmail" resultMap="resultMapObj">
+		SELECT
+			member_id AS memberId
+			,email
+			,password
+			,name
+			,gender
+			,birthday
+			,mobile_carrier AS mobileCarrier
+			,phone
+		FROM 
+			member
+		WHERE
+			1=1
+			AND email = #{email}
 	</select>
 	
 	<select id="countAllMember" resultType="Integer">
@@ -145,7 +158,6 @@
 			,mobile_carrier
 			,phone
 			,created_at
-			,is_admin
 			,is_deleted
 		) VALUES(
 			#{email}
@@ -156,7 +168,6 @@
 			,#{mobileCarrier}
 			,#{phone}
 			,now()
-			,#{isAdmin}
 			,0
 		)
 	</insert>
@@ -188,6 +199,15 @@
 			member_id = #{memberId}
 	</delete>
 		
+	<select id="emailChk" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM
+			member
+		WHERE
+			1=1
+			AND email = #{email}
+	</select>
 		
 		
 <!-- ***************************************************************************************************		 -->
