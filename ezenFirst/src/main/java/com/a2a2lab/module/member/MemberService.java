@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.a2a2lab.module.code.CodeDao;
 import com.a2a2lab.module.code.CodeDto;
@@ -75,6 +76,19 @@ public class MemberService {
 	
 	public int emailChk(String email) {
 		return dao.emailChk(email);
+	}
+	
+	public boolean changePassword(String email, String currentPassword, String newPassword) {
+		MemberDto dto = dao.findMemberByEmail(email);
+		// 현재 비밀번호 확인
+	    if (!passwordEncoder.matches(currentPassword, dto.getPassword())) {
+	        throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+	    }
+	    // 새 비밀번호 암호화 후 저장
+	    dto.setPassword(passwordEncoder.encode(newPassword));
+	    dao.changePwd(dto);
+		
+		return true;
 	}
 	
 	

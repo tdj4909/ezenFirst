@@ -21,6 +21,7 @@ public interface MemberDao {
 	public int softDeleteMember(String memberId);
 	public int hardDeleteMember(String memberId);
 	public int emailChk(String email);
+	public int changePwd(MemberDto dto);
 	
 	
 	

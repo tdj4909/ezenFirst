@@ -163,6 +163,21 @@ public class MemberController {
 		service.updateMember(dto);
 		return "redirect:/tableOrder/shop/list";
 	}
+	// 비밀번호 변경 화면
+	@RequestMapping("/tableOrder/sign/changePwdView")
+	public String changePwdView() {
+		return "usr/sign/changePwd";
+	}
+	// 비밀번호 변경 
+	@RequestMapping("/tableOrder/sign/changePwd")
+	public String changePwd(@RequestParam("currentPassword") String currentPassword,
+            				@RequestParam("newPassword") String newPassword,
+            				Authentication auth) {
+		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+		String email = userDetails.getUsername();
+		service.changePassword(email, currentPassword, newPassword);
+		return "redirect:/tableOrder/shop/list";
+	}
 	
 	
 //  관리자---------------------------------------------------------------------------	

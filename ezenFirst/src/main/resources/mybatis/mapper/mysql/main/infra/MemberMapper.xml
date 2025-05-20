@@ -211,6 +211,15 @@
 			1=1
 			AND email = #{email}
 	</select>
+	
+	<update id="changePwd">
+		UPDATE member SET
+			password = #{password}
+			,updated_at = now()
+		WHERE
+			1=1
+			AND member_id = #{memberId}
+	</update>
 		
 		
 <!-- ***************************************************************************************************		 -->
