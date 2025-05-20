@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ import com.a2a2lab.module.code.CodeService;
 import com.a2a2lab.module.upload.UploadService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ProductController {
@@ -114,7 +117,10 @@ public class ProductController {
 	
 	// 메뉴 리스트 화면
 	@RequestMapping("/tableOrder/shop/list")
-	public String showShopList(Model model) {
+	public String showShopList(Model model, HttpSession session, Authentication auth) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		System.out.println("session : " + session);
+		System.out.println("auth : " + auth);
 		return "usr/shop/shopList";
 	}
 	

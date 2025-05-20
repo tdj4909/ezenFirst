@@ -72,7 +72,9 @@
                             <a href="account-edit.html" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fas fa-user fa-2x"></i></a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 <a href="/tableOrder/sign/loginView" class="dropdown-item">로그인</a>
-                                <button type="button" id="signOut" class="dropdown-item">로그아웃</button>
+                                <form action="/logout" method="POST">
+								    <button type="submit" class="dropdown-item">로그아웃</button>
+								</form>
                                 <a href="/tableOrder/sign/registerView" class="dropdown-item">회원가입</a>
                                 <a href="/TableOrder/accountUpdate" class="dropdown-item">개인정보 수정</a>
                                 <a href="/TableOrder/accountChangePwd" class="dropdown-item">비밀번호 변경</a>
@@ -88,25 +90,25 @@
     <!-- Navbar End -->
     
     <script>
-    $("#signOut").on("click", function(){
-			$.ajax({
-				async: true 
-				,cache: false
-				,type: "post"
-				,url: "/TableOrder/signoutUsrProc"
-				,data: {}
-				,success: function(response) {
-					if(response.rt == "success") {
-						location.href = "/TableOrder/accountLogin";
-					} else {
-						// by pass
-					}
-				}
-				,error : function(jqXHR, textStatus, errorThrown){
-					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-				}
-			});
-		});
+//     $("#signOut").on("click", function(){
+// 			$.ajax({
+// 				async: true 
+// 				,cache: false
+// 				,type: "post"
+// 				,url: "/TableOrder/signoutUsrProc"
+// 				,data: {}
+// 				,success: function(response) {
+// 					if(response.rt == "success") {
+// 						location.href = "/TableOrder/accountLogin";
+// 					} else {
+// 						// by pass
+// 					}
+// 				}
+// 				,error : function(jqXHR, textStatus, errorThrown){
+// 					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+// 				}
+// 			});
+// 		});
     </script>
     
 </th:block>
