@@ -31,11 +31,11 @@ public class OrderService {
 		return dao.findOrderDetailsByOrderMasterId(id);
 	}
 	
-	public int countAllOrder() {
+	public Integer countAllOrder() {
 		return dao.countAllOrder();
 	}
 	
-	public int sumAllOrder() {
+	public Integer sumAllOrder() {
 		return dao.sumAllOrder();
 	}
 	

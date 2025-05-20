@@ -26,7 +26,7 @@
 	                    </div>
 						<div class="d-flex justify-content-between flex-lg-wrap">
 							<p class="text-dark fs-5 fw-bold mb-0"
-								th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + ' 원'"></p>
+								th:text="${#numbers.formatInteger(item.price, 1, 'COMMA')} + ' 원'"></p>
 							<button type="button"
 								class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart"
 								th:attr="data-seq=${item.productId},

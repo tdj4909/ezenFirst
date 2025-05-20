@@ -15,8 +15,8 @@ public interface OrderDao {
 	public List<OrderDto> findOrderMastersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 주문 검색
 	public OrderDto findOrderMasterById(String orderMasterId);
 	public List<OrderDto> findOrderDetailsByOrderMasterId(String orderMasterId);	
-	public int countAllOrder();
-	public int sumAllOrder();
+	public Integer countAllOrder();
+	public Integer sumAllOrder();
 	public int updateOrderMaster(OrderDto dto);
 	public int softDeleteOrderMaster(String orderMasterId);
 	public int hardDeleteOrderMaster(String orderMasterId);

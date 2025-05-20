@@ -11,8 +11,8 @@ import com.a2a2lab.module.vo.SearchVo;
 @Repository
 public interface MemberDao {
 	
-	public int countMembersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드 개수 검색
-	public List<MemberDto> findMembersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드 검색
+	public int countMembersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo);
+	public List<MemberDto> findMembersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo);
 	public MemberDto findMemberById(String memberId);
 	public MemberDto findMemberByEmail(String email);
 	public int countAllMember();
