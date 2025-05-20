@@ -16,6 +16,10 @@ public interface ReviewDao {
 	public int countAllReview();
 	public int softDeleteReview(String reviewId);
 	public int hardDeleteReview(String reviewId);
+	public List<ReviewDto> getReviewListByProductId(String productId);
+	public int saveReview(ReviewDto dto);
+	public int findAvgRatingByProductId(String productId);
+	
 	
 //	public int insert(ReviewDto dto);
 //	public int uelete(ReviewDto dto);

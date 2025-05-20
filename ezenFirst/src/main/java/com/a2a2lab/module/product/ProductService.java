@@ -64,6 +64,10 @@ public class ProductService {
 		return dao.fileUpdate(dto);
 	}
 	
+	public int updateRating(ProductDto dto) {
+		return dao.updateRating(dto);
+	}
+	
 //	public int insert(ProductDto dto) {
 //		return dao.insert(dto);
 //	}

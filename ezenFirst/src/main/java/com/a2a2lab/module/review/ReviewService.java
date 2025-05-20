@@ -35,6 +35,21 @@ public class ReviewService {
 		return dao.hardDeleteReview(id);
 	}
 	
+	public List<ReviewDto> getReviewListByProductId(String productId) {
+		return dao.getReviewListByProductId(productId);
+	}
+	
+	public int saveReview(ReviewDto dto) {
+		return dao.saveReview(dto);
+	}
+	
+	public int findAvgRatingByProductId(String productId) {
+		return dao.findAvgRatingByProductId(productId);
+	}
+	
+	
+	
+	
 	
 //	public int insert(ReviewDto dto) {
 //		return dao.insert(dto);

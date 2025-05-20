@@ -7,7 +7,7 @@ public class ReviewDto{
 	private String description;
 	private String createdAt;
 	private String memberId;
-	private String menuId;
+	private String productId;
 	
 	private String memberName;
 	private String menuName;
@@ -43,11 +43,11 @@ public class ReviewDto{
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	public String getMenuId() {
-		return menuId;
+	public String getProductId() {
+		return productId;
 	}
-	public void setMenuId(String menuId) {
-		this.menuId = menuId;
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 	public String getMemberName() {
 		return memberName;

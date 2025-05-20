@@ -83,7 +83,7 @@
 let form = document.querySelector("form[name=formList]");
 // 상품 상세
 goDetail = function (value) {
-	form.action = "/tableorder/shop/detail/" + value;
+	form.action = "/tableOrder/shop/detail/" + value;
 	form.submit();
 }
 
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 	  
 function loadMenuList(page) {
-    fetch(`/tableorder/menulist?page=${page}`)
+    fetch(`/tableOrder/shop/menuList?page=${page}`)
    	.then(response => response.text())
    	.then(html => {
 	    document.getElementById("menuList").innerHTML = html;
@@ -242,7 +242,7 @@ document.getElementById("checkoutBtn").addEventListener("click", () => {
 	  });
 	});
 
-	fetch("/TableOrder/ordersCheckout", {
+	fetch("/tableOrder/ordersCheckout", {
 		method: "POST",
 		headers: {
 		  "Content-Type": "application/json"

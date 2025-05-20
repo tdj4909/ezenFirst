@@ -263,6 +263,14 @@
 		WHERE
 			product_id = #{productId}
 	</update>
+	
+	<update id="updateRating">
+		UPDATE product SET
+			rating = #{rating}
+			,updated_at = now()
+		WHERE
+			product_id = #{productId}
+	</update>
 
 
 

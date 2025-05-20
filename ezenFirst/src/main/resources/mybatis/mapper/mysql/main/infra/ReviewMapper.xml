@@ -121,8 +121,50 @@
 			review_id = #{reviewId}
 	</delete>
 
+	<select id="getReviewListByProductId" resultMap="resultMapObj">
+		SELECT
+			rw.review_id AS reviewId
+			,rw.rating AS rating
+			,rw.description AS description
+			,rw.created_at AS createdAt
+			,mb.name AS name
+		FROM
+			review rw
+			JOIN member mb ON mb.member_id = rw.member_id
+		WHERE
+			1=1
+		    AND rw.product_id = #{productId}
+		    AND rw.is_deleted = 0
+		ORDER BY
+			rw.review_id DESC
+	</select>
 
-
+	<insert id="saveReview">
+		INSERT INTO review(
+			rating
+			,description
+			,created_at
+			,is_deleted
+			,member_id
+			,product_id
+		) VALUES(
+			#{rating}
+			,#{description}
+			,now()
+			,0
+			,#{memberId}
+			,#{productId}
+		)
+	</insert>
+	
+	<select id="findAvgRatingByProductId" resultType="Integer">
+		SELECT
+			ROUND(AVG(rating))
+		FROM
+			review
+		WHERE
+			product_id = #{productId}
+	</select>
 
 
 <!--	<sql id="selectCommon">

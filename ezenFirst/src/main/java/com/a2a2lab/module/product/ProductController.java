@@ -113,13 +113,13 @@ public class ProductController {
 //	************************************************************
 	
 	// 메뉴 리스트 화면
-	@RequestMapping("/tableorder/shop/list")
+	@RequestMapping("/tableOrder/shop/list")
 	public String showShopList(Model model) {
 		return "usr/shop/shopList";
 	}
 	
 	// 메뉴 리스트 Ajax
-	@GetMapping("/tableorder/menulist")
+	@GetMapping("/tableOrder/shop/menuList")
 	public String getMenuListFragment(@RequestParam(name = "page", defaultValue = "1") int page, Model model, PageVo pageVo, SearchVo searchVo) {
 		
 		pageVo.setRowNumToShow(6);
@@ -133,108 +133,11 @@ public class ProductController {
 	}
 	
 	// 메뉴 상세 화면
-	@RequestMapping("/tableorder/shop/detail/{id}")
+	@RequestMapping("/tableOrder/shop/detail/{id}")
 	public String shopDetail(@PathVariable("id") String id, Model model) {
 		model.addAttribute("item", service.findProductById(id));
 		return "usr/shop/shopDetail";
 	}
-	
-	
-	
-//	@RequestMapping(value = "/Xdm/productXdmList")
-//	public String productXdmList(Model model, @ModelAttribute("vo") ProductVo vo, HttpSession httpSession) {
-//
-//		// login 검사
-//		if(httpSession.getAttribute("user") == null) {
-//			return "redirect:/Xdm/loginXdm";
-//		}
-//		model.addAttribute("user", httpSession.getAttribute("user"));
-//		
-//		vo.setParamsPaging(service.selectOneCount(vo));
-//		
-//		if (vo.getTotalRows() > 0) {
-//			model.addAttribute("lists", service.selectList(vo));
-//		}
-//		
-//		return "/xdm/product/productXdmList";
-//	}
-//	
-//	// 메뉴등록 화면
-//	@RequestMapping(value = "/Xdm/productXdmRegister")
-//	public String productXdmRegister(@ModelAttribute("vo") ProductVo vo, Model model, HttpSession httpSession) {
-//
-//		// login 검사
-//		if(httpSession.getAttribute("user") == null) {
-//			return "redirect:/Xdm/loginXdm";
-//		}
-//		model.addAttribute("user", httpSession.getAttribute("user"));
-//		
-//		if (vo.getIfcgSeq().equals("0") || vo.getIfcgSeq().equals("")) {
-////			insert mode
-//		} else {
-////			update mode
-//			model.addAttribute("item", service.selectOne(vo));
-//		}
-//		
-//		return "/xdm/product/productXdmRegister";
-//	}
-//	
-//	
-//	
-//	// 메뉴 등록
-//	@RequestMapping(value = "/Xdm/productXdmInst")
-//	public String productXdmInst(@RequestParam("file") MultipartFile file, ProductDto dto) throws IOException {
-//		
-//		// File DB upload
-//		dto.setFileUploaded_seq(uploadService.localUpload(file));
-//		// 메뉴 등록
-//		service.insert(dto);
-//		
-//		return "redirect:/Xdm/productXdmList";
-//	}
-//	
-//	// 메뉴 갱신
-//	@RequestMapping(value = "/Xdm/productXdmUpdt")
-//	public String productXdmUpdt(@RequestParam("file") MultipartFile file, ProductDto dto) throws IOException {
-//		
-//		// 파일 변경했을 때
-//		if(file != null) {
-//			// File DB upload
-//			dto.setFileUploaded_seq(uploadService.localUpload(file));
-//			// 파일만 Update
-//			service.fileUpdate(dto);
-//		}
-//		// 메뉴 갱신
-//		service.update(dto);
-//		
-//		return "redirect:/Xdm/productXdmList";
-//	}
-//	
-//	@RequestMapping(value = "/Xdm/productXdmUele")
-//	public String productXdmUele(@RequestParam("seq") List<String> seqs) {
-//		
-//		for(String seq : seqs) {
-//			if(!seq.isBlank()) {
-//				ProductDto dto = new ProductDto();
-//				dto.setSeq(seq);
-//				service.uelete(dto);
-//			}
-//		}
-//		return "redirect:/Xdm/productXdmList";
-//	}
-//	
-//	@RequestMapping(value = "/Xdm/productXdmDele")
-//	public String productXdmDele(@RequestParam("seq") List<String> seqs) {
-//		
-//		for(String seq : seqs) {
-//			if(!seq.isBlank()) {
-//				ProductDto dto = new ProductDto();
-//				dto.setSeq(seq);
-//				service.delete(dto);
-//			}
-//		}
-//		return "redirect:/Xdm/productXdmList";
-//	}
 	
 	
 }
