@@ -116,6 +116,40 @@
 			od.order_master_id = #{orderMasterId}
 	</select>
 	
+	<select id="findCartsByMemberId" resultMap="resultMapObj">
+		SELECT 
+			c.quantity AS quantity
+			,p.price AS orderDetailPrice
+			,p.name AS productName
+			,p.product_id AS productId
+			,p.rating AS rating			
+			,f.path AS filePath
+		FROM
+			cart c
+			JOIN product p ON p.product_id = c.product_id
+			JOIN file f ON f.file_id = p.file_id
+		WHERE
+			1=1
+			AND c.is_deleted = 0
+			AND c.member_id = #{memberId}
+	</select>
+	
+	<select id="findCartByMemberIdAndProductId" resultMap="resultMapObj">
+		SELECT 
+			c.quantity
+			,p.price AS orderDetailPrice
+			,c.member_id AS memberId
+			,c.product_id AS productId
+		FROM
+			cart c
+			JOIN product p ON p.product_id = c.product_id
+		WHERE
+			1=1
+			AND c.is_deleted = 0
+			AND c.member_id = #{memberId}
+			AND c.product_id = #{productId}
+	</select>
+	
 	<select id="countAllOrder" resultType="Integer">
 		SELECT
 			COUNT(*)
@@ -134,11 +168,36 @@
 			is_deleted = 0
 	</select>
 	
+	<insert id="saveCart">
+		INSERT INTO cart(
+			quantity,
+			is_deleted,
+			member_id,
+			product_id
+		)VALUES(
+			1
+			,0
+			,#{memberId}
+			,#{productId}
+		)
+	</insert>
+	
 	<update id="updateOrderMaster">
 		UPDATE order_master SET
 			status = #{status}
 		WHERE
 			order_master_id = #{orderMasterId}
+	</update>
+	
+	<update id="updateCart">
+		UPDATE cart SET
+			quantity = #{quantity}
+			,is_deleted = #{isDeleted}
+		WHERE
+			1=1
+			AND is_deleted = 0
+			AND member_id = #{memberId}
+			AND product_id = #{productId}
 	</update>
 	
 	<update id="softDeleteOrderMaster">

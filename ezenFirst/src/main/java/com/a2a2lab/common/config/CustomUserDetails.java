@@ -10,18 +10,24 @@ public class CustomUserDetails implements UserDetails {
     private String email;
     private String password;
     private String name;
+    private String memberId;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(String email, String password, String name,
+    public CustomUserDetails(String email, String password, String name, String memberId,
                              Collection<? extends GrantedAuthority> authorities) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.memberId = memberId;
         this.authorities = authorities;
     }
 
     public String getName() {
         return name;
+    }
+    
+    public String getMemberId() {
+        return memberId;
     }
 
     @Override

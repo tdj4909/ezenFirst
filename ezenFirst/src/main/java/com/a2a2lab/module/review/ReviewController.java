@@ -66,7 +66,7 @@ public class ReviewController{
 //	사용자
 //	************************************************************
 	// 리뷰 저장
-	@RequestMapping("/tableOrder/saveReview")
+	@RequestMapping("/tableOrder/review/save")
 	@ResponseBody
 	public ReviewDto saveReview(@RequestBody ReviewDto dto) {
 		// 리뷰 저장
@@ -79,12 +79,12 @@ public class ReviewController{
 	    return dto;
 	}
 	// 리뷰 Ajax
-	@GetMapping("/tableOrder/reviewFragment")
+	@GetMapping("/tableOrder/review/fragment")
 	public String reviewFragment(@RequestParam("productId") String productId, Model model, Authentication auth) {
 		System.out.println(auth);
 		System.out.println(auth.getName());
 		model.addAttribute("reviewList", service.getReviewListByProductId(productId));
-		return "usr/shop/reviewFragment :: reviewFragment";
+		return "usr/fragment/review :: reviewFragment";
 	}
 	
 }

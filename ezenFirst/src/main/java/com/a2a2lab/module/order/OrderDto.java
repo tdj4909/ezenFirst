@@ -18,6 +18,7 @@ public class OrderDto{
 	// product
 	private String productId;
 	private String productName;
+	private Integer rating;
 	// file
 	private String filePath;
 	
@@ -94,6 +95,12 @@ public class OrderDto{
 	}
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+	public Integer getRating() {
+		return rating;
+	}
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
 	public String getFilePath() {
 		return filePath;

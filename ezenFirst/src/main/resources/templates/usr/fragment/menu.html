@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- Menu List Start -->
+<div th:fragment="menuListFragment">
+	<div class="row g-4 justify-content-center">
+
+		<div class="col-md-6 col-lg-6 col-xl-4" th:each="item : ${list}">
+			<div class="rounded position-relative fruite-item">
+				<a th:attr="onclick=|goDetail('${item.productId}')|">
+					<div class="fruite-img">
+						<img th:src="${item.filePath}" class="img-fluid w-100 rounded-top" alt="">
+					</div>
+				</a>
+				<div class="p-4 border border-secondary border-top-0 rounded-bottom">
+					<div>
+						<h4 th:text="${item.name}"></h4>
+						<div class="mb-4" th:if="${item.rating == null}">
+							<h5 class="fw-bold">평점 없음</h5>
+						</div>
+	                    <div class="d-flex mb-4" th:if="${item.rating != null}">
+				            <span th:each="i : ${#numbers.sequence(1, 5)}">
+				                <i class="fa fa-star" th:classappend="${i <= item.rating} ? ' text-secondary' : ' text-muted'"></i>
+				            </span>
+	                    </div>
+						<div class="d-flex justify-content-between flex-lg-wrap">
+							<p class="text-dark fs-5 fw-bold mb-0" th:text="${#numbers.formatInteger(item.price, 1, 'COMMA')} + ' 원'"></p>
+							<button type="button"
+									class="btn border border-secondary rounded-pill px-3 text-primary btnAddCart"
+									th:data-product-id="${item.productId}">
+								<i class="fa fa-shopping-bag me-2 text-primary"></i>
+								<span>Add to cart</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Pagination Start -->
+		<div class="col-12">
+			<div class="pagination d-flex justify-content-center mt-5">
+				<a th:if="${pageVo.startPage gt pageVo.pageNumToShow}"  href="javascript:void(0);"
+					class="rounded" th:attr="onclick=|goList('${pageVo.startPage - 1}')|">&laquo;</a>
+
+				
+				<a th:each="num: ${#numbers.sequence(pageVo.startPage, pageVo.endPage)}" class="rounded" th:attr="onclick=|goList('${num}')|"
+					th:text="${num}" href="javascript:void(0);"
+					th:classappend="${num eq pageVo.thisPage} ? active : ''"></a>
+				
+
+				<a th:if="${pageVo.endPage ne pageVo.totalPages}" class="rounded" href="javascript:void(0);"
+					th:attr="onclick=|goList('${pageVo.endPage + 1}')|">&raquo;</a>
+			</div>
+		</div>
+		<!-- Pagination End -->
+
+	</div>
+</div>
+<!-- Menu List End -->
+
+<script>
+// document.querySelectorAll(".btnAddCart").forEach(button => {
+//   button.addEventListener("click", (e) => {
+//     const productId = e.currentTarget.dataset.productId;
+
+//     fetch("/tableOrder/order/addCart", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify({ productId })
+//     })
+//     .then(res => res.text())
+//     .then(msg => {
+//       if (msg === "success") {
+//         alert("장바구니에 추가되었습니다!");
+//       }
+//     })
+//     .catch(err => console.error(err));
+//   });
+// });
+</script>

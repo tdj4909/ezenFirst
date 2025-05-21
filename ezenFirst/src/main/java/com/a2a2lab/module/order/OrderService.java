@@ -3,6 +3,7 @@ package com.a2a2lab.module.order;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +32,28 @@ public class OrderService {
 		return dao.findOrderDetailsByOrderMasterId(id);
 	}
 	
+	public List<OrderDto> findCartsByMemberId(String memberId) {
+		return dao.findCartsByMemberId(memberId);
+	}
+	
+	public OrderDto findCartByMemberIdAndProductId(OrderDto dto) {
+		return dao.findCartByMemberIdAndProductId(dto);
+	}
+	
 	public Integer countAllOrder() {
 		return dao.countAllOrder();
 	}
 	
 	public Integer sumAllOrder() {
 		return dao.sumAllOrder();
+	}
+	
+	public int saveCart(OrderDto dto) {
+		return dao.saveCart(dto);
+	}
+	
+	public int updateCart(OrderDto dto) {
+		return dao.updateCart(dto);
 	}
 	
 	public int updateOrderMaster(OrderDto dto) {

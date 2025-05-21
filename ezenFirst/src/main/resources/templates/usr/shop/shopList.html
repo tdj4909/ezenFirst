@@ -30,17 +30,18 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="row g-4">
-
                         <!-- Side Bar Start -->
                         <div class="col-lg-3">
                             <div class="row g-4">
-
-
-								<form name="formCart" id="formCart" method="post" autocomplete="off">
-	                                <div class="col-lg-12">
+	                                <div id="cart" class="col-lg-12">
 	                                
-	                                    <h4 class="mb-3">장바구니</h4>
+	                                
+	                                
+	                                
+	                                
+	                                    <!-- <h4 class="mb-3">장바구니</h4>
 	                                    
 										<div id="cart-items"></div>
 	
@@ -56,11 +57,9 @@
 	                                    <div class="row p-3">
 	                                    	<button type="button" id="checkoutBtn" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">주문하기</button>
 	                                    </div>
-	
-	                                </div>
-                                </form>
-
-                            </div>
+	                                </div> -->
+                            	</div>
+                        	</div>
                         </div>
                         <!-- Side Bar End -->
 
@@ -88,8 +87,10 @@ goDetail = function (value) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-	//메뉴리스트
+	//메뉴 리스트
 	loadMenuList(1); // 처음 로딩 시 page 1
+	//장바구니
+	loadCart();
 	
 	window.goList = function (page) {
 	    loadMenuList(page);
@@ -102,171 +103,232 @@ function loadMenuList(page) {
    	.then(html => {
 	    document.getElementById("menuList").innerHTML = html;
 	    
-	    // 새로 삽입된 장바구니 버튼들 이벤트 바인딩
-	    document.querySelectorAll(".add-to-cart").forEach(button => {
-	        button.addEventListener("click", () => {
-	        	addCart(button);
-	            // 장바구니 처리 함수 실행
-	            console.log("Add to cart:", button.dataset.name);
-	        });
-	    });
-	
+		// menuListFragment 버튼들 이벤트 바인딩
+	    document.querySelectorAll(".btnAddCart").forEach(button => {
+    	  button.addEventListener("click", (e) => {
+    	    const productId = e.currentTarget.dataset.productId;
+
+    	    fetch("/tableOrder/order/addCart", {
+    	      method: "POST",
+    	      headers: {
+    	        "Content-Type": "application/json"
+    	      },
+    	      body: JSON.stringify({ productId })
+    	    })
+    	    .then(res => res.text())
+    	    .then(msg => {
+    	      if (msg === "success") {
+    	        alert("장바구니에 추가되었습니다!");
+    	      }
+    	    })
+    	    .catch(err => console.error(err));
+    	  });
+    	});
 	})
 	.catch(error => console.error("메뉴 로딩 실패:", error));
+}
+
+function loadCart() {
+    fetch(`/tableOrder/shop/cart`)
+   	.then(response => response.text())
+   	.then(html => {
+	    document.getElementById("cart").innerHTML = html;
+	    
+	 // cartFragment 버튼들 이벤트 바인딩
+	 document.getElementById("cart-items").addEventListener("click", function (e) {
+	  	// + 버튼
+	  	if (e.target.closest(".btn-plus")) {
+	  		const qtyInput = e.target.closest(".quantity").querySelector(".item-qty");
+	  		qtyInput.value = parseInt(qtyInput.value) + 1;
+	  		updateCartTotal();
+	  	}
+	  	// - 버튼
+	  	if (e.target.closest(".btn-minus")) {
+	  		const qtyInput = e.target.closest(".quantity").querySelector(".item-qty");
+	  		const currentVal = parseInt(qtyInput.value);
+	  		if (currentVal > 1) {
+	  		  qtyInput.value = currentVal - 1;
+	  		  updateCartTotal();
+	  	  }
+	  	}
+	  	// 삭제 버튼
+	  	if (e.target.closest(".text-danger")) {
+	  		const itemRow = e.target.closest(".cart-item");
+	  		if (itemRow) {
+	  		    const itemName = itemRow.getAttribute("data-name");
+	  		    addedItems.delete(itemName); // Map에서도 삭제해줘야 중복 방지됨
+	  		    itemRow.remove();
+	  		    updateCartTotal();
+	  		}
+	  	}
+	 });
+	 
+	    
+// 	    // 새로 삽입된 장바구니 버튼들 이벤트 바인딩
+// 	    document.querySelectorAll(".add-to-cart").forEach(button => {
+// 	        button.addEventListener("click", () => {
+// 	        	addCart(button);
+// 	            // 장바구니 처리 함수 실행
+// 	            console.log("Add to cart:", button.dataset.name);
+// 	        });
+// 	    });
+	
+	})
+	.catch(error => console.error("장바구니 로딩 실패:", error));
 }
 		    
 // 	*******************************************************************************
 // 	장바구니
 // 	*******************************************************************************
-const cartItemsContainer = document.getElementById("cart-items");
-// 중복 확인과 수량 증가를 위해 Map 사용 (key: 상품명, value: 해당 DOM 요소)
-const addedItems = new Map();
+// const cartItemsContainer = document.getElementById("cart-items");
+// // 중복 확인과 수량 증가를 위해 Map 사용 (key: 상품명, value: 해당 DOM 요소)
+// const addedItems = new Map();
 
-function addCart(button){
-	const seq = button.getAttribute("data-seq");
-    const name = button.getAttribute("data-name");
-    const price = parseInt(button.getAttribute("data-price")).toLocaleString();
-    const img = button.getAttribute("data-img");
+// function addCart(button){
+// 	const seq = button.getAttribute("data-seq");
+//     const name = button.getAttribute("data-name");
+//     const price = parseInt(button.getAttribute("data-price")).toLocaleString();
+//     const img = button.getAttribute("data-img");
 
-    if (addedItems.has(name)) {
-        // 이미 담긴 경우 → 수량 +1
-        const cartItem = addedItems.get(name);
-        const qtyInput = cartItem.querySelector("input");
-        qtyInput.value = parseInt(qtyInput.value) + 1;
-        updateCartTotal();
-        return;
-    }
+//     if (addedItems.has(name)) {
+//         // 이미 담긴 경우 → 수량 +1
+//         const cartItem = addedItems.get(name);
+//         const qtyInput = cartItem.querySelector("input");
+//         qtyInput.value = parseInt(qtyInput.value) + 1;
+//         updateCartTotal();
+//         return;
+//     }
     
- 	// 새로 추가될 경우 → HTML 템플릿 생성
-    const cartItemHTML = document.createElement("div");
-    cartItemHTML.className = "row py-3 border-top cart-item";
-    cartItemHTML.setAttribute("data-name", name);
-    cartItemHTML.setAttribute("data-seq", seq);
-    cartItemHTML.innerHTML = `
-      <div class="col">
-        <img src="${img}" class="img-fluid rounded" alt="${name}">
-      </div>
-      <div class="col">
-     <div class="mb-2 d-flex justify-content-between align-items-center">
-       <h6 class="mb-0">${name}</h6>
-       <button type="button" class="btn btn-sm btn-delete rounded-circle bg-light border text-danger">
-       	<i class="fa fa-times"></i>
-       </button>
-     </div>
-        <div class="d-flex mb-2">
-          <i class="fa fa-star text-secondary"></i>
-          <i class="fa fa-star text-secondary"></i>
-          <i class="fa fa-star text-secondary"></i>
-          <i class="fa fa-star text-secondary"></i>
-          <i class="fa fa-star"></i>
-        </div>
-        <div class="mb-2">
-          <h5 class="fw-bold me-2 item-price" data-price="${parseInt(price.replace(/,/g, ""))}">${price} 원</h5>
-        </div>
-        <div class="input-group quantity mb-2" style="width: 100px;">
-          <div class="input-group-btn">
-            <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border">
-              <i class="fa fa-minus"></i>
-            </button>
-          </div>
-          <input type="text" style="background-color:#FFFFFF;" class="form-control form-control-sm text-center border-0 item-qty" value="1" readonly>
-          <div class="input-group-btn">
-            <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
-              <i class="fa fa-plus"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
+//  	// 새로 추가될 경우 → HTML 템플릿 생성
+//     const cartItemHTML = document.createElement("div");
+//     cartItemHTML.className = "row py-3 border-top cart-item";
+//     cartItemHTML.setAttribute("data-name", name);
+//     cartItemHTML.setAttribute("data-seq", seq);
+//     cartItemHTML.innerHTML = `
+//       <div class="col">
+//         <img src="${img}" class="img-fluid rounded" alt="${name}">
+//       </div>
+//       <div class="col">
+//      <div class="mb-2 d-flex justify-content-between align-items-center">
+//        <h6 class="mb-0">${name}</h6>
+//        <button type="button" class="btn btn-sm btn-delete rounded-circle bg-light border text-danger">
+//        	<i class="fa fa-times"></i>
+//        </button>
+//      </div>
+//         <div class="d-flex mb-2">
+//           <i class="fa fa-star text-secondary"></i>
+//           <i class="fa fa-star text-secondary"></i>
+//           <i class="fa fa-star text-secondary"></i>
+//           <i class="fa fa-star text-secondary"></i>
+//           <i class="fa fa-star"></i>
+//         </div>
+//         <div class="mb-2">
+//           <h5 class="fw-bold me-2 item-price" data-price="${parseInt(price.replace(/,/g, ""))}">${price} 원</h5>
+//         </div>
+//         <div class="input-group quantity mb-2" style="width: 100px;">
+//           <div class="input-group-btn">
+//             <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border">
+//               <i class="fa fa-minus"></i>
+//             </button>
+//           </div>
+//           <input type="text" style="background-color:#FFFFFF;" class="form-control form-control-sm text-center border-0 item-qty" value="1" readonly>
+//           <div class="input-group-btn">
+//             <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
+//               <i class="fa fa-plus"></i>
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     `;
 
-    // 장바구니에 추가
-    cartItemsContainer.appendChild(cartItemHTML);
-    updateCartTotal();
+//     // 장바구니에 추가
+//     cartItemsContainer.appendChild(cartItemHTML);
+//     updateCartTotal();
 
-    // Map에 추가해서 추후 수량 증가 처리
-    addedItems.set(name, cartItemHTML);
-}
+//     // Map에 추가해서 추후 수량 증가 처리
+//     addedItems.set(name, cartItemHTML);
+// }
 
-// 장바구니 버튼 Click
-document.getElementById("cart-items").addEventListener("click", function (e) {
-	// + 버튼
-	if (e.target.closest(".btn-plus")) {
-		const qtyInput = e.target.closest(".quantity").querySelector(".item-qty");
-		qtyInput.value = parseInt(qtyInput.value) + 1;
-		updateCartTotal();
-	}
-	// - 버튼
-	if (e.target.closest(".btn-minus")) {
-		const qtyInput = e.target.closest(".quantity").querySelector(".item-qty");
-		const currentVal = parseInt(qtyInput.value);
-		if (currentVal > 1) {
-		  qtyInput.value = currentVal - 1;
-		  updateCartTotal();
-	  }
-	}
-	// 삭제 버튼
-	if (e.target.closest(".text-danger")) {
-		const itemRow = e.target.closest(".cart-item");
-		if (itemRow) {
-		    const itemName = itemRow.getAttribute("data-name");
-		    addedItems.delete(itemName); // Map에서도 삭제해줘야 중복 방지됨
-		    itemRow.remove();
-		    updateCartTotal();
-		}
-	}
-});
+// // 장바구니 버튼 Click
+// document.getElementById("cart-items").addEventListener("click", function (e) {
+// 	// + 버튼
+// 	if (e.target.closest(".btn-plus")) {
+// 		const qtyInput = e.target.closest(".quantity").querySelector(".item-qty");
+// 		qtyInput.value = parseInt(qtyInput.value) + 1;
+// 		updateCartTotal();
+// 	}
+// 	// - 버튼
+// 	if (e.target.closest(".btn-minus")) {
+// 		const qtyInput = e.target.closest(".quantity").querySelector(".item-qty");
+// 		const currentVal = parseInt(qtyInput.value);
+// 		if (currentVal > 1) {
+// 		  qtyInput.value = currentVal - 1;
+// 		  updateCartTotal();
+// 	  }
+// 	}
+// 	// 삭제 버튼
+// 	if (e.target.closest(".text-danger")) {
+// 		const itemRow = e.target.closest(".cart-item");
+// 		if (itemRow) {
+// 		    const itemName = itemRow.getAttribute("data-name");
+// 		    addedItems.delete(itemName); // Map에서도 삭제해줘야 중복 방지됨
+// 		    itemRow.remove();
+// 		    updateCartTotal();
+// 		}
+// 	}
+// });
 
-// 합계 계산 함수
-function updateCartTotal() {
-	let total = 0;
-	document.querySelectorAll("#cart-items .cart-item").forEach(item => {
-		const qty = parseInt(item.querySelector(".item-qty").value);
-		const unitPrice = item.querySelector(".item-price").getAttribute("data-price");
-		total += qty * unitPrice;
-	});
-	document.getElementById("cart-total").textContent = total.toLocaleString() + " 원";
-}
+// // 합계 계산 함수
+// function updateCartTotal() {
+// 	let total = 0;
+// 	document.querySelectorAll("#cart-items .cart-item").forEach(item => {
+// 		const qty = parseInt(item.querySelector(".item-qty").value);
+// 		const unitPrice = item.querySelector(".item-price").getAttribute("data-price");
+// 		total += qty * unitPrice;
+// 	});
+// 	document.getElementById("cart-total").textContent = total.toLocaleString() + " 원";
+// }
    
-// 주문하기 Click
-document.getElementById("checkoutBtn").addEventListener("click", () => {
-	const cartItems = document.querySelectorAll(".cart-item");
-	const orderList = [];
+// // 주문하기 Click
+// document.getElementById("checkoutBtn").addEventListener("click", () => {
+// 	const cartItems = document.querySelectorAll(".cart-item");
+// 	const orderList = [];
 
-	cartItems.forEach((item) => {
-	  orderList.push({
-	    productId: item.dataset.seq,
-	    productName: item.dataset.name,
-	    filePath: item.querySelector("img").src,
-	    orderDetailPrice: parseInt(item.querySelector(".item-price").dataset.price),
-	    quantity: parseInt(item.querySelector(".item-qty").value)
-	  });
-	});
+// 	cartItems.forEach((item) => {
+// 	  orderList.push({
+// 	    productId: item.dataset.seq,
+// 	    productName: item.dataset.name,
+// 	    filePath: item.querySelector("img").src,
+// 	    orderDetailPrice: parseInt(item.querySelector(".item-price").dataset.price),
+// 	    quantity: parseInt(item.querySelector(".item-qty").value)
+// 	  });
+// 	});
 
-	fetch("/tableOrder/order/checkout", {
-		method: "POST",
-		headers: {
-		  "Content-Type": "application/json"
-		},
-		body: JSON.stringify(orderList)
-	})
-	.then((res) => {
-		if (res.ok) {
-		  return res.text(); // 페이지 HTML 반환
-		} else {
-		  throw new Error("주문 전송 실패");
-		}
-	})
-	.then((html) => {
-		// 새 페이지로 이동하는 효과
-		document.open();
-		document.write(html);
-		document.close();
-	})
-	.catch((err) => {
-		alert("문제가 발생했어요!");
-		console.error(err);
-	});
-});
+// 	fetch("/tableOrder/order/checkout", {
+// 		method: "POST",
+// 		headers: {
+// 		  "Content-Type": "application/json"
+// 		},
+// 		body: JSON.stringify(orderList)
+// 	})
+// 	.then((res) => {
+// 		if (res.ok) {
+// 		  return res.text(); // 페이지 HTML 반환
+// 		} else {
+// 		  throw new Error("주문 전송 실패");
+// 		}
+// 	})
+// 	.then((html) => {
+// 		// 새 페이지로 이동하는 효과
+// 		document.open();
+// 		document.write(html);
+// 		document.close();
+// 	})
+// 	.catch((err) => {
+// 		alert("문제가 발생했어요!");
+// 		console.error(err);
+// 	});
+// });
       
 </script>
 

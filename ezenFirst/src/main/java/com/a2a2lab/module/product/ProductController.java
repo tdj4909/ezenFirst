@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.a2a2lab.common.config.CustomUserDetails;
 import com.a2a2lab.module.code.CodeService;
+import com.a2a2lab.module.order.OrderService;
 import com.a2a2lab.module.upload.UploadService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
@@ -29,6 +31,8 @@ public class ProductController {
 	CodeService codeService;
 	@Autowired
 	UploadService uploadService;
+	@Autowired
+	OrderService orderService;
 	
 	
 //	************************************************************
@@ -124,7 +128,6 @@ public class ProductController {
 		System.out.println("session ID : " + session.getId());
 		return "usr/shop/shopList";
 	}
-	
 	// 메뉴 리스트 Ajax
 	@GetMapping("/tableOrder/shop/menuList")
 	public String getMenuListFragment(@RequestParam(name = "page", defaultValue = "1") int page, Model model, PageVo pageVo, SearchVo searchVo) {
@@ -136,7 +139,14 @@ public class ProductController {
 		model.addAttribute("pageVo", pageVo);
 		model.addAttribute("list", service.findProductsByVo(pageVo, searchVo));
 		
-		return "usr/shop/menuList :: menuListFragment";
+		return "usr/fragment/menu :: menuListFragment";
+	}
+	// 장바구니 Ajax
+	@GetMapping("/tableOrder/shop/cart")
+	public String getCartFragment(Model model, Authentication auth) {
+		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+		model.addAttribute("list", orderService.findCartsByMemberId(userDetails.getMemberId()));
+		return "usr/fragment/cart :: cartFragment";
 	}
 	
 	// 메뉴 상세 화면
