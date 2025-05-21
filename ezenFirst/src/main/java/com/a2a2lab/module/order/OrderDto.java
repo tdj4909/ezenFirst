@@ -13,8 +13,14 @@ public class OrderDto{
 	// member
 	private String memberName;
 	// orderDetail
-	private String menuName;
 	private Integer quantity;
+	private Integer orderDetailPrice;
+	// product
+	private String productId;
+	private String productName;
+	// file
+	private String filePath;
+	
 	
 	
 	public String getOrderMasterId() {
@@ -65,17 +71,35 @@ public class OrderDto{
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
 	}
-	public String getMenuName() {
-		return menuName;
-	}
-	public void setMenuName(String menuName) {
-		this.menuName = menuName;
-	}
 	public Integer getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+	public Integer getOrderDetailPrice() {
+		return orderDetailPrice;
+	}
+	public void setOrderDetailPrice(Integer orderDetailPrice) {
+		this.orderDetailPrice = orderDetailPrice;
+	}
+	public String getProductId() {
+		return productId;
+	}
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 	
 	

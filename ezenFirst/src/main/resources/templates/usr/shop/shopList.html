@@ -234,15 +234,15 @@ document.getElementById("checkoutBtn").addEventListener("click", () => {
 
 	cartItems.forEach((item) => {
 	  orderList.push({
-	    menu_seq: item.dataset.seq,
-	    menuNm: item.dataset.name,
-	    menuImg: item.querySelector("img").src,
-	    price: parseInt(item.querySelector(".item-price").dataset.price),
+	    productId: item.dataset.seq,
+	    productName: item.dataset.name,
+	    filePath: item.querySelector("img").src,
+	    orderDetailPrice: parseInt(item.querySelector(".item-price").dataset.price),
 	    quantity: parseInt(item.querySelector(".item-qty").value)
 	  });
 	});
 
-	fetch("/tableOrder/ordersCheckout", {
+	fetch("/tableOrder/order/checkout", {
 		method: "POST",
 		headers: {
 		  "Content-Type": "application/json"
