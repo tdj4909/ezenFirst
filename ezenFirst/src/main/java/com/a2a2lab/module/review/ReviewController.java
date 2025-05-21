@@ -36,9 +36,8 @@ public class ReviewController{
 		// 페이징 설정
 		pageVo.setParamsPaging(service.countReviewsByVo(pageVo, searchVo));
 		model.addAttribute("pageVo", pageVo);
-		
+		// 리뷰 출력
 		model.addAttribute("list", service.findReviewsByVo(pageVo, searchVo));
-		
 		return "xdm/review/reviewList";
 	}
 	// 리뷰 softDelete

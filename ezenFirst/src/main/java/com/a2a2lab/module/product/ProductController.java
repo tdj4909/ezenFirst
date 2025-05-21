@@ -38,7 +38,6 @@ public class ProductController {
 //	************************************************************
 //	관리자
 //	************************************************************
-	
 	// 메뉴 관리 화면
 	@RequestMapping("/xdm/service/product/list")
 	public String showProductManagement(Model model, PageVo pageVo, SearchVo searchVo) {
@@ -48,35 +47,31 @@ public class ProductController {
 		pageVo.setParamsPaging(service.countProductsByVo(pageVo, searchVo));
 		model.addAttribute("pageVo", pageVo);
 		// 메뉴 종류
-		model.addAttribute("codeList", codeService.findCodesByCodeGroupId("2"));
-		
+		model.addAttribute("codeList", codeService.getCodesByCodegroupId("2"));
+		// 메뉴 출력
 		model.addAttribute("list", service.findProductsByVo(pageVo, searchVo));
-		
 		return "xdm/product/productList";
 	}
-	
 	// 메뉴 등록/수정 화면
 	@RequestMapping("/xdm/service/product/edit")
 	public String showProductEdit(Model model, @RequestParam("productId") String productId){
 		// 메뉴 종류
-		model.addAttribute("codeList", codeService.findCodesByCodeGroupId("2"));
+		model.addAttribute("codeList", codeService.getCodesByCodegroupId("2"));
 		// productId가 있으면 수정, 없으면 등록
 		if (!productId.equals("") && !productId.equals("0")) {
 			model.addAttribute("item", service.findProductById(productId));
 		}
 		return "xdm/product/productEdit";
 	}
-	
 	// 메뉴 추가
 	@RequestMapping("/xdm/service/product/create")
 	public String createProduct(@RequestParam("file") MultipartFile file, ProductDto dto) throws IOException {
 		// File DB upload
 		dto.setFileId(uploadService.localUpload(file));
-		
+		// 메뉴 추가
 		service.createProduct(dto);
 		return "redirect:/xdm/service/product/list";
 	}
-	
 	// 메뉴 수정
 	@RequestMapping("/xdm/service/product/update")
 	public String updateProduct(@RequestParam("file") MultipartFile file, ProductDto dto) throws IOException {
@@ -91,7 +86,6 @@ public class ProductController {
 		service.updateProduct(dto);
 		return "redirect:/xdm/service/product/list";
 	}
-	
 	// 메뉴 softDelete
 	@RequestMapping("/xdm/service/product/softDelete")
 	public String softDeleteProduct(@RequestParam("delSeq") List<String> idList) {
@@ -102,7 +96,6 @@ public class ProductController {
 		}
 		return "redirect:/xdm/service/product/list";
 	}
-	
 	// 메뉴 hardDelete
 	@RequestMapping("/xdm/service/product/hardDelete")
 	public String hardDeleteProduct(@RequestParam("delSeq") List<String> idList) {
@@ -114,11 +107,9 @@ public class ProductController {
 		return "redirect:/xdm/service/product/list";
 	}
 	
-	
 //	************************************************************
 //	사용자
 //	************************************************************
-	
 	// 메뉴 리스트 화면
 	@RequestMapping("/tableOrder/shop/list")
 	public String showShopList(Model model, HttpSession session, Authentication auth) {
@@ -131,14 +122,13 @@ public class ProductController {
 	// 메뉴 리스트 Ajax
 	@GetMapping("/tableOrder/shop/menuList")
 	public String getMenuListFragment(@RequestParam(name = "page", defaultValue = "1") int page, Model model, PageVo pageVo, SearchVo searchVo) {
-		
+		// 페이징 세팅
 		pageVo.setRowNumToShow(6);
 		pageVo.setThisPage(page);
 		pageVo.setParamsPaging(service.countProductsByVo(pageVo, searchVo));
-		
 		model.addAttribute("pageVo", pageVo);
+		// 메뉴 출력
 		model.addAttribute("list", service.findProductsByVo(pageVo, searchVo));
-		
 		return "usr/fragment/menu :: menuListFragment";
 	}
 	// 장바구니 Ajax
@@ -148,13 +138,11 @@ public class ProductController {
 		model.addAttribute("list", orderService.findCartsByMemberId(userDetails.getMemberId()));
 		return "usr/fragment/cart :: cartFragment";
 	}
-	
 	// 메뉴 상세 화면
 	@RequestMapping("/tableOrder/shop/detail/{id}")
 	public String shopDetail(@PathVariable("id") String id, Model model) {
 		model.addAttribute("item", service.findProductById(id));
 		return "usr/shop/shopDetail";
 	}
-	
 	
 }

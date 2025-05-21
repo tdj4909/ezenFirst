@@ -25,12 +25,10 @@ public class CodeGroupController {
 		// 페이징 설정
 		pageVo.setParamsPaging(service.countCodeGroupsByVo(pageVo, searchVo));
 		model.addAttribute("pageVo", pageVo);
-		
+		// 코드그룹 출력
 		model.addAttribute("list", service.findCodeGroupsByVo(pageVo, searchVo));
-		
 		return "xdm/codegroup/codeGroupList";
 	}
-	
 	// 코드그룹 등록/수정 화면
 	@RequestMapping("/xdm/system/codegroup/edit")
 	public String showCodeGroupEdit(Model model, @RequestParam("codegroupId") String codegroupId){
@@ -40,21 +38,18 @@ public class CodeGroupController {
 		}
 		return "xdm/codegroup/codeGroupEdit";
 	}
-	
 	// 코드그룹 추가
 	@RequestMapping("/xdm/system/codegroup/create")
 	public String createCodeGroup(CodeGroupDto dto) {
 		service.createCodeGroup(dto);
 		return "redirect:/xdm/system/codegroup/list";
 	}
-	
 	// 코드그룹 수정
 	@RequestMapping("/xdm/system/codegroup/update")
 	public String updateCodeGroup(CodeGroupDto dto) {
 		service.updateCodeGroup(dto);
 		return "redirect:/xdm/system/codegroup/list";
 	}
-	
 	// 코드그룹 softDelete
 	@RequestMapping("/xdm/system/codegroup/softDelete")
 	public String softDeleteCodeGroup(@RequestParam("delSeq") List<String> idList) {
@@ -65,7 +60,6 @@ public class CodeGroupController {
 		}
 		return "redirect:/xdm/system/codegroup/list";
 	}
-	
 	// 코드그룹 hardDelete
 	@RequestMapping("/xdm/system/codegroup/hardDelete")
 	public String hardDeleteCodeGroup(@RequestParam("delSeq") List<String> idList) {
@@ -76,5 +70,4 @@ public class CodeGroupController {
 		}
 		return "redirect:/xdm/system/codegroup/list";
 	}
-	
 }

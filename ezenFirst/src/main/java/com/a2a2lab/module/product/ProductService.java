@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.a2a2lab.module.code.CodeDao;
 import com.a2a2lab.module.code.CodeDto;
+import com.a2a2lab.module.code.CodeService;
+import com.a2a2lab.module.member.MemberDto;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -18,26 +20,31 @@ public class ProductService {
 	@Autowired
 	ProductDao dao;
 	@Autowired
-	CodeDao codeDao;
+	CodeService codeService;
 
 	public int countProductsByVo(PageVo pageVo, SearchVo searchVo) {
 		return dao.countProductsByVo(pageVo, searchVo);
 	}
 	
 	public List<ProductDto> findProductsByVo(PageVo pageVo, SearchVo searchVo) {
-		// 메뉴 종류 이름 세팅
-		Map<Integer, String> map = new HashMap<>();
-		List<CodeDto> codeDtos= codeDao.findCodesByCodeGroupId("2");
-		for(CodeDto codeDto : codeDtos) {
-			map.put(Integer.parseInt(codeDto.getCodeId()), codeDto.getName());
-		}
-		
-		List<ProductDto> dtos = dao.findProductsByVo(pageVo, searchVo);
-		for(ProductDto dto : dtos) {
-			dto.setTypeName(map.get(dto.getType()));
-		}
-		
-		return dtos;
+		// 1. 캐싱된 코드 맵에서 메뉴종류 코드 그룹("2") 가져오기
+	    List<CodeDto> codeDtos = codeService.getCodesByCodegroupId("2");
+
+	    // 2. codeId → name 맵으로 변환
+	    Map<Integer, String> codeNameMap = new HashMap<>();
+	    for (CodeDto codeDto : codeDtos) {
+	        codeNameMap.put(Integer.parseInt(codeDto.getCodeId()), codeDto.getName());
+	    }
+
+	    // 3. 메뉴 목록 가져오기
+	    List<ProductDto> dtos = dao.findProductsByVo(pageVo, searchVo);
+
+	    // 4. 각 메뉴의 메뉴종류 코드에 해당하는 이름 설정
+	    for (ProductDto dto : dtos) {
+	        dto.setTypeName(codeNameMap.get(dto.getType()));
+	    }
+
+	    return dtos;
 	}
 	
 	public ProductDto findProductById(String id) {
@@ -68,37 +75,6 @@ public class ProductService {
 		return dao.updateRating(dto);
 	}
 	
-//	public int insert(ProductDto dto) {
-//		return dao.insert(dto);
-//	}
-//	
-//	public int uelete(ProductDto dto) {
-//		return dao.uelete(dto);
-//	}
-//	
-//	public int delete(ProductDto dto) {
-//		return dao.delete(dto);
-//	}
-//	
-//	public int update(ProductDto dto) {
-//		return dao.update(dto);
-//	}
-//	
-//	public int updateRating(ProductDto dto) {
-//		return dao.updateRating(dto);
-//	}
-//	
-//	public int fileUpdate(ProductDto dto) {
-//		return dao.fileUpdate(dto);
-//	}
-//
-//	public int selectOneCount(ProductVo vo) {
-//		return dao.selectOneCount(vo);
-//	}
-//	
-//	public ProductDto selectOne(ProductVo vo) {
-//		return dao.selectOne(vo);
-//	}
 //
 //	public List<ProductDto> selectList(ProductVo vo) {
 //		List<ProductDto> dtos = dao.selectList(vo);

@@ -116,6 +116,20 @@
 			AND is_deleted = 0
 			AND codegroup_id = #{codegroupId}
 	</select>
+	
+	<select id="findAllCodes" resultMap="resultMapObj">
+		SELECT
+			code_id AS codeId
+			,name
+		FROM 
+			code
+		WHERE
+			1=1
+			AND is_used = 1
+			AND is_deleted = 0
+		ORDER BY
+			codegroup_id ASC, code_id ASC
+	</select>
 
 	<insert id="createCode">
 		INSERT INTO code(

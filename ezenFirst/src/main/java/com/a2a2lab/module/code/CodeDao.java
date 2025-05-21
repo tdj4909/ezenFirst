@@ -15,6 +15,7 @@ public interface CodeDao {
 	public List<CodeDto> findCodesByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드 검색
 	public CodeDto findCodeById(String codeId);
 	public List<CodeDto> findCodesByCodeGroupId(String codegroupId); // codegroupId로 코드 검색
+	public List<CodeDto> findAllCodes();
 	public int createCode(CodeDto dto);
 	public int updateCode(CodeDto dto);
 	public int softDeleteCode(String codeId);

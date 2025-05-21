@@ -46,41 +46,5 @@ public class ReviewService {
 	public int findAvgRatingByProductId(String productId) {
 		return dao.findAvgRatingByProductId(productId);
 	}
-	
-	
-	
-	
-	
-//	public int insert(ReviewDto dto) {
-//		return dao.insert(dto);
-//	}
-//	
-//	public int uelete(ReviewDto dto) {
-//		return dao.uelete(dto);
-//	}
-//	
-//	public int delete(ReviewDto dto) {
-//		return dao.delete(dto);
-//	}
-//
-//	public int selectOneCount(ReviewVo vo) {
-//		return dao.selectOneCount(vo);
-//	}
-//	
-//	public int findAvgRatingByMenuSeq(String menu_seq) {
-//		return dao.findAvgRatingByMenuSeq(menu_seq);
-//	}
-//	
-//	public int reviewCount() {
-//		return dao.reviewCount();
-//	}
-//	
-//	public List<ReviewDto> selectList(ReviewVo vo) {
-//		return dao.selectList(vo);
-//	}
-//	
-//	public List<ReviewDto> getReviewListByMenuSeq(String menu_seq) {
-//		return dao.getReviewListByMenuSeq(menu_seq);
-//	}
 
 }

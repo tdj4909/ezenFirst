@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.a2a2lab.module.code.CodeDao;
 import com.a2a2lab.module.code.CodeDto;
+import com.a2a2lab.module.code.CodeService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -21,7 +22,7 @@ public class MemberService {
 	MemberDao dao;
 	
 	@Autowired
-	CodeDao codeDao;
+	CodeService codeService;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -31,18 +32,24 @@ public class MemberService {
 	}
 	
 	public List<MemberDto> findMembersByVo(PageVo pageVo, SearchVo searchVo) {
-		// 통신사 이름 세팅
-		Map<Integer, String> map = new HashMap<>();
-		List<CodeDto> codeDtos= codeDao.findCodesByCodeGroupId("1");
-		for(CodeDto codeDto : codeDtos) {
-			map.put(Integer.parseInt(codeDto.getCodeId()), codeDto.getName());
-		}
-		
-		List<MemberDto> dtos = dao.findMembersByVo(pageVo, searchVo);
-		for(MemberDto dto : dtos) {
-			dto.setMobileCarrierName(map.get(dto.getMobileCarrier()));
-		}
-		return dtos;
+		// 1. 캐싱된 코드 맵에서 통신사 코드 그룹("1") 가져오기
+	    List<CodeDto> codeDtos = codeService.getCodesByCodegroupId("1");
+
+	    // 2. codeId → name 맵으로 변환
+	    Map<Integer, String> codeNameMap = new HashMap<>();
+	    for (CodeDto codeDto : codeDtos) {
+	        codeNameMap.put(Integer.parseInt(codeDto.getCodeId()), codeDto.getName());
+	    }
+
+	    // 3. 회원 목록 가져오기
+	    List<MemberDto> dtos = dao.findMembersByVo(pageVo, searchVo);
+
+	    // 4. 각 회원의 통신사 코드에 해당하는 이름 설정
+	    for (MemberDto dto : dtos) {
+	        dto.setMobileCarrierName(codeNameMap.get(dto.getMobileCarrier()));
+	    }
+
+	    return dtos;
 	}
 	
 	public MemberDto findMemberById(String memberId) {
@@ -91,52 +98,6 @@ public class MemberService {
 		return true;
 	}
 	
-	
-	
-//	public int insert(MemberDto dto) {
-//		return dao.insert(dto);
-//	}
-//	
-//	public int update(MemberDto dto) {
-//		return dao.update(dto);
-//	}
-//	
-//	public int uelete(MemberDto dto) {
-//		return dao.uelete(dto);
-//	}
-//	
-//	public int delete(MemberDto dto) {
-//		return dao.delete(dto);
-//	}
-//
-//	public int memberCount() {
-//		return dao.memberCount();
-//	}
-//	
-//	public int selectOneCount(MemberVo vo) {
-//		return dao.selectOneCount(vo);
-//	}
-//	
-//	public MemberDto selectOne(MemberVo vo) {
-//		return dao.selectOne(vo);
-//	}
-//	
-//	public MemberDto loginChk(MemberDto dto) {
-//		return dao.loginChk(dto);
-//	}
-//	
-//	public int emailChk(MemberDto dto) {
-//		return dao.emailChk(dto);
-//	}
-//
-//	public List<MemberDto> selectList(MemberVo vo) {
-//		return dao.selectList(vo);
-//	}
-//	
-//	public List<MemberDto> selectMobileCarrierGroup() {
-//		return dao.selectMobileCarrierGroup();
-//	}
-//
 //	@PostConstruct
 //	public void selectListCachedCodeArrayList() throws Exception {
 //		List<MemberDto> codeListFromDb = (ArrayList<MemberDto>) dao.selectListCachedCodeArrayList();
