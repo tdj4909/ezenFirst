@@ -45,6 +45,7 @@
 			,p.price AS price
 			,c.member_id AS memberId
 			,c.product_id AS productId
+			,c.is_deleted AS isDeleted
 		FROM
 			cart c
 			JOIN product p ON p.product_id = c.product_id

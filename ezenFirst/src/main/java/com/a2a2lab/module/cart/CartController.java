@@ -49,7 +49,7 @@ public class CartController{
 	// 장바구니 수정
 	@PostMapping("/tableOrder/cart/update")
 	@ResponseBody
-	public Map<String, String> updateCart(@RequestParam int qty, @RequestParam String cartId) {
+	public Map<String, String> updateCart(@RequestParam("qty") int qty, @RequestParam("cartId") String cartId) {
 		Map<String, String> result = new HashMap<>();
 		CartDto dto = service.findCartById(cartId);
 		if(qty == 1) {
@@ -58,7 +58,7 @@ public class CartController{
 		} else if (qty == -1 && dto.getQuantity() > 1) {
 			dto.setQuantity(dto.getQuantity()-1);
 			service.updateCart(dto);
-		} else {
+		} else if(qty == 0){
 			dto.setIsDeleted(1);
 			service.updateCart(dto);
 		}
