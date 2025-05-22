@@ -87,7 +87,7 @@ public class OrderController{
 //	************************************************************
 	// 결제 화면
 	@PostMapping("/tableOrder/order/checkout")
-	public String ordersCheckout(Model model, Authentication auth) {
+	public String ordersCheckout() {
 		return "usr/order/orderCheckout";
 	}
 	// 결제 화면 Ajax
@@ -98,27 +98,30 @@ public class OrderController{
 		return "usr/fragment/orderDetails :: orderDetailsFragment";
 	}
 	// 결제
-//	@RequestMapping(value = "/TableOrder/ordersCompleted")
-//	public String ordersCompleted(@RequestParam("menu_seq") List<String> menu_seqList,
-//								  @RequestParam("quantity") List<Integer> quantityList,
-//								  @RequestParam("odTotalPrice") Integer odTotalPrice,
-//								  HttpSession httpSession) {
-//		// 주문 Insert
-//		MemberDto memberDto = (MemberDto) httpSession.getAttribute("user");
-//		OrdersDto dto = new OrdersDto();
-//		dto.setOdTotalPrice(odTotalPrice);
-////		dto.setUser_seq(memberDto.getSeq());
-//		service.insertOrder(dto);
-//		
-//		// 개별 주문 Insert
-//		for(int i = 0; i < menu_seqList.size(); i++) {
-//			dto.setMenu_seq(menu_seqList.get(i));
-//			dto.setQuantity(quantityList.get(i));
-//			service.insertOrderMenu(dto);
-//		}
-//		
-//		return "redirect:/TableOrder/ordersDetail/"+ dto.getOrders_seq();
-//	}
+	@PostMapping("/tableOrder/order/completed")
+	public String ordersCompleted(@RequestParam("productId") List<String> productIdList,
+							      @RequestParam("cartId") List<String> cartIdList,
+								  @RequestParam("quantity") List<Integer> quantityList,
+								  @RequestParam("orderDetailPrice") List<Integer> orderDetailPriceList,
+								  @RequestParam("odTotalPrice") Integer odTotalPrice,
+								  Authentication auth) {
+		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+		OrderDto dto = new OrderDto();
+		dto.setMemberId(userDetails.getMemberId());
+		dto.setPrice(odTotalPrice);
+		service.saveOrderMaster(dto);
+		
+		// 개별 주문 Insert
+		for(int i = 0; i < productIdList.size(); i++) {
+			dto.setProductId(productIdList.get(i));
+			dto.setQuantity(quantityList.get(i));
+			dto.setOrderDetailPrice(orderDetailPriceList.get(i));
+			service.saveOrderDetail(dto);
+			cartService.softDeleteCart(cartIdList.get(i));
+		}
+		
+		return "redirect:/TableOrder/ordersDetail/"+ dto.getOrderMasterId();
+	}
 //	
 //	// 주문상세 화면
 //	@RequestMapping(value = "/TableOrder/ordersDetail/{seq}")

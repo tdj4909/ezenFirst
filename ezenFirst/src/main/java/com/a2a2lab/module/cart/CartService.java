@@ -31,5 +31,9 @@ public class CartService {
 	public int updateCart(CartDto dto) {
 		return dao.updateCart(dto);
 	}
+	
+	public int softDeleteCart(String cartId) {
+		return dao.softDeleteCart(cartId);
+	}
 
 }

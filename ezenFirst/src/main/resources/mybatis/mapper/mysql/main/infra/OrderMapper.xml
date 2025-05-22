@@ -106,7 +106,7 @@
 	
 	<select id="findOrderDetailsByOrderMasterId" resultMap="resultMapObj">
 		SELECT 
-			p.name AS menuName
+			p.name AS productName
 			,od.price AS price
 			,od.quantity AS quantity
 		FROM
@@ -133,6 +133,39 @@
 		WHERE
 			is_deleted = 0
 	</select>
+	
+	<insert id="saveOrderMaster">
+		INSERT INTO order_master(
+			status
+			,price
+			,created_at
+			,is_deleted
+			,member_id
+		) VALUES (
+			0
+			,#{price}
+			,now()
+			,0
+			,#{memberId}
+		)
+		<selectKey resultType="String" keyProperty="orderMasterId" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<insert id="saveOrderDetail">
+		INSERT INTO order_detail(
+			quantity
+			,price
+			,order_master_id
+			,product_id
+		) VALUES (
+			#{quantity}
+			,#{orderDetailPrice}
+			,#{orderMasterId}
+			,#{productId}
+		)
+	</insert>
 	
 	<update id="updateOrderMaster">
 		UPDATE order_master SET

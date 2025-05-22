@@ -161,7 +161,7 @@ public class ProductController {
 //	************************************************************
 	// 메뉴 리스트 화면
 	@RequestMapping("/tableOrder/shop/list")
-	public String showShopList(Model model, HttpSession session, Authentication auth) {
+	public String showShopList() {
 		return "usr/shop/shopList";
 	}
 	// 메뉴 리스트 Ajax

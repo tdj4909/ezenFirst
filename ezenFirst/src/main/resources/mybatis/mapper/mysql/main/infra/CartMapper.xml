@@ -81,4 +81,11 @@
 			AND product_id = #{productId}
 	</update>
 	
+	<update id="softDeleteCart">
+		UPDATE cart SET
+			is_deleted = 1
+		WHERE
+			cart_id = #{cartId}
+	</update>
+	
 </mapper>

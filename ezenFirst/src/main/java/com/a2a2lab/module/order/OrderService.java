@@ -39,6 +39,14 @@ public class OrderService {
 		return dao.sumAllOrder();
 	}
 	
+	public int saveOrderMaster(OrderDto dto) {
+		return dao.saveOrderMaster(dto);
+	}
+	
+	public int saveOrderDetail(OrderDto dto) {
+		return dao.saveOrderDetail(dto);
+	}
+	
 	public int updateOrderMaster(OrderDto dto) {
 		return dao.updateOrderMaster(dto);
 	}

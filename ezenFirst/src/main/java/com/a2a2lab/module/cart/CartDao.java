@@ -12,5 +12,6 @@ public interface CartDao {
 	public CartDto findCartByMemberIdAndProductId(CartDto dto);	
 	public int saveCart(CartDto dto);
 	public int updateCart(CartDto dto);
+	public int softDeleteCart(String cartId);
 	
 }

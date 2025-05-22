@@ -17,6 +17,8 @@ public interface OrderDao {
 	public List<OrderDto> findOrderDetailsByOrderMasterId(String orderMasterId);	
 	public Integer countAllOrder();
 	public Integer sumAllOrder();
+	public int saveOrderMaster(OrderDto dto);
+	public int saveOrderDetail(OrderDto dto);
 	public int updateOrderMaster(OrderDto dto);
 	public int softDeleteOrderMaster(String orderMasterId);
 	public int hardDeleteOrderMaster(String orderMasterId);
