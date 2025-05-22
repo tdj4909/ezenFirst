@@ -88,9 +88,14 @@ public class OrderController{
 	// 결제 화면
 	@PostMapping("/tableOrder/order/checkout")
 	public String ordersCheckout(Model model, Authentication auth) {
+		return "usr/order/orderCheckout";
+	}
+	// 결제 화면 Ajax
+	@GetMapping("/tableOrder/order/checkout/orderDetails")
+	public String getorderDetailsFragment(Model model, Authentication auth) {
 		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 		model.addAttribute("list", cartService.findCartsByMemberId(userDetails.getMemberId()));
-		return "usr/order/orderCheckout";
+		return "usr/fragment/orderDetails :: orderDetailsFragment";
 	}
 	// 결제
 //	@RequestMapping(value = "/TableOrder/ordersCompleted")
