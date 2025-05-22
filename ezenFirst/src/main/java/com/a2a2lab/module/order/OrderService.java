@@ -31,28 +31,12 @@ public class OrderService {
 		return dao.findOrderDetailsByOrderMasterId(id);
 	}
 	
-	public List<OrderDto> findCartsByMemberId(String memberId) {
-		return dao.findCartsByMemberId(memberId);
-	}
-	
-	public OrderDto findCartByMemberIdAndProductId(OrderDto dto) {
-		return dao.findCartByMemberIdAndProductId(dto);
-	}
-	
 	public Integer countAllOrder() {
 		return dao.countAllOrder();
 	}
 	
 	public Integer sumAllOrder() {
 		return dao.sumAllOrder();
-	}
-	
-	public int saveCart(OrderDto dto) {
-		return dao.saveCart(dto);
-	}
-	
-	public int updateCart(OrderDto dto) {
-		return dao.updateCart(dto);
 	}
 	
 	public int updateOrderMaster(OrderDto dto) {
@@ -67,7 +51,4 @@ public class OrderService {
 		return dao.hardDeleteOrderMaster(id);
 	}
 	
-	
-
-
 }

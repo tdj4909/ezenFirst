@@ -134,47 +134,34 @@ function loadCart() {
    	.then(html => {
 	    document.getElementById("cart").innerHTML = html;
 	    
-	 // cartFragment 버튼들 이벤트 바인딩
-	 document.getElementById("cart-items").addEventListener("click", function (e) {
-	  	// + 버튼
-	  	if (e.target.closest(".btn-plus")) {
-	  		const qtyInput = e.target.closest(".quantity").querySelector(".item-qty");
-	  		qtyInput.value = parseInt(qtyInput.value) + 1;
-	  		updateCartTotal();
-	  	}
-	  	// - 버튼
-	  	if (e.target.closest(".btn-minus")) {
-	  		const qtyInput = e.target.closest(".quantity").querySelector(".item-qty");
-	  		const currentVal = parseInt(qtyInput.value);
-	  		if (currentVal > 1) {
-	  		  qtyInput.value = currentVal - 1;
-	  		  updateCartTotal();
-	  	  }
-	  	}
-	  	// 삭제 버튼
-	  	if (e.target.closest(".text-danger")) {
-	  		const itemRow = e.target.closest(".cart-item");
-	  		if (itemRow) {
-	  		    const itemName = itemRow.getAttribute("data-name");
-	  		    addedItems.delete(itemName); // Map에서도 삭제해줘야 중복 방지됨
-	  		    itemRow.remove();
-	  		    updateCartTotal();
-	  		}
-	  	}
-	 });
-	 
-	    
-// 	    // 새로 삽입된 장바구니 버튼들 이벤트 바인딩
-// 	    document.querySelectorAll(".add-to-cart").forEach(button => {
-// 	        button.addEventListener("click", () => {
-// 	        	addCart(button);
-// 	            // 장바구니 처리 함수 실행
-// 	            console.log("Add to cart:", button.dataset.name);
-// 	        });
-// 	    });
-	
+		// cartFragment 버튼들 이벤트 바인딩
+		document.getElementById("cart").addEventListener("click", function (e) {
+		 	// + 버튼
+		 	if (e.target.closest(".btn-plus")) {
+		 		updateCartTotal(1, e.target.closest("#cartId").value);
+		 	}
+		 	// - 버튼
+		 	if (e.target.closest(".btn-minus")) {
+		 		updateCartTotal(-1);
+		 	}
+		 	// 삭제 버튼
+		 	if (e.target.closest(".text-danger")) {
+		 		updateCartTotal(0);
+		 	}
+		});
 	})
 	.catch(error => console.error("장바구니 로딩 실패:", error));
+}
+
+// 합계 계산 함수
+function updateCartTotal(qty, cartId) {
+	fetch(`/tableOrder/cart/update?qty=${qty}&cartId=${cartId}`)
+   	.then(response => response.text())
+   	.then(data => {
+	    console.log(data);
+	    loadCart();
+	})
+	.catch(error => console.error("장바구니 수정 실패:", error));
 }
 		    
 // 	*******************************************************************************

@@ -196,9 +196,9 @@
 								
 								<div class="col">
 									<div style="float: right;">
-										<a href="#" class="btn btn-success"> 
+										<button type="button" class="btn btn-success" onclick="downloadExcel()"> 
 											<i class="ri-file-excel-line"></i>
-										</a> 
+										</button>
 										<button type="button" id="btnForm" class="btn btn-primary">
 											<i class="ri-add-line"></i>
 										</button>
@@ -366,6 +366,12 @@
 		timepicker:false,
 		format:'Y-m-d'
 	});
+	
+	// Excel 다운로드
+	function downloadExcel() {
+        const params = new URLSearchParams(new FormData(form)).toString();
+        window.location.href = '/xdm/system/codegroup/excel?' + params;
+    }
 		
 </script>
 

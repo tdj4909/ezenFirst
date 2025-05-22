@@ -121,6 +121,7 @@
 		SELECT
 			code_id AS codeId
 			,name
+			,codegroup_id AS codegroupId
 		FROM 
 			code
 		WHERE

@@ -7,6 +7,7 @@
 	<form action="/tableOrder/order/checkout" method="post">
 		<div class="cartList" th:each="item : ${list}">
 			<div class="row mb-3">
+				<input type="hidden" name="cartId" th:value="${item.cartId}">
 				<div class="col">
 					<img th:src="${item.filePath}" class="img-fluid rounded">
 				</div>
@@ -29,7 +30,7 @@
 					</div>
 					<div class="mb-1">
 						<h5 class="fw-bold me-2 item-price"
-							data-price="${item.orderDetailPrice}" th:text="${item.orderDetailPrice} + ' 원'"></h5>
+							data-price="${item.price}" th:text="${item.price} + ' 원'"></h5>
 					</div>
 					<div class="input-group quantity mb-1" style="width: 100px;">
 						<div class="input-group-btn">

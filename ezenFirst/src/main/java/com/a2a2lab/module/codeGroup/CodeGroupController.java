@@ -1,15 +1,23 @@
 package com.a2a2lab.module.codeGroup;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CodeGroupController {
@@ -69,5 +77,41 @@ public class CodeGroupController {
 			}
 		}
 		return "redirect:/xdm/system/codegroup/list";
+	}
+	// Excel 다운로드
+	@GetMapping("/xdm/system/codegroup/excel")
+	public void downloadCodeGroupExcel(HttpServletResponse response, PageVo pageVo, SearchVo searchVo) throws IOException {
+	    List<CodeGroupDto> codeGroups = service.findCodeGroupsByVo(pageVo, searchVo); // 필터링 적용된 목록
+
+	    // 엑셀 워크북 생성
+	    Workbook workbook = new XSSFWorkbook();
+	    Sheet sheet = workbook.createSheet("CodeGroups");
+
+	    // 헤더
+	    Row header = sheet.createRow(0);
+	    header.createCell(0).setCellValue("코드그룹 ID");
+	    header.createCell(1).setCellValue("코드그룹명");
+	    header.createCell(2).setCellValue("사용 여부");
+	    header.createCell(3).setCellValue("등록일");
+	    header.createCell(4).setCellValue("수정일");
+
+	    // 내용
+	    int rowNum = 1;
+	    for (CodeGroupDto group : codeGroups) {
+	        Row row = sheet.createRow(rowNum++);
+	        row.createCell(0).setCellValue(group.getCodegroupId());
+	        row.createCell(1).setCellValue(group.getName());
+	        row.createCell(2).setCellValue(group.getIsUsed() == 1 ? "Y" : "N");
+	        row.createCell(3).setCellValue(group.getCreatedAt());
+	        row.createCell(4).setCellValue(group.getUpdatedAt());
+	    }
+
+	    // 응답 설정
+	    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+	    response.setHeader("Content-Disposition", "attachment; filename=codegroups.xlsx");
+
+	    // 엑셀 파일 내보내기
+	    workbook.write(response.getOutputStream());
+	    workbook.close();
 	}
 }

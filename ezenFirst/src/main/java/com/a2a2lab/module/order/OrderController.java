@@ -1,12 +1,8 @@
 package com.a2a2lab.module.order;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.a2a2lab.common.config.CustomUserDetails;
-import com.a2a2lab.module.product.ProductDto;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -84,24 +78,6 @@ public class OrderController{
 //	************************************************************
 //	사용자
 //	************************************************************
-	// 장바구니 추가
-	@PostMapping("/tableOrder/order/addCart")
-	@ResponseBody
-	public Map<String, String> addCart(@RequestBody OrderDto dto, Authentication auth) {
-		Map<String, String> result = new HashMap<>();
-		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
-		dto.setMemberId(userDetails.getMemberId());
-		// 장바구니 중복검사
-		OrderDto resultDto = service.findCartByMemberIdAndProductId(dto);
-		if(resultDto == null) { // 장바구니 상품 새로 추가
-			service.saveCart(dto);
-		} else { // 장바구니에서 동일상품 개수 +1
-			resultDto.setQuantity(resultDto.getQuantity()+1);
-			service.updateCart(resultDto);
-		}
-		result.put("status", "ok");
-		return result;
-	}
 	// 결제 화면
 	@PostMapping("/tableOrder/order/checkout")
 	public String ordersCheckout(@RequestBody List<OrderDto> dtoList, Model model) {

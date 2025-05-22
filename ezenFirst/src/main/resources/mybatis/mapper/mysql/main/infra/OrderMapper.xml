@@ -116,40 +116,6 @@
 			od.order_master_id = #{orderMasterId}
 	</select>
 	
-	<select id="findCartsByMemberId" resultMap="resultMapObj">
-		SELECT 
-			c.quantity AS quantity
-			,p.price AS orderDetailPrice
-			,p.name AS productName
-			,p.product_id AS productId
-			,p.rating AS rating			
-			,f.path AS filePath
-		FROM
-			cart c
-			JOIN product p ON p.product_id = c.product_id
-			JOIN file f ON f.file_id = p.file_id
-		WHERE
-			1=1
-			AND c.is_deleted = 0
-			AND c.member_id = #{memberId}
-	</select>
-	
-	<select id="findCartByMemberIdAndProductId" resultMap="resultMapObj">
-		SELECT 
-			c.quantity
-			,p.price AS orderDetailPrice
-			,c.member_id AS memberId
-			,c.product_id AS productId
-		FROM
-			cart c
-			JOIN product p ON p.product_id = c.product_id
-		WHERE
-			1=1
-			AND c.is_deleted = 0
-			AND c.member_id = #{memberId}
-			AND c.product_id = #{productId}
-	</select>
-	
 	<select id="countAllOrder" resultType="Integer">
 		SELECT
 			COUNT(*)
@@ -168,36 +134,11 @@
 			is_deleted = 0
 	</select>
 	
-	<insert id="saveCart">
-		INSERT INTO cart(
-			quantity,
-			is_deleted,
-			member_id,
-			product_id
-		)VALUES(
-			1
-			,0
-			,#{memberId}
-			,#{productId}
-		)
-	</insert>
-	
 	<update id="updateOrderMaster">
 		UPDATE order_master SET
 			status = #{status}
 		WHERE
 			order_master_id = #{orderMasterId}
-	</update>
-	
-	<update id="updateCart">
-		UPDATE cart SET
-			quantity = #{quantity}
-			,is_deleted = #{isDeleted}
-		WHERE
-			1=1
-			AND is_deleted = 0
-			AND member_id = #{memberId}
-			AND product_id = #{productId}
 	</update>
 	
 	<update id="softDeleteOrderMaster">
@@ -231,181 +172,7 @@
 			<when test="shOption == 2">AND u.nickname LIKE CONCAT('%',#{shValue},'%')</when>
 		</choose>
 			
-	</sql>
-
-	<select id="selectOneCount" resultType="Integer">
-		SELECT COUNT(*)
-		<include refid="selectCommon"></include>
-	</select>
-	
-	<select id="ordersCount" resultType="Integer">
-		SELECT 
-			COUNT(*)
-		FROM
-			orders
-		WHERE
-			ordersStatus != 3
-		    AND ordersDelNy = 0
-	</select>
-	
-	<select id="ordersSum" resultType="Integer">
-		SELECT 
-			SUM(m.menuPrice) AS odTotalPrice
-		FROM
-			orders od
-			JOIN orderMenu om ON om.orders_seq = od.seq
-			JOIN menu m ON m.seq = om.menu_seq
-		WHERE
-			ordersStatus != 3
-		    AND ordersDelNy = 0
-	</select>
-	
-
-	<select id="selectList" resultMap="resultMapObj">
-		SELECT 
-			aa.* 
-		FROM (
-			SELECT
-				a.seq
-				,a.reviewDate
-				,a.reviewRate
-				,a.reviewDescription
-				,a.user_seq
-				,a.menu_seq
-				,u.nickname
-			,m.menuNm
-			<include refid="selectCommon"></include>
-			) aa
-		ORDER BY
-			seq DESC
-		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
-	</select>
-
- 
- 	<select id="selectOne" resultMap="resultMapObj">
- 		SELECT
-			u.nickname
-		    ,o.seq
-		    ,o.ordersDate
-		    ,o.ordersStatus
-		    ,o.ordersDelNy
-		    ,o.odTotalPrice
-		FROM
-			orders o
-			JOIN user u ON u.seq = o.user_seq
-		WHERE
-			1=1
-			AND o.seq = #{seq}
- 	</select>
- 	
- 	<select id="selectOneList" resultMap="resultMapObj">
-		SELECT 
-			m.menuNm
-			,m.menuPrice
-		    ,om.quantity
-		    ,f.path
-		FROM
-			orders o
-			JOIN orderMenu om ON om.orders_seq = o.seq
-		    JOIN menu m ON m.seq = om.menu_seq
-		    JOIN fileUploaded f ON f.seq = m.fileUploaded_seq
-		AND o.seq = #{seq}
- 	</select>
- 
- 	<select id="selectList" resultMap="resultMapObj">
- 		SELECT
-			u.nickname
-		    ,o.seq
-		    ,o.ordersDate
-		    ,o.ordersStatus
-		    ,o.ordersDelNy
-		<include refid="selectCommon"></include>
-		ORDER BY
-			seq DESC
-		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
- 	</select>
- 	
- 	<select id="findOrdersByMemberSeq" resultMap="resultMapObj">
- 		SELECT
- 			seq
-		    ,ordersDate
-		    ,ordersStatus
-		    ,odTotalPrice
-		FROM
-			orders
-		WHERE
-			1=1
-			AND user_seq = #{user_seq}
-			AND ordersDelNy = 0
-		ORDER BY
-			seq DESC
-		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
- 	</select>
- 	
-	<select id="countOrdersByMemberSeq" resultType="Integer">
- 		SELECT
- 			COUNT(*)
-		FROM
-			orders
-		WHERE
-			1=1
-			AND user_seq = #{user_seq}
-			AND ordersDelNy = 0
- 	</select>
- 	
- 	<insert id="insertOrder">
-		INSERT INTO orders(
-			ordersDate
-		    ,ordersStatus
-		    ,ordersDelNy
-		    ,user_seq
-		    ,odTotalPrice
-		) VALUES(
-			now()
-		    ,1
-		    ,0
-		    ,#{user_seq}
-		    ,#{odTotalPrice}
-		)
-		<selectKey resultType="String" keyProperty="orders_seq"
-			order="AFTER">
-			SELECT last_insert_id()
-		</selectKey>
-	</insert>
-	
-	<insert id="insertOrderMenu">
-		INSERT INTO orderMenu(
-		    quantity
-		    ,orders_seq
-		    ,menu_seq
-		) VALUES(
-			#{quantity}
-		    ,#{orders_seq}
-		    ,#{menu_seq}
-		)
-	</insert>
-	
-	<update id="uelete">
-		UPDATE orders SET
-			ordersDelNy = 1
-		WHERE
-			seq = #{seq}
-	</update>
-	
-	<delete id="delete">
-		Delete
-		FROM
-			orders
-		WHERE
-			seq = #{seq}
-	</delete>
-	
-	<update id="update">
-		UPDATE orders SET
-			ordersStatus = #{ordersStatus}
-		WHERE
-			seq = #{seq}
-	</update> -->
+	</sql> -->
 
 	
 </mapper>

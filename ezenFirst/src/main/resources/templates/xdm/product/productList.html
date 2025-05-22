@@ -17,11 +17,11 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
 					<li class="breadcrumb-item">서비스 관리</li>
-					<li class="breadcrumb-item active">제품 관리</li>
+					<li class="breadcrumb-item active">메뉴 관리</li>
 				</ol>
 			</nav>
 
-			<h1 style="font-weight: bold;">제품 목록</h1>
+			<h1 style="font-weight: bold;">메뉴 목록</h1>
 			
 			<!-- Search Start -->
 			<div class="search">
@@ -241,9 +241,9 @@
 								
 								<div class="col">
 									<div style="float: right;">
-										<a href="#" class="btn btn-success"> 
+										<button type="button" class="btn btn-success" onclick="downloadExcel()"> 
 											<i class="ri-file-excel-line"></i>
-										</a> 
+										</button> 
 										<button type="button" id="btnForm" class="btn btn-primary">
 											<i class="ri-add-line"></i>
 										</button>
@@ -412,6 +412,12 @@
 		timepicker:false,
 		format:'Y-m-d'
 	});
+	
+	// Excel 다운로드
+	function downloadExcel() {
+        const params = new URLSearchParams(new FormData(form)).toString();
+        window.location.href = '/xdm/service/product/excel?' + params;
+    }
 	
 </script>
 

@@ -15,29 +15,10 @@ public interface OrderDao {
 	public List<OrderDto> findOrderMastersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 주문 검색
 	public OrderDto findOrderMasterById(String orderMasterId);
 	public List<OrderDto> findOrderDetailsByOrderMasterId(String orderMasterId);	
-	public List<OrderDto> findCartsByMemberId(String memberId);	
-	public OrderDto findCartByMemberIdAndProductId(OrderDto dto);	
 	public Integer countAllOrder();
 	public Integer sumAllOrder();
-	public int saveCart(OrderDto dto);
-	public int updateCart(OrderDto dto);
 	public int updateOrderMaster(OrderDto dto);
 	public int softDeleteOrderMaster(String orderMasterId);
 	public int hardDeleteOrderMaster(String orderMasterId);
 	
-//	public int insertOrder(OrderDto dto);
-//	public int insertOrderMenu(OrderDto dto);
-//	public int uelete(OrderDto dto);
-//	public int delete(OrderDto dto);
-//	public int update(OrderDto dto);
-//	public int selectOneCount(OrderVo vo);
-//	public int ordersCount();
-//	public int ordersSum();
-//	public OrderDto selectOne(OrderDto dto);
-//	public List<OrderDto> selectOneList(OrderDto dto);
-//	public List<OrderDto> selectList(OrderVo vo);
-//	
-//	public int countOrdersByMemberSeq(String user_seq);
-//	public List<OrderDto> findOrdersByMemberSeq(@Param("user_seq") String user_seq, @Param("pageVo") PageVo pageVo);
-
 }

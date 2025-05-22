@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.a2a2lab.module.cart.CartDao">
+
+	<resultMap id="resultMapObj" type="com.a2a2lab.module.cart.CartDto"></resultMap>
+	
+	<select id="findCartById" resultMap="resultMapObj">
+		SELECT
+			cart_id AS cartId
+			,quantity
+			,is_deleted AS isDeleted
+			,member_id AS memberId
+			,product_id AS productId
+		FROM
+			cart
+		WHERE
+			1=1
+			AND is_deleted = 0
+			AND cart_id = #{cartId}
+	</select>
+	
+	<select id="findCartsByMemberId" resultMap="resultMapObj">
+		SELECT 
+			c.cart_id AS cartId
+			,c.quantity AS quantity
+			,p.price AS price
+			,p.name AS productName
+			,p.product_id AS productId
+			,p.rating AS rating			
+			,f.path AS filePath
+		FROM
+			cart c
+			JOIN product p ON p.product_id = c.product_id
+			JOIN file f ON f.file_id = p.file_id
+		WHERE
+			1=1
+			AND c.is_deleted = 0
+			AND c.member_id = #{memberId}
+	</select>
+	
+	<select id="findCartByMemberIdAndProductId" resultMap="resultMapObj">
+		SELECT 
+			c.quantity
+			,p.price AS price
+			,c.member_id AS memberId
+			,c.product_id AS productId
+		FROM
+			cart c
+			JOIN product p ON p.product_id = c.product_id
+		WHERE
+			1=1
+			AND c.is_deleted = 0
+			AND c.member_id = #{memberId}
+			AND c.product_id = #{productId}
+	</select>
+	
+	<insert id="saveCart">
+		INSERT INTO cart(
+			quantity,
+			is_deleted,
+			member_id,
+			product_id
+		)VALUES(
+			1
+			,0
+			,#{memberId}
+			,#{productId}
+		)
+	</insert>
+	
+	<update id="updateCart">
+		UPDATE cart SET
+			quantity = #{quantity}
+			,is_deleted = #{isDeleted}
+		WHERE
+			1=1
+			AND is_deleted = 0
+			AND member_id = #{memberId}
+			AND product_id = #{productId}
+	</update>
+	
+</mapper>
