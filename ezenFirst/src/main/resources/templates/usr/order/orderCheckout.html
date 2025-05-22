@@ -3,27 +3,51 @@
 
 <div th:replace="~{usr/include/head :: head}"></div>
 
-    <!-- Checkout Page Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5 mt-5">
-            <h1 class="mb-4 mt-5">결제</h1>
+<!-- Checkout Page Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5 mt-5">
+        <h1 class="mb-4 mt-5">결제</h1>
 
 
-            <form action="/tableOrder/order/completed" method="post">
+        <form action="/tableOrder/order/completed" method="post">
+        
+        	<div id="orderDetails">
+             <!-- Ajax -->
+            </div>
             
-            	<div id="orderDetails">
-	                <!-- Ajax -->
-                </div>
-                
-            </form>
-        </div>
+        </form>
     </div>
-    <!-- Checkout Page End -->
+</div>
+<!-- Checkout Page End -->
     
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 	// 장바구니 출력
 	loadCartList();
+	
+	// 장바구니 이벤트 위임
+    document.getElementById("orderDetails").addEventListener("click", function (e) {
+        const cartItem = e.target.closest(".item-row");
+        if (!cartItem) return;
+
+        const cartIdInput = cartItem.querySelector("input[name='cartId']");
+        if (!cartIdInput) return;
+
+        const cartId = cartIdInput.value;
+
+        // + 버튼
+        if (e.target.closest(".btn-plus")) {
+            updateCart(1, cartId);
+        }
+        // - 버튼
+        else if (e.target.closest(".btn-minus")) {
+            updateCart(-1, cartId);
+        }
+        // 삭제 버튼
+        else if (e.target.closest(".btn-delete")) {
+            updateCart(0, cartId);
+        }
+    });
 	
 	
 });
@@ -34,10 +58,47 @@ function loadCartList() {
         .then(response => response.text())
         .then(html => {
             document.getElementById("orderDetails").innerHTML = html;
+            updateTotalSum();
 
         })
         .catch(error => {
             console.error("장바구니 로딩 실패:", error);
+        });
+}
+
+// 총합 계산
+function updateTotalSum(){
+	let sum = 0;
+	document.querySelectorAll(".item-row").forEach(function(row) {
+        const totalCell = row.querySelector(".item-total");
+        const text = totalCell.textContent.replace("원", "").trim();
+        const number = parseInt(text.replace(/,/g, ""));
+        sum += number;
+	});
+	document.getElementById("odTotalPrice").value = sum;
+	document.querySelector(".total-sum").textContent = sum.toLocaleString() + " 원";
+}
+
+//장바구니 수정
+function updateCart(qty, cartId) {
+    fetch('/tableOrder/cart/update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `qty=${qty}&cartId=${cartId}`
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("업데이트 실패");
+            return response.text();
+        })
+        .then(data => {
+            console.log("업데이트 성공", data);
+            loadCartList(); // 성공 후 다시 장바구니 로드
+        })
+        .catch(error => {
+            console.error("에러:", error);
+            alert("장바구니 수량 변경 중 문제가 발생했습니다.");
         });
 }
 
@@ -92,25 +153,6 @@ function loadCartList() {
 // 				}
 // 			});
 			
-// 			// 총합 계산
-// 			function updateTotalSum(){
-// 				let sum = 0;
-				
-// 				document.querySelectorAll(".item-row").forEach(function(row) {
-					
-// 			        const totalCell = row.querySelector(".item-total");
-// 			        const text = totalCell.textContent.replace("원", "").trim();
-// 			        const number = parseInt(text.replace(/,/g, ""));
-// 			        sum += number;
-					
-// 		    	});
-				
-// 				document.getElementById("odTotalPrice").value = sum;
-// 				document.querySelector(".total-sum").textContent = sum.toLocaleString() + " 원";
-// 			}
-	
-	
-
 </script>
 
 <div th:replace="~{usr/include/footer :: footer}"></div>

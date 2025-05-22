@@ -71,6 +71,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	//메뉴 리스트
 	loadMenuList(1); // 처음 로딩 시 page 1
 	
+	
+	//장바구니
+	loadCart();
+	
 	// 장바구니 이벤트 위임
     document.getElementById("cart").addEventListener("click", function (e) {
         const cartItem = e.target.closest(".cart-item");
@@ -94,10 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
             updateCart(0, cartId);
         }
     });
-	//장바구니
-	loadCart();
-	
-	
 	
 	window.goList = function (page) {
 	    loadMenuList(page);
