@@ -3,14 +3,18 @@ package com.a2a2lab.module.order;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.a2a2lab.common.config.CustomUserDetails;
+import com.a2a2lab.module.cart.CartService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -19,6 +23,9 @@ public class OrderController{
 	
 	@Autowired
 	OrderService service;
+	
+	@Autowired
+	CartService cartService;
 	
 //	************************************************************
 //	관리자
@@ -80,8 +87,9 @@ public class OrderController{
 //	************************************************************
 	// 결제 화면
 	@PostMapping("/tableOrder/order/checkout")
-	public String ordersCheckout(@RequestBody List<OrderDto> dtoList, Model model) {
-		model.addAttribute("list", dtoList);
+	public String ordersCheckout(Model model, Authentication auth) {
+		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+		model.addAttribute("list", cartService.findCartsByMemberId(userDetails.getMemberId()));
 		return "usr/order/orderCheckout";
 	}
 	// 결제

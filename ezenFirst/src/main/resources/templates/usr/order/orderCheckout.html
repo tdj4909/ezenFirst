@@ -39,7 +39,7 @@
                                             </div>
                                         </td>
                                         <td class="py-5 text-center" th:text="${item.productName}"></td>
-                                        <td class="py-5 text-center" th:text="${item.orderDetailPrice} + 원"></td>
+                                        <td class="py-5 text-center" th:text="${item.price} + 원"></td>
                                         
                                         <td class="text-center align-middle">
 	                                        <div class="input-group mx-auto text-center" style="width: 100px;">
@@ -57,7 +57,7 @@
 								            </div>
                                         </td>
                                         
-                                        <td class="py-5 text-center item-total" th:value="${item.orderDetailPrice * item.quantity}" th:text="${item.orderDetailPrice * item.quantity} + 원"></td>
+                                        <td class="py-5 text-center item-total" th:value="${item.price * item.quantity}" th:text="${item.price * item.quantity} + 원"></td>
                                     	<td class="text-center align-middle">
                                     		<button type="button" class="btn btn-md rounded-circle bg-light border btn-delete">
                                     			<i class="fa fa-times text-danger"></i>

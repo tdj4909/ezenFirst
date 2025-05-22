@@ -5,76 +5,57 @@
 
 	<form name="formList" id="formList" method="post" autocomplete="off">
 		<input type="hidden" name="formSeq">
-    <!-- Fruits Shop Start-->
-    <div class="container-fluid fruite py-5">
-        <div class="container py-5">
-            <h1 class="mb-4 mt-5">추천메뉴</h1>
-            <div class="row g-4">
-                <div class="col-lg-12">
-                    <div class="row g-4">
-                        <div class="col-xl-3">
-                            <div class="input-group w-100 mx-auto d-flex">
-                                <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                                <span onclick="location.href='shop.html'" style="cursor:pointer;" id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                            </div>
-                        </div>
-                        <div class="col-6"></div>
-                        <div class="col-xl-3">
-                            <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
-                                <label for="fruits">정렬 : </label>
-                                <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3"
-                                    form="fruitform">
-                                    <option value="volvo">주문 많은 순</option>
-                                    <option value="saab">평점 높은 순</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row g-4">
-                        <!-- Side Bar Start -->
-                        <div class="col-lg-3">
-                            <div class="row g-4">
-	                                <div id="cart" class="col-lg-12">
-	                                
-	                                
-	                                
-	                                
-	                                
-	                                    <!-- <h4 class="mb-3">장바구니</h4>
-	                                    
-										<div id="cart-items"></div>
+	    <!-- Fruits Shop Start-->
+	    <div class="container-fluid fruite py-5">
+	        <div class="container py-5">
+	            <h1 class="mb-4 mt-5">추천메뉴</h1>
+	            <div class="row g-4">
+	                <div class="col-lg-12">
+	                    <div class="row g-4">
+	                        <div class="col-xl-3">
+	                            <div class="input-group w-100 mx-auto d-flex">
+	                                <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+	                                <span onclick="location.href='shop.html'" style="cursor:pointer;" id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+	                            </div>
+	                        </div>
+	                        <div class="col-6"></div>
+	                        <div class="col-xl-3">
+	                            <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+	                                <label for="fruits">정렬 : </label>
+	                                <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3"
+	                                    form="fruitform">
+	                                    <option value="volvo">주문 많은 순</option>
+	                                    <option value="saab">평점 높은 순</option>
+	                                </select>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    
+	                    <div class="row g-4">
+	                        <!-- Side Bar Start -->
+	                        <div class="col-lg-3">
+	                            <div class="row g-4">
+	                            	<!-- Cart List Start -->
+		                            <div id="cart" class="col-lg-12">
+		                                <!-- Ajax -->
+	                            	</div>
+	                            	<!-- Cart List End -->
+	                        	</div>
+	                        </div>
+	                        <!-- Side Bar End -->
 	
-	                                    <div class="row py-3">
-	                                        <div class="col">
-	                                            <h4 class="mb-3">합계:</h4>
-	                                        </div>
-	                                        <div class="col text-end">
-	                                            <h4 class="mb-3"><span id="cart-total">0 원</span></h4>
-	                                        </div>
-	                                    </div>
+	                        <!-- Menu List Start -->
+	                        <div id="menuList" class="col-lg-9">
+	                            <!-- Ajax -->
+	                        </div>
+	                        <!-- Menu List End -->
 	
-	                                    <div class="row p-3">
-	                                    	<button type="button" id="checkoutBtn" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">주문하기</button>
-	                                    </div>
-	                                </div> -->
-                            	</div>
-                        	</div>
-                        </div>
-                        <!-- Side Bar End -->
-
-                        <!-- Menu List Start -->
-                        <div id="menuList" class="col-lg-9">
-                            <!-- Ajax -->
-                        </div>
-                        <!-- Menu List End -->
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Fruits Shop End-->
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- Fruits Shop End-->
     </form>
     
 <script>
@@ -115,6 +96,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 	//장바구니
 	loadCart();
+	
+	
 	
 	window.goList = function (page) {
 	    loadMenuList(page);
@@ -165,6 +148,20 @@ function loadCart() {
         .then(html => {
             document.getElementById("cart").innerHTML = html;
             updateCartTotalPrice();
+            
+         	// 주문하기 버튼
+        	document.getElementById('btnOrder').addEventListener('click', function () {
+        		  const cartItems = document.querySelectorAll('.cart-item');
+        		  
+        		  if (cartItems.length === 0) {
+        		    alert('장바구니가 비어 있습니다.');
+        		    return;
+        		  }
+
+        		  form.action = "/tableOrder/order/checkout";
+        		  form.submit();
+        	});
+         	
         })
         .catch(error => {
             console.error("장바구니 로딩 실패:", error);
