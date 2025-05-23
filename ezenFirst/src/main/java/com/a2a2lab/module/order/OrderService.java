@@ -15,12 +15,20 @@ public class OrderService {
 	@Autowired
 	OrderDao dao;
 	
-	public int countOrderMastersByVo(PageVo pageVo, SearchVo searchVo) {
-		return dao.countOrderMastersByVo(pageVo, searchVo);
+	public int countOrderMastersByVo(SearchVo searchVo) {
+		return dao.countOrderMastersByVo(searchVo);
 	}
 	
 	public List<OrderDto> findOrderMastersByVo(PageVo pageVo, SearchVo searchVo) {
 		return dao.findOrderMastersByVo(pageVo, searchVo);
+	}
+	
+	public int countOrderMastersByMemberId(String memberId) {
+		return dao.countOrderMastersByMemberId(memberId);
+	}
+	
+	public List<OrderDto> findOrderMastersByMemberId(PageVo pageVo, String memberId) {
+		return dao.findOrderMastersByMemberId(pageVo, memberId);
 	}
 	
 	public OrderDto findOrderMasterById(String id) {

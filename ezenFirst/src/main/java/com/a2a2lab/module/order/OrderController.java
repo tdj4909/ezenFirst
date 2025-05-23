@@ -1,14 +1,17 @@
 package com.a2a2lab.module.order;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,7 +39,7 @@ public class OrderController{
 		// 검색 설정
 		model.addAttribute("searchVo", searchVo);
 		// 페이징 설정
-		pageVo.setParamsPaging(service.countOrderMastersByVo(pageVo, searchVo));
+		pageVo.setParamsPaging(service.countOrderMastersByVo(searchVo));
 		model.addAttribute("pageVo", pageVo);
 		// 주문 출력
 		model.addAttribute("list", service.findOrderMastersByVo(pageVo, searchVo));
@@ -89,7 +92,7 @@ public class OrderController{
 //	************************************************************
 	// 결제 화면
 	@PostMapping("/tableOrder/order/checkout")
-	public String ordersCheckout() {
+	public String orderCheckout() {
 		return "usr/order/orderCheckout";
 	}
 	// 결제 화면 Ajax
@@ -101,7 +104,7 @@ public class OrderController{
 	}
 	// 결제
 	@PostMapping("/tableOrder/order/completed")
-	public String ordersCompleted(@RequestParam("productId") List<String> productIdList,
+	public String orderCompleted(@RequestParam("productId") List<String> productIdList,
 							      @RequestParam("cartId") List<String> cartIdList,
 								  @RequestParam("quantity") List<Integer> quantityList,
 								  @RequestParam("orderDetailPrice") List<Integer> orderDetailPriceList,
@@ -124,45 +127,36 @@ public class OrderController{
 		
 		return "redirect:/tableOrder/order/history/detail/"+ dto.getOrderMasterId();
 	}
-	
 	// 주문상세 화면
 	@RequestMapping("/tableOrder/order/history/detail/{orderMasterId}")
-	public String ordersDetail(@PathVariable("orderMasterId") String orderMasterId, Model model) {
+	public String orderDetail(@PathVariable("orderMasterId") String orderMasterId, Model model) {
 		// orderMaster 주문 하나 
 		model.addAttribute("orderMaster", service.findOrderMasterById(orderMasterId));
 		// orderMaster에 속한 orderDetail 주문들
 		model.addAttribute("orderDetail", service.findOrderDetailsByOrderMasterId(orderMasterId));
 		return "usr/order/orderDetail";
 	}
-//	
-//	
-//	// 주문내역 화면
-//	@RequestMapping(value = "/TableOrder/ordersHistory")
-//	public String ordersHistory(@RequestParam(name = "page", defaultValue="1") int page, Model model, HttpSession httpSession) {
-//	
-//		// 로그인한 member의 id 추출
-//		MemberDto memberDto = (MemberDto) httpSession.getAttribute("user");
-////		String user_seq = memberDto.getSeq();
-//		// 페이징 설정
-//		PageVo pageVo = new PageVo();
-//		pageVo.setRowNumToShow(5);
-//		pageVo.setThisPage(page);
-////		pageVo.setParamsPaging(service.countOrdersByMemberSeq(user_seq));
-//		model.addAttribute("pageVo", pageVo);
-//		// 주문 목록 출력
-////		model.addAttribute("list", service.findOrdersByMemberSeq(user_seq, pageVo));
-//		
-//		return "/usr/orders/ordersHistory";
-//	}
-//	// 주문내역 삭제
-//	@RequestMapping("/TableOrder/ordersUsrUele")
-//	public ResponseEntity<String> ordersUsrUele(@RequestBody Map<String, String> map) {
-//		
-//		OrdersDto dto = new OrdersDto();
-//		dto.setSeq(map.get("seq"));
-//		service.uelete(dto);
-//		
-//		return ResponseEntity.ok("삭제 성공");
-//	}
+	// 주문내역 화면
+	@RequestMapping("/tableOrder/order/history")
+	public String orderHistory(@RequestParam(name = "page", defaultValue="1") int page,
+								Model model,
+								Authentication auth) {
+		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+		String memberId = userDetails.getMemberId();
+		// 페이징 설정
+		PageVo pageVo = new PageVo();
+		pageVo.setThisPage(page);
+		pageVo.setParamsPaging(service.countOrderMastersByMemberId(memberId));
+		model.addAttribute("pageVo", pageVo);
+		// 주문 목록 출력
+		model.addAttribute("list", service.findOrderMastersByMemberId(pageVo, memberId));
+		return "/usr/order/orderHistory";
+	}
+	// 주문내역 삭제
+	@RequestMapping("/tableOrder/order/history/softDelete")
+	public ResponseEntity<String> softDeleteOrderHistory(@RequestBody Map<String, String> map) {
+		service.softDeleteOrderMaster(map.get("orderMasterId"));
+		return ResponseEntity.ok("삭제 성공");
+	}
 	
 }

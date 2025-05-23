@@ -23,24 +23,24 @@
                     <tbody>
                     
                         <tr th:each="item : ${list}">
-                            <td scope="row" class="text-center">
-                                <p class="mt-2"><a th:href="@{'/TableOrder/ordersDetail/' + ${item.seq}}" th:text="${item.seq}"></a></p>
+                            <td class="text-center">
+                                <p class="mt-2"><a th:href="@{'/tableOrder/order/history/detail/' + ${item.orderMasterId}}" th:text="${item.orderMasterId}"></a></p>
                             </td>
                             <td class="text-center">
-                                <p class="mt-2" th:text="${item.ordersDate}"></p>
+                                <p class="mt-2" th:text="${item.createdAt}"></p>
                             </td>
                             <td class="text-center">
-                                <p class="mt-2" th:text="${item.ordersStatus}"></p>
+                                <p class="mt-2" th:text="${item.status}"></p>
                             </td>
                             <td class="text-center">
-                                <p class="mt-2" th:text="${item.odTotalPrice}"></p>
+                                <p class="mt-2" th:text="${item.price}"></p>
                             </td>
                            	<td class="text-center align-middle">
                            		<button type="button" 
                            				class="btn btn-md rounded-circle bg-light border btn-delete" 
                            				data-bs-toggle="modal" 
                            				data-bs-target="#modal"
-                           				th:data-seq="${item.seq}">
+                           				th:data-seq="${item.orderMasterId}">
                            			<i class="fa fa-times text-danger"></i>
                            		</button>
                            	</td>
@@ -52,20 +52,20 @@
 
             <!-- Pageing Start -->
             <div class="pagination d-flex justify-content-center mt-5">
-                <a th:href="@{'/TableOrder/ordersHistory?page=' + ${pageVo.startPage - 1}}" 
+                <a th:href="@{'/tableOrder/order/history?page=' + ${pageVo.startPage - 1}}" 
                    class="rounded" 
                    th:if="${pageVo.thisPage > pageVo.pageNumToShow}">
                    &laquo;
                 </a>
                 
-                <a th:href="@{'/TableOrder/ordersHistory?page=' + ${pageNum}}" 
+                <a th:href="@{'/tableOrder/order/history?page=' + ${pageNum}}" 
                    class="rounded" 
                    th:each="pageNum : ${#numbers.sequence(pageVo.startPage, pageVo.endPage)}"
                    th:classappend="${pageNum == pageVo.thisPage} ? 'active' : ''"
                    th:text="${pageNum}">
                 </a>
 
-                <a th:href="@{'/TableOrder/ordersHistory?page=' + ${pageVo.endPage + 1}}" 
+                <a th:href="@{'/tableOrder/order/history?page=' + ${pageVo.endPage + 1}}" 
                    class="rounded" 
                    th:if="${pageVo.endPage < pageVo.totalPages}">
                    &raquo;
@@ -107,20 +107,20 @@ document.querySelectorAll('.btn-delete').forEach(button => {
 
 document.querySelector('.btn-confirm').addEventListener('click', () => {
 	
-	fetch('/TableOrder/ordersUsrUele', {
+	fetch('/tableOrder/order/history/softDelete', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			seq: targetRow
+			orderMasterId: targetRow
 		})
 	})
 	.then(res => res.text())
 	.then(data => {
 		console.log(data);
 		if(data == '삭제 성공'){
-			window.location.href='/TableOrder/ordersHistory';
+			window.location.href='/tableOrder/order/history';
 		}
 	})
 	.catch(error => console.error(error));

@@ -11,12 +11,23 @@ import com.a2a2lab.module.vo.SearchVo;
 @Repository
 public interface OrderDao {
 	
-	public int countOrderMastersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 주문 개수 검색
-	public List<OrderDto> findOrderMastersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 주문 검색
+	// 관리자 주문관리
+	public int countOrderMastersByVo(SearchVo searchVo);
+	public List<OrderDto> findOrderMastersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo);
+	
+	// 사용자 주문 내역
+	public int countOrderMastersByMemberId(String memberId);
+	public List<OrderDto> findOrderMastersByMemberId(@Param("pageVo") PageVo pageVo, @Param("memberId") String memberId);
+	
+	// 주문 상세
 	public OrderDto findOrderMasterById(String orderMasterId);
-	public List<OrderDto> findOrderDetailsByOrderMasterId(String orderMasterId);	
+	public List<OrderDto> findOrderDetailsByOrderMasterId(String orderMasterId);
+	
+	// 관리자 index
 	public Integer countAllOrder();
 	public Integer sumAllOrder();
+	
+	// Select를 제외한 CRUD
 	public int saveOrderMaster(OrderDto dto);
 	public int saveOrderDetail(OrderDto dto);
 	public int updateOrderMaster(OrderDto dto);
