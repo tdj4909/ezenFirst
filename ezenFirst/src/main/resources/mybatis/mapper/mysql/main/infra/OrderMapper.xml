@@ -107,11 +107,13 @@
 	<select id="findOrderDetailsByOrderMasterId" resultMap="resultMapObj">
 		SELECT 
 			p.name AS productName
-			,od.price AS price
+			,od.price AS orderDetailPrice
 			,od.quantity AS quantity
+			,f.path AS filePath
 		FROM
 			order_detail od
 			JOIN product p ON p.product_id = od.product_id
+			JOIN file f ON f.file_id = p.file_id
 		WHERE
 			od.order_master_id = #{orderMasterId}
 	</select>

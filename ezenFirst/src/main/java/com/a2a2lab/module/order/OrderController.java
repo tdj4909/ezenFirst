@@ -7,8 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,7 +45,9 @@ public class OrderController{
 	// 주문 상세
 	@RequestMapping("/xdm/service/order/detail")
 	public String ordersXdmOne(Model model, @RequestParam("orderMasterId") String orderMasterId) {
+		// orderMaster 주문 하나 
 		model.addAttribute("orderMaster", service.findOrderMasterById(orderMasterId));
+		// orderMaster에 속한 orderDetail 주문들
 		model.addAttribute("list", service.findOrderDetailsByOrderMasterId(orderMasterId));
 		return "xdm/order/orderDetail";
 	}
@@ -120,22 +122,18 @@ public class OrderController{
 			cartService.softDeleteCart(cartIdList.get(i));
 		}
 		
-		return "redirect:/TableOrder/ordersDetail/"+ dto.getOrderMasterId();
+		return "redirect:/tableOrder/order/history/detail/"+ dto.getOrderMasterId();
 	}
-//	
-//	// 주문상세 화면
-//	@RequestMapping(value = "/TableOrder/ordersDetail/{seq}")
-//	public String ordersDetail(@PathVariable("seq") String seq, Model model) {
-//	
-//		OrdersDto dto = new OrdersDto();
-//		dto.setSeq(seq);
-//		// 주문 selectOne
-//		model.addAttribute("order", service.selectOne(dto));
-//		// 상세주문 selectAll by oreders_seq
-//		model.addAttribute("orderMenu", service.selectOneList(dto));
-//		
-//		return "/usr/orders/ordersDetail";
-//	}
+	
+	// 주문상세 화면
+	@RequestMapping("/tableOrder/order/history/detail/{orderMasterId}")
+	public String ordersDetail(@PathVariable("orderMasterId") String orderMasterId, Model model) {
+		// orderMaster 주문 하나 
+		model.addAttribute("orderMaster", service.findOrderMasterById(orderMasterId));
+		// orderMaster에 속한 orderDetail 주문들
+		model.addAttribute("orderDetail", service.findOrderDetailsByOrderMasterId(orderMasterId));
+		return "usr/order/orderDetail";
+	}
 //	
 //	
 //	// 주문내역 화면
