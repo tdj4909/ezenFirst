@@ -18,17 +18,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a2a2lab.common.config.CustomUserDetails;
 import com.a2a2lab.module.cart.CartService;
+import com.a2a2lab.module.product.ProductService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
 @Controller
 public class OrderController{
-	
+
 	@Autowired
 	OrderService service;
 	
 	@Autowired
 	CartService cartService;
+	
+	@Autowired
+	ProductService productService;
 	
 //	************************************************************
 //	관리자
@@ -123,6 +127,9 @@ public class OrderController{
 			dto.setOrderDetailPrice(orderDetailPriceList.get(i));
 			service.saveOrderDetail(dto);
 			cartService.softDeleteCart(cartIdList.get(i));
+			
+			// 메뉴 orderCount +1
+			productService.updateOrderCountByProductId(productIdList.get(i));
 		}
 		
 		return "redirect:/tableOrder/order/history/detail/"+ dto.getOrderMasterId();

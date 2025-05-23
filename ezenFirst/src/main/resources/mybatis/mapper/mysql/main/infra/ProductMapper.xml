@@ -272,6 +272,16 @@
 		WHERE
 			product_id = #{productId}
 	</update>
+	
+	<update id="updateOrderCountByProductId">
+		UPDATE 
+			product 
+		SET
+			order_count = order_count + 1 
+			,updated_at = now()
+		WHERE 
+			product_id = #{productId}
+	</update>
 
 
 

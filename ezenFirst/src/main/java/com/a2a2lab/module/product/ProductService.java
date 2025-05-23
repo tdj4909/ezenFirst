@@ -75,6 +75,10 @@ public class ProductService {
 		return dao.updateRating(dto);
 	}
 	
+	public int updateOrderCountByProductId(String productId) {
+		return dao.updateOrderCountByProductId(productId);
+	}
+	
 //
 //	public List<ProductDto> selectList(ProductVo vo) {
 //		List<ProductDto> dtos = dao.selectList(vo);
