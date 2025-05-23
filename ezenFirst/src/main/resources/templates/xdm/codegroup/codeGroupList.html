@@ -11,7 +11,6 @@
 		<input type="hidden" name="codegroupId">
 		
 		<div class="pagetitle">
-
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
@@ -19,9 +18,7 @@
 					<li class="breadcrumb-item active">코드그룹 관리</li>
 				</ol>
 			</nav>
-
 			<h1 style="font-weight: bold;">코드그룹 목록</h1>
-
 			<!-- Search Start -->
 			<div class="search">
 				<div class="row mb-3 mt-3">
@@ -80,16 +77,13 @@
 				</div>
 			</div>
 			<!-- Search End -->
-			
 		</div>
 
 		<section class="section">
 			<div class="row">
 				<div class="col-lg-12">
-
 					<div class="card">
 						<div class="card-body m-2">
-
 							<div class="row">
 								<div class="col">
 									<h5 class="card-title" th:text="'Total: ' + ${pageVo.totalRows}"></h5>
@@ -105,7 +99,6 @@
 									</select>
 								</div>
 							</div>
-							
 							<!-- Table Start -->
 							<div class="row">
 								<table class="table table-hover">
@@ -145,17 +138,14 @@
 											<td class="text-center" th:text="${item.createdAt}"></td>
 											<td class="text-center" th:text="${item.updatedAt}"></td>
 										</tr>
-
 									</tbody>
 								</table>
 							</div>
 							<!-- Table End -->
-
 							<!-- Pagination Start-->
 							<div class="row">
 								<nav>
 									<ul class="pagination justify-content-center">
-
 										<li th:if="${pageVo.startPage gt pageVo.pageNumToShow}" 
 											class="page-item"
 											style="cursor: pointer;">
@@ -177,12 +167,10 @@
 												<i class="fa-solid fa-angle-right"></i>
 											</a>
 										</li>
-										
 									</ul>
 								</nav>
 							</div>
 							<!-- Pagination End -->
-
 							<!-- Table Button Start -->
 							<div class="row">
 								<div class="col">
@@ -206,10 +194,8 @@
 								</div>
 							</div>
 							<!-- Table Button End -->
-							
 						</div>
 					</div>
-
 				</div>
 			</div>
 			
@@ -233,9 +219,7 @@
 				</div>
 			</div>
 			<!-- Modal End -->
-	
 		</section>
-
 	</form>
 </main>
 

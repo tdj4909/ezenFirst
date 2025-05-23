@@ -26,7 +26,7 @@
 			<!-- Search Start -->
 			<div class="search">
 				<div class="row mb-3 mt-3">
-					<div class="col-2">
+					<div class="col-md-2">
 						<select id="shOptionDate" name="shOptionDate" class="form-select">
 							<option value="" th:selected="${searchVo.shOptionDate == null}">날짜</option>
 							<option value="1" th:selected="${searchVo.shOptionDate == 1}">등록일</option>
@@ -34,23 +34,23 @@
 							<option value="3" th:selected="${searchVo.shOptionDate == 3}">생년월일</option>
 						</select>
 					</div>
-					<div class="col-2">
+					<div class="col-md-2">
 						<input id="datetimepickerStart" name="shDateStart" type="text" class="form-control" placeholder="시작일" th:value="${searchVo.shDateStart}" autocomplete="off">
 					</div>
-					<div class="col-2">
+					<div class="col-md-2">
 						<input id="datetimepickerEnd" name="shDateEnd" type="text" class="form-control" placeholder="종료일" th:value="${searchVo.shDateEnd}" autocomplete="off">
 					</div>
 				</div>
 				
 				<div class="row mb-3 mt-3">
-					<div class="col-2">
+					<div class="col-md-2">
 						<select id="shIsDel" name="shIsDel" class="form-select">
 							<option value="" th:selected="${searchVo.shIsDel == null}">삭제 여부</option>
 							<option value="1" th:selected="${searchVo.shIsDel == 1}">Y</option>
 							<option value="0" th:selected="${searchVo.shIsDel == 0}">N</option>
 						</select>
 					</div>
-					<div class="col-2">
+					<div class="col-md-2">
 						<select id="shGender" name="shGender" class="form-select">
 							<option value="" th:selected="${searchVo.shGender == null}">성별</option>
 							<option value="1" th:selected="${searchVo.shGender == 1}">남성</option>
@@ -58,7 +58,7 @@
 							<option value="3" th:selected="${searchVo.shGender == 3}">공개안함</option>
 						</select>
 					</div>
-					<div class="col-2">
+					<div class="col-md-2">
 						<select id="shTel" name="shTel" class="form-select">
 							<option value="" th:selected="${searchVo.shTel == null}">통신사</option>
 							<option th:each="code : ${codeList}" 
@@ -72,7 +72,7 @@
 				</div>
 	
 				<div class="row mb-3 mt-3">
-					<div class="col-2">
+					<div class="col-md-2">
 						<select id="shOption" name="shOption" class="form-select">
 							<option value="" th:selected="${searchVo.shOption == null}">검색 구분</option>
 							<option value="1" th:selected="${searchVo.shOption == 1}">이메일</option>
@@ -80,11 +80,11 @@
 							<option value="3" th:selected="${searchVo.shOption == 3}">전화번호</option>
 						</select>
 					</div>
-					<div class="col-2">
+					<div class="col-md-2">
 						<input id="shValue" name="shValue" type="text" th:value="${searchVo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control">
 						<div class="invalid-feedback" id="shValueFeedback"></div>
 					</div>
-					<div class="col-2">
+					<div class="col-md-2">
 						<button type="button" id="btnSearch" class="btn btn-outline-secondary">
 							<i class="ri-search-line"></i>
 						</button>

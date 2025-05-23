@@ -14,8 +14,8 @@ public class CodeGroupService {
 	@Autowired
 	CodeGroupDao dao;
 	
-	public int countCodeGroupsByVo(PageVo pageVo, SearchVo searchVo) {
-		return dao.countCodeGroupsByVo(pageVo, searchVo);
+	public int countCodeGroupsByVo(SearchVo searchVo) {
+		return dao.countCodeGroupsByVo(searchVo);
 	}
 	
 	public List<CodeGroupDto> findCodeGroupsByVo(PageVo pageVo, SearchVo searchVo) {

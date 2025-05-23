@@ -11,7 +11,7 @@ import com.a2a2lab.module.vo.SearchVo;
 @Repository
 public interface OrderDao {
 	
-	// 관리자 주문관리
+	// 관리자 주문 관리
 	public int countOrderMastersByVo(SearchVo searchVo);
 	public List<OrderDto> findOrderMastersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo);
 	

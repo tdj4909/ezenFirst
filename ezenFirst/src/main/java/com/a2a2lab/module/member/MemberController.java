@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a2a2lab.common.config.CustomUserDetails;
 import com.a2a2lab.module.code.CodeService;
-import com.a2a2lab.module.codeGroup.CodeGroupDto;
 import com.a2a2lab.module.mail.MailService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;

@@ -3,42 +3,46 @@
 
 <mapper namespace="com.a2a2lab.module.codeGroup.CodeGroupDao">
 
-	<resultMap id="resultMapObj"
-		type="com.a2a2lab.module.codeGroup.CodeGroupDto"></resultMap>
+	<resultMap id="resultMapObj" type="com.a2a2lab.module.codeGroup.CodeGroupDto"></resultMap>
+	
+	<!-- 공통 검색조건 -->
+	<sql id="searchVo">
+		<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND cg.is_used = #{searchVo.shIsUse}</if>
+		<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND cg.is_deleted = #{searchVo.shIsDel}</if>
+		
+		<choose>
+		    <when test="searchVo.shOptionDate == 1">
+		        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+		            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+		        </if>
+		        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+		            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+		        </if>
+		    </when>
+		    <when test="searchVo.shOptionDate == 2">
+		        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+		            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+		        </if>
+		        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+		            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+		        </if>
+		    </when>
+		</choose>
+		
+		<choose>
+			<when test="searchVo.shOption == 1">AND cg.codegroup_id = #{searchVo.shValue}</when>
+			<when test="searchVo.shOption == 2">AND cg.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+		</choose>
+	</sql>
 
 	<select id="countCodeGroupsByVo" resultType="Integer">
 		SELECT 
 			COUNT(*)
 		FROM
-			codegroup
+			codegroup cg
 		WHERE
 			1=1
-			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND is_used = #{searchVo.shIsUse}</if>
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
-			
-			<choose>
-			    <when test="searchVo.shOptionDate == 1">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionDate == 2">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-				<when test="searchVo.shOption == 1">AND codegroup_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>
+			<include refid="searchVo"></include>
 	</select>
 
 	<select id="findCodeGroupsByVo" resultMap="resultMapObj">
@@ -49,43 +53,18 @@
 			,cg.updated_at AS updatedAt
 			,cg.is_used AS isUsed
 			,(
-			SELECT
-				COUNT(*)
-			FROM
-				code cd
-			WHERE
-				cd.codegroup_id = cg.codegroup_id
+				SELECT
+					COUNT(*)
+				FROM
+					code cd
+				WHERE
+					cd.codegroup_id = cg.codegroup_id
 			) AS codeCount
 		FROM
 			codegroup cg
 		WHERE
 			1=1
-			<if test="searchVo.shIsUse != null and !searchVo.shIsUse.equals('')">AND cg.is_used = #{searchVo.shIsUse}</if>
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND cg.is_deleted = #{searchVo.shIsDel}</if>
-			
-			<choose>
-			    <when test="searchVo.shOptionDate == 1">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionDate == 2">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-				<when test="searchVo.shOption == 1">AND cg.codegroup_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND cg.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>
+			<include refid="searchVo"></include>
 		ORDER BY
 			cg.codegroup_id DESC
 		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
@@ -129,7 +108,9 @@
 	</insert>
 	
 	<update id="updateCodeGroup">
-		UPDATE codegroup SET
+		UPDATE 
+			codegroup 
+		SET
 			name = #{name}
 			,is_used = #{isUsed}
 			,updated_at = now()
@@ -139,7 +120,9 @@
 	</update>
 	
 	<update id="softDeleteCodeGroup">
-		UPDATE codegroup SET
+		UPDATE 
+			codegroup 
+		SET
 			is_deleted = 1
 			,updated_at = now()
 		WHERE
@@ -154,26 +137,5 @@
 		WHERE
 			codegroup_id = #{codegroupId}
 	</delete>
-
-<!-- ******************************************************************************************************* -->
-<!-- 	
-	<sql id="selectCommon">
-		FROM codegroup a
-		WHERE 1=1
-			
-		<if test="shUseNy != null and !shUseNy.equals('')">AND a.codegroupUse = #{shUseNy}</if>
-		<if test="shDelNy != null and !shDelNy.equals('')">AND a.codegroupDelNy = #{shDelNy}</if>
-		
-		<choose>
-			<when test="shOptionDate == 1">AND a.codeGroupRegDateTime BETWEEN CONCAT(#{shDateStart}, 'T00:00:00') AND CONCAT(#{shDateEnd}, 'T23:59:59')</when>
-			<when test="shOptionDate == 2">AND a.codeGroupModDateTime BETWEEN CONCAT(#{shDateStart}, 'T00:00:00') AND CONCAT(#{shDateEnd}, 'T23:59:59')</when>
-		</choose>
-		
-		<choose>
-			<when test="shOption == 1">AND a.seq = #{shValue}</when>
-			<when test="shOption == 2">AND a.codegroupNm LIKE CONCAT('%',#{shValue},'%')</when>
-		</choose>
-			
-	</sql>
-	 -->
+	
 </mapper>
