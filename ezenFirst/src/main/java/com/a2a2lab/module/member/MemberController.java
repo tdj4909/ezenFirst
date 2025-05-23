@@ -126,6 +126,12 @@ public class MemberController {
 	        row.createCell(6).setCellValue(member.getCreatedAt());
 	        row.createCell(7).setCellValue(member.getUpdatedAt() == null ? "" : member.getUpdatedAt());
 	    }
+	    
+	    // 열 너비 자동 조절
+	    for (int i = 0; i < 8; i++) {
+	        sheet.autoSizeColumn(i);
+	        sheet.setColumnWidth(i, sheet.getColumnWidth(i) + 1024); // 약간 여유 (한글 대응)
+	    }
 
 	    // 응답 설정
 	    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

@@ -144,6 +144,12 @@ public class ProductController {
 	        row.createCell(10).setCellValue(product.getIsRecommand() == 1 ? "Y" : "N");
 	    }
 	    
+	    // 열 너비 자동 조절
+	    for (int i = 0; i < 11; i++) {
+	        sheet.autoSizeColumn(i);
+	        sheet.setColumnWidth(i, sheet.getColumnWidth(i) + 1024); // 약간 여유 (한글 대응)
+	    }
+	    
 	    // 응답 설정
 	    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 	    response.setHeader("Content-Disposition", "attachment; filename=products.xlsx");

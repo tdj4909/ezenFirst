@@ -116,6 +116,12 @@ public class CodeController {
 	        row.createCell(6).setCellValue(code.getUpdatedAt());
 	    }
 	    
+	    // 열 너비 자동 조절
+	    for (int i = 0; i < 6; i++) {
+	        sheet.autoSizeColumn(i);
+	        sheet.setColumnWidth(i, sheet.getColumnWidth(i) + 1024); // 약간 여유 (한글 대응)
+	    }
+	    
 	    // 응답 설정
 	    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 	    response.setHeader("Content-Disposition", "attachment; filename=codes.xlsx");
