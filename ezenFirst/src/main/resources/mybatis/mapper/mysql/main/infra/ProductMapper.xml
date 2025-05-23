@@ -176,6 +176,7 @@
 			,p.fat
 			,p.sodium
 			,p.stock
+			,p.rating
 			,p.is_recommand AS isRecommand
 			,p.file_id AS fileId
 			,f.path AS filePath

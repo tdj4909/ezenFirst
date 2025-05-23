@@ -127,7 +127,8 @@
 			,rw.rating AS rating
 			,rw.description AS description
 			,rw.created_at AS createdAt
-			,mb.name AS name
+			,rw.member_id AS memberId			
+			,mb.name AS memberName
 		FROM
 			review rw
 			JOIN member mb ON mb.member_id = rw.member_id

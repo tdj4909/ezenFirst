@@ -21,7 +21,7 @@
                         <div class="col-lg-6">
 							<input type="hidden" id="productId" name="productId" th:value="${item.productId}">
                             <h4 class="fw-bold mb-3" th:text="${item.name}"></h4>
-                            <h5 class="fw-bold mb-3" th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + ' 원'"></h5>
+                            <h5 class="fw-bold mb-3" th:text="${#numbers.formatInteger(item.price, 1, 'COMMA')} + ' 원'"></h5>
                             <h5 class="fw-bold mb-3" th:if="${item.rating == null}">평점 없음</h5>
                             <div class="d-flex mb-4" th:if="${item.rating != null}">
 				                <span th:each="i : ${#numbers.sequence(1, 5)}">
@@ -148,7 +148,7 @@ function updateStars(rate) {
 function loadReview() {
     const productId = document.getElementById('productId').value;
 
-    fetch(`/tableOrder/reviewfragment?productId=${productId}`)
+    fetch(`/tableOrder/review/fragment?productId=${productId}`)
         .then(res => res.text())
         .then(html => {
             document.getElementById("review").innerHTML = html;
@@ -164,7 +164,7 @@ function saveReview() {
     const content = document.querySelector('textarea').value.trim();
     const rating = parseInt(document.getElementById('reviewRate').value, 10);
 
-    if (!content || rate <= 0) {
+    if (!content || rating <= 0) {
         alert("리뷰 내용과 평점을 모두 입력해주세요.");
         return;
     }
@@ -172,11 +172,11 @@ function saveReview() {
     const review = {
 		rating: rating,
 		description: content,
-		memberId: 1,
+		memberId: memberId,
     	productId: productId,
     };
 
-    fetch('/tableOrder/saveReview', {
+    fetch('/tableOrder/review/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(review)

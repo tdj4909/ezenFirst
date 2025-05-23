@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.a2a2lab.common.config.CustomUserDetails;
 import com.a2a2lab.module.product.ProductDto;
 import com.a2a2lab.module.product.ProductService;
 import com.a2a2lab.module.vo.PageVo;
@@ -79,9 +80,15 @@ public class ReviewController{
 	}
 	// 리뷰 Ajax
 	@GetMapping("/tableOrder/review/fragment")
-	public String reviewFragment(@RequestParam("productId") String productId, Model model, Authentication auth) {
-		System.out.println(auth);
-		System.out.println(auth.getName());
+	public String reviewFragment(@RequestParam("productId") String productId,
+								 Model model,
+								 Authentication auth) {
+		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+		String memberId = userDetails.getMemberId();
+		String memberName = userDetails.getName();
+		
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("memberName", memberName);
 		model.addAttribute("reviewList", service.getReviewListByProductId(productId));
 		return "usr/fragment/review :: reviewFragment";
 	}
