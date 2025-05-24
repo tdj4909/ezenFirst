@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.code.CodeService;
-import com.a2a2lab.module.product.ProductDto;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -36,7 +35,24 @@ public class OrderService {
 	}
 	
 	public List<OrderDto> findOrderMastersByMemberId(PageVo pageVo, String memberId) {
-		return dao.findOrderMastersByMemberId(pageVo, memberId);
+		// 캐싱된 코드 맵에서 주문 상태 종류 코드그룹 가져오기
+	    List<CodeDto> codeDtos = codeService.getCodesByCodegroupName("주문 상태");
+
+	    // codeId → name 맵으로 변환
+	    Map<Integer, String> codeNameMap = new HashMap<>();
+	    for (CodeDto codeDto : codeDtos) {
+	        codeNameMap.put(Integer.parseInt(codeDto.getCodeId()), codeDto.getName());
+	    }
+
+	    // OrderMaster 목록 가져오기
+	    List<OrderDto> dtos = dao.findOrderMastersByMemberId(pageVo, memberId);
+
+	    // 주문 상태에 해당하는 이름 설정
+	    for (OrderDto dto : dtos) {
+	        dto.setStatusName(codeNameMap.get(dto.getStatus()));
+	    }
+
+	    return dtos;
 	}
 	
 	public OrderDto findOrderMasterById(String id) {

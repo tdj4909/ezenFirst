@@ -172,7 +172,7 @@
 			,is_deleted
 			,member_id
 		) VALUES (
-			0
+			#{status}
 			,#{price}
 			,now()
 			,0

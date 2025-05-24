@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a2a2lab.common.config.CustomUserDetails;
 import com.a2a2lab.module.cart.CartService;
+import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.code.CodeService;
 import com.a2a2lab.module.product.ProductService;
 import com.a2a2lab.module.vo.PageVo;
@@ -67,11 +68,11 @@ public class OrderController{
 	// 주문 Update
 	@RequestMapping("/xdm/service/order/update")
 	@ResponseBody
-	public String updateOrderMaster(@RequestParam("id") List<String> idList, @RequestParam("status") List<Integer> statuses) {
+	public String updateOrderMaster(@RequestParam("id") List<String> idList, @RequestParam("status") List<Integer> statusList) {
 		for(int i = 0; i < idList.size(); i++) {
 			OrderDto dto = new OrderDto();
 			dto.setOrderMasterId(idList.get(i));
-			dto.setStatus(statuses.get(i));
+			dto.setStatus(statusList.get(i));
 			service.updateOrderMaster(dto);
 		}
 		return "redirect:/xdm/service/order/list";
@@ -122,6 +123,14 @@ public class OrderController{
 								  Authentication auth) {
 		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 		OrderDto dto = new OrderDto();
+		// 주문 상태 설정
+		List<CodeDto> codeDtos = codeService.getCodesByCodegroupName("주문 상태");
+		for(CodeDto codeDto : codeDtos) {
+			if(codeDto.getName().equals("주문 접수")) {
+				dto.setStatus(Integer.parseInt(codeDto.getCodeId()));
+			}
+		}
+		
 		dto.setMemberId(userDetails.getMemberId());
 		dto.setPrice(odTotalPrice);
 		service.saveOrderMaster(dto);
