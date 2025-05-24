@@ -51,7 +51,7 @@ public class MemberController {
 		pageVo.setParamsPaging(service.countMembersByVo(pageVo, searchVo));
 		model.addAttribute("pageVo", pageVo);
 		// 통신사
-		model.addAttribute("codeList", codeService.getCodesByCodegroupName("통신사"));
+		model.addAttribute("mobileCarrierCode", codeService.getCodesByCodegroupName("통신사"));
 		// 멤버 출력		
 		model.addAttribute("list", service.findMembersByVo(pageVo, searchVo));
 		return "xdm/member/memberList";
@@ -60,7 +60,7 @@ public class MemberController {
 	@RequestMapping("/xdm/member/edit")
 	public String showMemberEdit(Model model, @RequestParam("memberId") String memberId){
 		// 통신사
-		model.addAttribute("codeList", codeService.getCodesByCodegroupName("통신사"));
+		model.addAttribute("mobileCarrierCode", codeService.getCodesByCodegroupName("통신사"));
 		// memberId가 있으면 수정, 없으면 등록
 		if (!memberId.equals("") && !memberId.equals("0")) {
 			model.addAttribute("item", service.findMemberById(memberId));
@@ -94,7 +94,7 @@ public class MemberController {
 		return "redirect:/xdm/member/list";
 	}
 	// Excel 다운로드
-	@GetMapping("/xdm/member/excel")
+	@RequestMapping("/xdm/member/excel")
 	public void downloadMemberExcel(HttpServletResponse response, PageVo pageVo, SearchVo searchVo) throws IOException {
 	    List<MemberDto> members = service.findMembersByVo(pageVo, searchVo); // 필터링 적용된 목록
 
@@ -147,7 +147,7 @@ public class MemberController {
 //	사용자
 //	************************************************************
 	// 로그인 화면
-	@GetMapping("/tableOrder/sign/loginView")
+	@RequestMapping("/tableOrder/sign/loginView")
 	public String loginView(Model model) {
 		// 임시 로그인 계정
 		String tmpEmail = "ServiceAdmin@gmail.com";

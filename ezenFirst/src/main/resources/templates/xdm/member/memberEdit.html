@@ -67,7 +67,7 @@
 													<label for="mobileCarrier" class="form-label">통신사<b style="color: red;">*</b></label> 
 													<select class="form-select" name="mobileCarrier" required>
 														<option disabled hidden selected value="">통신사</option>
-														<option th:each="code : ${codeList}" 
+														<option th:each="code : ${mobileCarrierCode}" 
 																th:value="${code.codeId}"
 																th:text="${code.name}"
 																th:selected="${code.codeId == item?.mobileCarrier}"
