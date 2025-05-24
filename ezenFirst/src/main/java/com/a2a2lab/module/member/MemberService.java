@@ -32,8 +32,8 @@ public class MemberService {
 	}
 	
 	public List<MemberDto> findMembersByVo(PageVo pageVo, SearchVo searchVo) {
-		// 1. 캐싱된 코드 맵에서 통신사 코드 그룹("1") 가져오기
-	    List<CodeDto> codeDtos = codeService.getCodesByCodegroupId("1");
+		// 1. 캐싱된 코드 맵에서 통신사 코드그룹("통신사") 가져오기
+	    List<CodeDto> codeDtos = codeService.getCodesByCodegroupName("통신사");
 
 	    // 2. codeId → name 맵으로 변환
 	    Map<Integer, String> codeNameMap = new HashMap<>();

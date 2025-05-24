@@ -45,7 +45,7 @@ public class ProductController {
 		pageVo.setParamsPaging(service.countProductsByVo(pageVo, searchVo));
 		model.addAttribute("pageVo", pageVo);
 		// 메뉴 종류
-		model.addAttribute("codeList", codeService.getCodesByCodegroupId("2"));
+		model.addAttribute("codeList", codeService.getCodesByCodegroupName("메뉴 종류"));
 		// 메뉴 출력
 		model.addAttribute("list", service.findProductsByVo(pageVo, searchVo));
 		return "xdm/product/productList";
@@ -54,7 +54,7 @@ public class ProductController {
 	@RequestMapping("/xdm/service/product/edit")
 	public String showProductEdit(Model model, @RequestParam("productId") String productId){
 		// 메뉴 종류
-		model.addAttribute("codeList", codeService.getCodesByCodegroupId("2"));
+		model.addAttribute("codeList", codeService.getCodesByCodegroupName("메뉴 종류"));
 		// productId가 있으면 수정, 없으면 등록
 		if (!productId.equals("") && !productId.equals("0")) {
 			model.addAttribute("item", service.findProductById(productId));

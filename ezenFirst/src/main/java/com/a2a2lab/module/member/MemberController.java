@@ -51,7 +51,7 @@ public class MemberController {
 		pageVo.setParamsPaging(service.countMembersByVo(pageVo, searchVo));
 		model.addAttribute("pageVo", pageVo);
 		// 통신사
-		model.addAttribute("codeList", codeService.getCodesByCodegroupId("1"));
+		model.addAttribute("codeList", codeService.getCodesByCodegroupName("통신사"));
 		// 멤버 출력		
 		model.addAttribute("list", service.findMembersByVo(pageVo, searchVo));
 		return "xdm/member/memberList";
@@ -60,7 +60,7 @@ public class MemberController {
 	@RequestMapping("/xdm/member/edit")
 	public String showMemberEdit(Model model, @RequestParam("memberId") String memberId){
 		// 통신사
-		model.addAttribute("codeList", codeService.getCodesByCodegroupId("1"));
+		model.addAttribute("codeList", codeService.getCodesByCodegroupName("통신사"));
 		// memberId가 있으면 수정, 없으면 등록
 		if (!memberId.equals("") && !memberId.equals("0")) {
 			model.addAttribute("item", service.findMemberById(memberId));
@@ -160,7 +160,7 @@ public class MemberController {
 	@RequestMapping("/tableOrder/sign/registerView")
 	public String registerView(Model model) {
 		// 통신사
-		model.addAttribute("codeList", codeService.getCodesByCodegroupId("1"));
+		model.addAttribute("codeList", codeService.getCodesByCodegroupName("통신사"));
 		return "usr/sign/register";
 	}
 	// 회원가입
@@ -196,7 +196,7 @@ public class MemberController {
 		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 		model.addAttribute("member", service.findMemberByEmail(userDetails.getUsername()));
 		// 통신사
-		model.addAttribute("codeList", codeService.getCodesByCodegroupId("1"));
+		model.addAttribute("codeList", codeService.getCodesByCodegroupName("통신사"));
 		return "usr/sign/edit";
 	}
 	// 개인정보 수정 

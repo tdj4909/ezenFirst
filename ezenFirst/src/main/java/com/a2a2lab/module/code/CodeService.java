@@ -63,16 +63,16 @@ public class CodeService {
         codeMap = new HashMap<>();
 
         for (CodeDto code : codes) {
-            String codegroupId = code.getCodegroupId();
-            if (!codeMap.containsKey(codegroupId)) {
-                codeMap.put(codegroupId, new ArrayList<>());
+            String codegroupName = code.getCodegroupName();
+            if (!codeMap.containsKey(codegroupName)) {
+                codeMap.put(codegroupName, new ArrayList<>());
             }
-            codeMap.get(codegroupId).add(code);
+            codeMap.get(codegroupName).add(code);
         }
     }
 
-    public List<CodeDto> getCodesByCodegroupId(String codegroupId) {
-        return codeMap.getOrDefault(codegroupId, Collections.emptyList());
+    public List<CodeDto> getCodesByCodegroupName(String codegroupName) {
+        return codeMap.getOrDefault(codegroupName, Collections.emptyList());
     }
 
 }
