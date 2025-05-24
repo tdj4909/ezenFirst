@@ -42,13 +42,8 @@
 										<td class="text-center" th:text="${orderMaster.orderMasterId}"></td>
 										<td class="text-center" th:text="${orderMaster.memberName}"></td>
 										<td class="text-center" th:text="${orderMaster.createdAt}"></td>
-										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(orderMaster.price, 3, 'COMMA')}"></td>
-										<td class="text-center" th:text="${
-										    orderMaster.status == 0 ? '주문접수' :
-										    orderMaster.status == 1 ? '준비중' :
-										    orderMaster.status == 2 ? '주문완료' : '주문취소'
-											}">
-										</td>
+										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(orderMaster.price, 1, 'COMMA')}"></td>
+										<td class="text-center" th:text="${orderMaster.statusName}"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -81,9 +76,9 @@
 								<tbody>
 									<tr th:each="item : ${list}">
 										<td class="text-center" th:text="${item.productName}"></td>
-										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(item.price, 3, 'COMMA')}"></td>
+										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(item.orderDetailPrice, 1, 'COMMA')}"></td>
 										<td class="text-center" th:text="${item.quantity}"></td>												
-										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(item.price * item.quantity, 3, 'COMMA')}"></td>
+										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(item.orderDetailPrice * item.quantity, 1, 'COMMA')}"></td>
 									</tr>
 								</tbody>
 								<tfoot>
@@ -91,7 +86,7 @@
 										<td></td>
 										<td></td>
 										<td class="text-center">TOTAL</td>
-										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(orderMaster.price, 3, 'COMMA')}"></td>
+										<td class="text-center" th:text="'￦ ' + ${#numbers.formatInteger(orderMaster.price, 1, 'COMMA')}"></td>
 									</tr>
 								</tfoot>
 							</table>
