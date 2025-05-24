@@ -67,10 +67,12 @@
 					<div class="col-2">
 						<select id="shStatus" name="shStatus" class="form-select">
 							<option value="" th:selected="${searchVo.shStatus == null}">주문 상태</option>
-							<option value="0" th:selected="${searchVo.shStatus == 0}">주문 접수</option>
-							<option value="1" th:selected="${searchVo.shStatus == 1}">준비중</option>
-							<option value="2" th:selected="${searchVo.shStatus == 2}">주문 완료</option>
-							<option value="3" th:selected="${searchVo.shStatus == 3}">주문 취소</option>
+							<option th:each="code : ${codeList}" 
+									th:value="${code.codeId}"
+									th:text="${code.name}"
+									th:selected="${code.codeId == (searchVo.shStatus != null ? searchVo.shStatus.toString() : '')}"
+									>
+							</option>
 						</select>
 					</div>
 				</div>
@@ -163,10 +165,12 @@
 											<td class="text-center" th:text="${item.price}"></td>
 											<td class="text-center" style="text-align: center">
 												<select class="form-select form-select-sm" style="display: inline-block; width: auto;" id="selectStatus" th:data-seq="${item.orderMasterId}">
-													<option value="0" th:selected="${item.status == 0}">주문 접수</option>
-													<option value="1" th:selected="${item.status == 1}">준비중</option>
-													<option value="2" th:selected="${item.status == 2}">주문 완료</option>
-													<option value="3" th:selected="${item.status == 3}">주문 취소</option>
+													<option th:each="code : ${codeList}" 
+															th:value="${code.codeId}"
+															th:text="${code.name}"
+															th:selected="${code.codeId == item.status.toString()}"
+															>
+													</option>
 												</select>
 											</td>
 										</tr>
@@ -179,7 +183,6 @@
 							<div class="row">
 								<nav>
 									<ul class="pagination justify-content-center">
-
 										<li th:if="${pageVo.startPage gt pageVo.pageNumToShow}" 
 											class="page-item"
 											style="cursor: pointer;">
@@ -187,13 +190,11 @@
 												<i class="fa-solid fa-angle-left"></i>
 											</a>
 										</li>
-										
 										<li th:each="pageNum: ${#numbers.sequence(pageVo.startPage, pageVo.endPage)}" 
 											th:classappend="${pageNum eq pageVo.thisPage} ? active : ''"
 											class="page-item" style="cursor: pointer;">
 											<a class="page-link" th:attr="onclick=|goList('${pageNum}')|" th:text="${pageNum}"></a>
 										</li>
-										
 										<li th:if="${pageVo.endPage ne pageVo.totalPages}" 
 											class="page-item"
 											style="cursor: pointer;">
@@ -201,7 +202,6 @@
 												<i class="fa-solid fa-angle-right"></i>
 											</a>
 										</li>
-										
 									</ul>
 								</nav>
 							</div>
@@ -246,9 +246,7 @@
 				</div>
 			</div>
 			<!-- Modal End -->
-			
 		</section>
-
 	</form>
 </main>
 

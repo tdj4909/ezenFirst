@@ -5,6 +5,7 @@ public class OrderDto{
 	// orderMaster
 	private String orderMasterId;
 	private Integer status;
+	private String statusName;
 	private Integer price;
 	private String createdAt;
 	private String updatedAt;
@@ -35,6 +36,12 @@ public class OrderDto{
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public String getStatusName() {
+		return statusName;
+	}
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
 	}
 	public Integer getPrice() {
 		return price;

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a2a2lab.common.config.CustomUserDetails;
 import com.a2a2lab.module.cart.CartService;
+import com.a2a2lab.module.code.CodeService;
 import com.a2a2lab.module.product.ProductService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
@@ -27,6 +28,9 @@ public class OrderController{
 
 	@Autowired
 	OrderService service;
+	
+	@Autowired
+	CodeService codeService;
 	
 	@Autowired
 	CartService cartService;
@@ -45,6 +49,8 @@ public class OrderController{
 		// 페이징 설정
 		pageVo.setParamsPaging(service.countOrderMastersByVo(searchVo));
 		model.addAttribute("pageVo", pageVo);
+		// 주문 상태
+		model.addAttribute("codeList", codeService.getCodesByCodegroupName("주문 상태"));
 		// 주문 출력
 		model.addAttribute("list", service.findOrderMastersByVo(pageVo, searchVo));
 		return "xdm/order/orderList";
