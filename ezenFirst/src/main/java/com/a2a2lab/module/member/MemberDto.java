@@ -1,8 +1,5 @@
 package com.a2a2lab.module.member;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MemberDto {
 	
 	private String memberId;

@@ -161,7 +161,7 @@
 											<td class="text-center" th:text="${pageVo.totalRows - ((pageVo.thisPage - 1) * pageVo.rowNumToShow + itemStat.index)}"></td>
 											<td class="text-center" th:text="${item.email}"></td>
 											<td class="text-center" th:text="${item.name}"></td>
-											<td class="text-center" th:switch="${item.genderName}"></td>
+											<td class="text-center" th:text="${item.genderName}"></td>
 
 											<!-- <td th:text="${@memberService.selectOneCachedCode(list.gender)}"></td> -->
 											
