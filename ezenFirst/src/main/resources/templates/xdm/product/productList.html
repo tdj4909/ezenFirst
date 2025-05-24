@@ -69,7 +69,7 @@
 					</div>
 					<div class="col-2">
 						<select id="shType" name="shType" class="form-select">
-							<option value="" th:selected="${searchVo.shType == null}">종류</option>
+							<option value="" th:selected="${searchVo.shType == null}">메뉴 종류</option>
 							<option th:each="code : ${codeList}" 
 									th:value="${code.codeId}"
 									th:text="${code.name}"
@@ -148,7 +148,7 @@
 											</th>
 											<th class="text-center">#</th>
 											<th class="text-center">메뉴 번호</th>
-											<th class="text-center">종류</th>
+											<th class="text-center">메뉴 종류</th>
 											<th class="text-center">메뉴명</th>
 											<th class="text-center">가격</th>
 											<th class="text-center">열량(kcal)</th>

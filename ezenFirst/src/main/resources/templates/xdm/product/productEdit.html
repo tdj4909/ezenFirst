@@ -13,12 +13,12 @@
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
-					<li class="breadcrumb-item">서비스관리</li>
-					<li class="breadcrumb-item active">제품관리</li>
+					<li class="breadcrumb-item">서비스 관리</li>
+					<li class="breadcrumb-item active">메뉴 관리</li>
 				</ol>
 			</nav>
 
-			<h1 style="font-weight: bold;">제품관리</h1>
+			<h1 style="font-weight: bold;">메뉴 관리</h1>
 
 
 		</div>
@@ -35,7 +35,7 @@
 						<div class="card">
 
 							<h5 class="card-header"
-								style="font-weight: bold; color: #4b4b4b;">기본정보</h5>
+								style="font-weight: bold; color: #4b4b4b;">기본 정보</h5>
 
 							<div class="card-body m-2">
 
@@ -48,10 +48,10 @@
 									<div class="row mb-3">
 										<div class="col-4">
 											<div class="row">
-												<div class="col-4">
-													<label for="type" class="form-label">종류<b style="color: red;">*</b></label> 
+												<div class="col-5">
+													<label for="type" class="form-label">메뉴 종류<b style="color: red;">*</b></label> 
 													<select class="form-select" id="type" name="type" required>
-														<option disabled hidden th:selected="${item?.type == null}" value="">종류</option>
+														<option disabled hidden th:selected="${item?.type == null}" value="">메뉴 종류</option>
 														<option th:each="code : ${codeList}" 
 																th:value="${code.codeId}"
 																th:text="${code.name}"
@@ -60,7 +60,7 @@
 														</option>
 													</select>
 												</div>
-												<div class="col-8">
+												<div class="col-7">
 													<label for="name" class="form-label">메뉴명<b style="color: red;">*</b></label> 
 													<input type="text" id="name" name="name" class="form-control" placeholder="메뉴명" th:value="${item?.name}" required>
 													<div class="invalid-feedback">메뉴명을 입력하세요.</div>
@@ -102,7 +102,7 @@
 									<div class="row mb-3">
 										<div class="col-4">
 											<div class="row">
-												<div class="col-4">
+												<div class="col-5">
 													<label for="price" class="form-label">가격(￦)<b style="color: red;">*</b></label> 
 													<input type="text" id="price" name="price" class="form-control" placeholder="숫자" th:value="${item?.price}" required>
 													<div class="invalid-feedback">가격을 입력하세요.</div>
@@ -112,7 +112,7 @@
 													<input type="text" id="stock" name="stock" class="form-control" placeholder="숫자" th:value="${item?.stock}" required>
 													<div class="invalid-feedback">재고를 입력하세요.</div>
 												</div>
-												<div class="col-4">
+												<div class="col-3">
 													<label for="isRecommand" class="form-label">추천<b style="color: red;">*</b></label> 
 													<select name="isRecommand" id="isRecommand" class="form-select" required>
 														<option value="1" th:selected="${item?.isRecommand == 1}">Y</option>
