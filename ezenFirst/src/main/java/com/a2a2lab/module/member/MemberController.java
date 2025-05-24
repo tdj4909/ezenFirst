@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -121,7 +120,7 @@ public class MemberController {
 	        Row row = sheet.createRow(rowNum++);
 	        row.createCell(0).setCellValue(member.getEmail());
 	        row.createCell(1).setCellValue(member.getName());
-	        row.createCell(2).setCellValue(member.getGender());
+	        row.createCell(2).setCellValue(member.getGenderName());
 	        row.createCell(3).setCellValue(member.getBirthday());
 	        row.createCell(4).setCellValue(member.getMobileCarrierName());
 	        row.createCell(5).setCellValue(member.getPhone());
