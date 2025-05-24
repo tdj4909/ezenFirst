@@ -170,7 +170,7 @@ public class MemberController {
 	@RequestMapping("/tableOrder/sign/register")
 	public String registerMember(MemberDto dto) {
 		service.createMember(dto);
-		return "redirect:/tableOrder/shop/list";
+		return "redirect:/tableOrder/sign/loginView";
 	}
 	// 회원가입 email 중복검사
 	@RequestMapping("/tableOrder/emailChk")
