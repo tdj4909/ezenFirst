@@ -30,21 +30,26 @@ public class MemberService {
 	}
 	
 	public List<MemberDto> findMembersByVo(PageVo pageVo, SearchVo searchVo) {
-		// 1. 캐싱된 코드 맵에서 통신사 코드그룹("통신사") 가져오기
-	    List<CodeDto> codeDtos = codeService.getCodesByCodegroupName("통신사");
+		// 1. 캐싱된 코드 맵에서 코드그룹 가져오기
+	    List<CodeDto> mobileCarrierCodeDtos = codeService.getCodesByCodegroupName("통신사");
+	    List<CodeDto> genderCodeDtos = codeService.getCodesByCodegroupName("성별");
 
 	    // 2. codeId → name 맵으로 변환
 	    Map<Integer, String> codeNameMap = new HashMap<>();
-	    for (CodeDto codeDto : codeDtos) {
+	    for (CodeDto codeDto : mobileCarrierCodeDtos) {
+	        codeNameMap.put(Integer.parseInt(codeDto.getCodeId()), codeDto.getName());
+	    }
+	    for (CodeDto codeDto : genderCodeDtos) {
 	        codeNameMap.put(Integer.parseInt(codeDto.getCodeId()), codeDto.getName());
 	    }
 
 	    // 3. 회원 목록 가져오기
 	    List<MemberDto> dtos = dao.findMembersByVo(pageVo, searchVo);
 
-	    // 4. 각 회원의 통신사 코드에 해당하는 이름 설정
+	    // 4. 각 회원의 통신사, 성별 코드에 해당하는 이름 설정
 	    for (MemberDto dto : dtos) {
 	        dto.setMobileCarrierName(codeNameMap.get(dto.getMobileCarrier()));
+	        dto.setGenderName(codeNameMap.get(dto.getGender()));
 	    }
 
 	    return dtos;

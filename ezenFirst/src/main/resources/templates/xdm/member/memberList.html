@@ -53,9 +53,12 @@
 					<div class="col-md-2">
 						<select id="shGender" name="shGender" class="form-select">
 							<option value="" th:selected="${searchVo.shGender == null}">성별</option>
-							<option value="1" th:selected="${searchVo.shGender == 1}">남성</option>
-							<option value="2" th:selected="${searchVo.shGender == 2}">여성</option>
-							<option value="3" th:selected="${searchVo.shGender == 3}">공개안함</option>
+							<option th:each="code : ${genderCode}" 
+									th:value="${code.codeId}"
+									th:text="${code.name}"
+									th:selected="${code.codeId == (searchVo.shGender != null ? searchVo.shGender.toString() : '')}"
+									>
+							</option>
 						</select>
 					</div>
 					<div class="col-md-2">
@@ -158,11 +161,7 @@
 											<td class="text-center" th:text="${pageVo.totalRows - ((pageVo.thisPage - 1) * pageVo.rowNumToShow + itemStat.index)}"></td>
 											<td class="text-center" th:text="${item.email}"></td>
 											<td class="text-center" th:text="${item.name}"></td>
-											<td class="text-center" th:switch="${item.gender}">
-											    <span th:case="'1'">남성</span>
-											    <span th:case="'2'">여성</span>
-											    <span th:case="*">공개안함</span>
-											</td>
+											<td class="text-center" th:switch="${item.genderName}"></td>
 
 											<!-- <td th:text="${@memberService.selectOneCachedCode(list.gender)}"></td> -->
 											

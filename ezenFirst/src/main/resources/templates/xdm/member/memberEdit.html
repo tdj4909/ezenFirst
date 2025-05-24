@@ -49,7 +49,7 @@
 										</div>
 										<div class="col-4">
 											<label for="datetimepicker" class="form-label">생년월일<b style="color: red;">*</b></label> 
-											<input id="datetimepicker" name="birthday" type="text" class="form-control" placeholder="생년월일" th:value="${item?.birthday}" required>
+											<input id="datetimepicker" name="birthday" type="text" class="form-control" placeholder="생년월일" th:value="${item?.birthday}" autocomplete="off" required>
 											<div class="invalid-feedback" id="birthdayFeedback"></div>
 										</div>
 
@@ -70,7 +70,7 @@
 														<option th:each="code : ${mobileCarrierCode}" 
 																th:value="${code.codeId}"
 																th:text="${code.name}"
-																th:selected="${code.codeId == item?.mobileCarrier}"
+																th:selected="${code.codeId == item?.mobileCarrier.toString()}"
 																>
 														</option>
 													</select>
@@ -95,9 +95,12 @@
 											<label for="gender" class="form-label">성별<b style="color: red;">*</b></label> 
 											<select name="gender" class="form-select" required>
 												<option disabled hidden selected value="">성별</option>
-												<option value="1" th:selected="${item?.gender == 1}">남성</option>
-												<option value="2" th:selected="${item?.gender == 2}">여성</option>
-												<option value="3" th:selected="${item?.gender == 3}">공개안함</option>
+												<option th:each="code : ${genderCode}" 
+														th:value="${code.codeId}"
+														th:text="${code.name}"
+														th:selected="${code.codeId == item?.gender.toString()}"
+														>
+												</option>
 											</select>
 										</div>
 									</div>

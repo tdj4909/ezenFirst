@@ -50,8 +50,9 @@ public class MemberController {
 		// 페이징 설정
 		pageVo.setParamsPaging(service.countMembersByVo(pageVo, searchVo));
 		model.addAttribute("pageVo", pageVo);
-		// 통신사
+		// 통신사, 성별 코드그룹
 		model.addAttribute("mobileCarrierCode", codeService.getCodesByCodegroupName("통신사"));
+		model.addAttribute("genderCode", codeService.getCodesByCodegroupName("성별"));
 		// 멤버 출력		
 		model.addAttribute("list", service.findMembersByVo(pageVo, searchVo));
 		return "xdm/member/memberList";
@@ -59,8 +60,9 @@ public class MemberController {
 	// 멤버 등록/수정 화면
 	@RequestMapping("/xdm/member/edit")
 	public String showMemberEdit(Model model, @RequestParam("memberId") String memberId){
-		// 통신사
+		// 통신사, 성별 코드그룹
 		model.addAttribute("mobileCarrierCode", codeService.getCodesByCodegroupName("통신사"));
+		model.addAttribute("genderCode", codeService.getCodesByCodegroupName("성별"));
 		// memberId가 있으면 수정, 없으면 등록
 		if (!memberId.equals("") && !memberId.equals("0")) {
 			model.addAttribute("item", service.findMemberById(memberId));
@@ -159,8 +161,9 @@ public class MemberController {
 	// 회원가입 화면
 	@RequestMapping("/tableOrder/sign/registerView")
 	public String registerView(Model model) {
-		// 통신사
-		model.addAttribute("codeList", codeService.getCodesByCodegroupName("통신사"));
+		// 통신사, 성별 코드그룹
+		model.addAttribute("mobileCarrierCode", codeService.getCodesByCodegroupName("통신사"));
+		model.addAttribute("genderCode", codeService.getCodesByCodegroupName("성별"));
 		return "usr/sign/register";
 	}
 	// 회원가입
@@ -195,8 +198,9 @@ public class MemberController {
 		// 계정 정보
 		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 		model.addAttribute("member", service.findMemberByEmail(userDetails.getUsername()));
-		// 통신사
-		model.addAttribute("codeList", codeService.getCodesByCodegroupName("통신사"));
+		// 통신사, 성별 코드그룹
+		model.addAttribute("mobileCarrierCode", codeService.getCodesByCodegroupName("통신사"));
+		model.addAttribute("genderCode", codeService.getCodesByCodegroupName("성별"));
 		return "usr/sign/edit";
 	}
 	// 개인정보 수정 

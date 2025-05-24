@@ -20,9 +20,12 @@
 							<div class="col-md-12 col-lg-6">
 								<select class="form-select" name="gender" required>
 		                            <option disabled hidden selected value="">성별</option>
-		                            <option value="1" th:selected="${member.gender == 1}">남자</option>
-		                            <option value="2" th:selected="${member.gender == 2}">여자</option>
-		                            <option value="3" th:selected="${member.gender == 3}">공개안함</option>
+									<option th:each="code : ${genderCode}" 
+											th:value="${code.codeId}"
+											th:text="${code.name}"
+											th:selected="${code.codeId == member.gender.toString()}"
+											>
+									</option>
 		                        </select>
 							</div>
 							<div class="col-md-12 col-lg-6">
@@ -35,7 +38,7 @@
 							<div class="col-md-12 col-lg-4">
 								<select class="form-select" name="mobileCarrier" required>
 									<option disabled hidden selected value="">통신사</option>
-									<option th:each="code : ${codeList}" 
+									<option th:each="code : ${mobileCarrierCode}" 
 											th:value="${code.codeId}"
 											th:text="${code.name}"
 											th:selected="${code.codeId == member.mobileCarrier.toString()}"

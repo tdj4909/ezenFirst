@@ -10,6 +10,7 @@ public class MemberDto {
 	private String password;
 	private String name;
 	private Integer gender;
+	private String genderName;
 	private String birthday;
 	private Integer mobileCarrier;
 	private String mobileCarrierName;
@@ -17,8 +18,7 @@ public class MemberDto {
 	private String createdAt;
 	private String updatedAt;
 	
-	public static List<MemberDto> cachedCodeArrayList = new ArrayList<MemberDto>();
-
+	
 	public String getMemberId() {
 		return memberId;
 	}
@@ -57,6 +57,14 @@ public class MemberDto {
 
 	public void setGender(Integer gender) {
 		this.gender = gender;
+	}
+
+	public String getGenderName() {
+		return genderName;
+	}
+
+	public void setGenderName(String genderName) {
+		this.genderName = genderName;
 	}
 
 	public String getBirthday() {
