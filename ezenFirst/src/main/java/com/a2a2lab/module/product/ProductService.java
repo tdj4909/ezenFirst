@@ -27,7 +27,7 @@ public class ProductService {
 	}
 	
 	public List<ProductDto> findProductsByVo(PageVo pageVo, SearchVo searchVo) {
-		// 1. 캐싱된 코드 맵에서 메뉴 종류 코드그룹("메뉴 종류") 가져오기
+		// 1. 캐싱된 코드 맵에서 메뉴 종류 코드그룹 가져오기
 	    List<CodeDto> codeDtos = codeService.getCodesByCodegroupName("메뉴 종류");
 
 	    // 2. codeId → name 맵으로 변환

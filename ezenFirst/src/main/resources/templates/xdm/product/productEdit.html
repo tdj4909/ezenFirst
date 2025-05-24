@@ -121,17 +121,13 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-8">
-											<label for="description" class="form-label">설명</label>
-											<textarea class="form-control" id="description" name="description" rows="2" placeholder="최대 200자" th:text="${item?.description}" maxlength="200"></textarea>
-										</div>
-									</div>
-									
-									<!-- 3행 -->
-									<div class="row mb-3">
 										<div class="col-4">
-											<label for="file" class="form-label">메뉴 사진</label>
+											<label for="file" class="form-label">메뉴 사진<b style="color: red;">*</b></label>
   											<input class="form-control" type="file" id="file" name="file">
+										</div>
+										<div class="col-4">
+											<label for="description" class="form-label">설명</label>
+											<textarea class="form-control" id="description" name="description" rows="3" placeholder="최대 200자" th:text="${item?.description}" maxlength="200"></textarea>
 										</div>
 									</div>
 									
