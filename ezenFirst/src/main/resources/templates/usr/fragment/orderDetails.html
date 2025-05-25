@@ -59,11 +59,10 @@
                       		</button>
                       	</td>
                       </tr>
-                      
                   </tbody>
                   
                   <tfoot>
-                  	<tr>
+                  	  <tr>
                           <td class="py-5"></td>
                           <td class="py-5"></td>
                           <td class="py-5"></td>
@@ -93,9 +92,16 @@
               <div class="col-12 col-md-3 order-1 order-md-2">
                   <button type="button" class="btn btn-primary py-3 px-4 text-uppercase w-100 text-white"
                       data-bs-toggle="modal" data-bs-target="#checkoutModal">
-                      결제
+                      TEST용 결제
                   </button>
               </div>
+			  <div class="col-12 col-md-3 order-1 order-md-2">
+                <button type="button" 
+						class="btn btn-primary py-3 px-4 text-uppercase w-100 text-white"
+						onclick="requestPayment()">
+                    결제
+                </button>
+            </div>
           </div>
           
           <!-- Modal Start-->
@@ -104,11 +110,10 @@
               <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                       <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="checkoutModalLabel">결제 완료</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          <h1 class="modal-title fs-5" id="checkoutModalLabel">성공</h1>
                       </div>
                       <div class="modal-body">
-                          결제 완료.
+                          결제가 완료되었습니다.
                       </div>
                       <div class="modal-footer">
                           <button type="submit" class="btn btn-primary">확인</button>

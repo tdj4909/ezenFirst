@@ -7,8 +7,6 @@
 <div class="container-fluid py-5">
     <div class="container py-5 mt-5">
         <h1 class="mb-4 mt-5">결제</h1>
-
-
         <form action="/tableOrder/order/completed" method="post">
         
         	<div id="orderDetails">
@@ -20,6 +18,8 @@
 </div>
 <!-- Checkout Page End -->
     
+<script src="https://js.tosspayments.com/v2/standard"></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 	// 장바구니 출력
@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
             updateCart(0, cartId);
         }
     });
-	
 	
 });
 
@@ -102,56 +101,46 @@ function updateCart(qty, cartId) {
         });
 }
 
-	
-// 			document.addEventListener("DOMContentLoaded", function(){
-// 			    document.getElementById("tbody").addEventListener("click", function(e) {
-// 			        // 수량 증가
-// 			        if (e.target.closest(".btn-plus")) {
-// 			            const row = e.target.closest(".item-row");
-// 			            const qtyInput = row.querySelector(".item-qty");
-// 			            let quantity = parseInt(qtyInput.value);
-// 			            qtyInput.value = ++quantity;
-// 			            updateItemTotal(row);
-// 			            updateTotalSum();
-// 			        }
-		
-// 			        // 수량 감소
-// 			        if (e.target.closest(".btn-minus")) {
-// 			            const row = e.target.closest(".item-row");
-// 			            const qtyInput = row.querySelector(".item-qty");
-// 			            let quantity = parseInt(qtyInput.value);
-// 			            if (quantity > 1) {
-// 			                qtyInput.value = --quantity;
-// 			                updateItemTotal(row);
-// 			            }
-// 			            updateTotalSum();
-// 			        }
-// 			    });
-		
-// 			    function updateItemTotal(row) {
-// 			        const priceText = row.querySelector("td:nth-child(3)").innerText.replace("원", "").trim(); // 3번째 <td>
-// 			        const quantity = parseInt(row.querySelector(".item-qty").value);
-// 			        const totalTd = row.querySelector(".item-total");
-		
-// 			        const price = parseInt(priceText);
-// 			        const total = price * quantity;
-		
-// 			        totalTd.textContent = total + "원";
-// 			    }
-		
-// 			    updateTotalSum();
-// 			});
-			
-// 			// 개별 주문 삭제
-// 			document.getElementById("tbody").addEventListener("click", function(e) {
-// 				if(e.target.closest(".btn-delete")) {
-// 					const row = e.target.closest(".item-row");
-// 					if(row){
-// 						row.remove();
-// 						updateTotalSum();
-// 					}
-// 				}
-// 			});
+// 토스 페이
+// ------  SDK 초기화 ------
+// @docs https://docs.tosspayments.com/sdk/v2/js#토스페이먼츠-초기화
+const clientKey = "test_ck_nRQoOaPz8Lxz2KndYGEe8y47BMw6";
+const customerKey = "haiwcxeVmfIN3FzlmAmV7";
+const tossPayments = TossPayments(clientKey);
+// 회원 결제
+// @docs https://docs.tosspayments.com/sdk/v2/js#tosspaymentspayment
+const payment = tossPayments.payment({ customerKey });
+// 비회원 결제
+// const payment = tossPayments.payment({customerKey: TossPayments.ANONYMOUS})
+
+// ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
+// @docs https://docs.tosspayments.com/sdk/v2/js#paymentrequestpayment
+async function requestPayment() {
+
+	const orderId = 'ORDER-' + Date.now() + '-' + Math.floor(Math.random() * 1000000);
+  // const orderName = document.getElementById("title").value;
+  // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
+  // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
+  await payment.requestPayment({
+    method: "CARD", // 카드 결제
+    amount: {
+      currency: "KRW",
+      value: 1,
+    },
+    orderId: orderId, // 고유 주문번호
+    orderName: "버거",
+    successUrl: window.location.origin + 
+    			"/tableOrder/order/completed", // 결제 요청이 성공하면 리다이렉트되는 URL,
+    failUrl: window.location.origin + "/fail", // 결제 요청이 실패하면 리다이렉트되는 URL
+    // 카드 결제에 필요한 정보
+    card: {
+      useEscrow: false,
+      flowMode: "DEFAULT", // 통합결제창 여는 옵션
+      useCardPoint: false,
+      useAppCardOnly: false,
+    },
+  });
+}
 			
 </script>
 

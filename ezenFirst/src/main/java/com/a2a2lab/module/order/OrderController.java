@@ -114,7 +114,7 @@ public class OrderController{
 		return "usr/fragment/orderDetails :: orderDetailsFragment";
 	}
 	// 결제
-	@PostMapping("/tableOrder/order/completed")
+	@RequestMapping("/tableOrder/order/completed")
 	public String orderCompleted(@RequestParam("productId") List<String> productIdList,
 							      @RequestParam("cartId") List<String> cartIdList,
 								  @RequestParam("quantity") List<Integer> quantityList,
