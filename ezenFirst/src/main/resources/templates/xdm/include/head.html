@@ -62,43 +62,11 @@
 		<nav class="header-nav ms-auto">
 			<ul class="d-flex align-items-center">
 				<li class="nav-item dropdown pe-3">
-					<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> 
-						<i class="bi bi-person-circle fs-1"></i>
-					</a>
-					<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-						<li>
-							<button type="button" id="signOut" class="dropdown-item d-flex align-items-center"> 
-								<i class="bi bi-box-arrow-right"></i> <span>로그아웃</span>
-							</button>
-						</li>
-					</ul>
+					<i class="bi bi-person-circle fs-1"></i>
 				</li>
 			</ul>
 		</nav>
 		<!-- Profile End -->
-		<script>
-
-		$("#signOut").on("click", function(){
-			$.ajax({
-				async: true 
-				,cache: false
-				,type: "post"
-				,url: "/Xdm/signoutXdmProc"
-				,data: {}
-				,success: function(response) {
-					if(response.rt == "success") {
-						location.href = "/Xdm/loginXdm";
-					} else {
-						// by pass
-					}
-				}
-				,error : function(jqXHR, textStatus, errorThrown){
-					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-				}
-			});
-		});
-		
-		</script>
 	</header>
 	<!-- End Header -->
 

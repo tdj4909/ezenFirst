@@ -105,7 +105,7 @@ public class ProductController {
 		return "redirect:/xdm/service/product/list";
 	}
 	// Excel 다운로드
-	@GetMapping("/xdm/service/product/excel/download")
+	@RequestMapping("/xdm/service/product/excel/download")
 	public void downloadProductExcel(HttpServletResponse response, PageVo pageVo, SearchVo searchVo) throws IOException {
 		pageVo.setParamsPaging(service.countProductsByVo(searchVo));
 		List<ProductDto> products = service.findProductsByVo(pageVo, searchVo); // 필터링 적용된 목록
@@ -169,7 +169,7 @@ public class ProductController {
 		return "usr/shop/shopList";
 	}
 	// 메뉴 리스트 Ajax
-	@GetMapping("/tableOrder/shop/menuList")
+	@RequestMapping("/tableOrder/shop/menuList")
 	public String getMenuListFragment(@RequestParam(name = "page", defaultValue = "1") int page, Model model, PageVo pageVo, SearchVo searchVo) {
 		// 페이징 세팅
 		pageVo.setRowNumToShow(6);

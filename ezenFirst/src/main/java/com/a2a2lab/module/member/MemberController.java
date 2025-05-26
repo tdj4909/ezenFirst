@@ -62,10 +62,6 @@ public class MemberController {
 		// 통신사, 성별 코드그룹
 		model.addAttribute("mobileCarrierCode", codeService.getCodesByCodegroupName("통신사"));
 		model.addAttribute("genderCode", codeService.getCodesByCodegroupName("성별"));
-		// memberId가 있으면 수정, 없으면 등록
-		if (!memberId.equals("") && !memberId.equals("0")) {
-			model.addAttribute("item", service.findMemberById(memberId));
-		}
 		return "xdm/member/memberEdit";
 	}
 	// 멤버 추가

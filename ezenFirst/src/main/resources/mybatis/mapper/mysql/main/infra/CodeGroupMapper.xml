@@ -58,7 +58,9 @@
 				FROM
 					code cd
 				WHERE
-					cd.codegroup_id = cg.codegroup_id
+					1=1
+					AND cd.is_deleted = 0
+					AND cd.codegroup_id = cg.codegroup_id
 			) AS codeCount
 		FROM
 			codegroup cg
