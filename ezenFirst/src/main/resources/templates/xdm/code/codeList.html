@@ -6,7 +6,7 @@
 <!-- Main -->
 <main id="main" class="main">
 
-	<form name="formList" id="formList" method="post" autocomplete="off">
+	<form name="formList" id="formList" method="post" enctype="multipart/form-data" autocomplete="off">
 	
 		<input type="hidden" name="thisPage" th:value="${pageVo.thisPage}"> 
 		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${pageVo.rowNumToShow}">
@@ -204,9 +204,10 @@
 								
 								<div class="col">
 									<div style="float: right;">
-										<a href="#" class="btn btn-primary">
+										<input type="file" id="excelFile" name="excelFile" accept=".xlsx" hidden />
+										<button type="button" class="btn btn-primary" onclick="uploadExcel()">
 											<i class="ri-upload-line"></i>
-										</a>
+										</button>
 										<button type="button" class="btn btn-success" onclick="downloadExcel()"> 
 											<i class="ri-file-excel-line"></i>
 										</button>
@@ -382,8 +383,18 @@
 	// Excel 다운로드
 	function downloadExcel() {
         const params = new URLSearchParams(new FormData(form)).toString();
-        window.location.href = '/xdm/system/code/excel?' + params;
+        window.location.href = '/xdm/system/code/excel/download?' + params;
     }
+	// Excel 업로드
+	function uploadExcel() {
+	    document.getElementById("excelFile").click(); // 파일 선택창 열기
+	}
+	document.getElementById("excelFile").addEventListener("change", function () {
+	    if (this.files.length > 0) {
+	    	form.action = "/xdm/system/code/excel/upload";
+			form.submit();
+	    }
+	});
 	
 </script>
 

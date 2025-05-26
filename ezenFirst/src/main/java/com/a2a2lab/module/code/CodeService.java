@@ -26,8 +26,8 @@ public class CodeService {
 //	관리자 화면
 //	****************************************
 	// 검색한 코드 총 개수
-	public int countCodesByVo(PageVo pageVo, SearchVo searchVo) {
-		return dao.countCodesByVo(pageVo, searchVo);
+	public int countCodesByVo(SearchVo searchVo) {
+		return dao.countCodesByVo(searchVo);
 	}
 	// 검색한 코드
 	public List<CodeDto> findCodesByVo(PageVo pageVo, SearchVo searchVo) {

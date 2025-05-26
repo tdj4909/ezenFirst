@@ -1,6 +1,8 @@
 package com.a2a2lab.module.code;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Row;
@@ -13,8 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.a2a2lab.module.codeGroup.CodeGroupDto;
 import com.a2a2lab.module.codeGroup.CodeGroupService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
@@ -36,7 +38,7 @@ public class CodeController {
 		// 검색 설정
 		model.addAttribute("searchVo", searchVo);
 		// 페이징 설정
-		pageVo.setParamsPaging(service.countCodesByVo(pageVo, searchVo));
+		pageVo.setParamsPaging(service.countCodesByVo(searchVo));
 		model.addAttribute("pageVo", pageVo);
 		// 코드 출력
 		model.addAttribute("list", service.findCodesByVo(pageVo, searchVo));
@@ -85,8 +87,9 @@ public class CodeController {
 		return "redirect:/xdm/system/code/list";
 	}
 	// Excel 다운로드
-	@GetMapping("/xdm/system/code/excel")
+	@RequestMapping("/xdm/system/code/excel/download")
 	public void downloadCodeExcel(HttpServletResponse response, PageVo pageVo, SearchVo searchVo) throws IOException {
+		pageVo.setParamsPaging(service.countCodesByVo(searchVo));
 	    List<CodeDto> codes = service.findCodesByVo(pageVo, searchVo); // 필터링 적용된 목록
 
 	    // 엑셀 워크북 생성
@@ -108,9 +111,9 @@ public class CodeController {
 	    for (CodeDto code : codes) {
 	        Row row = sheet.createRow(rowNum++);
 	        row.createCell(0).setCellValue(code.getIsUsed() == 1 ? "Y" : "N");
-	        row.createCell(1).setCellValue(code.getCodegroupId());
+	        row.createCell(1).setCellValue(Integer.parseInt(code.getCodegroupId()));
 	        row.createCell(2).setCellValue(code.getCodegroupName());
-	        row.createCell(3).setCellValue(code.getCodeId());
+	        row.createCell(3).setCellValue(Integer.parseInt(code.getCodeId()));
 	        row.createCell(4).setCellValue(code.getName());
 	        row.createCell(5).setCellValue(code.getCreatedAt());
 	        row.createCell(6).setCellValue(code.getUpdatedAt());
@@ -130,4 +133,36 @@ public class CodeController {
 	    workbook.write(response.getOutputStream());
 	    workbook.close();
 	}
+	// Excel 업로드
+	@RequestMapping("/xdm/system/code/excel/upload")
+	public String uploadExcel(@RequestParam("excelFile") MultipartFile file) throws IOException {
+	    InputStream inputStream = file.getInputStream();
+        Workbook workbook = new XSSFWorkbook(inputStream);
+        Sheet sheet = workbook.getSheetAt(0);
+
+        List<CodeDto> codeList = new ArrayList<>();
+
+        for (int rowNum = 1; rowNum <= sheet.getLastRowNum(); rowNum++) {
+            Row row = sheet.getRow(rowNum);
+            if (row == null) continue;
+
+            CodeDto code = new CodeDto();
+
+            code.setIsUsed(row.getCell(0).getStringCellValue().equals("Y") ? 1 : 0);
+            code.setCodegroupId(String.valueOf(row.getCell(1).getNumericCellValue()));
+            code.setName(row.getCell(4).getStringCellValue());
+
+            codeList.add(code);
+        }
+
+        workbook.close();
+
+        // 저장
+        for(CodeDto dto : codeList) {
+        	service.createCode(dto);
+        }
+
+        return "redirect:/xdm/system/code/list"; // 업로드 후 목록 페이지로 리다이렉트
+	}
+	
 }

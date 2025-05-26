@@ -1,6 +1,8 @@
 package com.a2a2lab.module.codeGroup;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Row;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
@@ -85,9 +88,10 @@ public class CodeGroupController {
 	}
 	
 	// Excel 다운로드
-	@GetMapping("/xdm/system/codegroup/excel")
+	@GetMapping("/xdm/system/codegroup/excel/download")
 	public void downloadCodeGroupExcel(HttpServletResponse response, PageVo pageVo, SearchVo searchVo) throws IOException {
-	    List<CodeGroupDto> codeGroups = service.findCodeGroupsByVo(pageVo, searchVo); // 필터링 적용된 목록
+		pageVo.setParamsPaging(service.countCodeGroupsByVo(searchVo));
+		List<CodeGroupDto> codeGroups = service.findCodeGroupsByVo(pageVo, searchVo); // 필터링 적용된 목록
 
 	    // 엑셀 워크북 생성
 	    Workbook workbook = new XSSFWorkbook();
@@ -95,25 +99,27 @@ public class CodeGroupController {
 
 	    // 헤더
 	    Row header = sheet.createRow(0);
-	    header.createCell(0).setCellValue("코드그룹 ID");
-	    header.createCell(1).setCellValue("코드그룹명");
-	    header.createCell(2).setCellValue("사용 여부");
-	    header.createCell(3).setCellValue("등록일");
-	    header.createCell(4).setCellValue("수정일");
+	    header.createCell(0).setCellValue("사용 여부");
+	    header.createCell(1).setCellValue("코드그룹 번호");
+	    header.createCell(2).setCellValue("코드그룹명");
+	    header.createCell(3).setCellValue("개수");
+	    header.createCell(4).setCellValue("등록일");
+	    header.createCell(5).setCellValue("수정일");
 
 	    // 내용
 	    int rowNum = 1;
 	    for (CodeGroupDto group : codeGroups) {
 	        Row row = sheet.createRow(rowNum++);
-	        row.createCell(0).setCellValue(group.getCodegroupId());
-	        row.createCell(1).setCellValue(group.getName());
-	        row.createCell(2).setCellValue(group.getIsUsed() == 1 ? "Y" : "N");
-	        row.createCell(3).setCellValue(group.getCreatedAt());
-	        row.createCell(4).setCellValue(group.getUpdatedAt());
+	        row.createCell(0).setCellValue(group.getIsUsed() == 1 ? "Y" : "N");
+	        row.createCell(1).setCellValue(Integer.parseInt(group.getCodegroupId()));
+	        row.createCell(2).setCellValue(group.getName());
+	        row.createCell(3).setCellValue(group.getCodeCount());
+	        row.createCell(4).setCellValue(group.getCreatedAt());
+	        row.createCell(5).setCellValue(group.getUpdatedAt());
 	    }
 	    
 	    // 열 너비 자동 조절
-	    for (int i = 0; i < 5; i++) {
+	    for (int i = 0; i < 6; i++) {
 	        sheet.autoSizeColumn(i);
 	        sheet.setColumnWidth(i, sheet.getColumnWidth(i) + 1024); // 약간 여유 (한글 대응)
 	    }
@@ -126,4 +132,35 @@ public class CodeGroupController {
 	    workbook.write(response.getOutputStream());
 	    workbook.close();
 	}
+	// Excel 업로드
+	@RequestMapping("/xdm/system/codegroup/excel/upload")
+	public String uploadExcel(@RequestParam("excelFile") MultipartFile file) throws IOException {
+	    InputStream inputStream = file.getInputStream();
+        Workbook workbook = new XSSFWorkbook(inputStream);
+        Sheet sheet = workbook.getSheetAt(0);
+
+        List<CodeGroupDto> codeList = new ArrayList<>();
+
+        for (int rowNum = 1; rowNum <= sheet.getLastRowNum(); rowNum++) {
+            Row row = sheet.getRow(rowNum);
+            if (row == null) continue;
+
+            CodeGroupDto code = new CodeGroupDto();
+
+            code.setIsUsed(row.getCell(0).getStringCellValue().equals("Y") ? 1 : 0);
+            code.setName(row.getCell(2).getStringCellValue());
+
+            codeList.add(code);
+        }
+
+        workbook.close();
+
+        // 저장
+        for(CodeGroupDto dto : codeList) {
+        	service.createCodeGroup(dto);
+        }
+
+        return "redirect:/xdm/system/codegroup/list"; // 업로드 후 목록 페이지로 리다이렉트
+	}
+		
 }

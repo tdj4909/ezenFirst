@@ -11,7 +11,7 @@ import com.a2a2lab.module.vo.SearchVo;
 @Repository
 public interface CodeDao {
 	
-	public int countCodesByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드 개수 검색
+	public int countCodesByVo(@Param("searchVo") SearchVo searchVo); // vo로 코드 개수 검색
 	public List<CodeDto> findCodesByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 코드 검색
 	public CodeDto findCodeById(String codeId);
 	public List<CodeDto> findCodesByCodeGroupId(String codegroupId); // codegroupId로 코드 검색
