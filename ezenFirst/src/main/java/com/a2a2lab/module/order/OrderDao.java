@@ -24,7 +24,7 @@ public interface OrderDao {
 	public List<OrderDto> findOrderDetailsByOrderMasterId(String orderMasterId);
 	
 	// 관리자 index
-	public Integer countAllOrder();
+	public int countAllOrder();
 	public Integer sumAllOrder();
 	
 	// Select를 제외한 CRUD

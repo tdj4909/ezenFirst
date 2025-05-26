@@ -95,7 +95,7 @@ public class OrderService {
 		return dao.findOrderDetailsByOrderMasterId(id);
 	}
 	
-	public Integer countAllOrder() {
+	public int countAllOrder() {
 		return dao.countAllOrder();
 	}
 	

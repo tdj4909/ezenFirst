@@ -25,7 +25,6 @@ import com.a2a2lab.common.config.CustomUserDetails;
 import com.a2a2lab.module.cart.CartService;
 import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.code.CodeService;
-import com.a2a2lab.module.codeGroup.CodeGroupDto;
 import com.a2a2lab.module.product.ProductService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
@@ -153,12 +152,12 @@ public class OrderController{
 //	사용자
 //	************************************************************
 	// 결제 화면
-	@PostMapping("/tableOrder/order/checkout")
+	@RequestMapping("/tableOrder/order/checkout")
 	public String orderCheckout() {
 		return "usr/order/orderCheckout";
 	}
 	// 결제 화면 Ajax
-	@GetMapping("/tableOrder/order/checkout/orderDetails")
+	@RequestMapping("/tableOrder/order/checkout/orderDetails")
 	public String getorderDetailsFragment(Model model, Authentication auth) {
 		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 		model.addAttribute("list", cartService.findCartsByMemberId(userDetails.getMemberId()));
