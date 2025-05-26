@@ -22,6 +22,7 @@ public class ReviewController{
 	
 	@Autowired
 	ReviewService service;
+	
 	@Autowired
 	ProductService productService;
 	
@@ -34,7 +35,7 @@ public class ReviewController{
 		// 검색 설정
 		model.addAttribute("searchVo", searchVo);
 		// 페이징 설정
-		pageVo.setParamsPaging(service.countReviewsByVo(pageVo, searchVo));
+		pageVo.setParamsPaging(service.countReviewsByVo(searchVo));
 		model.addAttribute("pageVo", pageVo);
 		// 리뷰 출력
 		model.addAttribute("list", service.findReviewsByVo(pageVo, searchVo));

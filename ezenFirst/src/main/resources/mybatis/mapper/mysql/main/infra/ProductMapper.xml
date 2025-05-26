@@ -5,75 +5,80 @@
 
 	<resultMap id="resultMapObj" type="com.a2a2lab.module.product.ProductDto"></resultMap>
 
+	<!-- 공통 검색조건 -->
+	<sql id="searchVo">
+		<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND p.is_deleted = #{searchVo.shIsDel}</if>
+		<if test="searchVo.shType != null and !searchVo.shType.equals('')">AND p.type = #{searchVo.shType}</if>
+		<if test="searchVo.shRecommand != null and !searchVo.shRecommand.equals('')">AND p.is_recommand = #{searchVo.shRecommand}</if>
+		
+		<choose>
+		    <when test="searchVo.shOptionDate == 1">
+		        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+		            AND p.created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+		        </if>
+		        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+		            AND p.created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+		        </if>
+		    </when>
+		    <when test="searchVo.shOptionDate == 2">
+		        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+		            AND p.updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+		        </if>
+		        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+		            AND p.updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+		        </if>
+		    </when>
+		</choose>
+		
+		<choose>
+		    <when test="searchVo.shOptionRange eq 1">
+		        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+		            AND p.price &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+		        </if>
+		        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+		            AND p.price &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+		        </if>
+		    </when>
+		    <when test="searchVo.shOptionRange eq 2">
+		        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+		            AND p.calories &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+		        </if>
+		        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+		            AND p.calories &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+		        </if>
+		    </when>
+		    <when test="searchVo.shOptionRange eq 3">
+		        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+		            AND p.order_count &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+		        </if>
+		        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+		            AND p.order_count &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+		        </if>
+		    </when>
+		    <when test="searchVo.shOptionRange eq 4">
+		        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+		            AND p.stock &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+		        </if>
+		        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+		            AND p.stock &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+		        </if>
+		    </when>
+		</choose>
+		
+		<choose>
+			<when test="searchVo.shOption == 1">AND p.product_id = #{searchVo.shValue}</when>
+			<when test="searchVo.shOption == 2">AND p.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+		</choose>
+	</sql>
+	
 	<select id="countProductsByVo" resultType="Integer">
 		SELECT 
 			COUNT(*)
 		FROM
-			product
+			product p
 		WHERE
 			1=1
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
-			<if test="searchVo.shType != null and !searchVo.shType.equals('')">AND type = #{searchVo.shType}</if>
-			<if test="searchVo.shRecommand != null and !searchVo.shRecommand.equals('')">AND is_recommand = #{searchVo.shRecommand}</if>
-			
-			<choose>
-			    <when test="searchVo.shOptionDate == 1">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionDate == 2">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-			    <when test="searchVo.shOptionRange eq 1">
-			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND price &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND price &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionRange eq 2">
-			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND calories &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND calories &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionRange eq 3">
-			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND order_count &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND order_count &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionRange eq 4">
-			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND stock &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND stock &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-				<when test="searchVo.shOption == 1">AND product_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>
+			<include refid="searchVo"></include>
 	</select>
 
 	<select id="findProductsByVo" resultMap="resultMapObj">
@@ -95,68 +100,7 @@
 			JOIN file f ON f.file_id = p.file_id
 		WHERE
 			1=1
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND p.is_deleted = #{searchVo.shIsDel}</if>
-			<if test="searchVo.shType != null and !searchVo.shType.equals('')">AND p.type = #{searchVo.shType}</if>
-			<if test="searchVo.shRecommand != null and !searchVo.shRecommand.equals('')">AND p.is_recommand = #{searchVo.shRecommand}</if>
-			
-			<choose>
-			    <when test="searchVo.shOptionDate == 1">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND p.created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND p.created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionDate == 2">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND p.updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND p.updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-			    <when test="searchVo.shOptionRange eq 1">
-			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND p.price &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND p.price &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionRange eq 2">
-			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND p.calories &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND p.calories &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionRange eq 3">
-			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND p.order_count &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND p.order_count &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionRange eq 4">
-			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND p.stock &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND p.stock &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-				<when test="searchVo.shOption == 1">AND p.product_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND p.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>
+			<include refid="searchVo"></include>
 		ORDER BY
 			p.product_id DESC
 		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
@@ -276,195 +220,10 @@
 		UPDATE 
 			product 
 		SET
-			order_count = order_count + 1 
+			order_count = order_count + #{orderCount} 
 			,updated_at = now()
 		WHERE 
 			product_id = #{productId}
 	</update>
 
-
-
-<!--	<sql id="selectCommon">
-		FROM menu a
-		WHERE 1=1
-			
-		<if test="shDelNy != null and !shDelNy.equals('')">AND a.menuDelNy = #{shDelNy}</if>
-		<if test="shType != null and !shType.equals('')">AND a.menuType = #{shType}</if>
-		<if test="shRecommand != null and !shRecommand.equals('')">AND a.recommand = #{shRecommand}</if>
-		<if test="shNew != null and !shNew.equals('')">AND a.menuNew = #{shNew}</if>
-
-		
-		<choose>
-			<when test="shOption == 1">AND a.menuNm LIKE CONCAT('%',#{shValue},'%')</when>
-			<when test="shOption == 2">AND a.menuDescription LIKE CONCAT('%',#{shValue},'%')</when>
-		</choose>
-			
-	</sql>
-
-	<select id="selectOneCount" resultType="Integer">
-		SELECT COUNT(*)
-		<include refid="selectCommon"></include>
-	</select>
-	
-	<select id="selectOne" resultMap="resultMapObj">
-		SELECT 
-			aa.*
-			,aa.seq AS ifcgSeq
-			,fu.path
-		FROM (
-			SELECT
-				a.seq
-				,a.menuNm
-				,a.menuPrice
-				,a.menuDescription
-				,a.calories
-				,a.sugars
-				,a.protein
-				,a.fat
-				,a.sodium
-				,a.menuType
-				,a.recommand
-				,a.menuNew
-				,a.menuStock
-				,a.menuOrderCnt
-				,a.menuRating
-				,a.fileUploaded_seq
-			<include refid="selectCommon"></include>
-			ORDER BY
-				seq DESC
-			) aa
-			JOIN fileUploaded fu ON fu.seq = aa.fileUploaded_seq
-		WHERE
-			aa.seq = #{ifcgSeq}
-	</select>
-
-	<select id="selectList" resultMap="resultMapObj">
-		SELECT 
-			aa.*
-			,aa.seq AS ifcgSeq 
-		FROM (
-			SELECT
-				a.seq
-				,a.menuNm
-				,a.menuPrice
-				,a.menuDescription
-				,a.calories
-				,a.sugars
-				,a.protein
-				,a.fat
-				,a.sodium
-				,a.menuType
-				,a.recommand
-				,a.menuNew
-				,a.menuStock
-			<include refid="selectCommon"></include>
-			ORDER BY
-				seq DESC
-			) aa
-		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
-	</select>
-
-	<insert id="insert">
-		INSERT INTO menu(
-		    menuNm
-			,menuPrice
-			,menuDescription
-			,calories
-			,sugars
-			,protein
-			,fat
-			,sodium
-			,menuType
-			,recommand
-			,menuNew
-			,menuStock
-			,menuRegDateTime
-			,menuDelNy
-			,fileUploaded_seq
-		) VALUES(
-			#{menuNm}
-			,#{menuPrice}
-			,#{menuDescription}
-			,#{calories}
-			,#{sugars}
-			,#{protein}
-			,#{fat}
-			,#{sodium}
-			,#{menuType}
-			,#{recommand}
-			,#{menuNew}
-			,#{menuStock}
-			,now()
-			,0
-			,#{fileUploaded_seq}
-		)
-	</insert>
-	
-	<update id="update">
-		UPDATE menu SET
-			menuNm = #{menuNm}
-			,menuPrice = #{menuPrice}
-			,menuDescription = #{menuDescription}
-			,calories = #{calories}
-			,sugars = #{sugars}
-			,protein = #{protein}
-			,fat = #{fat}
-			,sodium = #{sodium}
-			,menuType = #{menuType}
-			,recommand = #{recommand}
-			,menuNew = #{menuNew}
-			,menuStock = #{menuStock}
-			,menuModDateTime = #{menuModDateTime}
-		WHERE
-			seq = #{ifcgSeq}
-	</update>
-	
-	<update id="updateRating">
-		UPDATE menu SET
-			menuRating = #{menuRating}
-			,menuModDateTime = now()
-		WHERE
-			seq = #{seq}
-	</update>
-	
-	<update id="fileUpdate">
-		UPDATE menu SET
-			fileUploaded_seq = #{fileUploaded_seq}
-		WHERE
-			seq = #{ifcgSeq}
-	</update>
-	
-	<update id="uelete">
-		UPDATE menu SET
-			menuDelNy = 1
-		WHERE
-			seq = #{seq}
-	</update>
-	
-	<delete id="delete">
-		Delete
-		FROM
-			menu
-		WHERE
-			seq = #{seq}
-	</delete>
-
-	<select id="selectShopList" resultMap="resultMapObj">
-		SELECT 
-			m.seq
-			,m.menuNm
-			,m.menuPrice
-			,m.menuRating
-			,fu.path
-		FROM 
-			menu m
-			JOIN fileUploaded fu ON fu.seq = m.fileUploaded_seq
-		WHERE
-			1=1
-			AND menuDelNy = 0
-		ORDER BY
-			seq DESC
-		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
-	</select>
--->	
 </mapper>

@@ -1,6 +1,5 @@
 package com.a2a2lab.module.review;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,8 @@ public class ReviewService {
 	@Autowired
 	ReviewDao dao;
 	
-	public int countReviewsByVo(PageVo pageVo, SearchVo searchVo) {
-		return dao.countReviewsByVo(pageVo, searchVo);
+	public int countReviewsByVo(SearchVo searchVo) {
+		return dao.countReviewsByVo(searchVo);
 	}
 	
 	public List<ReviewDto> findReviewsByVo(PageVo pageVo, SearchVo searchVo) {

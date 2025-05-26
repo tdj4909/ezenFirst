@@ -38,19 +38,19 @@ public class ProductService {
 	}
 	
 	public List<ProductDto> findProductsByVo(PageVo pageVo, SearchVo searchVo) {
-		// 1. 캐싱된 코드 맵에서 메뉴 종류 코드그룹 가져오기
+		// 캐싱된 코드 맵에서 메뉴 종류 코드그룹 가져오기
 	    List<CodeDto> codeDtos = codeService.getCodesByCodegroupName("메뉴 종류");
 
-	    // 2. codeId → name 맵으로 변환
+	    // codeId → name 맵으로 변환
 	    Map<Integer, String> codeNameMap = new HashMap<>();
 	    for (CodeDto codeDto : codeDtos) {
 	        codeNameMap.put(Integer.parseInt(codeDto.getCodeId()), codeDto.getName());
 	    }
 
-	    // 3. 메뉴 목록 가져오기
+	    // 메뉴 목록 가져오기
 	    List<ProductDto> dtos = dao.findProductsByVo(pageVo, searchVo);
 
-	    // 4. 각 메뉴의 메뉴종류 코드에 해당하는 이름 설정
+	    // 각 메뉴의 메뉴종류 코드에 해당하는 이름 설정
 	    for (ProductDto dto : dtos) {
 	        dto.setTypeName(codeNameMap.get(dto.getType()));
 	    }
@@ -90,30 +90,8 @@ public class ProductService {
 		return dao.updateRating(dto);
 	}
 	
-	public int updateOrderCountByProductId(String productId) {
-		return dao.updateOrderCountByProductId(productId);
+	public int updateOrderCountByProductId(String productId, Integer orderCount) {
+		return dao.updateOrderCountByProductId(productId, orderCount);
 	}
-	
-//
-//	public List<ProductDto> selectList(ProductVo vo) {
-//		List<ProductDto> dtos = dao.selectList(vo);
-//		for(ProductDto dto : dtos) {
-//			if (dto.getMenuType() == 1) {
-//				dto.setMenuTypeNm("세트");
-//			} else if (dto.getMenuType() == 2) {
-//				dto.setMenuTypeNm("단품");
-//			} else if (dto.getMenuType() == 3) {
-//				dto.setMenuTypeNm("사이드");
-//			} else if (dto.getMenuType() == 4) {
-//				dto.setMenuTypeNm("음료");
-//			}
-//		}
-//		
-//		return dtos;
-//	}
-//	
-//	public List<ProductDto> selectShopList(ProductVo vo) {
-//		return dao.selectShopList(vo);
-//	}
 
 }

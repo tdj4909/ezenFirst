@@ -24,14 +24,6 @@ public class ProductDto {
 	private String fileId;
 	
 	private String filePath;
-
-	
-//	private String path;
-//	private String originalName;
-//	
-//	private String menuTypeNm;
-//	
-//	private String ifcgSeq;
 	
 	
 	public String getProductId() {

@@ -5,6 +5,39 @@
 
 	<resultMap id="resultMapObj" type="com.a2a2lab.module.order.OrderDto"></resultMap>
 	
+	<!-- 공통 검색조건 -->
+	<sql id="searchVo">
+		<if test="shIsDel != null and !shIsDel.equals('')">AND om.is_deleted = #{shIsDel}</if>
+		<if test="shStatus != null and !shStatus.equals('')">AND om.status = #{shStatus}</if>
+		
+		<choose>
+		    <when test="shOptionDate == 1">
+		        <if test="shDateStart != null and shDateStart != ''">
+		            AND om.created_at &gt;= CONCAT(#{shDateStart}, 'T00:00:00')
+		        </if>
+		        <if test="shDateEnd != null and shDateEnd != ''">
+		            AND om.created_at &lt;= CONCAT(#{shDateEnd}, 'T23:59:59')
+		        </if>
+		    </when>
+		</choose>
+		
+		<choose>
+		    <when test="shOptionRange eq 1">
+		        <if test="shRangeStart != null and shRangeStart != ''">
+		            AND om.price &gt;= #{shRangeStart, jdbcType=INTEGER}
+		        </if>
+		        <if test="shRangeEnd != null and shRangeEnd != ''">
+		            AND om.price &lt;= #{shRangeEnd, jdbcType=INTEGER}
+		        </if>
+		    </when>
+		</choose>
+		
+		<choose>
+			<when test="shOption == 1">AND om.order_master_id = #{shValue}</when>
+			<when test="shOption == 2">AND mb.name LIKE CONCAT('%',#{shValue},'%')</when>
+		</choose>
+	</sql>
+	
 	<select id="countOrderMastersByVo" resultType="Integer">
 		SELECT 
 			COUNT(*)
@@ -13,35 +46,7 @@
 			JOIN member mb ON mb.member_id = om.member_id
 		WHERE
 			1=1
-			<if test="shIsDel != null and !shIsDel.equals('')">AND om.is_deleted = #{shIsDel}</if>
-			<if test="shStatus != null and !shStatus.equals('')">AND om.status = #{shStatus}</if>
-			
-			<choose>
-			    <when test="shOptionDate == 1">
-			        <if test="shDateStart != null and shDateStart != ''">
-			            AND om.created_at &gt;= CONCAT(#{shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="shDateEnd != null and shDateEnd != ''">
-			            AND om.created_at &lt;= CONCAT(#{shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-			    <when test="shOptionRange eq 1">
-			        <if test="shRangeStart != null and shRangeStart != ''">
-			            AND om.price &gt;= #{shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="shRangeEnd != null and shRangeEnd != ''">
-			            AND om.price &lt;= #{shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-				<when test="shOption == 1">AND om.order_master_id = #{shValue}</when>
-				<when test="shOption == 2">AND mb.name LIKE CONCAT('%',#{shValue},'%')</when>
-			</choose>
+			<include refid="searchVo"></include>
 	</select>
 
 	<select id="findOrderMastersByVo" resultMap="resultMapObj">
@@ -56,35 +61,7 @@
 			JOIN member mb ON mb.member_id = om.member_id
 		WHERE
 			1=1
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND om.is_deleted = #{searchVo.shIsDel}</if>
-			<if test="searchVo.shStatus != null and !searchVo.shStatus.equals('')">AND om.status = #{searchVo.shStatus}</if>
-			
-			<choose>
-			    <when test="searchVo.shOptionDate == 1">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND om.created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND om.created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-			    <when test="searchVo.shOptionRange eq 1">
-			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND om.price &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND om.price &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-				<when test="searchVo.shOption == 1">AND om.order_master_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND mb.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>
+			<include refid="searchVo"></include>
 		ORDER BY
 			om.order_master_id DESC
 		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
@@ -236,22 +213,4 @@
 			order_master_id = #{orderMasterId}
 	</delete>
 
-<!-- 	<sql id="selectCommon">
-		FROM
-			orders o
-			JOIN user u ON u.seq = o.user_seq
-		WHERE 1=1
-			
-		<if test="shDelNy != null and !shDelNy.equals('')">AND o.ordersDelNy = #{shDelNy}</if>
-		<if test="shStatus != null and !shStatus.equals('')">AND o.ordersStatus = #{shStatus}</if>
-		<if test="shTakeOut != null and !shTakeOut.equals('')">AND o.takeOut = #{shTakeOut}</if>
-
-		<choose>
-			<when test="shOption == 1">AND o.seq LIKE CONCAT('%',#{shValue},'%')</when>
-			<when test="shOption == 2">AND u.nickname LIKE CONCAT('%',#{shValue},'%')</when>
-		</choose>
-			
-	</sql> -->
-
-	
 </mapper>

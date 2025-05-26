@@ -5,6 +5,40 @@
 
 	<resultMap id="resultMapObj" type="com.a2a2lab.module.review.ReviewDto"></resultMap>
 
+	<!-- 공통 검색조건 -->
+	<sql id="searchVo">
+		<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND rw.is_deleted = #{searchVo.shIsDel}</if>
+			
+		<choose>
+		    <when test="searchVo.shOptionDate == 1">
+		        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+		            AND rw.created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+		        </if>
+		        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+		            AND rw.created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+		        </if>
+		    </when>
+		</choose>
+		
+		<choose>
+		    <when test="searchVo.shOptionRange eq 1">
+		        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
+		            AND rw.rating &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
+		        </if>
+		        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
+		            AND rw.rating &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
+		        </if>
+		    </when>
+		</choose>
+		
+		<choose>
+			<when test="searchVo.shOption == 1">AND rw.review_id = #{searchVo.shValue}</when>
+			<when test="searchVo.shOption == 2">AND p.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			<when test="searchVo.shOption == 3">AND mb.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			<when test="searchVo.shOption == 4">AND rw.description LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+		</choose>
+	</sql>
+	
 	<select id="countReviewsByVo" resultType="Integer">
 		SELECT 
 			COUNT(*)
@@ -14,36 +48,7 @@
 			JOIN product p ON p.product_id = rw.product_id
 		WHERE
 			1=1
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND rw.is_deleted = #{searchVo.shIsDel}</if>
-			
-			<choose>
-			    <when test="searchVo.shOptionDate == 1">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND rw.created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND rw.created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-			    <when test="searchVo.shOptionRange eq 1">
-			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND rw.rating &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND rw.rating &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-				<when test="searchVo.shOption == 1">AND rw.review_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND p.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-				<when test="searchVo.shOption == 3">AND mb.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-				<when test="searchVo.shOption == 4">AND rw.description LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>
+			<include refid="searchVo"></include>
 	</select>
 
 	<select id="findReviewsByVo" resultMap="resultMapObj">
@@ -60,36 +65,7 @@
 			JOIN product p ON p.product_id = rw.product_id
 		WHERE
 			1=1
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND rw.is_deleted = #{searchVo.shIsDel}</if>
-			
-			<choose>
-			    <when test="searchVo.shOptionDate == 1">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND rw.created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND rw.created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-			    <when test="searchVo.shOptionRange eq 1">
-			        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-			            AND rw.rating &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-			        </if>
-			        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-			            AND rw.rating &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-				<when test="searchVo.shOption == 1">AND rw.review_id = #{searchVo.shValue}</when>
-				<when test="searchVo.shOption == 2">AND p.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-				<when test="searchVo.shOption == 3">AND mb.name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-				<when test="searchVo.shOption == 4">AND rw.description LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>
+			<include refid="searchVo"></include>
 		ORDER BY
 			rw.review_id DESC
 		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
@@ -184,116 +160,5 @@
 		WHERE
 			product_id = #{productId}
 	</select>
-
-
-<!--	<sql id="selectCommon">
-		FROM review a
-			JOIN user u ON u.seq = a.user_seq
-			JOIN menu m ON m.seq = a.menu_seq
-		WHERE 1=1
-			
-		<if test="shDelNy != null and !shDelNy.equals('')">AND a.reviewDelNy = #{shDelNy}</if>
-
-		<choose>
-			<when test="shOption == 1">AND m.menuNm LIKE CONCAT('%',#{shValue},'%')</when>
-			<when test="shOption == 2">AND u.nickname LIKE CONCAT('%',#{shValue},'%')</when>
-			<when test="shOption == 3">AND a.reviewDescription LIKE CONCAT('%',#{shValue},'%')</when>
-		</choose>
-			
-	</sql>
-
-	<select id="selectOneCount" resultType="Integer">
-		SELECT COUNT(*)
-		<include refid="selectCommon"></include>
-	</select>
-	
-	<select id="findAvgRatingByMenuSeq" resultType="Integer">
-		SELECT
-			ROUND(AVG(reviewRate))
-		FROM
-			review
-		WHERE
-			menu_seq = #{menu_seq}
-	</select>
-	
-	<select id="reviewCount" resultType="Integer">
-		SELECT 
-			COUNT(*)
-		FROM
-			review
-		WHERE
-			reviewDelNy = 0
-	</select>
-
-	<select id="selectList" resultMap="resultMapObj">
-		SELECT 
-			aa.* 
-		FROM (
-			SELECT
-				a.seq
-				,a.reviewDate
-				,a.reviewRate
-				,a.reviewDescription
-				,a.user_seq
-				,a.menu_seq
-				,u.nickname
-				,m.menuNm
-			<include refid="selectCommon"></include>
-			) aa
-		ORDER BY
-			seq DESC
-		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
-	</select>
-
-	<insert id="insert">
-		INSERT INTO review(
-			reviewDate
-			,reviewRate
-			,reviewDescription
-			,reviewDelNy
-			,user_seq
-			,menu_seq
-		) VALUES(
-			#{reviewDate}
-			,#{reviewRate}
-			,#{reviewDescription}
-			,0
-			,#{user_seq}
-			,#{menu_seq}
-		)
-	</insert>
-	
-	<update id="uelete">
-		UPDATE review SET
-			reviewDelNy = 1
-		WHERE
-			seq = #{seq}
-	</update>
-	
-	<delete id="delete">
-		Delete
-		FROM
-			review
-		WHERE
-			seq = #{seq}
-	</delete>
-
-	<select id="getReviewListByMenuSeq" resultMap="resultMapObj">
-		SELECT
-			r.seq
-			,r.reviewDate
-			,r.reviewRate
-			,r.reviewDescription
-			,u.nickname
-		FROM
-			review r
-			JOIN user u ON u.seq = r.user_seq
-		WHERE
-			1=1
-		    AND r.menu_seq = #{menu_seq}
-		    AND r.reviewDelNy = 0
-		ORDER BY
-			r.seq DESC
-	</select>-->
 	
 </mapper>
