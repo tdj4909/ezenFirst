@@ -22,7 +22,12 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**", "/login").permitAll()
+                        .requestMatchers(
+                        				"/xdm/**", 
+                        				"/tableOrder/sign/loginView", 
+                        				"/tableOrder/sign/registerView",
+                        				"/tableOrder/sign/register",
+                        				"/tableOrder/emailChk").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
@@ -61,7 +66,7 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/usr", "/xdm");
+                .requestMatchers("/usr/**", "/xdm/**");
     }
     
     @Bean
