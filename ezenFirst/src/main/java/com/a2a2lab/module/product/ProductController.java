@@ -42,7 +42,7 @@ public class ProductController {
 		// 검색 설정
 		model.addAttribute("searchVo", searchVo);
 		// 페이징 설정
-		pageVo.setParamsPaging(service.countProductsByVo(pageVo, searchVo));
+		pageVo.setParamsPaging(service.countProductsByVo(searchVo));
 		model.addAttribute("pageVo", pageVo);
 		// 메뉴 종류
 		model.addAttribute("codeList", codeService.getCodesByCodegroupName("메뉴 종류"));
@@ -105,9 +105,10 @@ public class ProductController {
 		return "redirect:/xdm/service/product/list";
 	}
 	// Excel 다운로드
-	@GetMapping("/xdm/service/product/excel")
+	@GetMapping("/xdm/service/product/excel/download")
 	public void downloadProductExcel(HttpServletResponse response, PageVo pageVo, SearchVo searchVo) throws IOException {
-	    List<ProductDto> products = service.findProductsByVo(pageVo, searchVo); // 필터링 적용된 목록
+		pageVo.setParamsPaging(service.countProductsByVo(searchVo));
+		List<ProductDto> products = service.findProductsByVo(pageVo, searchVo); // 필터링 적용된 목록
 
 	    // 엑셀 워크북 생성
 	    Workbook workbook = new XSSFWorkbook();
@@ -173,7 +174,7 @@ public class ProductController {
 		// 페이징 세팅
 		pageVo.setRowNumToShow(6);
 		pageVo.setThisPage(page);
-		pageVo.setParamsPaging(service.countProductsByVo(pageVo, searchVo));
+		pageVo.setParamsPaging(service.countProductsByVo(searchVo));
 		model.addAttribute("pageVo", pageVo);
 		// 메뉴 출력
 		model.addAttribute("list", service.findProductsByVo(pageVo, searchVo));

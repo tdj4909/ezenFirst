@@ -7,10 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.a2a2lab.module.code.CodeDao;
 import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.code.CodeService;
-import com.a2a2lab.module.member.MemberDto;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -22,8 +20,8 @@ public class ProductService {
 	@Autowired
 	CodeService codeService;
 
-	public int countProductsByVo(PageVo pageVo, SearchVo searchVo) {
-		return dao.countProductsByVo(pageVo, searchVo);
+	public int countProductsByVo(SearchVo searchVo) {
+		return dao.countProductsByVo(searchVo);
 	}
 	
 	public List<ProductDto> findProductsByVo(PageVo pageVo, SearchVo searchVo) {

@@ -25,8 +25,8 @@ public class MemberService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
-	public int countMembersByVo(PageVo pageVo, SearchVo searchVo) {
-		return dao.countMembersByVo(pageVo, searchVo);
+	public int countMembersByVo(SearchVo searchVo) {
+		return dao.countMembersByVo(searchVo);
 	}
 	
 	public List<MemberDto> findMembersByVo(PageVo pageVo, SearchVo searchVo) {

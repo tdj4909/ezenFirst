@@ -47,7 +47,7 @@ public class MemberController {
 		// 검색 설정
 		model.addAttribute("searchVo", searchVo);
 		// 페이징 설정
-		pageVo.setParamsPaging(service.countMembersByVo(pageVo, searchVo));
+		pageVo.setParamsPaging(service.countMembersByVo(searchVo));
 		model.addAttribute("pageVo", pageVo);
 		// 통신사, 성별 코드그룹
 		model.addAttribute("mobileCarrierCode", codeService.getCodesByCodegroupName("통신사"));
@@ -95,9 +95,10 @@ public class MemberController {
 		return "redirect:/xdm/member/list";
 	}
 	// Excel 다운로드
-	@RequestMapping("/xdm/member/excel")
+	@RequestMapping("/xdm/member/excel/download")
 	public void downloadMemberExcel(HttpServletResponse response, PageVo pageVo, SearchVo searchVo) throws IOException {
-	    List<MemberDto> members = service.findMembersByVo(pageVo, searchVo); // 필터링 적용된 목록
+		pageVo.setParamsPaging(service.countMembersByVo(searchVo));
+		List<MemberDto> members = service.findMembersByVo(pageVo, searchVo); // 필터링 적용된 목록
 
 	    // 엑셀 워크북 생성
 	    Workbook workbook = new XSSFWorkbook();

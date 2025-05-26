@@ -11,7 +11,7 @@ import com.a2a2lab.module.vo.SearchVo;
 @Repository
 public interface ProductDao {
 	
-	public int countProductsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 메뉴 개수 검색
+	public int countProductsByVo(@Param("searchVo") SearchVo searchVo); // vo로 메뉴 개수 검색
 	public List<ProductDto> findProductsByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo); // vo로 메뉴 검색
 	public ProductDto findProductById(String productId);
 	public int createProduct(ProductDto dto);

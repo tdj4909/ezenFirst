@@ -11,7 +11,7 @@ import com.a2a2lab.module.vo.SearchVo;
 @Repository
 public interface MemberDao {
 	
-	public int countMembersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo);
+	public int countMembersByVo(@Param("searchVo") SearchVo searchVo);
 	public List<MemberDto> findMembersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo);
 	public MemberDto findMemberById(String memberId);
 	public MemberDto findMemberByEmail(String email);
@@ -23,20 +23,4 @@ public interface MemberDao {
 	public int emailChk(String email);
 	public int changePwd(MemberDto dto);
 	
-	
-	
-	
-//	public int insert(MemberDto dto);
-//	public int update(MemberDto dto);
-//	public int uelete(MemberDto dto);
-//	public int delete(MemberDto dto);
-//	public int memberCount();
-//	public int selectOneCount(MemberVo vo);
-//	public MemberDto selectOne(MemberVo vo);
-//	public MemberDto loginChk(MemberDto dto);
-//	public int emailChk(MemberDto dto);
-//	public List<MemberDto> selectList(MemberVo vo);
-//	public List<MemberDto> selectMobileCarrierGroup();
-
-	public List<MemberDto> selectListCachedCodeArrayList();
 }
