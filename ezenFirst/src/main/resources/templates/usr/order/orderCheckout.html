@@ -118,17 +118,21 @@ const payment = tossPayments.payment({ customerKey });
 async function requestPayment() {
 
 	const orderId = 'ORDER-' + Date.now() + '-' + Math.floor(Math.random() * 1000000);
-  // const orderName = document.getElementById("title").value;
+	const orderNameElements = document.querySelectorAll('.item-name'); // class명이라면 .item-name
+	let orderName = Array.from(orderNameElements)
+	    .map(el => el.textContent.trim())
+	    .join(', ');
+	const orderValue = Number(document.getElementById("odTotalPrice").value);
   // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
   // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
   await payment.requestPayment({
     method: "CARD", // 카드 결제
     amount: {
       currency: "KRW",
-      value: 1,
+      value: orderValue,
     },
     orderId: orderId, // 고유 주문번호
-    orderName: "버거",
+    orderName: orderName,
     successUrl: window.location.origin + 
     			"/tableOrder/order/completed", // 결제 요청이 성공하면 리다이렉트되는 URL,
     failUrl: window.location.origin + "/fail", // 결제 요청이 실패하면 리다이렉트되는 URL

@@ -28,7 +28,7 @@
                                       alt="">
                               </div>
                           </td>
-                          <td class="py-5 text-center" th:text="${item.productName}"></td>
+                          <td class="py-5 text-center item-name" th:text="${item.productName}"></td>
                           <td class="py-5 text-center item-price" 
                           	  th:attr="data-price=${item.price}" 
                           	  th:text="${#numbers.formatInteger(item.price, 1, 'COMMA')} + ' 원'">
