@@ -27,7 +27,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oauth2User = new DefaultOAuth2UserService().loadUser(userRequest);
 
-        // 예: 구글 로그인 시 사용자 이메일
         String email = oauth2User.getAttribute("email");
 
         MemberDto member = dao.findMemberByEmail(email);

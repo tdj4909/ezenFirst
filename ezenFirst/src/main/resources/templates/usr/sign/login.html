@@ -3,7 +3,6 @@
 
 <div th:replace="~{usr/include/head :: head}"></div>
 
-    <!-- Checkout Page Start -->
     <div class="container-fluid py-5">
         <div class="container py-5 mt-5">
             <h1 class="text-center mb-4 mt-5">로그인</h1>
@@ -45,6 +44,7 @@
                 </div>
             </form>
             
+            <!-- Modal Start -->
             <div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
@@ -61,50 +61,22 @@
 					</div>
 				</div>
 			</div>
-	
+			<!-- Modal End -->
         </div>
     </div>
-    <!-- Checkout Page End -->
     
-<script>
+<script th:inline="javascript">
+let error = '[[${param.error}]]';
+console.log("Error param:", error); // 값 확인용
 
-// let signin = $("#buttonSignIn");
-
-// signin.on("click", function(){
-	
-// // 	if(validation() == false) return false;
-// 	$.ajax({
-// 		async: true 
-// 		,cache: false
-// 		,type: "post"
-// 		/* ,dataType:"json" */
-// 		,url: "/TableOrder/signinUsrProc"
-// 		/* ,data : $("#formLogin").serialize() */
-// 		,data : { 
-// 			"email" : $("#email").val()
-// 			,"password" : $("#password").val() 
-// // 			,"autoLogin" : $("#autoLogin").is(":checked")
-// 			}
-// 		,success: function(response) {
-// 			if(response.rt == "success") {
-// 				location.href = "/TableOrder/shopList";
-// /* 				if(response.changePwd == "true") {
-// 					location.href = "/v1/infra/member/expiredPwdUsrForm";
-// 				} else {
-// 					location.href = "/v1/infra/index/indexXdmView";
-// 				} */
-// 			} else {
-// 		 		document.getElementById("modalConfirmTitle").innerText = "확 인";
-// 		 		document.getElementById("modalConfirmBody").innerText = "일치하는 회원이 존재 하지 않습니다!";
-// 		 		$("#modalConfirm").modal("show");
-// 			}
-// 		}
-// 		,error : function(jqXHR, textStatus, errorThrown){
-// 			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-// 		}
-// 	});
-// });
-
+if (error && error !== 'null' && error !== '') {
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('modalConfirmTitle').textContent = '로그인 실패';
+        document.getElementById('modalConfirmBody').textContent = '아이디가 존재하지 않거나 로그인 정보가 잘못되었습니다.';
+        let modal = new bootstrap.Modal(document.getElementById('modalConfirm'));
+        modal.show();
+    });
+}
 </script>
 
 <div th:replace="~{usr/include/footer :: footer}"></div>

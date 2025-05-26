@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .formLogin(login -> login
                         .loginPage("/tableOrder/sign/loginView")         // 커스텀 로그인 페이지
                         .loginProcessingUrl("/login")
+                        .failureUrl("/tableOrder/sign/loginView?error")
                         .defaultSuccessUrl("/tableOrder/shop/list", true) // 로그인 성공 후 이동할 페이지
                 )
                 .oauth2Login(oauth2Login -> oauth2Login
@@ -35,6 +36,7 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                             .userService(oauth2UserService()) // OAuth2 사용자 정보를 처리할 서비스 설정
                         )
+                        .failureUrl("/tableOrder/sign/loginView?error")
                         .defaultSuccessUrl("/tableOrder/shop/list", true) // OAuth2 로그인 성공 시 기본 이동 경로
                         .permitAll()
                 )
