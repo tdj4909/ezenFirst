@@ -217,6 +217,14 @@
 										<i class="ri-delete-bin-line"></i>
 									</button>
 								</div>
+								
+								<div class="col">
+									<div style="float: right;">
+										<button type="button" class="btn btn-success" onclick="downloadExcel()"> 
+											<i class="ri-file-excel-line"></i>
+										</button>
+									</div>
+								</div>
 							</div>
 							<!-- Table Button End -->
 							
@@ -408,6 +416,11 @@
 	    });
 	});
 
+	// Excel 다운로드
+	function downloadExcel() {
+        const params = new URLSearchParams(new FormData(form)).toString();
+        window.location.href = '/xdm/service/order/excel/download?' + params;
+    }
 	
 </script>
 

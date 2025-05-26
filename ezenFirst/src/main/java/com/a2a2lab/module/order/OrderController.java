@@ -1,8 +1,13 @@
 package com.a2a2lab.module.order;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -20,9 +25,12 @@ import com.a2a2lab.common.config.CustomUserDetails;
 import com.a2a2lab.module.cart.CartService;
 import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.code.CodeService;
+import com.a2a2lab.module.codeGroup.CodeGroupDto;
 import com.a2a2lab.module.product.ProductService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class OrderController{
@@ -96,6 +104,49 @@ public class OrderController{
 			}
 		}
 		return "redirect:/xdm/service/order/list";
+	}
+	// Excel 다운로드
+	@RequestMapping("/xdm/service/order/excel/download")
+	public void downloadCodeGroupExcel(HttpServletResponse response, PageVo pageVo, SearchVo searchVo) throws IOException {
+		pageVo.setParamsPaging(service.countOrderMastersByVo(searchVo));
+		List<OrderDto> orders = service.findOrderMastersByVo(pageVo, searchVo); // 필터링 적용된 목록
+
+	    // 엑셀 워크북 생성
+	    Workbook workbook = new XSSFWorkbook();
+	    Sheet sheet = workbook.createSheet("Orders");
+
+	    // 헤더
+	    Row header = sheet.createRow(0);
+	    header.createCell(0).setCellValue("주문 번호");
+	    header.createCell(1).setCellValue("이름");
+	    header.createCell(2).setCellValue("주문일");
+	    header.createCell(3).setCellValue("가격");
+	    header.createCell(4).setCellValue("주문 상태");
+
+	    // 내용
+	    int rowNum = 1;
+	    for (OrderDto order : orders) {
+	        Row row = sheet.createRow(rowNum++);
+	        row.createCell(0).setCellValue(Integer.parseInt(order.getOrderMasterId()));
+	        row.createCell(1).setCellValue(order.getMemberName());
+	        row.createCell(2).setCellValue(order.getCreatedAt());
+	        row.createCell(3).setCellValue(order.getPrice());
+	        row.createCell(4).setCellValue(order.getStatusName());
+	    }
+	    
+	    // 열 너비 자동 조절
+	    for (int i = 0; i < 5; i++) {
+	        sheet.autoSizeColumn(i);
+	        sheet.setColumnWidth(i, sheet.getColumnWidth(i) + 1024); // 약간 여유 (한글 대응)
+	    }
+
+	    // 응답 설정
+	    response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+	    response.setHeader("Content-Disposition", "attachment; filename=orders.xlsx");
+
+	    // 엑셀 파일 내보내기
+	    workbook.write(response.getOutputStream());
+	    workbook.close();
 	}
 
 //	************************************************************
@@ -180,5 +231,6 @@ public class OrderController{
 		service.softDeleteOrderMaster(map.get("orderMasterId"));
 		return ResponseEntity.ok("삭제 성공");
 	}
+	
 	
 }

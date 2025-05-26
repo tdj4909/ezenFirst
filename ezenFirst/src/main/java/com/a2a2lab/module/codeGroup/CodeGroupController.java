@@ -88,7 +88,7 @@ public class CodeGroupController {
 	}
 	
 	// Excel 다운로드
-	@GetMapping("/xdm/system/codegroup/excel/download")
+	@RequestMapping("/xdm/system/codegroup/excel/download")
 	public void downloadCodeGroupExcel(HttpServletResponse response, PageVo pageVo, SearchVo searchVo) throws IOException {
 		pageVo.setParamsPaging(service.countCodeGroupsByVo(searchVo));
 		List<CodeGroupDto> codeGroups = service.findCodeGroupsByVo(pageVo, searchVo); // 필터링 적용된 목록
