@@ -8,13 +8,13 @@
 	    <!-- Fruits Shop Start-->
 	    <div class="container-fluid fruite py-5">
 	        <div class="container py-5">
-	            <h1 class="mb-4 mt-5">추천메뉴</h1>
+	            <h1 class="mb-4 mt-5">전체 메뉴</h1>
 	            <div class="row g-4">
 	                <div class="col-lg-12">
 	                    <div class="row g-4">
 	                        <div class="col-xl-3">
 	                            <div class="input-group w-100 mx-auto d-flex">
-	                                <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+	                                <input type="search" class="form-control p-3" placeholder="메뉴명" aria-describedby="search-icon-1">
 	                                <span onclick="location.href='shop.html'" style="cursor:pointer;" id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
 	                            </div>
 	                        </div>
@@ -178,18 +178,18 @@ function updateCart(qty, cartId) {
         },
         body: `qty=${qty}&cartId=${cartId}`
     })
-        .then(response => {
-            if (!response.ok) throw new Error("업데이트 실패");
-            return response.text();
-        })
-        .then(data => {
-            console.log("업데이트 성공", data);
-            loadCart(); // 성공 후 다시 장바구니 로드
-        })
-        .catch(error => {
-            console.error("에러:", error);
-            alert("장바구니 수량 변경 중 문제가 발생했습니다.");
-        });
+    .then(response => {
+        if (!response.ok) throw new Error("업데이트 실패");
+        return response.text();
+    })
+    .then(data => {
+        console.log("업데이트 성공", data);
+        loadCart(); // 성공 후 다시 장바구니 로드
+    })
+    .catch(error => {
+        console.error("에러:", error);
+        alert("장바구니 수량 변경 중 문제가 발생했습니다.");
+    });
 }
 
 // 장바구니 합계
@@ -207,160 +207,7 @@ function updateCartTotalPrice() {
     const formatted = total.toLocaleString(); // 1,000 단위 구분
     document.getElementById("cart-total").textContent = formatted + " 원";
 }
-		    
-// 	*******************************************************************************
-// 	장바구니
-// 	*******************************************************************************
-// const cartItemsContainer = document.getElementById("cart-items");
-// // 중복 확인과 수량 증가를 위해 Map 사용 (key: 상품명, value: 해당 DOM 요소)
-// const addedItems = new Map();
 
-// function addCart(button){
-// 	const seq = button.getAttribute("data-seq");
-//     const name = button.getAttribute("data-name");
-//     const price = parseInt(button.getAttribute("data-price")).toLocaleString();
-//     const img = button.getAttribute("data-img");
-
-//     if (addedItems.has(name)) {
-//         // 이미 담긴 경우 → 수량 +1
-//         const cartItem = addedItems.get(name);
-//         const qtyInput = cartItem.querySelector("input");
-//         qtyInput.value = parseInt(qtyInput.value) + 1;
-//         updateCartTotal();
-//         return;
-//     }
-    
-//  	// 새로 추가될 경우 → HTML 템플릿 생성
-//     const cartItemHTML = document.createElement("div");
-//     cartItemHTML.className = "row py-3 border-top cart-item";
-//     cartItemHTML.setAttribute("data-name", name);
-//     cartItemHTML.setAttribute("data-seq", seq);
-//     cartItemHTML.innerHTML = `
-//       <div class="col">
-//         <img src="${img}" class="img-fluid rounded" alt="${name}">
-//       </div>
-//       <div class="col">
-//      <div class="mb-2 d-flex justify-content-between align-items-center">
-//        <h6 class="mb-0">${name}</h6>
-//        <button type="button" class="btn btn-sm btn-delete rounded-circle bg-light border text-danger">
-//        	<i class="fa fa-times"></i>
-//        </button>
-//      </div>
-//         <div class="d-flex mb-2">
-//           <i class="fa fa-star text-secondary"></i>
-//           <i class="fa fa-star text-secondary"></i>
-//           <i class="fa fa-star text-secondary"></i>
-//           <i class="fa fa-star text-secondary"></i>
-//           <i class="fa fa-star"></i>
-//         </div>
-//         <div class="mb-2">
-//           <h5 class="fw-bold me-2 item-price" data-price="${parseInt(price.replace(/,/g, ""))}">${price} 원</h5>
-//         </div>
-//         <div class="input-group quantity mb-2" style="width: 100px;">
-//           <div class="input-group-btn">
-//             <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border">
-//               <i class="fa fa-minus"></i>
-//             </button>
-//           </div>
-//           <input type="text" style="background-color:#FFFFFF;" class="form-control form-control-sm text-center border-0 item-qty" value="1" readonly>
-//           <div class="input-group-btn">
-//             <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
-//               <i class="fa fa-plus"></i>
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     `;
-
-//     // 장바구니에 추가
-//     cartItemsContainer.appendChild(cartItemHTML);
-//     updateCartTotal();
-
-//     // Map에 추가해서 추후 수량 증가 처리
-//     addedItems.set(name, cartItemHTML);
-// }
-
-// // 장바구니 버튼 Click
-// document.getElementById("cart-items").addEventListener("click", function (e) {
-// 	// + 버튼
-// 	if (e.target.closest(".btn-plus")) {
-// 		const qtyInput = e.target.closest(".quantity").querySelector(".item-qty");
-// 		qtyInput.value = parseInt(qtyInput.value) + 1;
-// 		updateCartTotal();
-// 	}
-// 	// - 버튼
-// 	if (e.target.closest(".btn-minus")) {
-// 		const qtyInput = e.target.closest(".quantity").querySelector(".item-qty");
-// 		const currentVal = parseInt(qtyInput.value);
-// 		if (currentVal > 1) {
-// 		  qtyInput.value = currentVal - 1;
-// 		  updateCartTotal();
-// 	  }
-// 	}
-// 	// 삭제 버튼
-// 	if (e.target.closest(".text-danger")) {
-// 		const itemRow = e.target.closest(".cart-item");
-// 		if (itemRow) {
-// 		    const itemName = itemRow.getAttribute("data-name");
-// 		    addedItems.delete(itemName); // Map에서도 삭제해줘야 중복 방지됨
-// 		    itemRow.remove();
-// 		    updateCartTotal();
-// 		}
-// 	}
-// });
-
-// // 합계 계산 함수
-// function updateCartTotal() {
-// 	let total = 0;
-// 	document.querySelectorAll("#cart-items .cart-item").forEach(item => {
-// 		const qty = parseInt(item.querySelector(".item-qty").value);
-// 		const unitPrice = item.querySelector(".item-price").getAttribute("data-price");
-// 		total += qty * unitPrice;
-// 	});
-// 	document.getElementById("cart-total").textContent = total.toLocaleString() + " 원";
-// }
-   
-// // 주문하기 Click
-// document.getElementById("checkoutBtn").addEventListener("click", () => {
-// 	const cartItems = document.querySelectorAll(".cart-item");
-// 	const orderList = [];
-
-// 	cartItems.forEach((item) => {
-// 	  orderList.push({
-// 	    productId: item.dataset.seq,
-// 	    productName: item.dataset.name,
-// 	    filePath: item.querySelector("img").src,
-// 	    orderDetailPrice: parseInt(item.querySelector(".item-price").dataset.price),
-// 	    quantity: parseInt(item.querySelector(".item-qty").value)
-// 	  });
-// 	});
-
-// 	fetch("/tableOrder/order/checkout", {
-// 		method: "POST",
-// 		headers: {
-// 		  "Content-Type": "application/json"
-// 		},
-// 		body: JSON.stringify(orderList)
-// 	})
-// 	.then((res) => {
-// 		if (res.ok) {
-// 		  return res.text(); // 페이지 HTML 반환
-// 		} else {
-// 		  throw new Error("주문 전송 실패");
-// 		}
-// 	})
-// 	.then((html) => {
-// 		// 새 페이지로 이동하는 효과
-// 		document.open();
-// 		document.write(html);
-// 		document.close();
-// 	})
-// 	.catch((err) => {
-// 		alert("문제가 발생했어요!");
-// 		console.error(err);
-// 	});
-// });
-      
 </script>
 
 <div th:replace="~{usr/include/footer :: footer}"></div>
