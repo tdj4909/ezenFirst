@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.a2a2lab.module.code.CodeDao;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -13,6 +14,9 @@ public class CodeGroupService {
 
 	@Autowired
 	CodeGroupDao dao;
+	
+	@Autowired
+	CodeDao codeDao;
 	
 	public int countCodeGroupsByVo(SearchVo searchVo) {
 		return dao.countCodeGroupsByVo(searchVo);
@@ -39,6 +43,7 @@ public class CodeGroupService {
 	}
 	
 	public int softDeleteCodeGroup(String id) {
+		codeDao.softDeleteCodeByCodeGroupId(id);
 		return dao.softDeleteCodeGroup(id);
 	}
 	

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.a2a2lab.module.code.CodeService;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -27,9 +26,6 @@ public class CodeGroupController {
 
 	@Autowired
 	CodeGroupService service;
-	
-	@Autowired
-	CodeService codeService;
 	
 	// 코드그룹 관리 화면
 	@RequestMapping("/xdm/system/codegroup/list")
@@ -74,7 +70,6 @@ public class CodeGroupController {
 		for(String id : idList) {
 			if(!id.equals("")) {
 				service.softDeleteCodeGroup(id);
-				codeService.softDeleteCodeByCodeGroupId(id);
 			}
 		}
 		return "redirect:/xdm/system/codegroup/list";

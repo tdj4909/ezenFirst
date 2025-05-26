@@ -212,6 +212,22 @@
 			order_master_id = #{orderMasterId}
 	</update>
 	
+	<update id="softDeleteOrderMasterByMemberId">
+		UPDATE order_master SET
+			is_deleted = 1
+			,updated_at = now()
+		WHERE
+			member_id = #{memberId}
+	</update>
+	
+	<update id="softDeleteOrderMasterByProductId">
+		UPDATE order_master SET
+			is_deleted = 1
+			,updated_at = now()
+		WHERE
+			product_id = #{productId}
+	</update>
+	
 	<delete id="hardDeleteOrderMaster">
 		DELETE
 		FROM

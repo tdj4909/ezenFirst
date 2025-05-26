@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.a2a2lab.module.cart.CartDao;
 import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.code.CodeService;
+import com.a2a2lab.module.order.OrderDao;
+import com.a2a2lab.module.review.ReviewDao;
 import com.a2a2lab.module.vo.PageVo;
 import com.a2a2lab.module.vo.SearchVo;
 
@@ -24,6 +27,15 @@ public class MemberService {
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	CartDao cartDao;
+	
+	@Autowired
+	OrderDao orderDao;
+	
+	@Autowired
+	ReviewDao reviewDao;
 	
 	public int countMembersByVo(SearchVo searchVo) {
 		return dao.countMembersByVo(searchVo);
@@ -77,6 +89,10 @@ public class MemberService {
 	}
 	
 	public int softDeleteMember(String id) {
+		cartDao.softDeleteCartByMemberId(id);
+		orderDao.softDeleteOrderMasterByMemberId(id);
+		reviewDao.softDeleteReviewByMemberId(id);
+		
 		return dao.softDeleteMember(id);
 	}
 	

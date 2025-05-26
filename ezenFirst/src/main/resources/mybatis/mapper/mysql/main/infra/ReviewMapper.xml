@@ -113,6 +113,24 @@
 			AND review_id = #{reviewId}
 	</update>
 	
+	<update id="softDeleteReviewByMemberId">
+		UPDATE review SET
+			is_deleted = 1
+			,updated_at = now()
+		WHERE
+			1=1
+			AND member_id = #{memberId}
+	</update>
+	
+	<update id="softDeleteReviewByProductId">
+		UPDATE review SET
+			is_deleted = 1
+			,updated_at = now()
+		WHERE
+			1=1
+			AND product_id = #{productId}
+	</update>
+	
 	<delete id="hardDeleteReview">
 		DELETE
 		FROM

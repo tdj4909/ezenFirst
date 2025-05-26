@@ -32,6 +32,8 @@ public interface OrderDao {
 	public int saveOrderDetail(OrderDto dto);
 	public int updateOrderMaster(OrderDto dto);
 	public int softDeleteOrderMaster(String orderMasterId);
+	public int softDeleteOrderMasterByMemberId(String memberId);
+	public int softDeleteOrderMasterByProductId(String productId);
 	public int hardDeleteOrderMaster(String orderMasterId);
 	
 }

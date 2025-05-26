@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,14 +21,14 @@ public class CartController{
 	CartService service;
 	
 	// 장바구니 Ajax
-	@GetMapping("/tableOrder/shop/cart")
+	@RequestMapping("/tableOrder/shop/cart")
 	public String getCartFragment(Model model, Authentication auth) {
 		CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
 		model.addAttribute("list", service.findCartsByMemberId(userDetails.getMemberId()));
 		return "usr/fragment/cart :: cartFragment";
 	}
 	// 장바구니 추가
-	@PostMapping("/tableOrder/cart/add")
+	@RequestMapping("/tableOrder/cart/add")
 	@ResponseBody
 	public Map<String, String> addCart(@RequestBody CartDto dto, Authentication auth) {
 		Map<String, String> result = new HashMap<>();
@@ -47,7 +46,7 @@ public class CartController{
 		return result;
 	}
 	// 장바구니 수정
-	@PostMapping("/tableOrder/cart/update")
+	@RequestMapping("/tableOrder/cart/update")
 	@ResponseBody
 	public Map<String, String> updateCart(@RequestParam("qty") int qty, @RequestParam("cartId") String cartId) {
 		Map<String, String> result = new HashMap<>();
