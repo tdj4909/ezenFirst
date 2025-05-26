@@ -51,6 +51,9 @@ public class CodeService {
 	public int softDeleteCode(String id) {
 		return dao.softDeleteCode(id);
 	}
+	public int softDeleteCodeByCodeGroupId(String codegroupId) {
+		return dao.softDeleteCodeByCodeGroupId(codegroupId);
+	}
 	public int hardDeleteCode(String id) {
 		return dao.hardDeleteCode(id);
 	}

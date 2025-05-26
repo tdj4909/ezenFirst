@@ -170,6 +170,15 @@
 			AND code_id = #{codeId}
 	</update>
 	
+	<update id="softDeleteCodeByCodeGroupId">
+		UPDATE code SET
+			is_deleted = 1
+			,updated_at = now()
+		WHERE
+			1=1
+			AND codegroup_id = #{codegroupId}
+	</update>
+	
 	<delete id="hardDeleteCode">
 		DELETE
 		FROM

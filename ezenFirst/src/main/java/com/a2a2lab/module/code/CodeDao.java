@@ -19,5 +19,6 @@ public interface CodeDao {
 	public int createCode(CodeDto dto);
 	public int updateCode(CodeDto dto);
 	public int softDeleteCode(String codeId);
+	public int softDeleteCodeByCodeGroupId(String codegroupId);
 	public int hardDeleteCode(String codeId);
 }
