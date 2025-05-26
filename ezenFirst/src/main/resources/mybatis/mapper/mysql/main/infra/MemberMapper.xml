@@ -5,6 +5,46 @@
 
 	<resultMap id="resultMapObj" type="com.a2a2lab.module.member.MemberDto"></resultMap>
 		
+	<!-- 공통 검색조건 -->
+	<sql id="searchVo">
+		<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
+		<if test="searchVo.shGender != null and !searchVo.shGender.equals('')">AND gender = #{searchVo.shGender}</if>
+		<if test="searchVo.shTel != null and !searchVo.shTel.equals('')">AND mobile_carrier = #{searchVo.shTel}</if>
+		
+		<choose>
+		    <when test="searchVo.shOptionDate == 1">
+		        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+		            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+		        </if>
+		        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+		            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+		        </if>
+		    </when>
+		    <when test="searchVo.shOptionDate == 2">
+		        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+		            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+		        </if>
+		        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+		            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+		        </if>
+		    </when>
+		    <when test="searchVo.shOptionDate == 3">
+		        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
+		            AND birthday &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
+		        </if>
+		        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
+		            AND birthday &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
+		        </if>
+		    </when>
+		</choose>
+		
+		<choose>
+			<when test="searchVo.shOption == 1">AND email LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+			<when test="searchVo.shOption == 3">AND phone LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
+		</choose>
+	</sql>
+	
 	<select id="countMembersByVo" resultType="Integer">
 		SELECT 
 			COUNT(*)
@@ -12,42 +52,7 @@
 			member
 		WHERE
 			1=1
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
-			<if test="searchVo.shGender != null and !searchVo.shGender.equals('')">AND gender = #{searchVo.shGender}</if>
-			<if test="searchVo.shTel != null and !searchVo.shTel.equals('')">AND mobile_carrier = #{searchVo.shTel}</if>
-			
-			<choose>
-			    <when test="searchVo.shOptionDate == 1">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionDate == 2">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionDate == 3">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND birthday &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND birthday &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-				<when test="searchVo.shOption == 1">AND email LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-				<when test="searchVo.shOption == 3">AND phone LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>
+			<include refid="searchVo"></include>
 	</select>
 
 	<select id="findMembersByVo" resultMap="resultMapObj">
@@ -65,42 +70,7 @@
 			member
 		WHERE
 			1=1
-			<if test="searchVo.shIsDel != null and !searchVo.shIsDel.equals('')">AND is_deleted = #{searchVo.shIsDel}</if>
-			<if test="searchVo.shGender != null and !searchVo.shGender.equals('')">AND gender = #{searchVo.shGender}</if>
-			<if test="searchVo.shTel != null and !searchVo.shTel.equals('')">AND mobile_carrier = #{searchVo.shTel}</if>
-			
-			<choose>
-			    <when test="searchVo.shOptionDate == 1">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND created_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND created_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionDate == 2">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND updated_at &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND updated_at &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			    <when test="searchVo.shOptionDate == 3">
-			        <if test="searchVo.shDateStart != null and searchVo.shDateStart != ''">
-			            AND birthday &gt;= CONCAT(#{searchVo.shDateStart}, 'T00:00:00')
-			        </if>
-			        <if test="searchVo.shDateEnd != null and searchVo.shDateEnd != ''">
-			            AND birthday &lt;= CONCAT(#{searchVo.shDateEnd}, 'T23:59:59')
-			        </if>
-			    </when>
-			</choose>
-			
-			<choose>
-				<when test="searchVo.shOption == 1">AND email LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-				<when test="searchVo.shOption == 2">AND name LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-				<when test="searchVo.shOption == 3">AND phone LIKE CONCAT('%',#{searchVo.shValue},'%')</when>
-			</choose>
+			<include refid="searchVo"></include>
 		ORDER BY
 			member_id DESC
 		LIMIT #{pageVo.rowNumToShow} OFFSET #{pageVo.startRnumForMysql}
@@ -220,210 +190,5 @@
 			1=1
 			AND member_id = #{memberId}
 	</update>
-		
-		
-<!-- ***************************************************************************************************		 -->
-
-<!-- 	<sql id="selectCommon">
-		FROM user a
-		WHERE 1=1
-			
-		<if test="shDelNy != null and !shDelNy.equals('')">AND a.userDelNy = #{shDelNy}</if>
-		<if test="shGender != null and !shGender.equals('')">AND a.gender = #{shGender}</if>
-		<if test="shAdmin != null and !shAdmin.equals('')">AND a.admin = #{shAdmin}</if>
-
-		<choose>
-			<when test="shOption == 1">AND a.email = #{shValue}</when>
-			<when test="shOption == 2">AND a.nickname LIKE CONCAT('%',#{shValue},'%')</when>
-			<when test="shOption == 3">AND CONCAT(a.lastNm, a.firstNm) LIKE CONCAT('%',#{shValue},'%')</when>
-		</choose>
-			
-	</sql>
-
-	<select id="memberCount" resultType="Integer">
-		SELECT 
-			COUNT(*)
-		FROM
-			user
-		WHERE
-			userDelNy = 0
-	</select>
-	
-	<select id="selectOneCount" resultType="Integer">
-		SELECT COUNT(*)
-		<include refid="selectCommon"></include>
-	</select>
-
-	<select id="selectOne" resultMap="resultMapObj">
-		SELECT 
-			aa.*
-			,aa.seq AS ifcgSeq 
-		FROM (
-			SELECT
-				a.seq
-				,a.email
-			    ,a.nickname
-			    ,a.lastNm
-			    ,a.firstNm
-			    ,a.gender
-			    ,a.userDob
-			    ,
-			    (
-					SELECT codeNm
-			        FROM code c
-			        WHERE a.mobileCarrier = c.seq
-			    ) AS codeNm
-			    ,a.mobileCarrier
-			    ,a.phone
-			    ,a.admin
-			    ,a.password
-			<include refid="selectCommon"></include>
-			ORDER BY
-				seq DESC
-			) aa
-		WHERE
-			aa.seq = #{ifcgSeq}
-	</select>
-	
-	<select id="selectList" resultMap="resultMapObj">
-		SELECT 
-			aa.*
-			,aa.seq AS ifcgSeq 
-		FROM (
-			SELECT
-				a.seq
-				,a.email
-			    ,a.nickname
-			    ,a.lastNm
-			    ,a.firstNm
-			    ,a.gender
-			    ,a.userDob
-			    ,
-			    (
-					SELECT codeNm
-			        FROM code c
-			        WHERE a.mobileCarrier = c.seq
-			    ) AS codeNm
-			    ,a.phone
-			    ,a.admin
-			<include refid="selectCommon"></include>
-			ORDER BY
-				seq DESC
-			) aa
-		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
-	</select>
-	
-	<select id="loginChk" resultMap="resultMapObj">
-		SELECT 
-			seq
-			,email
-			,password
-			,nickname
-			,lastNm
-		    ,firstNm
-		    ,gender
-		    ,userDob
-		    ,mobileCarrier
-		    ,phone
-		    ,admin
-		FROM
-			user
-		WHERE
-			1=1
-			AND email = #{email}
-	</select>
-	
-	<select id="emailChk" resultType="Integer">
-		SELECT 
-			COUNT(*)
-		FROM
-			user
-		WHERE
-			1=1
-			AND email = #{email}
-	</select>
-
-	<select id="selectMobileCarrierGroup" resultMap="resultMapObj">
-		SELECT
-			seq AS codeSeq
-		    ,codeNm
-		FROM
-			code
-		WHERE
-			codeGroup_seq = 1
-	</select>
-	
-	<insert id="insert">
-		INSERT INTO user(
-			email
-			,password
-			,nickname
-			,lastNm
-			,firstNm
-			,gender
-			,userDob
-			,mobileCarrier
-			,phone
-			,admin
-			,userDelNy
-		) VALUES(
-			#{email}
-			,#{password}
-			,#{nickname}
-			,#{lastNm}
-			,#{firstNm}
-			,#{gender}
-			,#{userDob}
-			,#{mobileCarrier}
-			,#{phone}
-			,#{admin}
-			,0
-		)
-		<selectKey resultType="String" keyProperty="seq"
-			order="AFTER">
-			SELECT last_insert_id()
-		</selectKey>
-	</insert>
-	
-	
-	<update id="update">
-		UPDATE user SET
-			nickname = #{nickname}
-			,lastNm = #{lastNm}
-			,firstNm = #{firstNm}
-			,gender = #{gender}
-			,userDob = #{userDob}
-			,mobileCarrier = #{mobileCarrier}
-			,phone = #{phone}
-			,admin = #{admin}
-		WHERE
-			seq = #{ifcgSeq}
-	</update>
-	
-	<update id="uelete">
-		UPDATE user SET
-			userDelNy = 1
-		WHERE
-			seq = #{seq}
-	</update>
-	
-	<delete id="delete">
-		Delete
-		FROM
-			user
-		WHERE
-			seq = #{seq}
-	</delete>
-	
-	<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
-		SELECT 
-			seq
-			, gender
-		FROM
-			user
-		WHERE 1=1
-			AND userDelNy = 0
-
-   </select> -->
 	
 </mapper>
