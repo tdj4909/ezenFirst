@@ -327,6 +327,7 @@ body {
     overflow: hidden;
     transition: 0.5s;
     border-radius: 10px 10px 0 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .fruite .fruite-item .fruite-img img {

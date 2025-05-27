@@ -184,8 +184,6 @@ public class ProductController {
 		// 검색 설정		
 		searchVo.setShOption(2);
 		List<CodeDto> codeDtos = codeService.getCodesByCodegroupName("메뉴 종류");
-		System.out.println(type);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		for(CodeDto codeDto : codeDtos) {
 			System.out.println(codeDto.getName());
 			if(codeDto.getName().equals(type)) {
