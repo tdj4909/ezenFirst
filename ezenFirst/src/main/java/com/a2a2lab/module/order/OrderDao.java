@@ -12,7 +12,7 @@ import com.a2a2lab.module.vo.SearchVo;
 public interface OrderDao {
 	
 	// 관리자 주문 관리
-	public int countOrderMastersByVo(SearchVo searchVo);
+	public int countOrderMastersByVo(@Param("searchVo") SearchVo searchVo);
 	public List<OrderDto> findOrderMastersByVo(@Param("pageVo") PageVo pageVo, @Param("searchVo") SearchVo searchVo);
 	
 	// 사용자 주문 내역
