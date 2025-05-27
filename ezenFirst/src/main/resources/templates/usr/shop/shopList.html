@@ -101,11 +101,30 @@ document.addEventListener("DOMContentLoaded", function () {
         else if (e.target.closest(".btn-minus")) {
             updateCart(-1, cartId);
         }
-        // 삭제 버튼
-        else if (e.target.closest(".btn-delete")) {
-            updateCart(0, cartId);
-        }
     });
+	
+    let selectedCartId = null;
+
+	 // 삭제 버튼 클릭 시 cartId 저장
+	 document.addEventListener("click", function(e) {
+	     if (e.target.closest('.btn-delete')) {
+	         const btnDelete = e.target.closest('.btn-delete');
+	         selectedCartId = btnDelete.getAttribute('data-seq');
+	     }
+	 });
+	
+	 // 모달 확인 버튼 클릭 시 updateCart 호출
+	 document.addEventListener("click", function(e) {
+	     if (e.target.classList.contains("btn-confirm")) {
+	         if (selectedCartId) {
+	             updateCart(0, selectedCartId);
+	             selectedCartId = null;  // 초기화
+	             const modalElement = document.getElementById('modal');
+	             const modalInstance = bootstrap.Modal.getInstance(modalElement);
+	             modalInstance.hide();
+	         }
+	     }
+	 });
 	
 	window.goList = function (page) {
 	    loadMenuList(page);
