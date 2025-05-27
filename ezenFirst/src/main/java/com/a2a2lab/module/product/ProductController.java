@@ -123,10 +123,9 @@ public class ProductController {
 	    header.createCell(4).setCellValue("열량(kcal)");
 	    header.createCell(5).setCellValue("평점");
 	    header.createCell(6).setCellValue("누적 주문 수");
-	    header.createCell(7).setCellValue("재고");
-	    header.createCell(8).setCellValue("등록일");
-	    header.createCell(9).setCellValue("수정일");
-	    header.createCell(10).setCellValue("추천 여부");
+	    header.createCell(7).setCellValue("등록일");
+	    header.createCell(8).setCellValue("수정일");
+	    header.createCell(9).setCellValue("추천 여부");
 
 	    // 내용
 	    int rowNum = 1;
@@ -139,14 +138,13 @@ public class ProductController {
 	        row.createCell(4).setCellValue(product.getCalories());
 	        row.createCell(5).setCellValue(product.getRating() == null ? "평점 없음" : String.valueOf(product.getRating()));
 	        row.createCell(6).setCellValue(product.getOrderCount());
-	        row.createCell(7).setCellValue(product.getStock());
-	        row.createCell(8).setCellValue(product.getCreatedAt());
-	        row.createCell(9).setCellValue(product.getUpdatedAt() == null ? "" : product.getUpdatedAt());
-	        row.createCell(10).setCellValue(product.getIsRecommand() == 1 ? "Y" : "N");
+	        row.createCell(7).setCellValue(product.getCreatedAt());
+	        row.createCell(8).setCellValue(product.getUpdatedAt() == null ? "" : product.getUpdatedAt());
+	        row.createCell(9).setCellValue(product.getIsRecommand() == 1 ? "Y" : "N");
 	    }
 	    
 	    // 열 너비 자동 조절
-	    for (int i = 0; i < 11; i++) {
+	    for (int i = 0; i < 10; i++) {
 	        sheet.autoSizeColumn(i);
 	        sheet.setColumnWidth(i, sheet.getColumnWidth(i) + 1024); // 약간 여유 (한글 대응)
 	    }
@@ -195,7 +193,7 @@ public class ProductController {
 		searchVo.setShValue(shValue);
 		model.addAttribute("searchVo", searchVo); 
 		// 페이징 세팅
-		pageVo.setRowNumToShow(2);
+		pageVo.setRowNumToShow(6);
 		pageVo.setThisPage(page);
 		pageVo.setParamsPaging(service.countProductsByVo(searchVo));
 		model.addAttribute("pageVo", pageVo);

@@ -48,7 +48,6 @@
 							<option value="1" th:selected="${searchVo.shOptionRange == 1}">가격</option>
 							<option value="2" th:selected="${searchVo.shOptionRange == 2}">열량</option>
 							<option value="3" th:selected="${searchVo.shOptionRange == 3}">누적 주문 수</option>
-							<option value="4" th:selected="${searchVo.shOptionRange == 4}">재고</option>
 						</select>
 					</div>
 					<div class="col-2">
@@ -154,7 +153,6 @@
 											<th class="text-center">열량(kcal)</th>
 											<th class="text-center">평점</th>
 											<th class="text-center">누적 주문 수</th>
-											<th class="text-center">재고</th>
 											<th class="text-center">등록일</th>
 											<th class="text-center">수정일</th>
 											<th class="text-center">추천 여부</th>
@@ -163,7 +161,7 @@
 									<tbody>
 																		
 										<tr th:if="${list == null || list.isEmpty()}">
-											<td colspan=13 style="text-align: center">
+											<td colspan=12 style="text-align: center">
 												<p>There are no data!</p>
 											</td>
 										</tr>
@@ -185,7 +183,6 @@
 											<td class="text-center" th:text="${item.calories}"></td>											
 											<td class="text-center" th:text="${item.rating} == null ? '평점 없음' : ${item.rating}"></td>											
 											<td class="text-center" th:text="${item.orderCount}"></td>
-											<td class="text-center" th:text="${item.stock}"></td>
 											<td class="text-center" th:text="${item.createdAt}"></td>
 											<td class="text-center" th:text="${item.updatedAt}"></td>
 											<td class="text-center" th:text="${item.isRecommand} == 1 ? 'Y' : 'N' "></td>

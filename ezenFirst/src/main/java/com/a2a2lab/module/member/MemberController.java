@@ -148,7 +148,7 @@ public class MemberController {
 	@RequestMapping("/tableOrder/sign/loginView")
 	public String loginView(Model model) {
 		// 임시 로그인 계정
-		String tmpEmail = "ServiceAdmin@gmail.com";
+		String tmpEmail = "Admin@table.com";
 		String tmpPwd = "a1234567";
 		model.addAttribute("tmpEmail", tmpEmail);
 		model.addAttribute("tmpPwd", tmpPwd);

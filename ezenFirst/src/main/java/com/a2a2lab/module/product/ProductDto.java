@@ -16,7 +16,6 @@ public class ProductDto {
 	private Integer sodium;
 	private Integer isRecommand;
 	private Integer orderCount;
-	private Integer stock;
 	private Integer rating;
 	private String createdAt;
 	private String updatedAt;
@@ -103,12 +102,6 @@ public class ProductDto {
 	}
 	public void setOrderCount(Integer orderCount) {
 		this.orderCount = orderCount;
-	}
-	public Integer getStock() {
-		return stock;
-	}
-	public void setStock(Integer stock) {
-		this.stock = stock;
 	}
 	public Integer getRating() {
 		return rating;

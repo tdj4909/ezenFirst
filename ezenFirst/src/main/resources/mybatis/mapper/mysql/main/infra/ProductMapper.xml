@@ -55,14 +55,6 @@
 		            AND p.order_count &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
 		        </if>
 		    </when>
-		    <when test="searchVo.shOptionRange eq 4">
-		        <if test="searchVo.shRangeStart != null and searchVo.shRangeStart != ''">
-		            AND p.stock &gt;= #{searchVo.shRangeStart, jdbcType=INTEGER}
-		        </if>
-		        <if test="searchVo.shRangeEnd != null and searchVo.shRangeEnd != ''">
-		            AND p.stock &lt;= #{searchVo.shRangeEnd, jdbcType=INTEGER}
-		        </if>
-		    </when>
 		</choose>
 		
 		<choose>
@@ -90,7 +82,6 @@
 			,p.calories
 			,p.is_recommand AS isRecommand
 			,p.order_count AS orderCount
-			,p.stock
 			,p.rating
 			,p.created_at AS createdAt
 			,p.updated_at AS updatedAt
@@ -118,7 +109,6 @@
 			,p.protein
 			,p.fat
 			,p.sodium
-			,p.stock
 			,p.rating
 			,p.is_recommand AS isRecommand
 			,p.file_id AS fileId
@@ -142,7 +132,6 @@
 			,protein
 			,fat
 			,sodium
-			,stock
 			,order_count
 			,is_recommand
 			,created_at
@@ -178,7 +167,6 @@
 			,protein = #{protein}
 			,fat = #{fat}
 			,sodium = #{sodium}
-			,stock = #{stock}
 			,is_recommand = #{isRecommand}
 			,updated_at = now()
 		WHERE

@@ -28,7 +28,8 @@
 							<p class="text-dark fs-5 fw-bold mb-0" th:text="${#numbers.formatInteger(item.price, 1, 'COMMA')} + ' 원'"></p>
 							<button type="button"
 									class="btn border border-secondary rounded-pill px-3 text-primary btnAddCart"
-									th:data-product-id="${item.productId}">
+									th:data-product-id="${item.productId}"
+									>
 								<i class="fa fa-shopping-bag me-2 text-primary"></i>
 								<span>Add to cart</span>
 							</button>
