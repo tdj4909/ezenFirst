@@ -14,8 +14,8 @@
 	                    <div class="row g-4">
 	                        <div class="col-xl-3">
 	                            <div class="input-group w-100 mx-auto d-flex">
-	                                <input type="search" class="form-control p-3" placeholder="메뉴명" aria-describedby="search-icon-1">
-	                                <span onclick="location.href='shop.html'" style="cursor:pointer;" id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+	                                <input type="search" class="form-control p-3" id="shValue" th:value="${searchVo?.shValue}" placeholder="메뉴명">
+	                                <span onclick="loadMenuList(1)" style="cursor:pointer;" id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
 	                            </div>
 	                        </div>
 	                        <div class="col-6"></div>
@@ -106,7 +106,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	  
 // 메뉴 리스트 로드
 function loadMenuList(page) {
-    fetch(`/tableOrder/shop/menuList?page=${page}`)
+	const shValue = document.getElementById("shValue").value;
+    fetch(`/tableOrder/shop/menuList?page=${page}&shValue=${shValue}`)
         .then(response => response.text())
         .then(html => {
             document.getElementById("menuList").innerHTML = html;

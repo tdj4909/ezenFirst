@@ -169,9 +169,17 @@ public class ProductController {
 	}
 	// 메뉴 리스트 Ajax
 	@RequestMapping("/tableOrder/shop/menuList")
-	public String getMenuListFragment(@RequestParam(name = "page", defaultValue = "1") int page, Model model, PageVo pageVo, SearchVo searchVo) {
+	public String getMenuListFragment(@RequestParam(name = "page", defaultValue = "1") int page,
+									  @RequestParam(name = "shValue", defaultValue = "") String shValue,
+									  Model model, 
+									  PageVo pageVo, 
+									  SearchVo searchVo) {
+		// 검색 설정		
+		searchVo.setShOption(2);
+		searchVo.setShValue(shValue);
+		model.addAttribute("searchVo", searchVo); 
 		// 페이징 세팅
-		pageVo.setRowNumToShow(6);
+		pageVo.setRowNumToShow(2);
 		pageVo.setThisPage(page);
 		pageVo.setParamsPaging(service.countProductsByVo(searchVo));
 		model.addAttribute("pageVo", pageVo);
