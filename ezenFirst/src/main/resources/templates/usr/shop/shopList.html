@@ -8,7 +8,11 @@
 	    <!-- Fruits Shop Start-->
 	    <div class="container-fluid fruite py-5">
 	        <div class="container py-5">
-	            <h1 class="mb-4 mt-5">전체 메뉴</h1>
+	            <h1 class="mb-4 mt-5" th:if="${recommand == '1'}">추천 메뉴</h1>
+				<h1 class="mb-4 mt-5" th:if="${type == '버거'}">버거</h1>
+				<h1 class="mb-4 mt-5" th:if="${type == '피자'}">피자</h1>
+				<h1 class="mb-4 mt-5" th:if="${type == '음료'}">음료</h1>
+				<h1 class="mb-4 mt-5" th:if="${recommand == null and type == null}">전체 메뉴</h1>
 	            <div class="row g-4">
 	                <div class="col-lg-12">
 	                    <div class="row g-4">
@@ -110,8 +114,12 @@ document.addEventListener("DOMContentLoaded", function () {
 	  
 // 메뉴 리스트 로드
 function loadMenuList(page) {
+	const urlParams = new URLSearchParams(window.location.search);
+	const recommand = urlParams.get('recommand') || "";
+	const type = urlParams.get('type') || "";
+	
 	const shValue = document.getElementById("shValue").value;
-    fetch(`/tableOrder/shop/menuList?page=${page}&shValue=${shValue}`)
+    fetch(`/tableOrder/shop/menuList?page=${page}&shValue=${shValue}&type=${type}&recommand=${recommand}`)
         .then(response => response.text())
         .then(html => {
             document.getElementById("menuList").innerHTML = html;

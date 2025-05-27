@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.a2a2lab.module.code.CodeDto;
 import com.a2a2lab.module.code.CodeService;
 import com.a2a2lab.module.upload.UploadService;
 import com.a2a2lab.module.vo.PageVo;
@@ -164,18 +165,35 @@ public class ProductController {
 //	************************************************************
 	// 메뉴 리스트 화면
 	@RequestMapping("/tableOrder/shop/list")
-	public String showShopList() {
+	public String showShopList(@RequestParam(name = "recommand", required = false) String recommand,
+            				   @RequestParam(name = "type", required = false) String type,
+            				   Model model) {
+		model.addAttribute("recommand", recommand);
+	    model.addAttribute("type", type);
 		return "usr/shop/shopList";
 	}
 	// 메뉴 리스트 Ajax
 	@RequestMapping("/tableOrder/shop/menuList")
-	public String getMenuListFragment(@RequestParam(name = "page", defaultValue = "1") int page,
+	public String getMenuListFragment(@RequestParam(name = "page", defaultValue = "1") Integer page,
 									  @RequestParam(name = "shValue", defaultValue = "") String shValue,
+									  @RequestParam(name = "type", defaultValue = "") String type,
+									  @RequestParam(name = "recommand", defaultValue = "") Integer recommand,
 									  Model model, 
 									  PageVo pageVo, 
 									  SearchVo searchVo) {
 		// 검색 설정		
 		searchVo.setShOption(2);
+		List<CodeDto> codeDtos = codeService.getCodesByCodegroupName("메뉴 종류");
+		System.out.println(type);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		for(CodeDto codeDto : codeDtos) {
+			System.out.println(codeDto.getName());
+			if(codeDto.getName().equals(type)) {
+				searchVo.setShType(Integer.parseInt(codeDto.getCodeId()));
+				break;
+			}
+		}
+		searchVo.setShRecommand(recommand);
 		searchVo.setShValue(shValue);
 		model.addAttribute("searchVo", searchVo); 
 		// 페이징 세팅
