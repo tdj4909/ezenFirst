@@ -27,7 +27,7 @@ public class IndexController{
 		model.addAttribute("reviewCount", reviewService.countAllReview());
 		model.addAttribute("memberCount", memberService.countAllMember());
 		
-		return "/xdm/index/index";
+		return "xdm/index/index";
 	}
 	
 }
