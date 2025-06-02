@@ -40,6 +40,12 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.EC2_KEY }}
 
+    - name: Upload application-external.properties
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          echo "${{ secrets.EXTERNAL_PROPERTIES }}" > ~/application-external.properties
+        EOF
+        
     - name: Deploy to EC2 and restart container (using SSH agent)
       env:
         IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
@@ -49,10 +55,4 @@ jobs:
           sudo docker stop ezenFirst || true
           sudo docker rm ezenFirst || true
           sudo docker run -d -p 8080:8080 --name ezenFirst $IMAGE_NAME
-        EOF
-
-    - name: Upload application-external.properties
-      run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-          echo "${{ secrets.EXTERNAL_PROPERTIES }}" > ~/application-external.properties
         EOF
