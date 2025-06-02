@@ -3,9 +3,8 @@
 
 <div th:replace="~{xdm/include/head :: head}"></div>
 
-<!-- Main -->
+<!-- Main Start -->
 <main id="main" class="main">
-
 	<form name="formList" id="formList" method="post" enctype="multipart/form-data" autocomplete="off">
 	
 		<input type="hidden" name="thisPage" th:value="${pageVo.thisPage}"> 
@@ -13,7 +12,6 @@
 		<input type="hidden" name="codeId">
 		
 		<div class="pagetitle">
-
 			<nav>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
@@ -21,7 +19,6 @@
 					<li class="breadcrumb-item active">코드 관리</li>
 				</ol>
 			</nav>
-
 			<h1 style="font-weight: bold;">코드 목록</h1>
 			
 			<!-- Search Start -->
@@ -86,15 +83,12 @@
 			<!-- Search End -->
 
 		</div>
-		<!-- End Page Title -->
 
 		<section class="section">
 			<div class="row">
 				<div class="col-lg-12">
-
 					<div class="card">
 						<div class="card-body m-2">
-
 							<div class="row">
 								<div class="col">
 									<h5 class="card-title" th:text="|Total: ${pageVo.totalRows}|"></h5>
@@ -130,7 +124,6 @@
 										</tr>
 									</thead>
 									<tbody>
-
 										<tr th:if="${list == null || list.isEmpty()}">
 											<td colspan=9 class="text-center">
 												<p>There are no data!</p>
@@ -153,17 +146,15 @@
 											<td class="text-center" th:text="${item.createdAt}"></td>
 											<td class="text-center" th:text="${item.updatedAt}"></td>
 										</tr>
-
 									</tbody>
 								</table>
 							</div>
 							<!-- Table End -->
 
-							<!-- Pagination with icons -->
+							<!-- Pagination Start-->
 							<div class="row">
-								<nav aria-label="Page navigation example">
+								<nav>
 									<ul class="pagination justify-content-center">
-
 										<li th:if="${pageVo.startPage gt pageVo.pageNumToShow}" 
 											class="page-item"
 											style="cursor: pointer;">
@@ -185,11 +176,10 @@
 												<i class="fa-solid fa-angle-right"></i>
 											</a>
 										</li>
-
 									</ul>
 								</nav>
 							</div>
-							<!-- End Pagination with icons -->
+							<!-- Pagination End -->
 							
 							<!-- Table Button Start -->
 							<div class="row">
@@ -221,11 +211,10 @@
 							
 						</div>
 					</div>
-
 				</div>
 			</div>
 			
-<!-- 			Modal -->
+			<!-- Modal Start -->
 			<div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
@@ -244,13 +233,12 @@
 					</div>
 				</div>
 			</div>
-			
-			
+			<!-- Modal End -->
 			
 		</section>
 	</form>
 </main>
-<!-- End #main -->
+<!-- Main End -->
 
 <script type="text/javascript">
 
@@ -289,9 +277,7 @@
 	    form.submit();
 	}
 	
-	
 	document.addEventListener("DOMContentLoaded", function () {
-	
 	    // 사이드바 현재화면 위치 active
 	    links.forEach(link => {
 	        if (link.getAttribute("href") === currentPath) {
