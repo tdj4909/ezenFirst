@@ -23,7 +23,6 @@ jobs:
 
     - name: Build JAR with Gradle
       run: ezenFirst/gradlew clean bootJar
-      working-directory: ezenFirst/
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
