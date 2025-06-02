@@ -19,30 +19,46 @@ jobs:
         distribution: 'temurin'
 
     - name: Grant execute permission to gradlew
-      run: chmod +x ./gradlew
+      run: chmod +x ezenFirst/gradlew
 
     - name: Build JAR with Gradle
+      working-directory: ezenFirst
       run: ./gradlew clean bootJar
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Build Docker image
+      working-directory: ezenFirst
       run: docker build -t ${{ secrets.IMAGE_NAME }} .
 
     - name: Push Docker image to Docker Hub
       run: docker push ${{ secrets.IMAGE_NAME }}
 
-    - name: Prepare SSH key
+    - name: Set up SSH agent
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.EC2_KEY }}
+        
+    - name: Deploy to EC2 and restart container (using SSH agent)
+      env:
+        IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
       run: |
-        echo "${{ secrets.EC2_KEY }}" > ec2key.pem
-        chmod 600 ec2key.pem
-
-    - name: Deploy to EC2 and restart container
-      run: |
-        ssh -o StrictHostKeyChecking=no -i ec2key.pem ${{ secrets.EC2_HOST }} << EOF
-          docker pull ${{ secrets.IMAGE_NAME }}
-          docker stop ezenFirst || true
-          docker rm ezenFirst || true
-          docker run -d -p 8080:8080 --name ezenFirst ${{ secrets.IMAGE_NAME }}
+        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << EOF
+          sudo docker pull $IMAGE_NAME
+          sudo docker stop ezenFirst || true
+          sudo docker rm ezenFirst || true
+          sudo docker run -d -p 8080:8080 --name ezenFirst \
+            -e mysql_main_jdbc_url="${{ secrets.mysql_main_jdbc_url }}" \
+            -e mysql_main_username="${{ secrets.mysql_main_username }}" \
+            -e mysql_main_password="${{ secrets.mysql_main_password }}" \
+            -e cloud_aws_region="${{ secrets.cloud_aws_region }}" \
+            -e cloud_aws_bucket="${{ secrets.cloud_aws_bucket }}" \
+            -e cloud_aws_credentials_access_key="${{ secrets.cloud_aws_credentials_access_key }}" \
+            -e cloud_aws_credentials_secret_access_key="${{ secrets.cloud_aws_credentials_secret_access_key }}" \
+            -e google_mail_username="${{ secrets.google_mail_username }}" \
+            -e google_app_password="${{ secrets.google_app_password }}" \
+            -e GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}" \
+            -e GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}" \
+            $IMAGE_NAME
         EOF
