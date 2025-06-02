@@ -220,7 +220,7 @@ public class OrderController{
 		model.addAttribute("pageVo", pageVo);
 		// 주문 목록 출력
 		model.addAttribute("list", service.findOrderMastersByMemberId(pageVo, memberId));
-		return "/usr/order/orderHistory";
+		return "usr/order/orderHistory";
 	}
 	// 주문내역 삭제
 	@RequestMapping("/tableOrder/order/history/softDelete")
