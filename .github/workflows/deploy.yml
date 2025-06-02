@@ -37,14 +37,14 @@ jobs:
 
     - name: Prepare SSH key
       run: |
-        echo "${{ secrets.EC2_KEY }}" > ec2key.pem
-        chmod 600 ec2key.pem
+        echo "${{ secrets.EC2_KEY }}" > nowon-ec2-key.pem
+        chmod 600 nowon-ec2-key.pem
 
     - name: Deploy to EC2 and restart container
       run: |
-        ssh -o StrictHostKeyChecking=no -i ec2key.pem ${{ secrets.EC2_HOST }} << EOF
-          docker pull ${{ secrets.IMAGE_NAME }}
-          docker stop ezenFirst || true
-          docker rm ezenFirst || true
-          docker run -d -p 8080:8080 --name ezenFirst ${{ secrets.IMAGE_NAME }}
+        ssh -o StrictHostKeyChecking=no -i nowon-ec2-key.pem ec2-user@${{ secrets.EC2_HOST }} << EOF
+          sudo docker pull ${{ secrets.IMAGE_NAME }}
+          sudo docker stop ezenFirst || true
+          sudo docker rm ezenFirst || true
+          sudo docker run -d -p 8080:8080 --name ezenFirst ${{ secrets.IMAGE_NAME }}
         EOF
