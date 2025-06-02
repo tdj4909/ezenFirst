@@ -39,12 +39,6 @@ jobs:
       uses: webfactory/ssh-agent@v0.8.0
       with:
         ssh-private-key: ${{ secrets.EC2_KEY }}
-
-    - name: Upload application-external.properties
-      run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-          echo "${{ secrets.EXTERNAL_PROPERTIES }}" > ~/application-external.properties
-        EOF
         
     - name: Deploy to EC2 and restart container (using SSH agent)
       env:
@@ -54,5 +48,17 @@ jobs:
           sudo docker pull $IMAGE_NAME
           sudo docker stop ezenFirst || true
           sudo docker rm ezenFirst || true
-          sudo docker run -d -p 8080:8080 --name ezenFirst $IMAGE_NAME
+          sudo docker run -d -p 8080:8080 --name ezenFirst \
+            -e mysql_main_jdbc_url="${{ secrets.mysql_main_jdbc_url }}" \
+            -e mysql_main_username="${{ secrets.mysql_main_username }}" \
+            -e mysql_main_password="${{ secrets.mysql_main_password }}" \
+            -e cloud_aws_region="${{ secrets.cloud_aws_region }}" \
+            -e cloud_aws_bucket="${{ secrets.cloud_aws_bucket }}" \
+            -e cloud_aws_credentials_access_key="${{ secrets.cloud_aws_credentials_access_key }}" \
+            -e cloud_aws_credentials_secret_access_key="${{ secrets.cloud_aws_credentials_secret_access_key }}" \
+            -e google_mail_username="${{ secrets.google_mail_username }}" \
+            -e google_app_password="${{ secrets.google_app_password }}" \
+            -e GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}" \
+            -e GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}" \
+            $IMAGE_NAME
         EOF
