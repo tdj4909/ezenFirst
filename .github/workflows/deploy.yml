@@ -50,3 +50,9 @@ jobs:
           sudo docker rm ezenFirst || true
           sudo docker run -d -p 8080:8080 --name ezenFirst $IMAGE_NAME
         EOF
+
+    - name: Upload application-external.properties
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          echo "${{ secrets.EXTERNAL_PROPERTIES }}" > ~/application-external.properties
+        EOF
