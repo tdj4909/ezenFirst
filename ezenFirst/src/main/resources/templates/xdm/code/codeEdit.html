@@ -3,11 +3,9 @@
 
 <div th:replace="~{xdm/include/head :: head}"></div>
 
-<!-- Main -->
+<!-- Main Start -->
 <main id="main" class="main">
-
 	<div class="pagetitle mb-5">
-
 		<nav>
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="/xdm/index">Home</a></li>
@@ -15,27 +13,16 @@
 				<li class="breadcrumb-item active">코드 관리</li>
 			</ol>
 		</nav>
-
 		<h1 style="font-weight: bold;">코드 관리</h1>
-
-
 	</div>
-	<!-- End Page Title -->
 
 	<section class="section">
 		<form action="" method="post" id="form" class="needs-validation" novalidate>
-		
 			<div class="row">
 				<div class="col-lg-12">
-
 					<div class="card">
-
-						<h5 class="card-header" style="font-weight: bold; color: #4b4b4b;">
-							기본 정보</h5>
-
+						<h5 class="card-header" style="font-weight: bold; color: #4b4b4b;">기본 정보</h5>
 						<div class="card-body m-2">
-
-							<!-- Pagination with icons -->
 							<div class="row mb-3 mt-3">
 								<div class="row mb-3">
 									<div class="col-3">
@@ -70,10 +57,7 @@
 										</select>
 									</div>
 								</div>
-
-
 							</div>
-							<!-- End Pagination with icons -->
 
 							<div class="row">
 								<div class="col">
@@ -89,95 +73,29 @@
 									</div>
 								</div>
 							</div>
-							
 						</div>
 					</div>
-
 				</div>
 			</div>
-
 		</form>
 	</section>
-
 </main>
-<!-- End #main -->
+<!-- Main End -->
 
-<!-- ******************************************************************************* -->
-
-<!-- temp -->
 <script type="text/javascript">
 
+	document.addEventListener("DOMContentLoaded", function () {
+	    const inputCodeNm = document.querySelector("input[name='name']");
+	
+	    inputCodeNm.addEventListener("input", function () {
+	        // 첫 글자가 공백이면 자동 제거
+	        this.value = this.value.replace(/^\s+/, "");
+	    });
+	});
+
 // 	let codeNm = document.getElementById("codeNm");
-// 	let exampleModal = document.getElementById('exampleModal');
-// 	let close = document.getElementById('close');
-// 	let modalContent = document.getElementById('modalContent');
-	
-	  
-/* 	document.getElementById("btnSubmit").onclick = function() {
 
-	      
-		if (codeNm.value.trim() == null || codeNm.value.trim() == "") {
-			
-			let myModal = new bootstrap.Modal(exampleModal);
-			myModal.show();
-			
-			close.addEventListener("mouseover", () => {
-				close.classList.replace("btn-secondary", "btn-danger");
-// 				modalContent.style.cssText = "border-width: 5px; border-color: red;";				
-			});
-			
-			close.addEventListener("mouseout", () => {
-				close.classList.replace("btn-danger", "btn-secondary");
-// 				modalContent.style.cssText = "border-width: 2px; border-color: rgba(0, 0, 0, 0.176);";	
-			});
-			
-			close.addEventListener("click", () => {
-				myModal.hide();
-			});
-
-			exampleModal.addEventListener("hidden.bs.modal", (event) => {
-
-				if (!form.checkValidity()) {
-			        event.preventDefault()
-			        event.stopPropagation()
-			      }
-
-			      form.classList.add('was-validated')
-			      
-			      
-				codeNm.focus();
-			});
-			    
-			return false;
-		}
-
-		
-		
-		document.getElementById("form").submit();
-	}
-*/
-	
-/* 	// Example starter JavaScript for disabling form submissions if there are invalid fields
-	(() => {
-	  'use strict'
-
-	  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-	  const forms = document.querySelectorAll('.needs-validation')
-
-	  // Loop over them and prevent submission
-	  Array.from(forms).forEach(form => {
-	    form.addEventListener('submit', event => {
-	      if (!form.checkValidity()) {
-	        event.preventDefault()
-	        event.stopPropagation()
-	      }
-
-	      form.classList.add('was-validated')
-	    }, false)
-	  })
-	})() */
-	
-	let id = document.querySelector("input[name=codeId]");							/* ### */
+	let id = document.querySelector("input[name=codeId]");
 	
 // 	function validationInst() {
 // 	    if(validationUpdt() == false) return false;
@@ -214,29 +132,15 @@
 	document.getElementById("btnSubmit").onclick = function () {
 		if(id.value == "0" || id.value == "") {
 // 			if(validation() == false) return false;
-// 			$("#modalLoading").modal("show");
 			form.action = "/xdm/system/code/create";
 			form.submit();
 		} else {
 // 			if(validation() == false) return false;
-// 			$("#modalLoading").modal("show");
 			form.action = "/xdm/system/code/update";
 			form.submit();
 		}
 	}
 	
-// 	document.addEventListener("DOMContentLoaded", function () {
-// 	    const inputCodeNm = document.querySelector("input[name='codeNm']");
-
-// 	    inputCodeNm.addEventListener("input", function () {
-// 	        // 첫 글자가 공백이면 자동 제거
-// 	        this.value = this.value.replace(/^\s+/, "");
-// 	    });
-// 	});
-	
 </script>
-
-<!-- ******************************************************************************* -->
-
 
 <div th:replace="~{xdm/include/footer :: footer}"></div>
