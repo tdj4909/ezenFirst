@@ -36,15 +36,15 @@ jobs:
       run: docker push ${{ secrets.IMAGE_NAME }}
 
     - name: Set up SSH agent
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.EC2_KEY }}
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.EC2_KEY }}
 
     - name: Deploy to EC2 and restart container (using SSH agent)
-        run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} <<EOF
-            sudo docker pull ${{ secrets.IMAGE_NAME }}
-            sudo docker stop ezenFirst || true
-            sudo docker rm ezenFirst || true
-            sudo docker run -d -p 8080:8080 --name ezenFirst ${{ secrets.IMAGE_NAME }}
-          EOF
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          sudo docker pull ${{ secrets.IMAGE_NAME }}
+          sudo docker stop ezenFirst || true
+          sudo docker rm ezenFirst || true
+          sudo docker run -d -p 8080:8080 --name ezenFirst ${{ secrets.IMAGE_NAME }}
+        EOF
